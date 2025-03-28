@@ -1,0 +1,285 @@
+@startuml coffeBreak.entity
+
+    skinparam class {
+        BackgroundColor White
+        BorderColor Black
+        ArrowColor #444
+        NoteBackgroundColor #F9F9F9
+    }
+
+    package entity {
+
+        interface Entity <<interface>> {
+            + {abstract} getPosition(): Position
+            + {abstract} getDimension(): Dimension
+            + {abstract} update(deltaTime: long): void
+        }
+
+        abstract class GameEntity <<abstract>> implements Entity {
+            - position: Position
+            - dimension: Dimension
+            + {final} getPosition(): Position
+            + {final} getDimension(): Dimension
+            + {abstract} update(deltaTime: long): void
+        }
+
+        interface Movable <<interface>> {
+            + {abstract} move(direction: Vector2D): void
+        }
+
+        interface PlayableCharacter <<interface>> {
+            + {abstract} jump(): void
+            + {abstract} loseLife(): void
+        }
+
+        class Mario extends GameEntity implements PlayableCharacter, Movable {
+            - velocity: Vector2D
+            - lives: Integer
+            - state : MarioState
+            + climb(direction: int): void
+            + useHammer(): void
+        }
+
+        interface Villain <<interface>> {
+            + {abstract} throwBarrel(): void
+        }
+
+        class DonkeyKong extends GameEntity implements Villain {
+            - angerLevel: Integer
+        }
+
+        interface Collectible <<interface>> {
+            + {abstract} collect(): void
+            + {abstract} getValue(): int
+        }
+
+        abstract class BaseCollectible <<abstract>> extends GameEntity implements Collectible {
+            - value: int
+            - state : CollectibleType
+            + collect(): void
+            + {abstract} getValue(): int
+        }
+
+        class Coin extends BaseCollectible
+        class Hat extends BaseCollectible
+        class Bag extends BaseCollectible
+        class Hammer extends BaseCollectible {
+            - duration: long
+            + getRemainingTime(): long
+        }
+
+        interface Climbable <<interface>> {
+            + {abstract} canClimb(): boolean
+            + {abstract} getClimbSpeed(): float
+        }
+
+        class BasicLadder extends GameEntity implements Climbable {
+            - climb: boolean
+            + canClimb(): boolean
+            + getClimbSpeed(): float
+        }
+
+        abstract class LadderDecorator <<abstract>> implements Climbable {
+            - #wrapped: Climbable
+            + {abstract} canClimb(): boolean
+            + {abstract} getClimbSpeed(): float
+        }
+
+        class FastLadder extends LadderDecorator {
+            + getClimbSpeed(): float <<override: 2.5>>
+        }
+
+        interface Platform <<interface>> {
+            + {abstract} canBreak(): boolean
+            + {abstract} getFriction(): float
+        }
+
+        class BasicPlatform extends GameEntity implements Platform {
+            - breakable: boolean
+            + canBreak(): boolean
+            + getFriction(): float
+        }
+
+        abstract class PlatformDecorator <<abstract>> implements Platform {
+            - # wrapped: Platform
+            + {abstract} canBreak(): boolean
+            + {abstract} getFriction(): float
+        }
+
+        class FragilePlatform extends PlatformDecorator {
+            + canBreak(): boolean <<override: true>>
+        }
+
+        class MovingPlatform extends PlatformDecorator {
+            - velocity: Vector2D
+            + getFriction(): float <<override: 0.7>>
+        }
+
+        class GamePlatform extends GameEntity implements Platform {
+            - breakable: boolean
+        }
+
+        abstract class Enemy <<abstract>> extends GameEntity implements Hostile, Movable {
+            - state : EnemyType
+        }
+
+        class Barrel extends Enemy
+        class Fire extends Enemy
+
+        enum EnemyType {
+            BARREL
+            FIRE
+        }
+
+        enum MarioState {
+            NORMAL
+            WITHHAMMER
+            DEAD
+        } 
+
+        enum CollectibleType {
+            COIN
+            HAMMER
+            HAT
+            BAG
+            EXTRA_LIFE
+        }  
+        
+        note top of GameEntity
+            == TEMPLATE METHOD PATTERN ==
+            **Base Class for All Entities**:
+            Fornisce implementazioni comuni per posizione/dimensioni
+            lasciando ai sottotipi la definizione del comportamento update()
+
+            **Caratteristiche**:
+            • getPosition() e getDimension() sono final
+            • update() rimane astratto per logica personalizzata
+
+            **Vantaggi**:
+            → Elimina duplicazione di codice
+            → Fornisce struttura comune a tutte le entità
+            → Permette variazioni controllate
+        end note
+        note top of Movable
+            == STRATEGY PATTERN ==
+            **Movimento Disaccoppiato**:
+            Separa la logica di movimento dalle entità
+
+            **Implementazioni**:
+            • Personaggio giocabile (Mario)
+            • Nemici (Barili, Fuoco)
+            • Piattaforme mobili
+
+            **Vantaggi**:
+            → Possibilità di cambiare strategia di movimento a runtime
+            → Logica di movimento riutilizzabile
+            → Facile aggiunta di nuovi comportamenti
+        end note
+        note bottom of Mario
+            == STATE PATTERN ==
+            **Comportamento Dinamico**:
+            Il comportamento di Mario cambia in base allo stato
+
+            **Stati Principali**:
+            • NORMAL: Mario base
+            • WITHHAMMER: Può distruggere barili
+            • DIE: Stato di morte
+
+            **Transizioni**:
+            ◄ NORMAL → WITHHAMMER (raccoglie martello)
+            ◄ ANY → DIE (perde tutte le vite)
+
+            **Vantaggi**:
+            → Logica ben organizzata per stato
+            → Facile aggiunta di nuovi stati
+        end note
+        note top of Collectible
+            == FACTORY METHOD PATTERN ==
+            **Creazione Oggetti Raccoglibili**:
+            Gestisce la creazione di diversi tipi di collezionabili
+
+            **Tipi Implementati**:
+            • Coin: Aumenta punteggio
+            • Hammer: Dà potere speciale
+            • Hat/Bag: Bonus speciali
+
+            **Vantaggi**:
+            → Estensibile a nuovi tipi
+            → Logica di raccolta centralizzata
+            → Possibilità di pool di oggetti
+        end note
+        note top of Villain
+            == COMMAND PATTERN ==
+            **Azioni dei Nemici**:
+            Incapsula le azioni dei personaggi antagonisti
+
+            **Comandi Principali**:
+            • throwBarrel(): Lancia barili
+            • increaseAnger(): Aumenta aggressività
+
+            **Vantaggi**:
+            → Logica disaccoppiata
+            → Possibilità di coda comandi
+            → Facile undo per debug
+        end note
+        note bottom of DonkeyKong
+            == OBSERVER PATTERN ==
+            **Gestione Eventi**:
+            Notifica cambiamenti di stato
+
+            **Osservabili**:
+            • angerLevel: Livello di rabbia
+            • position: Posizione nel livello
+
+            **Vantaggi**:
+            → Reattività agli eventi di gioco
+            → Disaccoppiamento tra componenti
+            → Possibilità di multiple reazioni
+        end note
+        note top of LadderDecorator
+            == DECORATOR PATTERN ==
+            **Estensione Comportamento Scale**:
+            Aggiunge funzionalità senza modificare le classi esistenti
+
+            **Implementazioni**:
+            • FastLadder: Scala veloce
+
+            **Vantaggi**:
+            → Composizione dinamica
+            → Rispetto Open/Closed Principle
+            → Combinabilità di decoratori
+        end note        
+        note top of PlatformDecorator
+            == DECORATOR PATTERN ==
+            **Piattaforme Modificabili**:
+            Aggiunge caratteristiche speciali alle piattaforme
+
+            **Varianti**:
+            • FragilePlatform: Si rompe al contatto
+            • MovingPlatform: Si muove orizzontalmente
+
+            **Vantaggi**:
+            → Estensibilità senza ereditarietà
+            → Composizione a runtime
+            → Codice più pulito e modulare
+        end note
+
+        note as N1
+            **COLLABORAZIONE TRA PATTERN**
+            
+            == ARCHITETTURA COMPLETA ==
+            1. [GameEntity] Fornisce struttura base a tutte le entità
+            2. [Decorator] Aggiunge comportamenti speciali a scale/piattaforme
+            3. [State] Gestisce i diversi stati di Mario e nemici
+            4. [Observer] Monitora cambiamenti importanti
+            5. [Strategy] Implementa diversi movimenti per entità
+            6. [Command] Esegue azioni specifiche
+            
+            **BEST PRACTICES**:
+            ► Separazione chiara tra logica e rendering
+            ► Gestione stato centralizzata
+            ► Eventi disaccoppiati tramite observer
+        end note
+        N1 .. GameEntity
+    }
+@enduml

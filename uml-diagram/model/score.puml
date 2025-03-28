@@ -1,0 +1,135 @@
+@startuml coffeBreak.score
+
+    skinparam class {
+        BackgroundColor White
+        BorderColor Black
+        ArrowColor #444
+        NoteBackgroundColor #F9F9F9
+    }
+
+    package score {
+
+        interface ScoreManager <<interface>> {
+            + getCurrentScore() : Integer
+            + increaseScore(amount : Integer): void
+            + endGame() : void
+            + endMap() : void
+        }
+        
+        class GameScoreManager implements ScoreManager {
+            - score : Score
+            - bonus : Bonus
+            - ranking : LeaderBoard
+        }
+        
+        interface Score <<interface>> {
+            + getScore() : Integer
+            + increase(amount : integer) : void
+            + reset() : void
+        }
+        
+        class GameScore implements Score {
+            - score : Integer
+        }
+        
+        interface Bonus <<interface>> {
+            + getBonus(): Integer
+            + setBonus(value : Integer): void
+            + calculate(): void
+        }
+        
+        class GameBonus implements Bonus {
+            - bonus : Integer
+            - timer : Integer
+        }
+        
+        interface LeaderBoard <<interface>> {
+            + getLeaderBoard() : List<Entry>
+            + addScore(entry : Entry) : void
+            - isEligible(score : Integer) : boolean
+        }
+        
+        interface ScoreRepository <<interface>> {
+            + save(ranking : List<Entry>): boolean
+            + load(): List<Entry>
+        }
+        
+        class GameLeaderBoard implements LeaderBoard, ScoreRepository {
+            - ranking: List<Entry>
+        }
+        
+        interface Entry <<interface>> {
+            + getName(): String
+            + getScore(): Integer
+        }
+        
+        class ScoreEntry implements Entry {
+            - name: String
+            - score: Integer
+        }
+
+        GameScoreManager *-- Score
+        GameScoreManager *-- Bonus
+        GameScoreManager *-- LeaderBoard
+        GameLeaderBoard o-- Entry
+        
+        note left of ScoreManager
+            == FACADE PATTERN ==
+            **Centralizza 3 sistemi**:
+            1. Punteggio base (GameScore)
+            2. Bonus tempo (GameBonus)
+            3. Classifica (GameLeaderBoard)
+            
+            **Regole DK Originale**:
+            ► +100 punti per barile distrutto
+            ► +800 per salvare Pauline
+        end note
+        note right of GameScoreManager
+            == DECORATOR PATTERN ==
+            **Scopo**: Estendere funzionalità base
+            
+            **Componenti**:
+            - Score: gestione valore base
+            - BonusCalculator: calcola bonus
+            - HighScoreTable: gestione record
+            
+            **Flusso Punteggio**:
+            1. Aggiungi punti base
+            2. Applica moltiplicatori
+            3. Aggiorna classifica
+        end note
+        note bottom of GameScore
+            == VALUE OBJECT ==
+            **Implementazione tipica**:
+            • Incremento thread-safe
+            • Controllo overflow
+            
+            **Esempio uso**:
+            score.increase(200)
+        end note
+        note bottom of GameBonus
+            == STRATEGY PATTERN ==
+            **Bonus Tempo**:
+            • Decrementa ogni tot secondi
+            • Aggiunto a fine livello
+        end note
+        note right of GameLeaderBoard
+            == PROXY + REPOSITORY ==
+            **Flusso salvataggio**:
+            1. Verifica isEligible(score)
+            2. Crea nuova Entry
+            3. Persiste su filesystem
+            4. Aggiorna cache top 5
+            
+            **Protezioni**:
+            ► Nomi duplicati
+            ► Score impossibili
+            ► Corruzione dati
+        end note
+        note right of ScoreEntry
+            == DATA TRANSFER OBJECT ==
+            Salvataggio score con relativo nome.
+        end note
+    }
+
+@enduml
