@@ -1,0 +1,143 @@
+@startuml coffeBreak.view
+
+    skinparam class {
+        BackgroundColor White
+        BorderColor Black
+        ArrowColor #444
+        NoteBackgroundColor #F9F9F9
+    }
+
+    package view {
+        interface View <<interface>> {
+            + setView(state: ViewState): void
+            + update(): void
+        }
+
+        interface ViewState <<interface>> {
+            + updateView(model: Model): void
+            + setupController(controller: Controller): void
+            + loadResources(): void
+            + cleanupResources(): void
+        }
+
+        class ViewManager extends javax.swing.JFrame implements View {
+            - model: Model
+            - controller: Controller
+            - currentState: ViewState
+            - States: Map<ViewStateType, ViewState>
+            + initializeStates(): void
+        }
+
+        abstract class BufferedViewState <<abstract>> extends javax.swing.JPanel implements ViewState {
+            - buffer: BufferedImage
+            # renderToBuffer(g: Graphics): void
+            # paintComponent() : void
+        }
+
+        class MenuViewState extends BufferedViewState
+        class GameViewState extends BufferedViewState
+        class PauseViewState extends BufferedViewState
+        class GameOverViewState extends BufferedViewState
+
+        enum ViewStateType {
+            MENU
+            GAME
+            PAUSE
+            GAME_OVER
+        }
+
+        note left of View
+            == Strategy Pattern ==
+            **Ruolo**: 
+            Interfaccia comune per gestione stati vista
+
+            **Responsabilità**:
+            • setView(state): Cambia stato visualizzato
+            • update(): Sincronizza vista con model
+
+            **Vantaggi**:
+            → Flessibilità cambio comportamento
+            → Basso accoppiamento componenti
+        end note
+
+        note bottom of ViewState
+            == State Pattern ==
+            **Ruolo**:
+            Rappresenta stati del gioco
+
+            **Contratto**:
+            • updateView(model): Aggiorna visualizzazione
+            • setupController(): Configura input
+            • loadResources(): Carica assets
+            • cleanupResources(): Rilascia risorse
+
+            **Transizioni**:
+            Gestite da ViewManager
+        end note
+
+        note top of BufferedViewState
+            == Template Method ==
+            **Struttura**:
+            ◇ renderToBuffer(g) [astratto]
+            ◇ paintComponent(g) [implementazione]
+
+            **Meccanismo**:
+            • buffer: Back buffer anti-flickering
+            • Flusso controllato superclasse
+
+            **Estensione**:
+            Sottoclassi implementano rendering
+        end note
+
+        note left of ViewManager
+            == Composite + Facade ==
+            **Composite**:
+            Gestisce gerarchia stati
+
+            **Facade**:
+            Interfaccia semplificata
+
+            **Funzionalità**:
+            • initializeStates(): Carica tutti gli stati
+            • setView(): Cambio stato
+            • update(): Notifiche
+
+            **Stato**:
+            → currentState: Stato attivo
+            → States: Mappa stati
+        end note
+
+        ViewManager *-- ViewState
+        ViewStateType --> ViewManager
+    }
+
+    note "**Pattern Observer**\nLa View osserva i cambiamenti\nnel Model e si aggiorna di conseguenza.\nImplementato tramite il metodo update()." as N1
+    View .. N1
+
+    note "**Pattern Factory Method**\nLe concrete ViewState potrebbero\nessere create tramite factory\nper gestire la complessità\ndell'inizializzazione." as N2
+    ViewManager .. N2
+
+    note left of view
+        **Architettura View - Funzionamento Complessivo**
+        L'architettura segue un approccio a stati finiti (FSM) dove:
+        1. La **ViewManager** funge da gestore centrale (Facade)
+        2. Ogni stato del gioco (menu, gioco, pausa...) è 
+            rappresentato da una **ViewState**
+        3. Il cambio stato avviene tramite **setView()** che:
+            a) Rimuove la ViewState corrente
+            b) Inizializza la nuova ViewState
+            c) Configura gli input specifici
+        4. Il rendering avviene con:
+            a) **Double buffering** (gestito da BufferedViewState)
+            b) Aggiornamenti basati sullo stato del Model
+        5. Le risorse sono caricate/scaricate on demand
+
+        **Flusso tipico:**
+        1. Controller rileva input
+        2. Notifica il Model
+        3. Model si aggiorna
+        4. View riceve update()
+        5. ViewState corrente renderizza lo stato attuale
+    end note
+
+@enduml
