@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak;
+package it.unibo.coffebreak;
 
 /**
  * Entry point of the app, it creates a controller and launches the GUI
@@ -15,6 +15,6 @@ final class LaunchApp {
      * @param args unused
      */
     public static void main(final String[] args) {
-        System.out.println("Starting Game...");
+        System.out.println("Starting Game..."); // NOPMD suppressed as it is a false positive
     }
 }
