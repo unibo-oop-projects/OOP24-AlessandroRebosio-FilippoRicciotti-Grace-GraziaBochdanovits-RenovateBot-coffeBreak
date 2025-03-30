@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffeBreak.model.score.api.Entry;
-import it.unibo.coffeBreak.model.score.api.Repository;
+import it.unibo.coffebreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.api.Repository;
 
 /**
  * Implementation of {@link Repository} for storing and retrieving score
@@ -22,15 +22,15 @@ import it.unibo.coffeBreak.model.score.api.Repository;
 public class ScoreRepository implements Repository<Entry> {
 
     /**
+     * The name of the file where the leaderboard data will be permanently stored.
+     */
+    private static final String FILE_NAME = "leaderBoard.ser";
+
+    /**
      * The File object representing the permanent data storage location.
      * The file is located in the user's home directory.
      */
     private final File dataFile;
-
-    /**
-     * The name of the file where the leaderboard data will be permanently stored.
-     */
-    private static final String FILE_NAME = "leaderBoard.ser";
 
     /**
      * Constructs a new ScoreRepository.
@@ -101,5 +101,4 @@ public class ScoreRepository implements Repository<Entry> {
             super(message, cause);
         }
     }
-    
 }

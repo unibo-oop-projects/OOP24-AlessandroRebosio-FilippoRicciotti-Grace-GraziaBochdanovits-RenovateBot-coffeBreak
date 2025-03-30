@@ -1,12 +1,12 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffeBreak.model.score.api.Entry;
-import it.unibo.coffeBreak.model.score.api.LeaderBoard;
+import it.unibo.coffebreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.api.LeaderBoard;
 
 /**
  * Implementation of a game leaderboard that maintains the top scoring entries.
@@ -15,8 +15,8 @@ import it.unibo.coffeBreak.model.score.api.LeaderBoard;
  */
 public class GameLeaderBoard implements LeaderBoard<Entry> {
 
-    /** The maximum number of entries allowed in the leaderboard */
-    private static final int MAX_ENTRIES = 5;
+    /** The maximum number of entries allowed in the leaderboard. */
+    public static final int MAX_ENTRIES = 5;
 
     /**
      * The list containing the leaderboard entries.

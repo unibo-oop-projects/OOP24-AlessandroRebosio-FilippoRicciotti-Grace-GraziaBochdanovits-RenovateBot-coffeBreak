@@ -1,6 +1,6 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
-import it.unibo.coffeBreak.model.score.api.Bonus;
+import it.unibo.coffebreak.model.score.api.Bonus;
 
 /**
  * Implementation of {@link Bonus} interface that manages a game bonus system.
@@ -37,7 +37,7 @@ public class GameBonus implements Bonus {
      * {@inheritDoc}
      */
     @Override
-    public void setBonus(int value) {
+    public void setBonus(final int value) {
         if (value < 0) {
             throw new IllegalArgumentException("The value must be positive.");
         }

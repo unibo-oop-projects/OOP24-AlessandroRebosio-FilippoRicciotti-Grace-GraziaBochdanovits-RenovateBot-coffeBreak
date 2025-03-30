@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.api;
+package it.unibo.coffebreak.model.score.api;
 
 /**
  * Represents a score system that can be increased, reset and queried.
@@ -25,5 +25,4 @@ public interface Score {
      * Resets the score to zero.
      */
     void reset();
-
 }

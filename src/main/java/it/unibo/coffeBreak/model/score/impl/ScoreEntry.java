@@ -1,9 +1,9 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import it.unibo.coffeBreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.api.Entry;
 
 /**
  * Concrete implementation of an {@link Entry} that represents a score entry

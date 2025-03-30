@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.api;
+package it.unibo.coffebreak.model.score.api;
 
 import java.util.List;
 
@@ -24,5 +24,4 @@ public interface Repository<X> {
      * @return a list of all elements stored in the repository
      */
     List<X> load();
-
 }

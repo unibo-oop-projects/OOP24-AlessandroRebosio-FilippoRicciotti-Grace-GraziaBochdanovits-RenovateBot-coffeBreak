@@ -1,6 +1,6 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
-import it.unibo.coffeBreak.model.score.api.Score;
+import it.unibo.coffebreak.model.score.api.Score;
 
 /**
  * Implementation of the {@link Score} interface that manages a game score.

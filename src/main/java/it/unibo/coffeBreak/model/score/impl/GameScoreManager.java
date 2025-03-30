@@ -1,13 +1,13 @@
-package it.unibo.coffeBreak.model.score.impl;
+package it.unibo.coffebreak.model.score.impl;
 
 import java.util.List;
 
-import it.unibo.coffeBreak.model.score.api.Bonus;
-import it.unibo.coffeBreak.model.score.api.Entry;
-import it.unibo.coffeBreak.model.score.api.LeaderBoard;
-import it.unibo.coffeBreak.model.score.api.Repository;
-import it.unibo.coffeBreak.model.score.api.Score;
-import it.unibo.coffeBreak.model.score.api.ScoreManager;
+import it.unibo.coffebreak.model.score.api.Bonus;
+import it.unibo.coffebreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.api.LeaderBoard;
+import it.unibo.coffebreak.model.score.api.Repository;
+import it.unibo.coffebreak.model.score.api.Score;
+import it.unibo.coffebreak.model.score.api.ScoreManager;
 
 /**
  * Concrete implementation of {@link ScoreManager} for game score management.
@@ -15,16 +15,16 @@ import it.unibo.coffeBreak.model.score.api.ScoreManager;
  */
 public class GameScoreManager implements ScoreManager<Entry> {
 
-    /** The current score of the player */
+    /** The current score of the player. */
     private final Score score;
 
-    /** The current bonus that can be converted to points */
+    /** The current bonus that can be converted to points. */
     private final Bonus bonus;
 
-    /** The repository for loading and saving score data */
+    /** The repository for loading and saving score data. */
     private final Repository<Entry> repository;
 
-    /** The leaderboard containing high scores and player entries */
+    /** The leaderboard containing high scores and player entries. */
     private final LeaderBoard<Entry> leaderBoard;
 
     /**

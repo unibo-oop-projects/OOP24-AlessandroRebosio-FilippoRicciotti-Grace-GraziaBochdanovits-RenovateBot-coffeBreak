@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.api;
+package it.unibo.coffebreak.model.score.api;
 
 /**
  * Represents a bonus system that can be applied to a game.
@@ -26,5 +26,4 @@ public interface Bonus {
      * Typically reduces the bonus by a fixed amount.
      */
     void calculate();
-
 }

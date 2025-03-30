@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.api;
+package it.unibo.coffebreak.model.score.api;
 
 import java.util.List;
 
@@ -27,5 +27,4 @@ public interface LeaderBoard<X> {
      * @throws NullPointerException if the entry is null
      */
     void addEntry(X entry);
-    
 }

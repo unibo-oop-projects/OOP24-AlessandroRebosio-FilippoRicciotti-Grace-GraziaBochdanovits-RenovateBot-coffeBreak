@@ -1,4 +1,4 @@
-package it.unibo.donkey.model.score;
+package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffeBreak.model.score.api.Entry;
-import it.unibo.coffeBreak.model.score.impl.ScoreEntry;
+import it.unibo.coffebreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.impl.ScoreEntry;
 
 /**
  * Test class for {@link Entry} interface and {@link ScoreEntry} implementation.
  */
-public class TestEntry {
+class TestEntry {
 
     /** Test name used for entry operations. */
     private static final String TEST_NAME = "REB";

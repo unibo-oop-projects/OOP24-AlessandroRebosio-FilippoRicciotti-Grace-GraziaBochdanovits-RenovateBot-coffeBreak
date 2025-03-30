@@ -1,4 +1,4 @@
-package it.unibo.coffeBreak.model.score.api;
+package it.unibo.coffebreak.model.score.api;
 
 /**
  * Represents an entry in a scoreboard, containing a name and a score.
@@ -20,5 +20,4 @@ public interface Entry extends Comparable<Entry> {
      * @return the score value
      */
     int getScore();
-    
 }

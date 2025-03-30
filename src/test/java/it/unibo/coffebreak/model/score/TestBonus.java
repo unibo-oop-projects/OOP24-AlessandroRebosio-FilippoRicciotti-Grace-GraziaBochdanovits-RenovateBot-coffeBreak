@@ -1,4 +1,4 @@
-package it.unibo.donkey.model.score;
+package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffeBreak.model.score.api.Bonus;
-import it.unibo.coffeBreak.model.score.impl.GameBonus;
+import it.unibo.coffebreak.model.score.api.Bonus;
+import it.unibo.coffebreak.model.score.impl.GameBonus;
 
 /**
  * Test class for {@link Bonus} interface and {@link GameBonus} implementation.
  */
-public class TestBonus {
+class TestBonus {
 
     /** Test value used for bonus operations. */
     private static final int TEST_AMOUNT = 1000;

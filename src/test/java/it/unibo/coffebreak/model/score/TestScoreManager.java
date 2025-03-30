@@ -1,21 +1,23 @@
-package it.unibo.donkey.model.score;
+package it.unibo.coffebreak.model.score;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import it.unibo.coffeBreak.model.score.api.Entry;
-import it.unibo.coffeBreak.model.score.api.ScoreManager;
-import it.unibo.coffeBreak.model.score.impl.GameScoreManager;
-import it.unibo.coffeBreak.model.score.impl.ScoreEntry;
+
+import it.unibo.coffebreak.model.score.api.Entry;
+import it.unibo.coffebreak.model.score.api.ScoreManager;
+import it.unibo.coffebreak.model.score.impl.GameScoreManager;
+import it.unibo.coffebreak.model.score.impl.ScoreEntry;
+
 import java.util.List;
 
 /**
- * Test class for {@link ScoreManager} interface and {@link GameScoreManager} implementation.
+ * Test class for {@link ScoreManager} interface and {@link GameScoreManager}
+ * implementation.
  */
-public class TestScoreManager {
-
-    /** The score manager instance under test. */
-    private ScoreManager<Entry> scoreManager;
+class TestScoreManager {
 
     /** Test player name used for entries. */
     private static final String TEST_PLAYER = "Player1";
@@ -25,6 +27,9 @@ public class TestScoreManager {
     private static final int TEST_SCORE_MEDIUM = 500;
     private static final int TEST_SCORE_LARGE = 1000;
     private static final int TEST_SCORE_XLARGE = 2000;
+
+    /** The score manager instance under test. */
+    private ScoreManager<Entry> scoreManager;
 
     /**
      * Initializes the test environment before each test.
@@ -62,8 +67,8 @@ public class TestScoreManager {
     @Test
     void testEarnPoints() {
         scoreManager.earnPoints(TEST_SCORE_MEDIUM);
-        assertEquals(TEST_SCORE_MEDIUM, scoreManager.getCurrentScore(), 
-            "Score should match earned points");
+        assertEquals(TEST_SCORE_MEDIUM, scoreManager.getCurrentScore(),
+                "Score should match earned points");
     }
 
     /**
@@ -74,8 +79,8 @@ public class TestScoreManager {
     @Test
     void testCalculateBonus() {
         scoreManager.calculateBonus();
-        assertEquals(0, scoreManager.getCurrentBonus(), 
-            "Bonus should remain 0 after calculation with no setup");
+        assertEquals(0, scoreManager.getCurrentBonus(),
+                "Bonus should remain 0 after calculation with no setup");
     }
 
     /**
@@ -88,11 +93,11 @@ public class TestScoreManager {
     void testEndMap() {
         scoreManager.earnPoints(TEST_SCORE_SMALL);
         scoreManager.calculateBonus();
-        int scoreBeforeEnd = scoreManager.getCurrentScore();
+        final int scoreBeforeEnd = scoreManager.getCurrentScore();
         scoreManager.endMap();
-        assertEquals(scoreBeforeEnd + scoreManager.getCurrentBonus(), 
-            scoreManager.getCurrentScore(), 
-            "Score should include bonus points after map completion");
+        assertEquals(scoreBeforeEnd + scoreManager.getCurrentBonus(),
+                scoreManager.getCurrentScore(),
+                "Score should include bonus points after map completion");
     }
 
     /**
@@ -103,14 +108,14 @@ public class TestScoreManager {
      */
     @Test
     void testEndGame() {
-        Entry entry = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
+        final Entry entry = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
         scoreManager.endGame(entry);
 
-        List<Entry> leaderBoard = scoreManager.getLeaderBoard();
-        assertTrue(leaderBoard.contains(entry), 
-            "Leaderboard should contain the added entry");
-        assertEquals(TEST_SCORE_LARGE, entry.getScore(), 
-            "Entry score should match the provided value");
+        final List<Entry> leaderBoard = scoreManager.getLeaderBoard();
+        assertTrue(leaderBoard.contains(entry),
+                "Leaderboard should contain the added entry");
+        assertEquals(TEST_SCORE_LARGE, entry.getScore(),
+                "Entry score should match the provided value");
     }
 
     /**
@@ -121,13 +126,13 @@ public class TestScoreManager {
      */
     @Test
     void testGetHighestScore() {
-        Entry entry1 = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
-        Entry entry2 = new ScoreEntry("Player2", TEST_SCORE_XLARGE);
+        final Entry entry1 = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
+        final Entry entry2 = new ScoreEntry("Player2", TEST_SCORE_XLARGE);
         scoreManager.endGame(entry1);
         scoreManager.endGame(entry2);
 
-        assertEquals(TEST_SCORE_XLARGE, scoreManager.getHighestScore(), 
-            "Should return the highest score from leaderboard");
+        assertEquals(TEST_SCORE_XLARGE, scoreManager.getHighestScore(),
+                "Should return the highest score from leaderboard");
     }
 
 }
