@@ -18,7 +18,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
     }
     
     public GameLeaderBoard(final List<Entry> leaderBoard) {
-        this.leaderBoard = leaderBoard;
+        this.leaderBoard = new ArrayList<>(leaderBoard);;
     }
 
     @Override
