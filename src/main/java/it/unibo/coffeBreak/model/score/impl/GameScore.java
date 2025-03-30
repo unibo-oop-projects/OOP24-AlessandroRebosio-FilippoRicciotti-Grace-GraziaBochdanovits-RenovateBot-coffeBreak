@@ -3,7 +3,7 @@ package it.unibo.coffeBreak.model.score.impl;
 import it.unibo.coffeBreak.model.score.api.Score;
 
 /**
- * Implementation of the Score interface that manages a game score.
+ * Implementation of the {@link Score} interface that manages a game score.
  * This class provides thread-safe operations for score management.
  */
 public class GameScore implements Score {
