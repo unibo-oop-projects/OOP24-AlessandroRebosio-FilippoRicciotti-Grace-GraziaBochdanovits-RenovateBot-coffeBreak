@@ -9,30 +9,64 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffeBreak.model.score.api.Score;
 import it.unibo.coffeBreak.model.score.impl.GameScore;
 
+/**
+ * Test class for {@link Score} interface and {@link GameScore} implementation.
+ */
 public class TestScore {
 
-    final static int AMOUNT = 1000;
+    /** Test value used for score operations. */
+    private static final int TEST_AMOUNT = 1000;
+
+    /** The score instance under test. */
     private Score score;
 
+    /**
+     * Initializes the test environment before each test.
+     */
     @BeforeEach
     void init() {
         this.score = new GameScore();
     }
 
+    /**
+     * Tests the initial state and increase functionality.
+     * Verifies:
+     * - Initial score is 0
+     * - Score is correctly increased by positive value
+     * - Exception is thrown when increasing with negative value
+     */
     @Test
-    void testIncrease() {
-        assertEquals(this.score.getScore(), 0);
-        this.score.increase(AMOUNT);
-        assertEquals(this.score.getScore(), AMOUNT);
-        assertThrows(IllegalArgumentException.class, () -> this.score.increase(-AMOUNT));
+    void testScoreIncrease() {
+        final int initialScore = 0;
+        assertEquals(initialScore, this.score.getScore(), "Initial score should be 0");
+
+        this.score.increase(TEST_AMOUNT);
+        assertEquals(TEST_AMOUNT, this.score.getScore(), "Score should be increased by test amount");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> this.score.increase(-TEST_AMOUNT),
+                "Should throw exception when increasing with negative value");
     }
 
+    /**
+     * Tests the reset functionality.
+     * Verifies:
+     * - Score is correctly reset to 0
+     * - Multiple resets don't affect the value
+     */
     @Test
-    void testReset() {
-        assertEquals(this.score.getScore(), 0);
-        this.score.increase(AMOUNT);
-        assertEquals(this.score.getScore(), AMOUNT);
+    void testScoreReset() {
+        this.score.increase(TEST_AMOUNT);
+        assertEquals(TEST_AMOUNT, this.score.getScore(), "Precondition: score should be increased");
+
         this.score.reset();
-        assertEquals(this.score.getScore(), 0);
+        final int expectedAfterReset = 0;
+        assertEquals(expectedAfterReset, this.score.getScore(),
+                "Score should be 0 after reset");
+
+        this.score.reset();
+        assertEquals(expectedAfterReset, this.score.getScore(),
+                "Score should remain 0 on subsequent resets");
     }
+
 }
