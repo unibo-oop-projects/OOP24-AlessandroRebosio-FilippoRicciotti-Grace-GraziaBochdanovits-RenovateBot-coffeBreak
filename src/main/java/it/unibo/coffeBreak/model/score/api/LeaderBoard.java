@@ -9,6 +9,7 @@ import java.util.List;
  * @param <X> the type of entries maintained by this leaderboard
  */
 public interface LeaderBoard<X> {
+
     /**
      * Retrieves an unmodifiable view of the current leaderboard entries.
      * The entries are ordered from highest to lowest score.
@@ -26,4 +27,5 @@ public interface LeaderBoard<X> {
      * @throws NullPointerException if the entry is null
      */
     void addEntry(X entry);
+    
 }

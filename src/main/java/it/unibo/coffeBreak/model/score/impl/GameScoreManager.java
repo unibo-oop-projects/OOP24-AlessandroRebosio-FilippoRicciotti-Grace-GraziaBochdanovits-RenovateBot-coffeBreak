@@ -10,14 +10,21 @@ import it.unibo.coffeBreak.model.score.api.Score;
 import it.unibo.coffeBreak.model.score.api.ScoreManager;
 
 /**
- * Concrete implementation of ScoreManager for game score management.
+ * Concrete implementation of {@link ScoreManager} for game score management.
  * Manages score, bonus calculations, and leaderboard operations.
  */
 public class GameScoreManager implements ScoreManager<Entry> {
 
+    /** The current score of the player */
     private final Score score;
+
+    /** The current bonus that can be converted to points */
     private final Bonus bonus;
+
+    /** The repository for loading and saving score data */
     private final Repository<Entry> repository;
+
+    /** The leaderboard containing high scores and player entries */
     private final LeaderBoard<Entry> leaderBoard;
 
     /**

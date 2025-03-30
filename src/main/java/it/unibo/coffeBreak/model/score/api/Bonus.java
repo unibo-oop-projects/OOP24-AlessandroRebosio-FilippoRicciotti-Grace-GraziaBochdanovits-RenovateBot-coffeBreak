@@ -26,4 +26,5 @@ public interface Bonus {
      * Typically reduces the bonus by a fixed amount.
      */
     void calculate();
+
 }

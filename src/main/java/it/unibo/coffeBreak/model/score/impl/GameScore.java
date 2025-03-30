@@ -8,6 +8,9 @@ import it.unibo.coffeBreak.model.score.api.Score;
  */
 public class GameScore implements Score {
 
+    /**
+     * The current score value.
+     */
     private int score;
 
     /**
@@ -43,4 +46,5 @@ public class GameScore implements Score {
     public synchronized void reset() {
         this.score = 0;
     }
+
 }

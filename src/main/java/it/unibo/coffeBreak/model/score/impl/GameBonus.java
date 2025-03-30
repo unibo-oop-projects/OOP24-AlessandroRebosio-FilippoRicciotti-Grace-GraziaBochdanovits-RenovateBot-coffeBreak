@@ -13,6 +13,9 @@ public class GameBonus implements Bonus {
      */
     public static final int AMOUNT = 100;
 
+    /**
+     * The current bonus value.
+     */
     private int bonus;
 
     /**

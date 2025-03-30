@@ -13,7 +13,16 @@ public class ScoreEntry implements Entry, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * The name of the player associated with this score entry.
+     * Cannot be null and is treated in a case-sensitive manner.
+     */
     private final String name;
+
+    /**
+     * The numeric score value of this entry.
+     * Higher values indicate better performance.
+     */
     private final int score;
 
     /**
@@ -28,11 +37,17 @@ public class ScoreEntry implements Entry, Serializable {
         this.score = score;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getScore() {
         return this.score;
@@ -51,6 +66,9 @@ public class ScoreEntry implements Entry, Serializable {
         return Integer.compare(Objects.requireNonNull(o).getScore(), this.score);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -63,11 +81,17 @@ public class ScoreEntry implements Entry, Serializable {
         return this.score == that.score && Objects.equals(this.name, that.name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(this.name, this.score);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return new StringBuilder("ScoreEntry[")
@@ -76,4 +100,5 @@ public class ScoreEntry implements Entry, Serializable {
                 .append(']')
                 .toString();
     }
+
 }

@@ -15,7 +15,13 @@ import it.unibo.coffeBreak.model.score.api.LeaderBoard;
  */
 public class GameLeaderBoard implements LeaderBoard<Entry> {
 
+    /** The maximum number of entries allowed in the leaderboard */
     private static final int MAX_ENTRIES = 5;
+
+    /**
+     * The list containing the leaderboard entries.
+     * Maintained in descending order based on score.
+     */
     private final List<Entry> leaderBoard;
 
     /**
@@ -38,11 +44,17 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
         this.trimToMaxSize();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Entry> getLeaderBoard() {
         return Collections.unmodifiableList(this.leaderBoard);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEntry(final Entry entry) {
         Objects.requireNonNull(entry);
@@ -77,4 +89,5 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
             this.leaderBoard.subList(MAX_ENTRIES, this.leaderBoard.size()).clear();
         }
     }
+
 }

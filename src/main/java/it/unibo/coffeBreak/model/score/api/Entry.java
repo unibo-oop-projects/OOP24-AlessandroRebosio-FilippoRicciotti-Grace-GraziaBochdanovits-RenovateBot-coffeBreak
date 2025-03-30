@@ -20,4 +20,5 @@ public interface Entry extends Comparable<Entry> {
      * @return the score value
      */
     int getScore();
+    
 }
