@@ -1,10 +1,11 @@
 package it.unibo.coffeBreak.model.score.impl;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import it.unibo.coffeBreak.model.score.api.Entry;
 
-public class ScoreEntry implements Entry {
+public class ScoreEntry implements Entry, Serializable {
 
     private final String name;
     private final int score;
