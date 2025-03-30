@@ -10,70 +10,87 @@
     package score {
 
         interface ScoreManager <<interface>> {
-            + getCurrentScore() : Integer
-            + increaseScore(amount : Integer): void
-            + endGame() : void
+            + getCurrentScore() : int
+            + getCurretBonus() : int
+            + getLeaderBoard() : List<Entry>
+            + getHighestScore() : int
+            + calculateBonus() : void
+            + earnPoints() : void
+            + startMap() : void
             + endMap() : void
+            + endGame() : void
         }
         
         class GameScoreManager implements ScoreManager {
             - score : Score
             - bonus : Bonus
-            - ranking : LeaderBoard
+            - repository : Repository
+            - leaderBoard : LeaderBoard
         }
         
         interface Score <<interface>> {
-            + getScore() : Integer
-            + increase(amount : integer) : void
+            + getScore() : int
+            + increase(amount : int) : void
             + reset() : void
         }
         
         class GameScore implements Score {
-            - score : Integer
+            - score : int
         }
         
         interface Bonus <<interface>> {
-            + getBonus(): Integer
-            + setBonus(value : Integer): void
-            + calculate(): void
+            + getBonus() : int
+            + setBonus(value : int) : void
+            + calculate() : void
         }
         
         class GameBonus implements Bonus {
-            - bonus : Integer
-            - timer : Integer
+            - bonus : int
         }
         
         interface LeaderBoard <<interface>> {
             + getLeaderBoard() : List<Entry>
-            + addScore(entry : Entry) : void
-            - isEligible(score : Integer) : boolean
+            + addEntry(entry : Entry) : void
+            - isEligible(entry : Entry) : boolean
+            - trimToMaxSize() : void
         }
         
-        interface ScoreRepository <<interface>> {
-            + save(ranking : List<Entry>): boolean
-            + load(): List<Entry>
-        }
-        
-        class GameLeaderBoard implements LeaderBoard, ScoreRepository {
-            - ranking: List<Entry>
-        }
-        
-        interface Entry <<interface>> {
-            + getName(): String
-            + getScore(): Integer
-        }
-        
-        class ScoreEntry implements Entry {
-            - name: String
-            - score: Integer
+        class GameLeaderBoard implements LeaderBoard {
+            - MAX_ENTRIES : int
+            - ranking: List
         }
 
-        GameScoreManager *-- Score
-        GameScoreManager *-- Bonus
-        GameScoreManager *-- LeaderBoard
-        GameLeaderBoard o-- Entry
+        interface Repository <<interface>> {
+            + save(ranking : List<Entry>): boolean
+            + load(): List
+        }
         
-        note left of ScoreManager
+        class ScoreRepository implements Repository {
+            - FILE_NAME : String
+            - dataFile : File
+        }
+
+        interface Entry <<interface>> extends Comparable {
+            + getName(): String
+            + getScore(): int
+        }
+        
+        class ScoreEntry implements Entry, Serializable {
+            - name: String
+            - score: int
+            + compareTo(entry Entry) : int
+            + equals(obj : Object) : boolean
+            + hashCode() : int
+            + toString() : String
+        }
+
+        ScoreManager *-- Score
+        ScoreManager *-- Bonus
+        ScoreManager *-- LeaderBoard
+        ScoreManager *-- Repository
+        ' GameLeaderBoard o-- Entry
+        
+        note top of ScoreManager
             == FACADE PATTERN ==
             **Centralizza 3 sistemi**:
             1. Punteggio base (GameScore)
@@ -84,7 +101,7 @@
             ► +100 punti per barile distrutto
             ► +800 per salvare Pauline
         end note
-        note right of GameScoreManager
+        note bottom of GameScoreManager
             == DECORATOR PATTERN ==
             **Scopo**: Estendere funzionalità base
             
@@ -113,7 +130,7 @@
             • Decrementa ogni tot secondi
             • Aggiunto a fine livello
         end note
-        note right of GameLeaderBoard
+        note bottom of GameLeaderBoard
             == PROXY + REPOSITORY ==
             **Flusso salvataggio**:
             1. Verifica isEligible(score)
@@ -126,7 +143,7 @@
             ► Score impossibili
             ► Corruzione dati
         end note
-        note right of ScoreEntry
+        note bottom of ScoreEntry
             == DATA TRANSFER OBJECT ==
             Salvataggio score con relativo nome.
         end note
