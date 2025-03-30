@@ -30,6 +30,23 @@ public class ScoreEntry implements Entry {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        ScoreEntry that = (ScoreEntry) obj;
+        return score == that.score && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, score);
+    }
+
+    @Override
     public String toString() {
         return "ScoreEntry[name= " + this.name + ", " + "score= " + this.score + "]";
     }
