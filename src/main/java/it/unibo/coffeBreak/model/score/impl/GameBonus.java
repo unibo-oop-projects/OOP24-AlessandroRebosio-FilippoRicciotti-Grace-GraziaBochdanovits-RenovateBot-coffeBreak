@@ -4,7 +4,7 @@ import it.unibo.coffeBreak.model.score.api.Bonus;
 
 public class GameBonus implements Bonus {
 
-    final static int AMOUNT = 100;
+    public static final int AMOUNT = 100;
     private int bonus;
 
     public GameBonus() {
@@ -30,5 +30,5 @@ public class GameBonus implements Bonus {
             this.bonus = this.bonus - AMOUNT;
         }
     }
-    
+
 }
