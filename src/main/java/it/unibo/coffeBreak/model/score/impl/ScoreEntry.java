@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import it.unibo.coffeBreak.model.score.api.Entry;
 
-public class ScoreEntry implements Entry, Comparable<ScoreEntry> {
+public class ScoreEntry implements Entry {
 
     private final String name;
     private final int score;
@@ -25,7 +25,7 @@ public class ScoreEntry implements Entry, Comparable<ScoreEntry> {
     }
 
     @Override
-    public int compareTo(ScoreEntry o) {
+    public int compareTo(Entry o) {
         return Integer.compare(Objects.requireNonNull(o).getScore(), this.score);
     }
 
