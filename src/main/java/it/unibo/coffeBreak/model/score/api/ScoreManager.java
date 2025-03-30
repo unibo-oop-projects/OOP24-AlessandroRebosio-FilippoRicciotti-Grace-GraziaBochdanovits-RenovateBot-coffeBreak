@@ -17,5 +17,5 @@ public interface ScoreManager<X> {
 
     void endMap();
 
-    void endGame();
+    void endGame(Entry entry);
 }
