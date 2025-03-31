@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +11,6 @@ import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.ScoreManager;
 import it.unibo.coffebreak.model.score.impl.GameScoreManager;
 import it.unibo.coffebreak.model.score.impl.ScoreEntry;
-
-import java.util.List;
 
 /**
  * Test class for {@link ScoreManager} interface and {@link GameScoreManager}
@@ -46,7 +45,7 @@ class TestScoreManager {
      */
     @Test
     void testGetCurrentScore() {
-        assertEquals(0, scoreManager.getCurrentScore(), "Initial score should be 0");
+        assertEquals(0, this.scoreManager.getCurrentScore(), "Initial score should be 0");
     }
 
     /**
@@ -56,7 +55,7 @@ class TestScoreManager {
      */
     @Test
     void testGetCurrentBonus() {
-        assertEquals(0, scoreManager.getCurrentBonus(), "Initial bonus should be 0");
+        assertEquals(0, this.scoreManager.getCurrentBonus(), "Initial bonus should be 0");
     }
 
     /**
@@ -66,9 +65,10 @@ class TestScoreManager {
      */
     @Test
     void testEarnPoints() {
-        scoreManager.earnPoints(TEST_SCORE_MEDIUM);
-        assertEquals(TEST_SCORE_MEDIUM, scoreManager.getCurrentScore(),
+        this.scoreManager.earnPoints(TEST_SCORE_MEDIUM);
+        assertEquals(TEST_SCORE_MEDIUM, this.scoreManager.getCurrentScore(),
                 "Score should match earned points");
+        assertThrows(IllegalArgumentException.class, () -> scoreManager.earnPoints(-TEST_SCORE_MEDIUM));
     }
 
     /**
@@ -78,8 +78,8 @@ class TestScoreManager {
      */
     @Test
     void testCalculateBonus() {
-        scoreManager.calculateBonus();
-        assertEquals(0, scoreManager.getCurrentBonus(),
+        this.scoreManager.calculateBonus();
+        assertEquals(0, this.scoreManager.getCurrentBonus(),
                 "Bonus should remain 0 after calculation with no setup");
     }
 
@@ -91,12 +91,12 @@ class TestScoreManager {
      */
     @Test
     void testEndMap() {
-        scoreManager.earnPoints(TEST_SCORE_SMALL);
-        scoreManager.calculateBonus();
-        final int scoreBeforeEnd = scoreManager.getCurrentScore();
-        scoreManager.endMap();
-        assertEquals(scoreBeforeEnd + scoreManager.getCurrentBonus(),
-                scoreManager.getCurrentScore(),
+        this.scoreManager.earnPoints(TEST_SCORE_SMALL);
+        this.scoreManager.calculateBonus();
+        final int scoreBeforeEnd = this.scoreManager.getCurrentScore();
+        this.scoreManager.endMap();
+        assertEquals(scoreBeforeEnd + this.scoreManager.getCurrentBonus(),
+                this.scoreManager.getCurrentScore(),
                 "Score should include bonus points after map completion");
     }
 
@@ -109,10 +109,10 @@ class TestScoreManager {
     @Test
     void testEndGame() {
         final Entry entry = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
-        scoreManager.endGame(entry);
 
-        final List<Entry> leaderBoard = scoreManager.getLeaderBoard();
-        assertTrue(leaderBoard.contains(entry),
+        this.scoreManager.earnPoints(entry.getScore());
+        this.scoreManager.endGame(entry.getName());
+        assertTrue(this.scoreManager.getLeaderBoard().contains(entry),
                 "Leaderboard should contain the added entry");
         assertEquals(TEST_SCORE_LARGE, entry.getScore(),
                 "Entry score should match the provided value");
@@ -128,11 +128,11 @@ class TestScoreManager {
     void testGetHighestScore() {
         final Entry entry1 = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
         final Entry entry2 = new ScoreEntry("Player2", TEST_SCORE_XLARGE);
-        scoreManager.endGame(entry1);
-        scoreManager.endGame(entry2);
+        this.scoreManager.earnPoints(TEST_SCORE_LARGE);
+        this.scoreManager.endGame(entry1.getName());
+        this.scoreManager.endGame(entry2.getName());
 
-        assertEquals(TEST_SCORE_XLARGE, scoreManager.getHighestScore(),
+        assertEquals(TEST_SCORE_XLARGE, this.scoreManager.getHighestScore(),
                 "Should return the highest score from leaderboard");
     }
-
 }

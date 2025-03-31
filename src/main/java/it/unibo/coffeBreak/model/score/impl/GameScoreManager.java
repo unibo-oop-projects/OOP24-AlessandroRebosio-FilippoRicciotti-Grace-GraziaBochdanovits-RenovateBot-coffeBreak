@@ -79,6 +79,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException if amount is negative
      */
     @Override
     public void earnPoints(final int amount) {
