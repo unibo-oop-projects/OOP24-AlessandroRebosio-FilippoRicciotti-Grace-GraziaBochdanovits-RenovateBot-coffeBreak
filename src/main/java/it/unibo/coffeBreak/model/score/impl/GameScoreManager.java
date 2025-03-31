@@ -110,7 +110,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
     public void endGame(final String name) {
         this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
         this.score.reset();
-        this.repository.save(this.getLeaderBoard());
+        if (this.leaderBoard.isWritten()) {
+            this.repository.save(this.getLeaderBoard());
+        }
     }
-
 }
