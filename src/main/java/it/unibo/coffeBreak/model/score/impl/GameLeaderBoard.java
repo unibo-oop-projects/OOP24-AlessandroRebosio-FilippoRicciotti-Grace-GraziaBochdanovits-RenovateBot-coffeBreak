@@ -44,8 +44,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     public GameLeaderBoard(final List<Entry> leaderBoard) {
         this.leaderBoard = new ArrayList<>(Objects.requireNonNull(leaderBoard));
-        this.leaderBoard.sort(Entry::compareTo);
-        this.trimToMaxSize();
+        this.sortAndtrim();
     }
 
     /**
@@ -65,10 +64,8 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
 
         if (this.isEligible(entry)) {
             this.leaderBoard.add(entry);
+            this.sortAndtrim();
             this.isModified.set(true);
-
-            this.leaderBoard.sort(Entry::compareTo);
-            this.trimToMaxSize();
         }
     }
 
@@ -91,14 +88,15 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     private boolean isEligible(final Entry entry) {
         return this.leaderBoard.size() < MAX_ENTRIES
-                || this.leaderBoard.isEmpty()
                 || entry.compareTo(this.leaderBoard.get(this.leaderBoard.size() - 1)) > 0;
     }
 
     /**
      * Trims the leaderboard to the maximum allowed size if necessary.
      */
-    private void trimToMaxSize() {
+    private void sortAndtrim() {
+        this.leaderBoard.sort(Entry::compareTo);
+
         if (this.leaderBoard.size() > MAX_ENTRIES) {
             this.leaderBoard.subList(MAX_ENTRIES, this.leaderBoard.size()).clear();
         }
