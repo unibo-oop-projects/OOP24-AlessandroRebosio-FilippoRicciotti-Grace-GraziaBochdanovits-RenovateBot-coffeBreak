@@ -43,13 +43,14 @@ public class ScoreRepository implements Repository<Entry> {
     /**
      * Saves a list of entries to the repository.
      *
-     * @param list the list of entries to be saved
-     * @return true if the operation was successful
-     * @throws RepositoryException if an error occurs during the save operation
+     * @param list list the list of elements to be saved (cannot be {@code null}).
+     * @return {@code true} if the operation succeeded, {@code false} otherwise.
+     * @throws NullPointerException if {@code list} is {@code null}.
+     * @throws RepositoryException  if an error occurs during the save operation
      */
     @Override
     public boolean save(final List<Entry> list) {
-        Objects.requireNonNull(list);
+        Objects.requireNonNull(list, "The list cannot be null");
 
         if (list.isEmpty()) {
             return true;

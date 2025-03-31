@@ -14,6 +14,7 @@ public interface Repository<X> {
      * Saves a list of elements to the repository.
      *
      * @param list the list of elements to be saved
+     * @throws NullPointerException if the list is null
      * @return true if the operation was successful, false otherwise
      */
     boolean save(List<X> list);

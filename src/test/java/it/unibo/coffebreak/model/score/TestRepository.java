@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ import it.unibo.coffebreak.model.score.impl.ScoreRepository;
 class TestRepository {
 
     /** Path to the test data file in user's home directory. */
-    private static final String FILE_PATH = System.getProperty("user.home") + File.separator + "leaderBoard.ser";
+    public static final String FILE_PATH = System.getProperty("user.home") + File.separator + "leaderBoard.ser";
 
     /** Test score values used for testing. */
     private static final int TEST_SCORE_SMALL = 1000;
@@ -45,6 +46,20 @@ class TestRepository {
     @BeforeEach
     void init() throws IOException {
         this.repo = new ScoreRepository();
+        Files.deleteIfExists(Paths.get(FILE_PATH));
+    }
+
+    /**
+     * Cleans up test resources after all tests have executed.
+     * This method ensures the test environment is left in a clean state by:
+     * - Deleting the test data file if it exists
+     * 
+     * @throws IOException if an I/O error occurs while deleting the test file
+     * @see BeforeEach#init() for the corresponding setup method
+     * @see ScoreRepository for the repository being tested
+     */
+    @AfterAll
+    static void end() throws IOException {
         Files.deleteIfExists(Paths.get(FILE_PATH));
     }
 

@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.coffebreak.model.score.api.Bonus;
 import it.unibo.coffebreak.model.score.api.Entry;
@@ -79,6 +80,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException if amount is negative
      */
     @Override
     public void earnPoints(final int amount) {
@@ -105,9 +108,18 @@ public class GameScoreManager implements ScoreManager<Entry> {
      * {@inheritDoc}
      */
     @Override
-    public void endGame(final Entry entry) {
-        this.leaderBoard.addEntry(entry);
-        this.repository.save(this.getLeaderBoard());
-    }
+    public void endGame(final String name) {
+        Objects.requireNonNull(name, "Name cannot be null");
 
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Player name cannot be null or empty");
+        }
+
+        this.leaderBoard
+                .addEntry(new ScoreEntry(name, this.score.getScore()));
+        this.score.reset();
+        if (this.leaderBoard.isWritten()) {
+            this.repository.save(this.getLeaderBoard());
+        }
+    }
 }

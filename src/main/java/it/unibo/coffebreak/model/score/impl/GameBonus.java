@@ -45,12 +45,11 @@ public class GameBonus implements Bonus {
     }
 
     /**
-     * {@inheritDoc}
+     * Calculates and updates the bonus value by decreasing it by a fixed amount,
+     * ensuring it doesn't go below zero.
      */
     @Override
     public void calculate() {
-        if (this.bonus > 0) {
-            this.bonus -= AMOUNT;
-        }
+        this.bonus = Math.max(0, this.bonus - AMOUNT);
     }
 }

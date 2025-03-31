@@ -18,7 +18,7 @@
             + earnPoints() : void
             + startMap() : void
             + endMap() : void
-            + endGame() : void
+            + endGame(String name) : void
         }
         
         class GameScoreManager implements ScoreManager {
@@ -51,13 +51,14 @@
         interface LeaderBoard <<interface>> {
             + getLeaderBoard() : List<Entry>
             + addEntry(entry : Entry) : void
-            - isEligible(entry : Entry) : boolean
-            - trimToMaxSize() : void
+            + isWritten() : AtomicBoolean
         }
         
         class GameLeaderBoard implements LeaderBoard {
             - MAX_ENTRIES : int
             - ranking: List
+            - isEligible(entry : Entry) : boolean
+            - sortAndTrim() : void
         }
 
         interface Repository <<interface>> {
@@ -66,7 +67,6 @@
         }
         
         class ScoreRepository implements Repository {
-            - FILE_NAME : String
             - dataFile : File
         }
 

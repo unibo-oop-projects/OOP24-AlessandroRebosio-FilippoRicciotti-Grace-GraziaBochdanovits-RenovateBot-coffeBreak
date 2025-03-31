@@ -1,7 +1,9 @@
 package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -101,4 +103,15 @@ class TestLeaderBoard {
                 "Leaderboard should not exceed maximum capacity");
     }
 
+    /**
+     * Tests the modification flag behavior of the leaderboard.
+     * Ensures {@link GameLeaderBoard#isWritten()} returns true when modified and
+     * false after reading.
+     */
+    @Test
+    void testModificationFlag() {
+        this.leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
+        assertTrue(this.leaderBoard.isWritten(), "Modification flag should be true after modification");
+        assertFalse(this.leaderBoard.isWritten(), "Modification flag should be false after reading");
+    }
 }
