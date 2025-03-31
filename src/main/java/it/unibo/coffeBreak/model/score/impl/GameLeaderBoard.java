@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.LeaderBoard;
@@ -23,6 +24,9 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      * Maintained in descending order based on score.
      */
     private final List<Entry> leaderBoard;
+
+    /** Flag to track if the leaderboard was modified. */
+    private final AtomicBoolean isModified = new AtomicBoolean(false);
 
     /**
      * Constructs an empty leaderboard.
@@ -61,9 +65,19 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
 
         if (this.isEligible(entry)) {
             this.leaderBoard.add(entry);
+            this.isModified.set(true);
+
             this.leaderBoard.sort(Entry::compareTo);
             this.trimToMaxSize();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isWritten() {
+        return this.isModified.getAndSet(false);
     }
 
     /**
@@ -89,5 +103,4 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
             this.leaderBoard.subList(MAX_ENTRIES, this.leaderBoard.size()).clear();
         }
     }
-
 }
