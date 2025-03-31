@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -38,8 +41,9 @@ class TestScoreManager {
 	 * Initializes the test environment before each test.
 	 */
 	@BeforeEach
-	void init() {
+	void init() throws IOException {
 		this.scoreManager = new GameScoreManager();
+		Files.deleteIfExists(Paths.get(TestRepository.FILE_PATH));
 	}
 
 	/**
