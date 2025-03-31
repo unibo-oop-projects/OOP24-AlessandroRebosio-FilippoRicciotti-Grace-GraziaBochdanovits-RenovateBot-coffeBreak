@@ -111,6 +111,10 @@ public class GameScoreManager implements ScoreManager<Entry> {
     public void endGame(final String name) {
         Objects.requireNonNull(name, "Name cannot be null");
 
+        if (name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Player name cannot be null or empty");
+        }
+
         this.leaderBoard
                 .addEntry(new ScoreEntry(name, this.score.getScore()));
         this.score.reset();
