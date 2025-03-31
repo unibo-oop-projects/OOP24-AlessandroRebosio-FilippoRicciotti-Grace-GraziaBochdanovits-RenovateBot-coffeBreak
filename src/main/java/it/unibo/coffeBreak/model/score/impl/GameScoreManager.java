@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.coffebreak.model.score.api.Bonus;
 import it.unibo.coffebreak.model.score.api.Entry;
@@ -108,7 +109,10 @@ public class GameScoreManager implements ScoreManager<Entry> {
      */
     @Override
     public void endGame(final String name) {
-        this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
+        Objects.requireNonNull(name, "Name cannot be null");
+
+        this.leaderBoard
+                .addEntry(new ScoreEntry(name, this.score.getScore()));
         this.score.reset();
         if (this.leaderBoard.isWritten()) {
             this.repository.save(this.getLeaderBoard());
