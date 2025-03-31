@@ -51,8 +51,8 @@ public interface ScoreManager<X> {
     void endMap();
 
     /**
-     * Finalizes the game and saves the result.
-     * @param entry the player's entry to add to the leaderboard
+     * Finalizes the game, saves the result and reset the score.
+     * @param name the player's name to add to the leaderboard
      */
-    void endGame(Entry entry);
+    void endGame(String entry);
 }

@@ -105,8 +105,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
      * {@inheritDoc}
      */
     @Override
-    public void endGame(final Entry entry) {
-        this.leaderBoard.addEntry(entry);
+    public void endGame(final String name) {
+        this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
         this.score.reset();
         this.repository.save(this.getLeaderBoard());
     }
