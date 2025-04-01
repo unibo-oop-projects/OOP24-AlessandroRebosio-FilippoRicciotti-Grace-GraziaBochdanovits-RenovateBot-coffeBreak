@@ -11,6 +11,8 @@ import it.unibo.coffebreak.model.score.impl.GameScore;
 
 /**
  * Test class for {@link Score} interface and {@link GameScore} implementation.
+ * 
+ * @autor Alessandro Rebosio
  */
 class TestScore {
 

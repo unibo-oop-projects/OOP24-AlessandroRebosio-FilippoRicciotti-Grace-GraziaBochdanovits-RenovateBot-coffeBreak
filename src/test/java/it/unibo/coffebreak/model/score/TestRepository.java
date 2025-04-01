@@ -38,6 +38,8 @@ import it.unibo.coffebreak.model.score.impl.ScoreRepository;
  * <p>
  * Test files are created in the user's home directory and automatically cleaned
  * up.
+ * 
+ * @autor Alessandro Rebosio
  */
 class TestRepository {
 

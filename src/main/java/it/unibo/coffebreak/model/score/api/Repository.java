@@ -2,6 +2,8 @@ package it.unibo.coffebreak.model.score.api;
 
 import java.util.List;
 
+import it.unibo.coffebreak.model.score.impl.ScoreRepository.RepositoryException;
+
 /**
  * Defines a persistence mechanism for storing and retrieving collections of
  * elements.
@@ -12,6 +14,8 @@ import java.util.List;
  * @param <X> the type of elements to be stored, must be
  *            {@link java.io.Serializable}
  *            if binary persistence is used
+ * 
+ * @autor Alessandro Rebosio
  */
 public interface Repository<X> {
     /**

@@ -12,6 +12,8 @@ import java.util.List;
  * @param <X> the type of entries in this leaderboard, must implement
  *            {@link Comparable}
  *            or otherwise provide ordering capability
+ * 
+ * @autor Alessandro Rebosio
  */
 public interface LeaderBoard<X> {
     /**

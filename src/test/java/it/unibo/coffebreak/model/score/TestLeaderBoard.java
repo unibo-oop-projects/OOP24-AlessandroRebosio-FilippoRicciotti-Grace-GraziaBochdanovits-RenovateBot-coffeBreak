@@ -28,6 +28,8 @@ import it.unibo.coffebreak.model.score.impl.ScoreEntry;
  * <li>Error handling</li>
  * <li>Edge cases</li>
  * </ul>
+ * 
+ * @autor Alessandro Rebosio
  */
 class TestLeaderBoard {
 

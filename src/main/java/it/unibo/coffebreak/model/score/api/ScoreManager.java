@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score.api;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Manages all scoring-related operations for a game, including.
@@ -13,6 +14,8 @@ import java.util.List;
  * 
  * @param <X> the type of entries stored in the leaderboard, must implement
  *            {@link Entry}
+ * 
+ * @autor Alessandro Rebosio
  */
 public interface ScoreManager<X> {
 
