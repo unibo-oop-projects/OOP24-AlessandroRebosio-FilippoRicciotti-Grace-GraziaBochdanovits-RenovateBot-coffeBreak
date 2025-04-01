@@ -10,7 +10,8 @@ import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.LeaderBoard;
 
 /**
- * Implementation of a game leaderboard that maintains the top scoring entries.
+ * Implementation of an optimized game leaderboard that maintains the top
+ * scoring entries.
  * The leaderboard has a maximum capacity and entries are automatically sorted
  * in descending order of score.
  */
@@ -29,10 +30,10 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
     private final AtomicBoolean isModified = new AtomicBoolean(false);
 
     /**
-     * Constructs an empty leaderboard.
+     * Constructs an empty leaderboard pre-sized to maximum capacity.
      */
     public GameLeaderBoard() {
-        this.leaderBoard = new ArrayList<>(MAX_ENTRIES);
+        this(new ArrayList<>(MAX_ENTRIES));
     }
 
     /**
@@ -43,8 +44,9 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      * @throws NullPointerException if the provided list is null
      */
     public GameLeaderBoard(final List<Entry> leaderBoard) {
-        this.leaderBoard = new ArrayList<>(Objects.requireNonNull(leaderBoard));
-        this.sortAndtrim();
+        Objects.requireNonNull(leaderBoard, "The list cannot be null");
+        this.leaderBoard = new ArrayList<>(leaderBoard);
+        this.sortAndTrim();
     }
 
     /**
@@ -64,7 +66,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
 
         if (this.isEligible(entry)) {
             this.leaderBoard.add(entry);
-            this.sortAndtrim();
+            this.sortAndTrim();
             this.isModified.set(true);
         }
     }
@@ -92,9 +94,11 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
     }
 
     /**
-     * Trims the leaderboard to the maximum allowed size if necessary.
+     * Sorts the leaderboard in descending order and trims it to the maximum allowed
+     * size.
+     * Uses reverse order comparator for better readability.
      */
-    private void sortAndtrim() {
+    private void sortAndTrim() {
         this.leaderBoard.sort(Entry::compareTo);
 
         if (this.leaderBoard.size() > MAX_ENTRIES) {
