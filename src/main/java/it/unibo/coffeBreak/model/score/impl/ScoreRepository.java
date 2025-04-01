@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,11 +75,11 @@ public class ScoreRepository implements Repository<Entry> {
     @SuppressWarnings("unchecked")
     public List<Entry> load() {
         if (!this.dataFile.exists()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.dataFile))) {
-            return (List<Entry>) ois.readObject();
+            return new ArrayList<>((List<Entry>) ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
             throw new RepositoryException("Error while loading data", e);
         }

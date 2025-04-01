@@ -115,8 +115,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
             throw new IllegalArgumentException("Player name cannot be null or empty");
         }
 
-        this.leaderBoard
-                .addEntry(new ScoreEntry(name, this.score.getScore()));
+        this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
+
         this.score.reset();
         if (this.leaderBoard.isWritten()) {
             this.repository.save(this.getLeaderBoard());

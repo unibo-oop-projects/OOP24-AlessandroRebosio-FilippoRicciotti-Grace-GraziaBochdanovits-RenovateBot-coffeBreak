@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.score.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -103,7 +104,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
     private List<Entry> createDefaultEntries() {
         return IntStream.range(0, MAX_ENTRIES)
                 .mapToObj(i -> new ScoreEntry("", 0))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(() -> new ArrayList<>(MAX_ENTRIES)));
     }
 
     /**
