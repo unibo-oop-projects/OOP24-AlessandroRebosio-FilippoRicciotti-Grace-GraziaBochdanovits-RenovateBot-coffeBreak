@@ -1,13 +1,15 @@
 package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,108 +23,141 @@ import it.unibo.coffebreak.model.score.impl.ScoreEntry;
 import it.unibo.coffebreak.model.score.impl.ScoreRepository;
 
 /**
- * Test class for {@link Repository} interface and {@link ScoreRepository}
- * implementation.
+ * Comprehensive test suite for {@link Repository} interface and
+ * {@link ScoreRepository} implementation.
+ * 
+ * <p>
+ * Tests verify:
+ * <ul>
+ * <li>Data persistence operations</li>
+ * <li>File handling behavior</li>
+ * <li>Edge cases and error conditions</li>
+ * <li>Data integrity during save/load cycles</li>
+ * </ul>
+ * 
+ * <p>
+ * Test files are created in the user's home directory and automatically cleaned
+ * up.
  */
 class TestRepository {
 
-    /** Path to the test data file in user's home directory. */
-    public static final String FILE_PATH = System.getProperty("user.home") + File.separator + "leaderBoard.ser";
+    public static final Path FILE_PATH = Path.of(System.getProperty("user.home"), "leaderBoard.ser");
+    private static final String PLAYER_1 = "Player1";
+    private static final String PLAYER_2 = "Player2";
+    private static final String PLAYER_3 = "Player3";
+    private static final int SCORE_SMALL = 1000;
+    private static final int SCORE_MEDIUM = 2000;
+    private static final int SCORE_LARGE = 3000;
+    private static final String EMPTY_NAME = "";
+    private static final int ZERO_SCORE = 0;
 
-    /** Test score values used for testing. */
-    private static final int TEST_SCORE_SMALL = 1000;
-    private static final int TEST_SCORE_MEDIUM = 2000;
-    private static final int TEST_SCORE_LARGE = 3000;
-
-    /** The repository instance under test. */
-    private Repository<Entry> repo;
+    private Repository<Entry> repository;
 
     /**
-     * Initializes the test environment before each test.
-     * Cleans up any existing test data file.
+     * Initializes a fresh repository instance and cleans up any existing test file.
      * 
-     * @throws IOException
+     * @throws IOException if cleanup fails
      */
     @BeforeEach
-    void init() throws IOException {
-        this.repo = new ScoreRepository();
-        Files.deleteIfExists(Paths.get(FILE_PATH));
+    void setUp() throws IOException {
+        this.repository = new ScoreRepository();
+        Files.deleteIfExists(FILE_PATH);
     }
 
     /**
-     * Cleans up test resources after all tests have executed.
-     * This method ensures the test environment is left in a clean state by:
-     * - Deleting the test data file if it exists
+     * Final cleanup after all tests complete.
      * 
-     * @throws IOException if an I/O error occurs while deleting the test file
-     * @see BeforeEach#init() for the corresponding setup method
-     * @see ScoreRepository for the repository being tested
+     * @throws IOException if cleanup fails
      */
     @AfterAll
-    static void end() throws IOException {
-        Files.deleteIfExists(Paths.get(FILE_PATH));
+    static void tearDown() throws IOException {
+        Files.deleteIfExists(FILE_PATH);
     }
 
     /**
-     * Tests the save method functionality.
-     * Verifies:
-     * - Successful save operation returns true
-     * - Data file is created after save
+     * Tests successful save operation with valid entries.
      */
     @Test
-    void testSave() {
-        final List<Entry> entries = List.of(
-                new ScoreEntry("Player1", TEST_SCORE_SMALL),
-                new ScoreEntry("Player2", TEST_SCORE_MEDIUM),
-                new ScoreEntry("Player3", TEST_SCORE_LARGE));
+    void shouldSaveEntriesAndCreateFile() {
+        final List<Entry> entries = createTestEntries();
 
-        assertTrue(repo.save(entries), "Save operation should return true");
-        assertTrue(new File(FILE_PATH).exists(), "Data file should be created after save");
+        assertTrue(repository.save(entries));
+        assertTrue(Files.exists(FILE_PATH));
+        assertEquals(entries.size(), repository.load().size());
     }
 
     /**
-     * Tests the load method functionality.
-     * Verifies:
-     * - Saved entries are correctly loaded
-     * - Loaded entries match the saved ones
+     * Tests that saved entries can be correctly reloaded.
      */
     @Test
-    void testLoad() {
-        final List<Entry> entries = List.of(
-                new ScoreEntry("Player1", TEST_SCORE_SMALL),
-                new ScoreEntry("Player2", TEST_SCORE_MEDIUM),
-                new ScoreEntry("Player3", TEST_SCORE_LARGE));
-        repo.save(entries);
+    void shouldReloadSavedEntriesIdentically() {
+        final List<Entry> originalEntries = createTestEntries();
+        repository.save(originalEntries);
 
-        final List<Entry> loadedEntries = repo.load();
-        assertEquals(entries.size(), loadedEntries.size(),
-                "Loaded entries count should match saved entries");
-        assertIterableEquals(entries, loadedEntries,
-                "Loaded entries should match saved entries");
+        final List<Entry> loadedEntries = repository.load();
+
+        assertIterableEquals(originalEntries, loadedEntries);
     }
 
     /**
-     * Tests loading from empty repository.
-     * Verifies:
-     * - Loading from non-existent file returns empty list
+     * Tests loading when no data file exists.
      */
     @Test
-    void testLoadEmpty() {
-        final List<Entry> loadedEntries = repo.load();
-        assertTrue(loadedEntries.isEmpty(),
-                "Loading from empty repository should return empty list");
+    void shouldReturnEmptyListWhenFileNotExists() {
+        assertFalse(Files.exists(FILE_PATH));
+        assertTrue(repository.load().isEmpty());
     }
 
     /**
-     * Tests saving empty list.
-     * Verifies:
-     * - Saving empty list is allowed
-     * - Operation returns true
+     * Tests handling of empty entry lists.
      */
     @Test
-    void testSaveEmptyList() {
-        assertTrue(repo.save(Collections.emptyList()),
-                "Saving empty list should return true");
+    void shouldHandleEmptyEntryList() {
+        assertTrue(repository.save(Collections.emptyList()));
+        assertTrue(repository.load().isEmpty());
     }
 
+    /**
+     * Tests that null entries are rejected.
+     */
+    @Test
+    void shouldRejectNullEntriesList() {
+        assertThrows(NullPointerException.class,
+                () -> repository.save(null));
+    }
+
+    /**
+     * Tests handling of entries with edge case values.
+     */
+    @Test
+    void shouldHandleEdgeCaseEntries() {
+        final List<Entry> edgeCases = List.of(
+                new ScoreEntry(EMPTY_NAME, SCORE_LARGE),
+                new ScoreEntry(PLAYER_1, ZERO_SCORE),
+                new ScoreEntry(PLAYER_2, Integer.MAX_VALUE));
+
+        assertTrue(repository.save(edgeCases));
+        assertEquals(edgeCases.size(), repository.load().size());
+    }
+
+    /**
+     * Tests file corruption handling (simulated by writing invalid data).
+     */
+    @Test
+    void shouldHandleCorruptedDataFile() throws IOException {
+        Files.write(FILE_PATH, "invalid data".getBytes(StandardCharsets.UTF_8));
+
+        assertThrows(RuntimeException.class,
+                repository::load);
+    }
+
+    /**
+     * Creates standard test entries with varied scores.
+     */
+    private List<Entry> createTestEntries() {
+        return List.of(
+                new ScoreEntry(PLAYER_1, SCORE_SMALL),
+                new ScoreEntry(PLAYER_2, SCORE_MEDIUM),
+                new ScoreEntry(PLAYER_3, SCORE_LARGE));
+    }
 }

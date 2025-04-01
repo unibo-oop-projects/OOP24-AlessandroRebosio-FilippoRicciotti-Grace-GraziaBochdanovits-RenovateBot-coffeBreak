@@ -42,7 +42,7 @@ class TestScoreManager {
      */
     @BeforeEach
     void init() throws IOException {
-        Files.deleteIfExists(Paths.get(TestRepository.FILE_PATH));
+        // Files.deleteIfExists(Paths.get(TestRepository.FILE_PATH));
         this.scoreManager = new GameScoreManager();
     }
 
