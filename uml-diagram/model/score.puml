@@ -57,6 +57,7 @@
         class GameLeaderBoard implements LeaderBoard {
             - MAX_ENTRIES : int
             - ranking: List
+            - createDefaultEntries(): List<Entry>
             - isEligible(entry : Entry) : boolean
             - sortAndTrim() : void
         }
