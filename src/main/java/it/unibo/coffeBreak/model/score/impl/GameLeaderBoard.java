@@ -1,10 +1,11 @@
 package it.unibo.coffebreak.model.score.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.LeaderBoard;
@@ -33,7 +34,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      * Constructs an empty leaderboard pre-sized to maximum capacity.
      */
     public GameLeaderBoard() {
-        this(new ArrayList<>(MAX_ENTRIES));
+        this.leaderBoard = createDefaultEntries();
     }
 
     /**
@@ -45,7 +46,9 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     public GameLeaderBoard(final List<Entry> leaderBoard) {
         Objects.requireNonNull(leaderBoard, "The list cannot be null");
-        this.leaderBoard = new ArrayList<>(leaderBoard);
+        this.leaderBoard = leaderBoard.isEmpty()
+                ? createDefaultEntries()
+                : leaderBoard;
         this.sortAndTrim();
     }
 
@@ -80,6 +83,30 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
     }
 
     /**
+     * Creates and returns a list of default {@link Entry} instances initialized
+     * with empty names and zero scores.
+     * The list is pre-sized to the maximum capacity of the leaderboard
+     * ({@link #MAX_ENTRIES}) to optimize memory allocation.
+     * 
+     * @return a new mutable {@link List} containing {@code MAX_ENTRIES} default
+     *         entries, where each entry has:
+     *         <ul>
+     *         <li>An empty string ("") as the name</li>
+     *         <li>Zero (0) as the score</li>
+     *         </ul>
+     * @implNote This implementation uses {@link IntStream} to generate the entries,
+     *           which provides
+     *           clear intent for creating a sequence of default values. The
+     *           collector explicitly
+     *           specifies the initial capacity for optimal memory usage.
+     */
+    private List<Entry> createDefaultEntries() {
+        return IntStream.range(0, MAX_ENTRIES)
+                .mapToObj(i -> new ScoreEntry("", 0))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Checks if an entry is eligible to be added to the leaderboard.
      * An entry is eligible if:
      * - The leaderboard isn't full, or
@@ -90,7 +117,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     private boolean isEligible(final Entry entry) {
         return this.leaderBoard.size() < MAX_ENTRIES
-                || entry.compareTo(this.leaderBoard.get(this.leaderBoard.size() - 1)) > 0;
+                || entry.compareTo(this.leaderBoard.getLast()) < 0;
     }
 
     /**
