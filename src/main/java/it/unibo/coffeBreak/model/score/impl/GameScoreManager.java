@@ -11,7 +11,7 @@ import it.unibo.coffebreak.model.score.api.Score;
 import it.unibo.coffebreak.model.score.api.ScoreManager;
 
 /**
- * Default implementation of {@link ScoreManager} using:
+ * Default implementation of {@link ScoreManager} using.
  * <ul>
  * <li>{@link GameScore} for score tracking</li>
  * <li>{@link GameBonus} for bonus management</li>
@@ -30,16 +30,16 @@ import it.unibo.coffebreak.model.score.api.ScoreManager;
  */
 public class GameScoreManager implements ScoreManager<Entry> {
 
-    /** Manages the player's core score value */
+    /** Manages the player's core score value. */
     private final Score score;
 
-    /** Handles bonus calculation and conversion */
+    /** Handles bonus calculation and conversion. */
     private final Bonus bonus;
 
-    /** Persists leaderboard data between sessions */
+    /** Persists leaderboard data between sessions. */
     private final Repository<Entry> repository;
 
-    /** Maintains ranked player entries */
+    /** Maintains ranked player entries. */
     private final LeaderBoard<Entry> leaderBoard;
 
     /**

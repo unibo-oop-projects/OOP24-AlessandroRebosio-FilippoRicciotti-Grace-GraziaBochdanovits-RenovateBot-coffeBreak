@@ -23,12 +23,13 @@ import it.unibo.coffebreak.model.score.api.LeaderBoard;
  * <li>Modification tracking via atomic flag</li>
  * </ul>
  * 
- * @implSpec This implementation is:
- *           <ul>
- *           <li>Mutable but thread-safe for concurrent access</li>
- *           <li>Not persistent - contents are lost after JVM shutdown</li>
- *           <li>Case-sensitive for entry names</li>
- *           </ul>
+ * <p>
+ * <b>Implementation Requirements:</b>
+ * <ul>
+ * <li>Mutable but thread-safe for concurrent access</li>
+ * <li>Not persistent - contents are lost after JVM shutdown</li>
+ * <li>Case-sensitive for entry names</li>
+ * </ul>
  */
 public class GameLeaderBoard implements LeaderBoard<Entry> {
 

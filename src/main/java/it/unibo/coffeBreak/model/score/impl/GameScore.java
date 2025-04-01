@@ -16,12 +16,13 @@ import it.unibo.coffebreak.model.score.api.Score;
  * score.reset();
  * }</pre>
  * 
- * @implNote This implementation is not thread-safe. For concurrent usage,
- *           consider using thread-safe alternatives like:
- *           <ul>
- *           <li>{@link java.util.concurrent.atomic.AtomicInteger}</li>
- *           <li>External synchronization</li>
- *           </ul>
+ * <p>
+ * <b>Implementation Notes:</b> This implementation is not thread-safe.
+ * For concurrent usage, consider using thread-safe alternatives like:
+ * <ul>
+ * <li>{@link java.util.concurrent.atomic.AtomicInteger}</li>
+ * <li>External synchronization</li>
+ * </ul>
  */
 public class GameScore implements Score {
     /**

@@ -24,11 +24,12 @@ import it.unibo.coffebreak.model.score.api.Repository;
  * <li>Maintains data consistency through atomic write operations</li>
  * </ul>
  * 
- * @implNote Serialization format considerations:
- *           <ul>
- *           <li>All stored entries must remain serializable</li>
- *           <li>Changing Entry class structure may break compatibility</li>
- *           </ul>
+ * <p>
+ * <b>Implementation Notes:</b> Serialization format considerations.
+ * <ul>
+ * <li>All stored entries must remain serializable</li>
+ * <li>Changing Entry class structure may break compatibility</li>
+ * </ul>
  */
 public class ScoreRepository implements Repository<Entry> {
 

@@ -3,7 +3,7 @@ package it.unibo.coffebreak.model.score.api;
 import java.util.List;
 
 /**
- * Manages all scoring-related operations for a game, including:
+ * Manages all scoring-related operations for a game, including.
  * <ul>
  * <li>Player score tracking</li>
  * <li>Bonus calculation and conversion</li>

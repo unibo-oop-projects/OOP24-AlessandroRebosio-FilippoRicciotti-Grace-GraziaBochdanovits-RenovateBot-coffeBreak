@@ -107,7 +107,7 @@ public class ScoreEntry implements Entry, Serializable {
     }
 
     /**
-     * Returns a string representation in format: "ScoreEntry[name=X, score=Y]"
+     * Returns a string representation in format. "ScoreEntry[name=X, score=Y]"
      * 
      * @return descriptive string representation
      */
