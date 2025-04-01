@@ -1,23 +1,31 @@
 package it.unibo.coffebreak.model.score.api;
 
 /**
- * Represents a score system that can be increased, reset and queried.
- * This interface defines the basic operations for managing a game score.
+ * Manages a numeric score value that can be incremented and reset.
+ * The score always maintains a non-negative value.
+ * 
+ * <p>
+ * Typical usage:
+ * 
+ * <pre>{@code
+ * Score gameScore = new GameScore();
+ * gameScore.increase(100);
+ * int current = gameScore.getScore();
+ * }</pre>
  */
 public interface Score {
-
     /**
-     * Gets the current score value.
+     * Returns the current score value.
      * 
-     * @return the current score as an integer
+     * @return the current score (always ≥ 0)
      */
     int getScore();
 
     /**
-     * Increases the current score by the specified amount.
+     * Increments the score by the specified amount.
      * 
-     * @param amount the positive value to add to the current score
-     * @throws IllegalArgumentException if the amount is negative
+     * @param amount the positive value to add (must be ≥ 0)
+     * @throws IllegalArgumentException if amount is negative
      */
     void increase(int amount);
 
