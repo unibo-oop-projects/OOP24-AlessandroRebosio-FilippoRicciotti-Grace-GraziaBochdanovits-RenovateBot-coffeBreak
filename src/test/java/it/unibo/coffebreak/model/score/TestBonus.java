@@ -10,64 +10,108 @@ import it.unibo.coffebreak.model.score.api.Bonus;
 import it.unibo.coffebreak.model.score.impl.GameBonus;
 
 /**
- * Test class for {@link Bonus} interface and {@link GameBonus} implementation.
+ * Test class for verifying the behavior of {@link Bonus} interface
+ * and its implementation {@link GameBonus}.
+ * 
+ * <p>
+ * Tests cover:
+ * <ul>
+ * <li>Initial state verification</li>
+ * <li>Bonus setting functionality</li>
+ * <li>Bonus calculation behavior</li>
+ * <li>Edge case handling</li>
+ * <li>Error conditions</li>
+ * </ul>
  */
 class TestBonus {
 
-    /** Test value used for bonus operations. */
+    /** Standard test value for positive bonus amounts. */
     private static final int TEST_AMOUNT = 1000;
 
     /** The bonus instance under test. */
     private Bonus bonus;
 
     /**
-     * Initializes the test environment before each test.
+     * Initializes a fresh GameBonus instance before each test.
+     * Ensures test isolation by creating new instance for each test method.
      */
     @BeforeEach
-    void init() {
+    void setUp() {
         this.bonus = new GameBonus();
     }
 
     /**
-     * Tests the setBonus method functionality.
-     * Verifies:
-     * - Initial bonus is 0
-     * - Bonus is correctly set to a positive value
-     * - Exception is thrown when setting negative value
+     * Verifies that a newly created bonus instance starts with zero value.
      */
     @Test
-    void testSetBonus() {
-        final int initialBonus = 0;
-        assertEquals(initialBonus, this.bonus.getBonus(), "Initial bonus should be 0");
-
-        this.bonus.setBonus(TEST_AMOUNT);
-        assertEquals(TEST_AMOUNT, this.bonus.getBonus(), "Bonus should be set to test amount");
-
-        assertThrows(IllegalArgumentException.class,
-                () -> this.bonus.setBonus(-TEST_AMOUNT),
-                "Should throw exception when setting negative bonus");
+    void initialBonusShouldBeZero() {
+        assertEquals(0, bonus.getBonus());
     }
 
     /**
-     * Tests the calculate method functionality.
-     * Verifies:
-     * - Bonus is correctly reduced by AMOUNT
-     * - Bonus doesn't go below 0
-     * - Multiple calculations on zero bonus don't change value
+     * Tests that positive bonus values can be set correctly.
      */
     @Test
-    void testCalculate() {
-        this.bonus.setBonus(GameBonus.AMOUNT);
-        assertEquals(GameBonus.AMOUNT, this.bonus.getBonus(), "Bonus should be set to GameBonus.AMOUNT");
-
-        this.bonus.calculate();
-        final int expectedAfterCalculation = 0;
-        assertEquals(expectedAfterCalculation, this.bonus.getBonus(),
-                "Bonus should be 0 after calculation");
-
-        this.bonus.calculate();
-        assertEquals(expectedAfterCalculation, this.bonus.getBonus(),
-                "Bonus should remain 0 on subsequent calculations");
+    void shouldSetPositiveBonus() {
+        bonus.setBonus(TEST_AMOUNT);
+        assertEquals(TEST_AMOUNT, bonus.getBonus());
     }
 
+    /**
+     * Tests that zero can be set as a valid bonus value.
+     */
+    @Test
+    void shouldSetZeroBonus() {
+        bonus.setBonus(0);
+        assertEquals(0, bonus.getBonus());
+    }
+
+    /**
+     * Verifies that attempting to set negative bonus values throws
+     * IllegalArgumentException.
+     */
+    @Test
+    void shouldThrowWhenSettingNegativeBonus() {
+        assertThrows(IllegalArgumentException.class, () -> bonus.setBonus(-1));
+        assertThrows(IllegalArgumentException.class, () -> bonus.setBonus(-TEST_AMOUNT));
+        assertThrows(IllegalArgumentException.class, () -> bonus.setBonus(Integer.MIN_VALUE));
+    }
+
+    /**
+     * Tests that the calculate method correctly reduces the bonus
+     * by the fixed AMOUNT value.
+     */
+    @Test
+    void shouldReduceBonusByFixedAmount() {
+        bonus.setBonus(GameBonus.AMOUNT * 2);
+        bonus.calculate();
+        assertEquals(GameBonus.AMOUNT, bonus.getBonus());
+    }
+
+    /**
+     * Verifies that the bonus cannot become negative after calculation
+     * and remains zero on subsequent calculations.
+     */
+    @Test
+    void shouldNotReduceBonusBelowZero() {
+        bonus.setBonus(GameBonus.AMOUNT);
+        bonus.calculate();
+        assertEquals(0, bonus.getBonus());
+
+        bonus.calculate();
+        assertEquals(0, bonus.getBonus());
+    }
+
+    /**
+     * Tests edge case behavior when bonus is just above the reduction amount.
+     */
+    @Test
+    void shouldHandleEdgeCaseJustAboveAmount() {
+        bonus.setBonus(GameBonus.AMOUNT + 1);
+        bonus.calculate();
+        assertEquals(1, bonus.getBonus());
+
+        bonus.calculate();
+        assertEquals(0, bonus.getBonus());
+    }
 }
