@@ -16,34 +16,33 @@ import it.unibo.coffebreak.model.score.impl.GameLeaderBoard;
 import it.unibo.coffebreak.model.score.impl.ScoreEntry;
 
 /**
- * Test class for {@link LeaderBoard} interface and {@link GameLeaderBoard}
- * implementation.
+ * Comprehensive test suite for {@link LeaderBoard} interface and
+ * {@link GameLeaderBoard} implementation.
+ * 
+ * <p>
+ * Tests verify:
+ * <ul>
+ * <li>Entry addition and ordering</li>
+ * <li>Capacity management</li>
+ * <li>Modification tracking</li>
+ * <li>Error handling</li>
+ * <li>Edge cases</li>
+ * </ul>
  */
 class TestLeaderBoard {
 
-    /** Test player name 1. */
     private static final String PLAYER_1 = "REB";
-
-    /** Test player name 2. */
     private static final String PLAYER_2 = "RIC";
-
-    /** Test player name 3. */
     private static final String PLAYER_3 = "GRA";
-
-    /** Test score value 1. */
     private static final int SCORE_1 = 1000;
-
-    /** Test score value 2. */
     private static final int SCORE_2 = 2000;
-
-    /** Test score value 3. */
     private static final int SCORE_3 = 3000;
+    private static final String EMPTY_NAME = "";
 
-    /** The leaderboard instance under test. */
     private LeaderBoard<Entry> leaderBoard;
 
     /**
-     * Initializes the test environment before each test.
+     * Initializes a fresh GameLeaderBoard instance before each test.
      */
     @BeforeEach
     void init() {
@@ -51,67 +50,91 @@ class TestLeaderBoard {
     }
 
     /**
-     * Tests the addEntry method functionality.
-     * Verifies:
-     * - Entries are correctly added to the leaderboard
-     * - Leaderboard maintains entries in descending score order
+     * Tests that entries are added in correct descending score order.
      */
     @Test
-    void testAddEntry() {
-        this.leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
-        this.leaderBoard.addEntry(new ScoreEntry(PLAYER_2, SCORE_2));
-        this.leaderBoard.addEntry(new ScoreEntry(PLAYER_3, SCORE_3));
+    void shouldMaintainDescendingOrder() {
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_3, SCORE_3));
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_2, SCORE_2));
 
         final List<Entry> expected = List.of(
                 new ScoreEntry(PLAYER_3, SCORE_3),
                 new ScoreEntry(PLAYER_2, SCORE_2),
-                new ScoreEntry(PLAYER_1, SCORE_1));
+                new ScoreEntry(PLAYER_1, SCORE_1),
+                new ScoreEntry(EMPTY_NAME, 0),
+                new ScoreEntry(EMPTY_NAME, 0));
 
-        assertEquals(expected, this.leaderBoard.getLeaderBoard(),
-                "Leaderboard should maintain entries in descending score order");
+        assertEquals(expected, leaderBoard.getLeaderBoard());
     }
 
     /**
-     * Tests the behavior when adding null entries.
-     * Verifies:
-     * - NullPointerException is thrown when adding null entry
+     * Tests that adding null entries throws NullPointerException.
      */
     @Test
-    void testAddNullEntry() {
+    void shouldRejectNullEntries() {
         assertThrows(NullPointerException.class,
-                () -> this.leaderBoard.addEntry(null),
-                "Adding null entry should throw NullPointerException");
+                () -> leaderBoard.addEntry(null));
     }
 
     /**
-     * Tests the leaderboard capacity management.
-     * Verifies:
-     * - Leaderboard doesn't exceed maximum capacity
-     * - Lower scores don't make it into full leaderboard
+     * Tests that leaderboard respects maximum capacity.
      */
     @Test
-    void testLeaderBoardCapacity() {
-        final int entryScore = 50;
+    void shouldEnforceMaximumCapacity() {
+        fillLeaderBoardToCapacity();
 
+        final Entry lowScoreEntry = new ScoreEntry("NewPlayer", 50);
+        leaderBoard.addEntry(lowScoreEntry);
+
+        assertEquals(GameLeaderBoard.MAX_ENTRIES, leaderBoard.getLeaderBoard().size());
+        assertFalse(leaderBoard.getLeaderBoard().contains(lowScoreEntry));
+    }
+
+    /**
+     * Tests that higher scores replace lower scores when at capacity.
+     */
+    @Test
+    void shouldReplaceLowestScoreWhenFull() {
+        fillLeaderBoardToCapacity();
+
+        final Entry highScoreEntry = new ScoreEntry("Champion", Integer.MAX_VALUE);
+        leaderBoard.addEntry(highScoreEntry);
+
+        assertTrue(leaderBoard.getLeaderBoard().contains(highScoreEntry));
+        assertEquals(highScoreEntry, leaderBoard.getLeaderBoard().get(0));
+    }
+
+    /**
+     * Tests modification flag behavior.
+     */
+    @Test
+    void shouldTrackModifications() {
+        assertFalse(leaderBoard.isWritten());
+
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
+        assertTrue(leaderBoard.isWritten());
+        assertFalse(leaderBoard.isWritten());
+
+        assertFalse(leaderBoard.isWritten());
+    }
+
+    /**
+     * Tests handling of entries with empty names.
+     */
+    @Test
+    void shouldAcceptEmptyPlayerNames() {
+        final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
+        leaderBoard.addEntry(entry);
+        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().get(0).getName());
+    }
+
+    /**
+     * Helper method to fill leaderboard to maximum capacity.
+     */
+    private void fillLeaderBoardToCapacity() {
         for (int i = 1; i <= GameLeaderBoard.MAX_ENTRIES; i++) {
-            this.leaderBoard.addEntry(new ScoreEntry("Player" + i, i * 100));
+            leaderBoard.addEntry(new ScoreEntry("Player" + i, i * 100));
         }
-
-        this.leaderBoard.addEntry(new ScoreEntry("NewPlayer", entryScore));
-
-        assertEquals(GameLeaderBoard.MAX_ENTRIES, this.leaderBoard.getLeaderBoard().size(),
-                "Leaderboard should not exceed maximum capacity");
-    }
-
-    /**
-     * Tests the modification flag behavior of the leaderboard.
-     * Ensures {@link GameLeaderBoard#isWritten()} returns true when modified and
-     * false after reading.
-     */
-    @Test
-    void testModificationFlag() {
-        this.leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
-        assertTrue(this.leaderBoard.isWritten(), "Modification flag should be true after modification");
-        assertFalse(this.leaderBoard.isWritten(), "Modification flag should be false after reading");
     }
 }
