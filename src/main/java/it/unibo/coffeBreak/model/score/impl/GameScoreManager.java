@@ -11,25 +11,40 @@ import it.unibo.coffebreak.model.score.api.Score;
 import it.unibo.coffebreak.model.score.api.ScoreManager;
 
 /**
- * Concrete implementation of {@link ScoreManager} for game score management.
- * Manages score, bonus calculations, and leaderboard operations.
+ * Default implementation of {@link ScoreManager} using:
+ * <ul>
+ * <li>{@link GameScore} for score tracking</li>
+ * <li>{@link GameBonus} for bonus management</li>
+ * <li>{@link GameLeaderBoard} for ranking</li>
+ * <li>{@link ScoreRepository} for persistence</li>
+ * </ul>
+ * 
+ * <p>
+ * Lifecycle operations:
+ * <ol>
+ * <li>{@code startMap()} initializes bonus</li>
+ * <li>{@code earnPoints()} accumulates score</li>
+ * <li>{@code endMap()} converts bonus</li>
+ * <li>{@code endGame()} saves results</li>
+ * </ol>
  */
 public class GameScoreManager implements ScoreManager<Entry> {
 
-    /** The current score of the player. */
+    /** Manages the player's core score value */
     private final Score score;
 
-    /** The current bonus that can be converted to points. */
+    /** Handles bonus calculation and conversion */
     private final Bonus bonus;
 
-    /** The repository for loading and saving score data. */
+    /** Persists leaderboard data between sessions */
     private final Repository<Entry> repository;
 
-    /** The leaderboard containing high scores and player entries. */
+    /** Maintains ranked player entries */
     private final LeaderBoard<Entry> leaderBoard;
 
     /**
-     * Constructs a new GameScoreManager with default implementations.
+     * Creates a new manager with default component implementations.
+     * Initializes leaderboard with persisted data if available.
      */
     public GameScoreManager() {
         this.score = new GameScore();
@@ -40,6 +55,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Delegates to {@link Score#getScore()}
      */
     @Override
     public int getCurrentScore() {
@@ -48,6 +65,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Delegates to {@link Bonus#getBonus()}
      */
     @Override
     public int getCurrentBonus() {
@@ -56,6 +75,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Returns leaderboard snapshot
      */
     @Override
     public List<Entry> getLeaderBoard() {
@@ -64,6 +85,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NoSuchElementException if leaderboard is empty
      */
     @Override
     public int getHighestScore() {
@@ -72,6 +95,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Delegates to {@link Bonus#calculate()}
      */
     @Override
     public void calculateBonus() {
@@ -81,15 +106,20 @@ public class GameScoreManager implements ScoreManager<Entry> {
     /**
      * {@inheritDoc}
      * 
-     * @throws IllegalArgumentException if amount is negative
+     * @implSpec Validates input before delegation
      */
     @Override
     public void earnPoints(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Points amount cannot be negative");
+        }
         this.score.increase(amount);
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Delegates to {@link Bonus#setBonus(int)}
      */
     @Override
     public void startMap(final int value) {
@@ -98,6 +128,8 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implNote Converts entire bonus to points
      */
     @Override
     public void endMap() {
@@ -106,18 +138,25 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
+     * 
+     * @implSpec Performs:
+     *           <ol>
+     *           <li>Name validation</li>
+     *           <li>Leaderboard update</li>
+     *           <li>Score reset</li>
+     *           <li>Conditional persistence</li>
+     *           </ol>
      */
     @Override
     public void endGame(final String name) {
         Objects.requireNonNull(name, "Name cannot be null");
-
         if (name.isBlank()) {
-            throw new IllegalArgumentException("Player name cannot be null or empty");
+            throw new IllegalArgumentException("Player name cannot be blank");
         }
 
         this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
-
         this.score.reset();
+
         if (this.leaderBoard.isWritten()) {
             this.repository.save(this.getLeaderBoard());
         }
