@@ -1,6 +1,16 @@
 package it.unibo.coffebreak.model.entity;
 
+/**
+* Represents the different types of enemies in the game.
+*/
 public enum EnemyType {
-    BARREL,
-    FIRE
+   /**
+    * Represents a barrel enemy type.
+    */
+   BARREL,
+
+   /**
+    * Represents a fire enemy type.
+    */
+   FIRE
 }
