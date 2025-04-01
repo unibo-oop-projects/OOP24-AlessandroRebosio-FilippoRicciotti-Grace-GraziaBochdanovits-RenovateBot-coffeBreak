@@ -3,10 +3,10 @@ package it.unibo.coffebreak.model.utility;
 /**
  * Represents a position in a 2D space with x and y coordinates.
  */
-public final class Position {
+public class Position {
 
-    private final float x;
-    private final float y;
+    private float x;
+    private float y;
 
     /**
      * Constructs a new Position with the specified coordinates.
@@ -16,6 +16,24 @@ public final class Position {
      */
     public Position(final float x, final float y) {
         this.x = x;
+        this.y = y;
+    }
+
+    /**
+     * Sets the x-coordinate of the position.
+     *
+     * @param x the new x-coordinate.
+     */
+    public void setX(final float x) {
+        this.x = x;
+    }
+
+    /**
+     * Sets the y-coordinate of the position.
+     *
+     * @param y the new y-coordinate.
+     */
+    public void setY(final float y) {
         this.y = y;
     }
 
