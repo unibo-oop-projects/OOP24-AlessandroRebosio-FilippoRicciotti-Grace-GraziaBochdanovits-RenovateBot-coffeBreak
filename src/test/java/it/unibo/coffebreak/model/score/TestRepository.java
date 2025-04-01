@@ -153,6 +153,11 @@ class TestRepository {
 
     /**
      * Creates standard test entries with varied scores.
+     * 
+     * @return a List containing three test entries with:
+     *         - PLAYER_1 and SCORE_SMALL
+     *         - PLAYER_2 and SCORE_MEDIUM
+     *         - PLAYER_3 and SCORE_LARGE
      */
     private List<Entry> createTestEntries() {
         return List.of(

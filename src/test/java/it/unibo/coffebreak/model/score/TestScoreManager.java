@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,192 +14,174 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.ScoreManager;
 import it.unibo.coffebreak.model.score.impl.GameScoreManager;
-import it.unibo.coffebreak.model.score.impl.ScoreEntry;
 
 /**
- * Test class for {@link ScoreManager} interface and {@link GameScoreManager}
- * implementation.
+ * Comprehensive test suite for {@link ScoreManager} interface and
+ * {@link GameScoreManager} implementation.
+ * 
+ * <p>
+ * Tests verify:
+ * <ul>
+ * <li>Score and bonus management</li>
+ * <li>Map lifecycle operations</li>
+ * <li>Game session handling</li>
+ * <li>Leaderboard functionality</li>
+ * <li>Error conditions and edge cases</li>
+ * </ul>
  */
 class TestScoreManager {
 
-    /** Test player name used for entries. */
     private static final String TEST_PLAYER = "Player1";
+    private static final String TEST_PLAYER_2 = "Player2";
+    private static final String TEST_PLAYER_3 = "Player3";
+    private static final String EMPTY_NAME = "";
+    private static final String WHITESPACE_NAME = "   ";
 
-    /** Test score values used for testing. */
-    private static final int TEST_SCORE_ZERO = 0;
-    private static final int TEST_SCORE_SMALL = 100;
-    private static final int TEST_SCORE_MEDIUM = 500;
-    private static final int TEST_SCORE_LARGE = 1000;
-    private static final int TEST_SCORE_XLARGE = 2000;
-    private static final int TEST_BONUS_VALUE = 250;
+    private static final int SCORE_ZERO = 0;
+    private static final int SCORE_SMALL = 100;
+    private static final int SCORE_MEDIUM = 500;
+    private static final int SCORE_LARGE = 1000;
+    private static final int SCORE_XLARGE = 2000;
+    private static final int BONUS_VALUE = 250;
 
-    /** The score manager instance under test. */
     private ScoreManager<Entry> scoreManager;
 
     /**
-     * Initializes the test environment before each test.
+     * Initializes a fresh GameScoreManager and cleans up test files before each
+     * test.
+     * 
+     * @throws IOException if file cleanup fails
      */
     @BeforeEach
-    void init() throws IOException {
-        // Files.deleteIfExists(Paths.get(TestRepository.FILE_PATH));
+    void setUp() throws IOException {
+        Files.deleteIfExists(TestRepository.FILE_PATH);
         this.scoreManager = new GameScoreManager();
     }
 
     /**
-     * Tests the initial score state.
-     * Verifies:
-     * - New score manager starts with 0 points
+     * Tests initial state of a new score manager.
      */
     @Test
-    void testGetCurrentScore() {
-        assertEquals(TEST_SCORE_ZERO, this.scoreManager.getCurrentScore(), "Initial score should be 0");
+    void shouldInitializeWithZeroScoreAndBonus() {
+        assertEquals(SCORE_ZERO, scoreManager.getCurrentScore());
+        assertEquals(SCORE_ZERO, scoreManager.getCurrentBonus());
     }
 
     /**
-     * Tests the initial bonus state.
-     * Verifies:
-     * - New score manager starts with 0 bonus
+     * Tests point earning functionality with valid and invalid amounts.
      */
     @Test
-    void testGetCurrentBonus() {
-        assertEquals(TEST_SCORE_ZERO, this.scoreManager.getCurrentBonus(), "Initial bonus should be 0");
+    void shouldAccumulatePointsAndRejectNegativeValues() {
+        scoreManager.earnPoints(SCORE_SMALL);
+        assertEquals(SCORE_SMALL, scoreManager.getCurrentScore());
+
+        scoreManager.earnPoints(SCORE_MEDIUM);
+        assertEquals(SCORE_SMALL + SCORE_MEDIUM, scoreManager.getCurrentScore());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> scoreManager.earnPoints(-SCORE_SMALL),
+                "Should reject negative points");
     }
 
     /**
-     * Tests the points earning mechanism.
-     * Verifies:
-     * - Points are correctly added to current score
+     * Tests bonus calculation with different initial values.
      */
     @Test
-    void testEarnPoints() {
-        this.scoreManager.earnPoints(TEST_SCORE_MEDIUM);
-        assertEquals(TEST_SCORE_MEDIUM, this.scoreManager.getCurrentScore(),
-                "Score should match earned points");
-        assertThrows(IllegalArgumentException.class, () -> scoreManager.earnPoints(-TEST_SCORE_MEDIUM));
+    void shouldCalculateBonusCorrectly() {
+        scoreManager.startMap(BONUS_VALUE);
+        scoreManager.calculateBonus();
+        assertTrue(scoreManager.getCurrentBonus() < BONUS_VALUE,
+                "Bonus should decrease after calculation");
+
+        scoreManager.startMap(SCORE_SMALL);
+        for (int i = 0; i < 10; i++) {
+            scoreManager.calculateBonus();
+        }
+        assertEquals(SCORE_ZERO, scoreManager.getCurrentBonus(),
+                "Bonus should not go below zero");
     }
 
     /**
-     * Tests the bonus calculation.
-     * Verifies:
-     * - Default bonus calculation behavior
+     * Tests complete map lifecycle including bonus conversion.
      */
     @Test
-    void testCalculateBonus() {
-        this.scoreManager.calculateBonus();
-        assertEquals(TEST_SCORE_ZERO, this.scoreManager.getCurrentBonus(),
-                "Bonus should remain 0 after calculation with no setup");
+    void shouldConvertBonusToPointsAtMapEnd() {
+        scoreManager.startMap(BONUS_VALUE);
+        final int initialBonus = scoreManager.getCurrentBonus();
+
+        scoreManager.earnPoints(SCORE_MEDIUM);
+        final int scoreBeforeEnd = scoreManager.getCurrentScore();
+
+        scoreManager.endMap();
+
+        assertEquals(scoreBeforeEnd + initialBonus, scoreManager.getCurrentScore());
     }
 
     /**
-     * Tests the bonus calculation with map initialization.
-     * Verifies:
-     * - Bonus is correctly set and retrieved
+     * Tests game completion with various invalid player names.
      */
     @Test
-    void testBonusCalculationWithMap() {
-        this.scoreManager.startMap(TEST_BONUS_VALUE);
-        assertEquals(TEST_BONUS_VALUE, this.scoreManager.getCurrentBonus(),
-                "Bonus should match the initialized value");
-
-        this.scoreManager.calculateBonus();
-        assertTrue(this.scoreManager.getCurrentBonus() >= 0,
-                "Calculated bonus should be non-negative");
-    }
-
-    /**
-     * Tests the map completion mechanism.
-     * Verifies:
-     * - Current bonus is correctly converted to points
-     * - Bonus is reset after map completion
-     * - Total score is properly updated
-     */
-    @Test
-    void testMapCompletion() {
-        this.scoreManager.earnPoints(TEST_SCORE_SMALL);
-        this.scoreManager.startMap(TEST_BONUS_VALUE);
-
-        final int scoreBeforeEnd = this.scoreManager.getCurrentScore();
-        final int bonusBeforeEnd = this.scoreManager.getCurrentBonus();
-
-        this.scoreManager.endMap();
-
-        assertEquals(scoreBeforeEnd + bonusBeforeEnd, this.scoreManager.getCurrentScore(),
-                "Score should include bonus points after map completion");
-    }
-
-    /**
-     * Tests that ending a game with invalid player names throws exceptions.
-     */
-    @Test
-    void testGameCompletionWithInvalidNames() {
-        this.scoreManager.earnPoints(TEST_SCORE_SMALL);
-
+    void shouldRejectInvalidPlayerNames() {
         assertThrows(NullPointerException.class,
                 () -> scoreManager.endGame(null),
-                "Should throw IllegalArgumentException for null name");
+                "Should reject null player name");
 
         assertThrows(IllegalArgumentException.class,
-                () -> scoreManager.endGame(""),
-                "Should throw IllegalArgumentException for empty name");
+                () -> scoreManager.endGame(EMPTY_NAME),
+                "Should reject empty player name");
 
         assertThrows(IllegalArgumentException.class,
-                () -> scoreManager.endGame("   "),
-                "Should throw IllegalArgumentException for whitespace name");
+                () -> scoreManager.endGame(WHITESPACE_NAME),
+                "Should reject whitespace-only player name");
     }
 
     /**
-     * Tests the leaderboard ordering and highest score retrieval.
-     * Verifies:
-     * - Leaderboard maintains entries in descending order
-     * - Correctly identifies the highest score
-     * - Handles empty leaderboard case
+     * Tests leaderboard ordering and highest score functionality.
      */
     @Test
-    void testLeaderboardOrderingAndHighestScore() {
-        final Entry entry1 = new ScoreEntry(TEST_PLAYER, TEST_SCORE_LARGE);
-        final Entry entry2 = new ScoreEntry("Player2", TEST_SCORE_XLARGE);
-        final Entry entry3 = new ScoreEntry("Player3", TEST_SCORE_MEDIUM);
+    void shouldMaintainLeaderboardOrderAndHighestScore() {
+        submitScore(TEST_PLAYER, SCORE_LARGE);
+        submitScore(TEST_PLAYER_2, SCORE_XLARGE);
+        submitScore(TEST_PLAYER_3, SCORE_MEDIUM);
 
-        this.scoreManager.earnPoints(entry2.getScore());
-        this.scoreManager.endGame(entry2.getName());
+        final List<Entry> leaderboard = scoreManager.getLeaderBoard();
+        assertEquals(SCORE_XLARGE, leaderboard.get(0).getScore());
+        assertEquals(SCORE_LARGE, leaderboard.get(1).getScore());
+        assertEquals(SCORE_MEDIUM, leaderboard.get(2).getScore());
 
-        this.scoreManager.earnPoints(entry3.getScore());
-        this.scoreManager.endGame(entry3.getName());
-
-        this.scoreManager.earnPoints(entry1.getScore());
-        this.scoreManager.endGame(entry1.getName());
-
-        final List<Entry> leaderboard = this.scoreManager.getLeaderBoard();
-        assertEquals(TEST_SCORE_XLARGE, leaderboard.get(0).getScore(),
-                "Highest score should be first in leaderboard");
-        assertEquals(TEST_SCORE_LARGE, leaderboard.get(1).getScore(),
-                "Second highest score should be second");
-        assertEquals(TEST_SCORE_MEDIUM, leaderboard.get(2).getScore(),
-                "Lowest score should be last");
-
-        assertEquals(TEST_SCORE_XLARGE, this.scoreManager.getHighestScore(),
-                "getHighestScore should return the top leaderboard entry");
+        assertEquals(SCORE_XLARGE, scoreManager.getHighestScore());
     }
 
     /**
-     * Tests the full workflow including map completion and game ending.
+     * Tests complete game workflow with multiple maps.
      */
     @Test
-    void testFullWorkflow() {
-        this.scoreManager.startMap(TEST_BONUS_VALUE);
-        this.scoreManager.earnPoints(TEST_SCORE_SMALL);
-        this.scoreManager.endMap();
+    void shouldHandleCompleteGameWorkflow() {
+        // First map
+        scoreManager.startMap(BONUS_VALUE);
+        scoreManager.earnPoints(SCORE_SMALL);
+        scoreManager.endMap();
 
-        this.scoreManager.startMap(TEST_BONUS_VALUE / 2);
-        this.scoreManager.earnPoints(TEST_SCORE_MEDIUM);
-        this.scoreManager.endMap();
+        // Second map
+        scoreManager.startMap(BONUS_VALUE / 2);
+        scoreManager.earnPoints(SCORE_MEDIUM);
+        scoreManager.endMap();
 
-        final int expectedTotal = TEST_SCORE_SMALL + TEST_BONUS_VALUE + TEST_SCORE_MEDIUM
-                + (TEST_BONUS_VALUE / 2);
-        this.scoreManager.endGame(TEST_PLAYER);
+        final int expectedTotal = SCORE_SMALL + BONUS_VALUE + SCORE_MEDIUM + (BONUS_VALUE / 2);
+        scoreManager.endGame(TEST_PLAYER);
 
-        final Entry expectedEntry = new ScoreEntry(TEST_PLAYER, expectedTotal);
-        assertTrue(this.scoreManager.getLeaderBoard().contains(expectedEntry),
-                "Leaderboard should contain entry with correct total score");
+        assertTrue(scoreManager.getLeaderBoard().stream()
+                .anyMatch(e -> TEST_PLAYER.equals(e.getName()) && e.getScore() == expectedTotal));
+    }
+
+    /**
+     * Helper method to submit a score to the leaderboard.
+     * 
+     * @param playerName name of the player
+     * @param score      current score
+     */
+    private void submitScore(final String playerName, final int score) {
+        scoreManager.earnPoints(score);
+        scoreManager.endGame(playerName);
     }
 }
