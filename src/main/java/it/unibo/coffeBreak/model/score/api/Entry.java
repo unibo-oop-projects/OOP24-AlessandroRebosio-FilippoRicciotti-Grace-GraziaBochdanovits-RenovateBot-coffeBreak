@@ -1,9 +1,12 @@
 package it.unibo.coffebreak.model.score.api;
 
 /**
- * Represents an entry in a scoreboard, containing a name and a score.
- * Entries can be compared based on their score values (higher scores come
- * first).
+ * Represents an entry in a scoreboard, containing a player name and associated
+ * score.
+ * Entries are compared based on their score values in descending order (higher
+ * scores come first).
+ * Implementations should be immutable to ensure thread safety in scoreboard
+ * operations.
  */
 public interface Entry extends Comparable<Entry> {
 
