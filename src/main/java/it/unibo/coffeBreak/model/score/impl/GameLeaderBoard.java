@@ -30,6 +30,8 @@ import it.unibo.coffebreak.model.score.api.LeaderBoard;
  * <li>Not persistent - contents are lost after JVM shutdown</li>
  * <li>Case-sensitive for entry names</li>
  * </ul>
+ * 
+ * @autor Alessandro Rebosio
  */
 public class GameLeaderBoard implements LeaderBoard<Entry> {
 
