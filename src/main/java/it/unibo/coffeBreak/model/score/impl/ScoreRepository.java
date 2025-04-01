@@ -14,39 +14,54 @@ import it.unibo.coffebreak.model.score.api.Entry;
 import it.unibo.coffebreak.model.score.api.Repository;
 
 /**
- * Implementation of {@link Repository} for storing and retrieving score
- * entries.
- * Uses Java serialization to persist data to a file in the user's home
- * directory.
+ * File-based implementation of {@link Repository} for {@link Entry} objects
+ * using Java serialization.
+ * Stores data in a fixed location in the user's home directory. This
+ * implementation:
+ * <ul>
+ * <li>Is thread-safe for concurrent access</li>
+ * <li>Creates the storage file on first write</li>
+ * <li>Maintains data consistency through atomic write operations</li>
+ * </ul>
+ * 
+ * @implNote Serialization format considerations:
+ *           <ul>
+ *           <li>All stored entries must remain serializable</li>
+ *           <li>Changing Entry class structure may break compatibility</li>
+ *           </ul>
  */
 public class ScoreRepository implements Repository<Entry> {
 
     /**
-     * The name of the file where the leaderboard data will be permanently stored.
+     * Default filename for storage ({@value}).
+     * Located in user's home directory for cross-platform compatibility.
      */
     private static final String FILE_NAME = "leaderBoard.ser";
 
     /**
-     * The File object representing the permanent data storage location.
-     * The file is located in the user's home directory.
+     * The persistent storage location.
+     * 
+     * @implSpec Final to ensure thread-safe publication
      */
     private final File dataFile;
 
     /**
-     * Constructs a new ScoreRepository.
-     * The data file will be created in the user's home directory.
+     * Creates a new repository using default storage location.
+     * The actual file won't be created until first save operation.
      */
     public ScoreRepository() {
         this.dataFile = new File(System.getProperty("user.home"), FILE_NAME);
     }
 
     /**
-     * Saves a list of entries to the repository.
-     *
-     * @param list list the list of elements to be saved (cannot be {@code null}).
-     * @return {@code true} if the operation succeeded, {@code false} otherwise.
-     * @throws NullPointerException if {@code list} is {@code null}.
-     * @throws RepositoryException  if an error occurs during the save operation
+     * {@inheritDoc}
+     * 
+     * @implSpec This implementation:
+     *           <ul>
+     *           <li>Performs atomic write-through</li>
+     *           <li>Overwrites existing data completely</li>
+     *           <li>Creates parent directories if needed</li>
+     *           </ul>
      */
     @Override
     public boolean save(final List<Entry> list) {
@@ -65,11 +80,14 @@ public class ScoreRepository implements Repository<Entry> {
     }
 
     /**
-     * Loads all entries from the repository.
-     *
-     * @return a list of all entries stored in the repository, or an empty list if
-     *         the repository is empty
-     * @throws RepositoryException if an error occurs during the load operation
+     * {@inheritDoc}
+     * 
+     * @implSpec This implementation:
+     *           <ul>
+     *           <li>Returns empty list for non-existent file</li>
+     *           <li>Creates defensive copies of loaded data</li>
+     *           <li>Validates deserialized types</li>
+     *           </ul>
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -86,17 +104,20 @@ public class ScoreRepository implements Repository<Entry> {
     }
 
     /**
-     * Exception thrown when an error occurs in repository operations.
+     * Indicates repository-specific errors during persistence operations.
+     * Wraps lower-level IO and serialization exceptions.
      */
     public static class RepositoryException extends RuntimeException {
+        /**
+         * Serial version UID for consistent deserialization.
+         */
         private static final long serialVersionUID = 1L;
 
         /**
-         * Constructs a new RepositoryException with the specified detail message and
-         * cause.
-         *
-         * @param message the detail message
-         * @param cause   the cause of the exception
+         * Creates an exception with detailed context.
+         * 
+         * @param message the operational context
+         * @param cause   the root failure cause
          */
         public RepositoryException(final String message, final Throwable cause) {
             super(message, cause);

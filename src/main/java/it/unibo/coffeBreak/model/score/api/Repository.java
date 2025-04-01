@@ -3,26 +3,32 @@ package it.unibo.coffebreak.model.score.api;
 import java.util.List;
 
 /**
- * Interface for a generic repository that handles saving and loading of
+ * Defines a persistence mechanism for storing and retrieving collections of
  * elements.
+ * Implementations may use various storage backends (files, databases, etc.) and
+ * should
+ * handle serialization/deserialization of elements.
  *
- * @param <X> the type of elements stored in the repository
+ * @param <X> the type of elements to be stored, must be
+ *            {@link java.io.Serializable}
+ *            if binary persistence is used
  */
 public interface Repository<X> {
-
     /**
-     * Saves a list of elements to the repository.
+     * Persists the complete collection of elements, replacing any existing data.
      *
-     * @param list the list of elements to be saved
-     * @throws NullPointerException if the list is null
-     * @return true if the operation was successful, false otherwise
+     * @param list the elements to store (cannot contain null elements)
+     * @return true if persistence succeeded, false otherwise
+     * @throws NullPointerException if list is null
+     * @throws RepositoryException  if serialization or storage fails
      */
     boolean save(List<X> list);
 
     /**
-     * Loads all elements from the repository.
+     * Retrieves all persisted elements.
      *
-     * @return a list of all elements stored in the repository
+     * @return a new list containing all stored elements, empty list if none exist
+     * @throws RepositoryException if deserialization or read operation fails
      */
     List<X> load();
 }
