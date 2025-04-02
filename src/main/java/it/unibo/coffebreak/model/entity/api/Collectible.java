@@ -26,6 +26,11 @@ public interface Collectible {
     int getValue();
 
     /**
+     * Performs the collection action when the player gathers this item.
+     */
+    void collect();
+
+    /**
      * Resets the collectible to its initial uncollected state.
      * This method should prepare the collectible to be available for collection
      * again,
