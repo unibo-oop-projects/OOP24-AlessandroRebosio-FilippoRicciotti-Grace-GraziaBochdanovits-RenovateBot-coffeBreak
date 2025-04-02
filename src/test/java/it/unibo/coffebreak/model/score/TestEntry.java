@@ -22,6 +22,8 @@ import it.unibo.coffebreak.model.score.impl.ScoreEntry;
  * <li>Immutable characteristics of entries</li>
  * <li>Edge cases in entry creation</li>
  * </ul>
+ * 
+ * @author Alessandro Rebosio
  */
 class TestEntry {
 

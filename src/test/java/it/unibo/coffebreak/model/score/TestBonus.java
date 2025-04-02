@@ -22,6 +22,8 @@ import it.unibo.coffebreak.model.score.impl.GameBonus;
  * <li>Edge case handling</li>
  * <li>Error conditions</li>
  * </ul>
+ * 
+ * @author Alessandro Rebosio
  */
 class TestBonus {
 

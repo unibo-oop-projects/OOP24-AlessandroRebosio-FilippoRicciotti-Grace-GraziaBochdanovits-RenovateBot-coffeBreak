@@ -7,6 +7,8 @@ import it.unibo.coffebreak.model.score.api.Bonus;
  * The bonus starts at 0 and can be set to any positive value. Each time
  * {@link #calculate()} is called, the bonus is reduced by {@link #AMOUNT},
  * but never goes below 0.
+ * 
+ * @author Alessandro Rebosio
  */
 public class GameBonus implements Bonus {
 

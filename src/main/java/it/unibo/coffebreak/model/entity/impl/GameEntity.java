@@ -12,9 +12,9 @@ import it.unibo.coffebreak.model.utility.Position;
 public abstract class GameEntity implements Entity {
 
     /*
-     * The position and dimention of the entities in the game.
+     * The position and the dimention of entities in the game.
      */
-    private final Position position;
+    private Position position;
     private final Dimension dimension;
 
      /**
@@ -24,8 +24,17 @@ public abstract class GameEntity implements Entity {
      * @param d the dimension of the entity.
      */
     public GameEntity(final Position p, final Dimension d) {
-        this.position = p;
+        this.position = new Position(p.getX(), p.getY());
         this.dimension = d;
+    }
+
+    /**
+     * Sets the position of the entity.
+     *
+     * @param position the new position of the entity.
+     */
+    public void setPosition(final Position position) {
+        this.position = new Position(position.getX(), position.getY());
     }
 
     /**
@@ -33,7 +42,7 @@ public abstract class GameEntity implements Entity {
      */
     @Override
     public final Position getPosition() {
-        return new Position(this.position.getX(), this.position.getY());
+        return new Position(this.position.getX(), this.position.getY()); 
     }
 
     /**

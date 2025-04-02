@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.score.api.Bonus;
@@ -27,6 +28,8 @@ import it.unibo.coffebreak.model.score.api.ScoreManager;
  * <li>{@code endMap()} converts bonus</li>
  * <li>{@code endGame()} saves results</li>
  * </ol>
+ * 
+ * @author Alessandro Rebosio
  */
 public class GameScoreManager implements ScoreManager<Entry> {
 

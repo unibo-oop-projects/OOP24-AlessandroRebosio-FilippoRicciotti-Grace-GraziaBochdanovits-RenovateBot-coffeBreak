@@ -30,6 +30,8 @@ import it.unibo.coffebreak.model.score.api.Repository;
  * <li>All stored entries must remain serializable</li>
  * <li>Changing Entry class structure may break compatibility</li>
  * </ul>
+ * 
+ * @author Alessandro Rebosio
  */
 public class ScoreRepository implements Repository<Entry> {
 

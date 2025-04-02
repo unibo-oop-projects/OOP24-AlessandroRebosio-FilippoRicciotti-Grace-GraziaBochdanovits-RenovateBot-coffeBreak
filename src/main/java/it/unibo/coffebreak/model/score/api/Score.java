@@ -12,6 +12,8 @@ package it.unibo.coffebreak.model.score.api;
  * gameScore.increase(100);
  * int current = gameScore.getScore();
  * }</pre>
+ * 
+ * @author Alessandro Rebosio
  */
 public interface Score {
     /**

@@ -5,6 +5,8 @@ package it.unibo.coffebreak.model.entity;
  * game.
  * Each constant represents a specific type of collectible with its base value
  * and behavior when collected by the player.
+ * 
+ * @author Alessandro Rebosio
  */
 public enum ItemType {
 

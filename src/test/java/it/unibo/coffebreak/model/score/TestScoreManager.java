@@ -28,6 +28,8 @@ import it.unibo.coffebreak.model.score.impl.GameScoreManager;
  * <li>Leaderboard functionality</li>
  * <li>Error conditions and edge cases</li>
  * </ul>
+ * 
+ * @author Alessandro Rebosio
  */
 class TestScoreManager {
 

@@ -3,6 +3,8 @@ package it.unibo.coffebreak.model.score.api;
 /**
  * Represents a bonus system that can be applied to a game.
  * Provides methods to get, set and calculate the bonus value.
+ * 
+ * @author Alessandro Rebosio
  */
 public interface Bonus {
 

@@ -23,6 +23,8 @@ import it.unibo.coffebreak.model.score.api.Score;
  * <li>{@link java.util.concurrent.atomic.AtomicInteger}</li>
  * <li>External synchronization</li>
  * </ul>
+ * 
+ * @author Alessandro Rebosio
  */
 public class GameScore implements Score {
     /**

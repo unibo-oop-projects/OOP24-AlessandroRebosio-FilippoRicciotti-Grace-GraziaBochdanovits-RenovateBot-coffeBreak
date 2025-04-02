@@ -15,6 +15,8 @@ import it.unibo.coffebreak.model.score.api.Entry;
  * 
  * @see Comparable
  * @see Serializable
+ * 
+ * @author Alessandro Rebosio
  */
 public class ScoreEntry implements Entry, Serializable {
     /**

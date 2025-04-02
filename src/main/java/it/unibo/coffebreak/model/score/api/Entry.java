@@ -7,6 +7,8 @@ package it.unibo.coffebreak.model.score.api;
  * scores come first).
  * Implementations should be immutable to ensure thread safety in scoreboard
  * operations.
+ * 
+ * @author Alessandro Rebosio
  */
 public interface Entry extends Comparable<Entry> {
 
