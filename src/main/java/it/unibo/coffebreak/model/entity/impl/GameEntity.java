@@ -20,12 +20,12 @@ public abstract class GameEntity implements Entity {
      /**
      * Constructs a new {@link GameEntity} with the specified position and dimension.
      *
-     * @param p the position of the entity.
-     * @param d the dimension of the entity.
+     * @param position the position of the entity.
+     * @param dimension the dimension of the entity.
      */
-    public GameEntity(final Position p, final Dimension d) {
-        this.position = new Position(p.getX(), p.getY());
-        this.dimension = d;
+    public GameEntity(final Position position, final Dimension dimension) {
+        this.position = position;
+        this.dimension = dimension;
     }
 
     /**
@@ -34,7 +34,7 @@ public abstract class GameEntity implements Entity {
      * @param position the new position of the entity.
      */
     public void setPosition(final Position position) {
-        this.position = new Position(position.getX(), position.getY());
+        this.position = position;
     }
 
     /**
@@ -42,7 +42,7 @@ public abstract class GameEntity implements Entity {
      */
     @Override
     public final Position getPosition() {
-        return new Position(this.position.getX(), this.position.getY()); 
+        return this.position; 
     }
 
     /**
