@@ -5,8 +5,8 @@ package it.unibo.coffebreak.model.utility;
  */
 public class Vector2D {
 
-    private double x;
-    private double y;
+    private float x;
+    private float y;
 
     /**
      * Constructs a new Vector2D with the specified components.
@@ -14,7 +14,7 @@ public class Vector2D {
      * @param x the x-component of the vector.
      * @param y the y-component of the vector.
      */
-    public Vector2D(final double x, final double y) {
+    public Vector2D(final float x, final float y) {
         this.x = x;
         this.y = y;
     }
@@ -24,7 +24,7 @@ public class Vector2D {
      *
      * @param x the new x-component.
      */
-    public void setX(final double x) {
+    public void setX(final float x) {
         this.x = x;
     }
 
@@ -33,7 +33,7 @@ public class Vector2D {
      *
      * @param y the new y-component.
      */
-    public void setY(final double y) {
+    public void setY(final float y) {
         this.y = y;
     }
 
@@ -42,7 +42,7 @@ public class Vector2D {
      *
      * @return the x-component.
      */
-    public double getX() {
+    public float getX() {
         return this.x;
     }
 
@@ -51,7 +51,7 @@ public class Vector2D {
      *
      * @return the y-component.
      */
-    public double getY() {
+    public float getY() {
         return this.y;
     }
 
@@ -81,7 +81,7 @@ public class Vector2D {
      * @param scalar the scalar to multiply by.
      * @return the resulting vector.
      */
-    public Vector2D multiply(final double scalar) {
+    public Vector2D multiply(final float scalar) {
         return new Vector2D(this.x * scalar, this.y * scalar);
     }
 
