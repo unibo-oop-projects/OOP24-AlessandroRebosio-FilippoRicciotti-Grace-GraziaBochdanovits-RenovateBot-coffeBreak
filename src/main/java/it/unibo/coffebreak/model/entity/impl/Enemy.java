@@ -9,7 +9,7 @@ import it.unibo.coffebreak.model.utility.Vector2D;
 /**
  * Represents an enemy in the game, which is a type of game entity that can move.
  */
-public abstract class Enemy extends GameEntity implements Movable {
+public abstract class Enemy extends GameEntity {
 
     /**
      * The current state of the enemy.
@@ -22,7 +22,12 @@ public abstract class Enemy extends GameEntity implements Movable {
     private Vector2D velocity;
 
     /**
-     * Constructs a new Enemy with the specified position, dimension, state, and velocity.
+     * The movement strategy of the enemy.
+     */
+    private Movable movementStrategy;
+
+    /**
+     * Constructs a new Enemy with the specified position, dimension, state and velocity.
      *
      * @param position the position of the enemy.
      * @param dimension the dimension of the enemy.
@@ -33,6 +38,39 @@ public abstract class Enemy extends GameEntity implements Movable {
         super(position, dimension);
         this.state = state;
         this.velocity = new Vector2D(velocity.getX(), velocity.getY());
+        this.setMovementStrategy(state);
+    }
+
+    /**
+     * Sets the movement strategy based on the enemy's state.
+     *
+     * @param state the state of the enemy.
+     */
+    private void setMovementStrategy(final EnemyType state) {
+        switch (state) {
+            case BARREL:
+                this.movementStrategy = new BarrelMovementStrategy(this);
+                break;
+            case FIRE:
+                this.movementStrategy = new FireMovementStrategy(this);
+                break;
+        }
+    }
+
+    /**
+     * Moves the enemy in the direction of its velocity.
+     */
+    public void move() {
+        this.movementStrategy.move(this.getVelocity());
+    }
+
+    /**
+     * Retrieves the movement strategy of the enemy.
+     *
+     * @return the movement strategy.
+     */
+    public Movable getMovementStrategy() {
+        return this.movementStrategy;
     }
 
     /**
@@ -51,6 +89,7 @@ public abstract class Enemy extends GameEntity implements Movable {
      */
     public void setState(final EnemyType state) {
         this.state = state;
+        this.setMovementStrategy(state);
     }
 
     /**
