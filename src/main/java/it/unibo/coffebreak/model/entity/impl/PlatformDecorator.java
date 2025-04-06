@@ -7,8 +7,8 @@ import it.unibo.coffebreak.model.entity.api.Platform;
  * This class is used to add additional functionality to a Platform object.
  */
 public abstract class PlatformDecorator implements Platform {
-    
-    private Platform basePlatform;
+
+    private final Platform basePlatform;
 
     /**
      * Constructs a PlatformDecorator with the specified base platform.
