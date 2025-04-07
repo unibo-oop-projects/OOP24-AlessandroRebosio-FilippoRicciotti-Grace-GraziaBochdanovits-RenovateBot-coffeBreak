@@ -27,4 +27,5 @@ public class FragilePlatform extends PlatformDecorator {
     public boolean canBreak() {
         return true; 
     }
+
 }

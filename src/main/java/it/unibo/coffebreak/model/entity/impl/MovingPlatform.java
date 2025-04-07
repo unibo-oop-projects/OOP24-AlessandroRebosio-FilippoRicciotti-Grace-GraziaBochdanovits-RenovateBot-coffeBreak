@@ -1,46 +1,68 @@
 package it.unibo.coffebreak.model.entity.impl;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.model.entity.api.Platform;
+import it.unibo.coffebreak.model.utility.Position;
 import it.unibo.coffebreak.model.utility.Vector2D;
 
 /**
- * Represents a moving platform in the game.
- * This class extends the PlatformDecorator to provide a platform that can move with a specified velocity.
+ * A decorator that adds movement capability to a platform.
+ * This class extends {@link PlatformDecorator} to create platforms that move with
+ * a constant velocity. It overrides the default friction to 0.7 to better reflect
+ * the physical properties of moving surfaces.
  */
 public class MovingPlatform extends PlatformDecorator {
 
-    private final Vector2D velocity;
-    private static final float FRICTION = 0.7f; 
+    /**
+     * The modified friction coefficient for moving platforms.
+     */
+    private static final float FRICTION = 0.7f;
 
     /**
-     * Constructs a MovingPlatform with the specified base platform and velocity.
+     * The velocity vector of this platform.
+     */
+    private final Vector2D velocity;
+
+    /**
+     * Constructs a new moving platform decorator.
      *
-     * @param basePlatform the base platform to be decorated
-     * @param velocity the velocity of the moving platform
+     * @param basePlatform the platform to decorate 
+     * @param velocity the movement velocity vector 
+     * @throws IllegalArgumentException if either parameter is null
      */
     public MovingPlatform(final Platform basePlatform, final Vector2D velocity) {
-        super(basePlatform);
-        this.velocity = velocity;
+        super(Objects.requireNonNull(basePlatform, "Base platform cannot be null"));
+        this.velocity = Objects.requireNonNull(velocity, "Velocity cannot be null");
     }
 
     /**
-     * Gets the friction level of the platform.
-     * This implementation returns a fixed friction level of 0.7.
+     * Gets the modified friction coefficient for this moving platform.
      *
-     * @return the friction level of the platform
+     * @return the constant friction value
      */
     @Override
     public float getFriction() {
-        return FRICTION; 
+        return FRICTION;
     }
 
     /**
-     * Gets the velocity of the moving platform.
+     * Gets the velocity vector of this platform.
      *
-     * @return the velocity of the platform
+     * @return the immutable velocity vector 
      */
     public Vector2D getVelocity() {
-        return this.velocity;
+        return velocity;
     }
 
+    /**
+     * Updates the platform's position based on its velocity.
+     *
+     * @param deltaTime the time elapsed since last update 
+     */
+    @Override
+    public void update(final long deltaTime) {
+        this.setPosition(new Position(this.getPlatformPosition().x() + velocity.getX() * deltaTime, 
+                                        this.getPlatformPosition().y() + velocity.getY() * deltaTime));
+    }
 }

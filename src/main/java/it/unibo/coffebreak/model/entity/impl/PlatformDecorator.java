@@ -1,43 +1,58 @@
 package it.unibo.coffebreak.model.entity.impl;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.model.entity.api.Platform;
 
 /**
- * Abstract decorator class for a Platform.
- * This class is used to add additional functionality to a Platform object.
+ * Abstract base class for platform decorators in the game.
+ * Implements the Decorator pattern to dynamically add responsibilities to {@link Platform} objects
+ * without affecting other instances of the same class. 
+ * Subclasses should override specific methods to modify platform behavior while delegating
+ * other calls to the wrapped platform via {@code basePlatform}.
  */
-public abstract class PlatformDecorator implements Platform {
+public abstract class PlatformDecorator extends AbstractPlatform {
 
     private final Platform basePlatform;
 
-    /**
-     * Constructs a PlatformDecorator with the specified base platform.
+     /**
+     * Constructs a new platform decorator wrapping the specified base platform.
+     * <p>
+     * Initializes the decorator with the base platform's position and dimensions.
+     * The actual behavior will be delegated to the base platform unless overridden.
+     * </p>
      *
-     * @param basePlatform the base platform to be decorated
+     * @param basePlatform the platform instance to be decorated (cannot be {@code null})
+     * @throws IllegalArgumentException if basePlatform is {@code null}
      */
     public PlatformDecorator(final Platform basePlatform) {
+        super(Objects.requireNonNull(basePlatform, "Base platform cannot be null").getPlatformPosition(), 
+              basePlatform.getPlatformDimension());
         this.basePlatform = basePlatform;
     }
 
     /**
-     * Determines if the platform can break.
-     * Delegates the call to the base platform.
+     * Determines if the decorated platform can break.
+     * Delegates the call to the wrapped platform instance.
      *
-     * @return true if the base platform can break, false otherwise
+     * @return {@code true} if the base platform can break, {@code false} otherwise
+     * @see Platform#canBreak()
      */
     @Override
     public boolean canBreak() {
-        return basePlatform.canBreak();
+        return this.basePlatform.canBreak();
     }
 
     /**
-     * Gets the friction level of the platform.
-     * Delegates the call to the base platform.
+     * Gets the friction level of the decorated platform.
+     * Delegates the call to the wrapped platform instance.
      *
      * @return the friction level of the base platform
+     * @see Platform#getFriction()
      */
     @Override
     public float getFriction() {
-        return basePlatform.getFriction();
+        return this.basePlatform.getFriction();
     }
+
 }
