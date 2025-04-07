@@ -27,8 +27,10 @@ public interface Collectible {
 
     /**
      * Performs the collection action when the player gathers this item.
+     * 
+     * @param collector the entity that collects the item, typically the player
      */
-    void collect();
+    void collect(Entity collector);
 
     /**
      * Resets the collectible to its initial uncollected state.

@@ -63,9 +63,10 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * </p>
      */
     @Override
-    public void collect() {
+    public void collect(final Entity collector) {
         if (!this.collected) {
             this.collected = true;
+            this.onCollected(collector);
         }
     }
 
