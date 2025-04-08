@@ -4,30 +4,34 @@ import it.unibo.coffebreak.model.utility.Dimension;
 import it.unibo.coffebreak.model.utility.Position;
 
 /**
- * Represents a bonus system that can be applied to a game.
- * Provides methods to get, set and calculate the bonus value.
+ * Represents a fundamental game entity with spatial properties and update capability.
+ * Implementations can represent both static and dynamic game elements.
+ *
+ * @see Position
+ * @see Dimension
  */
 public interface Entity {
 
     /**
-     * Retrieves the position of the entity.
+     * Gets the current position of this entity in game world coordinates.
      *
-     * @return the current position of the entity.
+     * @return the current {@link Position} of this entity (never {@code null})
+     * @see Position
      */
     Position getPosition();
 
     /**
-     * Retrieves the dimensions of the entity.
+     * Gets the physical dimensions of this entity.
      *
-     * @return the current dimensions of the entity.
+     * @return the {@link Dimension} of this entity (never {@code null})
+     * @see Dimension
      */
     Dimension getDimension();
 
     /**
-     * Updates the state of the entity based on the elapsed time.
+     * Updates the entity's state based on elapsed game time.
      *
-     * @param deltaTime the time elapsed since the
-     *                  last update, in milliseconds.
+     * @param deltaTime the time elapsed since last update in milliseconds 
      */
     void update(long deltaTime);
 }
