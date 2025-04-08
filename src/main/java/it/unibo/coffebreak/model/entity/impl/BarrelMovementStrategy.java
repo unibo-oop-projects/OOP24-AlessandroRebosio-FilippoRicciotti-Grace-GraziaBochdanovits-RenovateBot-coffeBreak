@@ -5,29 +5,31 @@ import it.unibo.coffebreak.model.utility.Position;
 import it.unibo.coffebreak.model.utility.Vector2D;
 
 /**
- * Implements the movement strategy for a barrel enemy.
+ * Concrete implementation of {@link Movable} for barrel-type enemies.
+ * Provides linear movement based on a direction vector, typically used
+ * for rolling barrels in platformer games.
+ * 
+ * @see Movable
+ * @see Position
+ * @see Vector2D
  */
 public class BarrelMovementStrategy implements Movable {
 
-    private Position enemyPosition;
-
     /**
-     * Constructs a BarrelMovementStrategy for the specified enemy.
-     *
-     * @param enemy the enemy that will use this movement strategy
-     */
-    public BarrelMovementStrategy(final Enemy enemy) {
-        this.enemyPosition = new Position(enemy.getPosition().x(), enemy.getPosition().y()); 
-    }
-
-    /**
-     * Moves the enemy in the specified direction.
-     *
-     * @param direction the direction in which to move the enemy
+     * Calculates the new position by applying a directional movement vector
+     * to the current position.
+     * 
+     * @param currentPosition the starting position (must not be {@code null})
+     * @param direction the movement vector containing both direction and magnitude
+     *        (must not be {@code null})
+     * @return a new {@code Position} representing the destination after movement
+     *         (never {@code null})
+     * @throws NullPointerException if either parameter is {@code null}
+     * 
      */
     @Override
-    public void move(final Vector2D direction) {
-        this.enemyPosition = new Position(enemyPosition.x() + direction.getX(), 
-                                    enemyPosition.y() + direction.getY());
+    public Position move(final Position currentPosition, final Vector2D direction) {
+        return new Position(currentPosition.x() + direction.getX(),
+                            currentPosition.y() + direction.getY());
     }
 }
