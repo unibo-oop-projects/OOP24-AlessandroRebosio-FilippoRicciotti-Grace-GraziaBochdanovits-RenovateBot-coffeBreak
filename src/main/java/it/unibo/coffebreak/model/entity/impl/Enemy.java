@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.entity.impl;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.model.entity.EnemyType;
 import it.unibo.coffebreak.model.entity.api.Movable;
 import it.unibo.coffebreak.model.utility.Dimension;
@@ -27,94 +29,79 @@ public abstract class Enemy extends GameEntity {
     private Movable movementStrategy;
 
     /**
-     * Constructs a new Enemy with the specified position, dimension, state and velocity.
-     *
-     * @param position the position of the enemy.
-     * @param dimension the dimension of the enemy.
-     * @param state the initial state of the enemy.
-     * @param velocity the initial velocity of the enemy.
+     * Constructs a new Enemy with the specified attributes.
+     * 
+     * @param position the initial position (non-null)
+     * @param dimension the entity dimensions (non-null)
+     * @param state the initial enemy type (non-null)
+     * @param velocity the initial velocity (non-null)
+     * @throws NullPointerException if any parameter is null
      */
     public Enemy(final Position position, final Dimension dimension, final EnemyType state, final Vector2D velocity) {
-        super(position, dimension);
-        this.state = state;
-        this.velocity = new Vector2D(velocity.getX(), velocity.getY());
-        this.setMovementStrategy(state);
+        super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
+        this.state = Objects.requireNonNull(state);
+        this.velocity = new Vector2D(Objects.requireNonNull(velocity).getX(), velocity.getY());
+        this.movementStrategy = createMovementStrategy(state);
     }
 
     /**
-     * Sets the movement strategy based on the enemy's state.
-     *
-     * @param state the state of the enemy.
+     * Factory method for movement strategies.
      */
-    private void setMovementStrategy(final EnemyType state) {
-        switch (state) {
-            case BARREL:
-                this.movementStrategy = new BarrelMovementStrategy(this);
-                break;
-            case FIRE:
-                this.movementStrategy = new FireMovementStrategy(this);
-                break;
-        }
+    protected Movable createMovementStrategy(EnemyType type) {
+        return switch (type) {
+            case BARREL -> new BarrelMovementStrategy();
+            case FIRE -> new FireMovementStrategy();
+            default -> throw new IllegalArgumentException("Unknown enemy type: " + type);
+        };
+    }
+
+     /**
+     * Updates the enemy's state based on elapsed time.
+     * Implements frame-rate independent movement.
+     * 
+     * @param deltaTime time elapsed in milliseconds
+     */
+    @Override
+    public void update(final long deltaTime) {
+        Objects.requireNonNull(deltaTime, "DeltaTime cannot be null");
+        final Vector2D updateVelocity = new Vector2D(velocity.getX() * deltaTime/1000.0f,
+                                            velocity.getY() * deltaTime/1000.0f);
+        move(updateVelocity);
+        specificUpdate(deltaTime);
     }
 
     /**
-     * Moves the enemy in the direction of its velocity.
+     * Applies immediate movement using the current strategy.
+     * @param direction movement vector (non-null)
      */
-    public void move() {
-        this.movementStrategy.move(this.getVelocity());
+    public void move(final Vector2D direction) {
+        final Position newPosition = movementStrategy.move(getPosition(), Objects.requireNonNull(direction));
+        setPosition(newPosition);
+    }
+    
+    protected void specificUpdate(final long deltaTime) {
     }
 
-    /**
-     * Retrieves the movement strategy of the enemy.
-     *
-     * @return the movement strategy.
-     */
     public Movable getMovementStrategy() {
         return this.movementStrategy;
     }
 
-    /**
-     * Retrieves the current state of the enemy.
-     *
-     * @return the current state.
-     */
     public EnemyType getState() {
-        return this.state;
+        return state;
     }
 
-    /**
-     * Sets the state of the enemy.
-     *
-     * @param state the new state.
-     */
     public void setState(final EnemyType state) {
-        this.state = state;
-        this.setMovementStrategy(state);
+        this.state = Objects.requireNonNull(state);
     }
 
-    /**
-     * Retrieves the velocity of the enemy.
-     *
-     * @return the velocity.
-     */
     public Vector2D getVelocity() {
-        return new Vector2D(this.velocity.getX(), this.velocity.getY());
+        return new Vector2D(velocity.getX(), velocity.getY());
     }
 
-    /**
-     * Sets the velocity of the enemy.
-     *
-     * @param velocity the new velocity.
-     */
     public void setVelocity(final Vector2D velocity) {
-        this.velocity = new Vector2D(velocity.getX(), velocity.getY());
+        this.velocity = new Vector2D(
+            Objects.requireNonNull(velocity).getX(),
+            velocity.getY()
+        );
     }
-
-    /**
-     * Updates the enemy's state based on the elapsed time.
-     *
-     * @param deltaTime the time elapsed since the last update.
-     */
-    @Override
-    public abstract void update(long deltaTime);
 }

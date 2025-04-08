@@ -21,15 +21,4 @@ public class Barrel extends Enemy {
     public Barrel(final Position position, final Dimension dimension, final EnemyType state, final Vector2D velocity) {
         super(position, dimension, state, velocity);
     }
-
-    /**
-     * Updates the barrel enemy's position based on the elapsed time.
-     *
-     * @param deltaTime the time elapsed since the last update
-     */
-    @Override
-    public void update(final long deltaTime) {
-        final Vector2D newVelocity = new Vector2D(this.getVelocity().getX() * deltaTime, this.getVelocity().getY() * deltaTime);
-        this.getMovementStrategy().move(newVelocity);
-    }
 }

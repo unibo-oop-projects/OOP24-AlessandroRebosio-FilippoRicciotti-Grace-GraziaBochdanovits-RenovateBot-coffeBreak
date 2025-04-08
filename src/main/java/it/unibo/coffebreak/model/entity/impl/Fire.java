@@ -22,14 +22,4 @@ public class Fire extends Enemy {
         super(position, dimension, state, velocity);
     }
 
-    /**
-     * Updates the fire enemy's position based on the elapsed time.
-     *
-     * @param deltaTime the time elapsed since the last update
-     */
-    @Override
-    public void update(final long deltaTime) {
-        final Vector2D newVelocity = new Vector2D(this.getVelocity().getX() * deltaTime, this.getVelocity().getY() * deltaTime);
-        this.getMovementStrategy().move(newVelocity);
-    }
 }
