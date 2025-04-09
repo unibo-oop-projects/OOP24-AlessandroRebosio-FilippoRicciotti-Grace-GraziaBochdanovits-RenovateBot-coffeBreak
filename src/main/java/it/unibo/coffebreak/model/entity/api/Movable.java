@@ -15,7 +15,7 @@ import it.unibo.coffebreak.model.utility.Vector2D;
  * @see Vector2D
  */
 public interface Movable {
-    
+
     /**
      * Calculates the resulting position after applying a movement vector to the
      * current position. The implementation must not modify the original position.

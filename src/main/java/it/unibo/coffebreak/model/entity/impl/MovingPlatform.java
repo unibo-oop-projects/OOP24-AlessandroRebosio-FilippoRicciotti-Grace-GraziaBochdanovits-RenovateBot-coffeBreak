@@ -49,10 +49,10 @@ public class MovingPlatform extends PlatformDecorator {
     /**
      * Gets the velocity vector of this platform.
      *
-     * @return the immutable velocity vector 
+     * @return a copy of the velocity vector 
      */
     public Vector2D getVelocity() {
-        return velocity;
+        return new Vector2D(velocity.getX(), velocity.getY());
     }
 
     /**
@@ -62,7 +62,7 @@ public class MovingPlatform extends PlatformDecorator {
      */
     @Override
     public void update(final long deltaTime) {
-        this.setPosition(new Position(this.getPlatformPosition().x() + velocity.getX() * deltaTime, 
-                                        this.getPlatformPosition().y() + velocity.getY() * deltaTime));
+        this.setPosition(new Position(this.getPlatformPosition().x() + velocity.getX() * deltaTime / 1000.0f, 
+                                        this.getPlatformPosition().y() + velocity.getY() * deltaTime / 1000.0f));
     }
 }
