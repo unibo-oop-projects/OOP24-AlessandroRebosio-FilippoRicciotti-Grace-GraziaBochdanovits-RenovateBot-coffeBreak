@@ -1,8 +1,7 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.item;
 
-import it.unibo.coffebreak.model.entity.ItemType;
-import it.unibo.coffebreak.model.entity.api.Collectible;
-import it.unibo.coffebreak.model.entity.api.CollectibleFactory;
+import it.unibo.coffebreak.model.api.entity.item.Collectible;
+import it.unibo.coffebreak.model.api.entity.item.CollectibleFactory;
 import it.unibo.coffebreak.model.entity.api.Entity;
 import it.unibo.coffebreak.model.utility.Dimension;
 import it.unibo.coffebreak.model.utility.Position;

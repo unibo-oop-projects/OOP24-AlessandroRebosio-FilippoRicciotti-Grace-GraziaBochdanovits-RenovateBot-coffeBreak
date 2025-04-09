@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.model.score.api;
+package it.unibo.coffebreak.model.api.score;
 
 import java.util.List;
 
-import it.unibo.coffebreak.model.score.impl.ScoreRepository.RepositoryException;
+import it.unibo.coffebreak.model.impl.score.ScoreRepository.RepositoryException;
 
 /**
  * Defines a persistence mechanism for storing and retrieving collections of

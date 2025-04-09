@@ -10,10 +10,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.LeaderBoard;
-import it.unibo.coffebreak.model.score.impl.GameLeaderBoard;
-import it.unibo.coffebreak.model.score.impl.ScoreEntry;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.LeaderBoard;
+import it.unibo.coffebreak.model.impl.score.GameLeaderBoard;
+import it.unibo.coffebreak.model.impl.score.ScoreEntry;
 
 /**
  * Comprehensive test suite for {@link LeaderBoard} interface and

@@ -1,6 +1,6 @@
-package it.unibo.coffebreak.model.score.impl;
+package it.unibo.coffebreak.model.impl.score;
 
-import it.unibo.coffebreak.model.score.api.Bonus;
+import it.unibo.coffebreak.model.api.score.Bonus;
 
 /**
  * Implementation of {@link Bonus} interface that manages a game bonus system.

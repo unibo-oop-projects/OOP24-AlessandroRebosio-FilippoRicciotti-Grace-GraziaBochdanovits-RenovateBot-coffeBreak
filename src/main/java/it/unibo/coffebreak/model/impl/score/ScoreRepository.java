@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score.impl;
+package it.unibo.coffebreak.model.impl.score;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.Repository;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.Repository;
 
 /**
  * File-based implementation of {@link Repository} for {@link Entry} objects

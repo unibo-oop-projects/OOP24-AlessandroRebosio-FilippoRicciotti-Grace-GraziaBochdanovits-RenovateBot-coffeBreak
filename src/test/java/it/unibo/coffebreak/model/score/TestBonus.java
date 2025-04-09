@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.score.api.Bonus;
-import it.unibo.coffebreak.model.score.impl.GameBonus;
+import it.unibo.coffebreak.model.api.score.Bonus;
+import it.unibo.coffebreak.model.impl.score.GameBonus;
 
 /**
  * Test class for verifying the behavior of {@link Bonus} interface

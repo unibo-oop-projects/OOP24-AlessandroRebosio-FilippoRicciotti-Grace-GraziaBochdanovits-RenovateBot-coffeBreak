@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score.api;
+package it.unibo.coffebreak.model.api.score;
 
 /**
  * Represents a bonus system that can be applied to a game.

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score.api;
+package it.unibo.coffebreak.model.api.score;
 
 import java.util.List;
 import java.util.NoSuchElementException;

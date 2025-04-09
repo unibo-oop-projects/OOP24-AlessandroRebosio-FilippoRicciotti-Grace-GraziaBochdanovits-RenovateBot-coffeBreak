@@ -1,15 +1,15 @@
-package it.unibo.coffebreak.model.score.impl;
+package it.unibo.coffebreak.model.impl.score;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.score.api.Bonus;
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.LeaderBoard;
-import it.unibo.coffebreak.model.score.api.Repository;
-import it.unibo.coffebreak.model.score.api.Score;
-import it.unibo.coffebreak.model.score.api.ScoreManager;
+import it.unibo.coffebreak.model.api.score.Bonus;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.LeaderBoard;
+import it.unibo.coffebreak.model.api.score.Repository;
+import it.unibo.coffebreak.model.api.score.Score;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
  * Default implementation of {@link ScoreManager} using.

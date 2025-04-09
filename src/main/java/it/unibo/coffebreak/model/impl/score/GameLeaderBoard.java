@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score.impl;
+package it.unibo.coffebreak.model.impl.score;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.LeaderBoard;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.LeaderBoard;
 
 /**
  * Thread-safe implementation of {@link LeaderBoard} maintaining top

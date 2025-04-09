@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entity;
+package it.unibo.coffebreak.model.impl.entity.item;
 
 /**
  * Enumeration representing the different types of collectible items in the

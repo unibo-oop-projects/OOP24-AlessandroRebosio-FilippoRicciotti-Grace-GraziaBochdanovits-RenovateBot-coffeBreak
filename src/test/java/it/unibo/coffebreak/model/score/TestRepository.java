@@ -17,10 +17,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.Repository;
-import it.unibo.coffebreak.model.score.impl.ScoreEntry;
-import it.unibo.coffebreak.model.score.impl.ScoreRepository;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.Repository;
+import it.unibo.coffebreak.model.impl.score.ScoreEntry;
+import it.unibo.coffebreak.model.impl.score.ScoreRepository;
 
 /**
  * Comprehensive test suite for {@link Repository} interface and

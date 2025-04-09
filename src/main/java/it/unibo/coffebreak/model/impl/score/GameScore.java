@@ -1,6 +1,6 @@
-package it.unibo.coffebreak.model.score.impl;
+package it.unibo.coffebreak.model.impl.score;
 
-import it.unibo.coffebreak.model.score.api.Score;
+import it.unibo.coffebreak.model.api.score.Score;
 
 /**
  * Basic implementation of {@link Score} without thread safety guarantees.

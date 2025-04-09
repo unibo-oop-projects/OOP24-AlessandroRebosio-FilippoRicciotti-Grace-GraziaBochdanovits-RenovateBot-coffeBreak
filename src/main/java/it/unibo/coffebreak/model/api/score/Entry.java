@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score.api;
+package it.unibo.coffebreak.model.api.score;
 
 /**
  * Represents an entry in a scoreboard, containing a player name and associated

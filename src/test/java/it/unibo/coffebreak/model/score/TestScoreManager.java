@@ -11,9 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.score.api.Entry;
-import it.unibo.coffebreak.model.score.api.ScoreManager;
-import it.unibo.coffebreak.model.score.impl.GameScoreManager;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
  * Comprehensive test suite for {@link ScoreManager} interface and
