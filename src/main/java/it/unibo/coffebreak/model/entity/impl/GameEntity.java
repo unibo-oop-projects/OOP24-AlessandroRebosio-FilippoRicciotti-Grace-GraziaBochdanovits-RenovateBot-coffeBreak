@@ -1,52 +1,72 @@
 package it.unibo.coffebreak.model.entity.impl;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.model.entity.api.Entity;
 import it.unibo.coffebreak.model.utility.Dimension;
 import it.unibo.coffebreak.model.utility.Position;
 
 /**
- * Represents a base class for game entities that have a position and a dimension.
- * This class implements the {@link Entity} interface and provides common functionality
- * for managing the position and dimension of entities in the game.
+ * Base abstract class for all game entities that have a physical representation.
+ * <p>
+ * Provides fundamental properties and behavior for entities that exist in the game world,
+ * including their position and dimensions. This class serves as the foundation for
+ * all concrete entity implementations in the game.
+ * </p>
+ * 
+ * @see Entity
  */
 public abstract class GameEntity implements Entity {
 
-    /*
-     * The position and the dimention of entities in the game.
+    /**
+     * The current position of the entity in game world coordinates.
+     * Expressed as a {@link Position} object containing x and y coordinates.
      */
     private Position position;
+
+    /**
+     * The physical dimensions of the entity.
+     * Expressed as a {@link Dimension} object containing width and height.
+     * This field is marked {@code final} and cannot be modified after construction.
+     */
     private final Dimension dimension;
 
-     /**
-     * Constructs a new {@link GameEntity} with the specified position and dimension.
+    /**
+     * Constructs a new game entity with the specified position and dimensions.
      *
-     * @param p the position of the entity.
-     * @param d the dimension of the entity.
+     * @param position the initial position of the entity (cannot be {@code null})
+     * @param dimension the dimensions of the entity (cannot be {@code null})
+     * @throws NullPointerException if either position or dimension is {@code null}
      */
-    public GameEntity(final Position p, final Dimension d) {
-        this.position = new Position(p.getX(), p.getY());
-        this.dimension = d;
+    public GameEntity(final Position position, final Dimension dimension) {
+        this.position = Objects.requireNonNull(position, "Position cannot be null");
+        this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
     }
 
     /**
-     * Sets the position of the entity.
+     * Updates the entity's position in the game world.
      *
-     * @param position the new position of the entity.
+     * @param position the new position to set (cannot be {@code null})
+     * @throws NullPointerException if position is {@code null}
      */
     public void setPosition(final Position position) {
-        this.position = new Position(position.getX(), position.getY());
+        this.position = Objects.requireNonNull(position, "Position cannot be null");
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the current position of the entity.
+     *
+     * @return the current position of the entity (never {@code null})
      */
     @Override
     public final Position getPosition() {
-        return new Position(this.position.getX(), this.position.getY()); 
+        return this.position; 
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the dimensions of the entity.
+     *
+     * @return the dimensions of the entity (never {@code null})
      */
     @Override
     public final Dimension getDimension() {
