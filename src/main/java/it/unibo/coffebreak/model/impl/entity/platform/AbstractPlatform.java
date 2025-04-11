@@ -1,8 +1,9 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.platform;
 
-import it.unibo.coffebreak.model.entity.api.Platform;
-import it.unibo.coffebreak.model.utility.Dimension;
-import it.unibo.coffebreak.model.utility.Position;
+import it.unibo.coffebreak.model.api.entity.platform.Platform;
+import it.unibo.coffebreak.model.impl.entity.GameEntity;
+import it.unibo.coffebreak.model.impl.utility.Dimension;
+import it.unibo.coffebreak.model.impl.utility.Position;
 
 /**
  * An abstract base implementation of the {@link Platform} interface that extends {@link GameEntity}.

@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.platform;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.entity.api.Platform;
+import it.unibo.coffebreak.model.api.entity.platform.Platform;
 
 /**
  * Abstract base class for platform decorators in the game.

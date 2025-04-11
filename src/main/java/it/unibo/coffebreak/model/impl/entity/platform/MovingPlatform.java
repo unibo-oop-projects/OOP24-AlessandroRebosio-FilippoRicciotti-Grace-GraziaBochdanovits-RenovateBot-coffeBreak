@@ -1,10 +1,10 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.platform;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.entity.api.Platform;
-import it.unibo.coffebreak.model.utility.Position;
-import it.unibo.coffebreak.model.utility.Vector2D;
+import it.unibo.coffebreak.model.api.entity.platform.Platform;
+import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
 /**
  * A decorator that adds movement capability to a platform.

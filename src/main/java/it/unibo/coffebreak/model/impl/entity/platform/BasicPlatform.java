@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.platform;
 
-import it.unibo.coffebreak.model.utility.Dimension;
-import it.unibo.coffebreak.model.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Dimension;
+import it.unibo.coffebreak.model.impl.utility.Position;
 
 /**
  * Represents the most elementary type of platform in the game,

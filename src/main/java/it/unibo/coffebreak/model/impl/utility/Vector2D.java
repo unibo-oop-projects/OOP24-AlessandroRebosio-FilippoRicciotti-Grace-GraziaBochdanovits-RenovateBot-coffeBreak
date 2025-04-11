@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.utility;
+package it.unibo.coffebreak.model.impl.utility;
 
 /**
  * Represents a 2D vector with x and y components.

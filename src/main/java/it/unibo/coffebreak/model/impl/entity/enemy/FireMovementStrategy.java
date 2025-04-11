@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.enemy;
 
-import it.unibo.coffebreak.model.entity.api.Movable;
-import it.unibo.coffebreak.model.utility.Position;
-import it.unibo.coffebreak.model.utility.Vector2D;
+import it.unibo.coffebreak.model.api.entity.Movable;
+import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
 /**
  * Implements the movement strategy for fire-type enemies.

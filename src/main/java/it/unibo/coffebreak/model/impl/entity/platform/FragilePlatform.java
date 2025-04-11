@@ -1,6 +1,6 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.platform;
 
-import it.unibo.coffebreak.model.entity.api.Platform;
+import it.unibo.coffebreak.model.api.entity.platform.Platform;
 
 /**
  * Represents a fragile platform in the game.

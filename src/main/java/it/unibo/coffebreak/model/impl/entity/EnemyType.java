@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entity;
+package it.unibo.coffebreak.model.impl.entity;
 
 /**
 * Represents the different types of enemies in the game.

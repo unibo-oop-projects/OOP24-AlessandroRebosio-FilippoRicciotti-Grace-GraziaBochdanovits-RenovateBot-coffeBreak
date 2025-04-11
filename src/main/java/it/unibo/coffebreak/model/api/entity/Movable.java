@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.entity.api;
+package it.unibo.coffebreak.model.api.entity;
 
-import it.unibo.coffebreak.model.utility.Position;
-import it.unibo.coffebreak.model.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
 /**
  * Defines the behavior for movable game entities. Implementations of this interface

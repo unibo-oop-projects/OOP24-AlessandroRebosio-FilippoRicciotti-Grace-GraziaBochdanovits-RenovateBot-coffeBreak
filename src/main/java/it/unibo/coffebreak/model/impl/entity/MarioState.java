@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entity;
+package it.unibo.coffebreak.model.impl.entity;
 
 /**
  * Represents the different states that Mario can be in during the game.

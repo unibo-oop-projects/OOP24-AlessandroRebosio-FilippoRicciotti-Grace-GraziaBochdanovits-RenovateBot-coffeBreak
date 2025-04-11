@@ -1,9 +1,9 @@
-package it.unibo.coffebreak.model.entity.impl;
+package it.unibo.coffebreak.model.impl.entity.enemy;
 
-import it.unibo.coffebreak.model.entity.EnemyType;
-import it.unibo.coffebreak.model.utility.Dimension;
-import it.unibo.coffebreak.model.utility.Position;
-import it.unibo.coffebreak.model.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.entity.EnemyType;
+import it.unibo.coffebreak.model.impl.utility.Dimension;
+import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
 /**
  * Represents a fire enemy in the game.

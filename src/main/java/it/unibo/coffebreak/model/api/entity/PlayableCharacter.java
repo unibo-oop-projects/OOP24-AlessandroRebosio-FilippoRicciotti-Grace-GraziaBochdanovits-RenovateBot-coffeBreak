@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entity.api;
+package it.unibo.coffebreak.model.api.entity;
 
 /**
  * Represents a playable character in the game.

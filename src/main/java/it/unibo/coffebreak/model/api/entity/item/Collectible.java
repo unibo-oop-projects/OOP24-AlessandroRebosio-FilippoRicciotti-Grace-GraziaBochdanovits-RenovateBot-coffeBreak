@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.api.entity.item;
 
-import it.unibo.coffebreak.model.entity.api.Entity;
+import it.unibo.coffebreak.model.api.entity.Entity;
 
 /**
  * Represents a collectible item in the game world.

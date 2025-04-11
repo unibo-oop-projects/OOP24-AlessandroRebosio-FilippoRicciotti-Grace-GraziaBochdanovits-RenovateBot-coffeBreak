@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.entity.api;
+package it.unibo.coffebreak.model.api.entity;
 
-import it.unibo.coffebreak.model.utility.Dimension;
-import it.unibo.coffebreak.model.utility.Position;
+import it.unibo.coffebreak.model.impl.utility.Dimension;
+import it.unibo.coffebreak.model.impl.utility.Position;
 
 /**
  * Represents a fundamental game entity with spatial properties and update capability.

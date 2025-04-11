@@ -2,11 +2,11 @@ package it.unibo.coffebreak.model.impl.entity.item;
 
 import java.util.Objects;
 
+import it.unibo.coffebreak.model.api.entity.Entity;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
-import it.unibo.coffebreak.model.entity.api.Entity;
-import it.unibo.coffebreak.model.entity.impl.GameEntity;
-import it.unibo.coffebreak.model.utility.Dimension;
-import it.unibo.coffebreak.model.utility.Position;
+import it.unibo.coffebreak.model.impl.entity.GameEntity;
+import it.unibo.coffebreak.model.impl.utility.Dimension;
+import it.unibo.coffebreak.model.impl.utility.Position;
 
 /**
  * Abstract base class for all collectible items in the game.
