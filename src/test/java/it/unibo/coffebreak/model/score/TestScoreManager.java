@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,6 +57,15 @@ class TestScoreManager {
     void setUp() {
         Optional.of(ScoreRepository.DATA_FILE.delete());
         this.scoreManager = new GameScoreManager();
+    }
+
+    /**
+     * Final cleanup after all tests complete.
+     * 
+     */
+    @AfterAll
+    static void tearDown() {
+        Optional.of(ScoreRepository.DATA_FILE.delete());
     }
 
     /**
