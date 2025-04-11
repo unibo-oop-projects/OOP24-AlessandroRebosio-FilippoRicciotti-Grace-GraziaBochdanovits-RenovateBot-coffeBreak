@@ -36,25 +36,11 @@ import it.unibo.coffebreak.model.api.score.Repository;
 public class ScoreRepository implements Repository<Entry> {
 
     /**
-     * Default filename for storage ({@value}).
-     * Located in user's home directory for cross-platform compatibility.
-     */
-    private static final String FILE_NAME = "leaderBoard.ser";
-
-    /**
      * The persistent storage location.
      * 
-     * @implSpec Final to ensure thread-safe publication
+     * @implSpec Final to ensure thread-safe publication.
      */
-    private final File dataFile;
-
-    /**
-     * Creates a new repository using default storage location.
-     * The actual file won't be created until first save operation.
-     */
-    public ScoreRepository() {
-        this.dataFile = new File(System.getProperty("user.home"), FILE_NAME);
-    }
+    public static final File DATA_FILE = new File(System.getProperty("user.home"), "leaderBoard.ser");
 
     /**
      * {@inheritDoc}
@@ -74,7 +60,7 @@ public class ScoreRepository implements Repository<Entry> {
             return true;
         }
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(this.dataFile))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
             oos.writeObject(list);
             return true;
         } catch (final IOException e) {
@@ -95,11 +81,11 @@ public class ScoreRepository implements Repository<Entry> {
     @Override
     @SuppressWarnings("unchecked")
     public List<Entry> load() {
-        if (!this.dataFile.exists()) {
+        if (!DATA_FILE.exists()) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(this.dataFile))) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
             return new ArrayList<>((List<Entry>) ois.readObject());
         } catch (IOException | ClassNotFoundException e) {
             throw new RepositoryException("Error while loading data", e);
