@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
+import it.unibo.coffebreak.model.impl.score.ScoreRepository;
 
 /**
  * Comprehensive test suite for {@link ScoreManager} interface and
@@ -56,7 +57,7 @@ class TestScoreManager {
      */
     @BeforeEach
     void setUp() throws IOException {
-        Files.deleteIfExists(TestRepository.FILE_PATH);
+        Optional.of(ScoreRepository.DATA_FILE.delete());
         this.scoreManager = new GameScoreManager();
     }
 

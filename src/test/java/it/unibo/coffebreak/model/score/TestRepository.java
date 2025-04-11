@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,7 +43,6 @@ import it.unibo.coffebreak.model.impl.score.ScoreRepository;
  */
 class TestRepository {
 
-    public static final Path FILE_PATH = Path.of(System.getProperty("user.home"), "leaderBoard.ser");
     private static final String PLAYER_1 = "Player1";
     private static final String PLAYER_2 = "Player2";
     private static final String PLAYER_3 = "Player3";
@@ -63,17 +62,16 @@ class TestRepository {
     @BeforeEach
     void setUp() throws IOException {
         this.repository = new ScoreRepository();
-        Files.deleteIfExists(FILE_PATH);
+        tearDown();
     }
 
     /**
      * Final cleanup after all tests complete.
      * 
-     * @throws IOException if cleanup fails
      */
     @AfterAll
-    static void tearDown() throws IOException {
-        Files.deleteIfExists(FILE_PATH);
+    static void tearDown() {
+        Optional.of(ScoreRepository.DATA_FILE.delete());
     }
 
     /**
@@ -84,7 +82,7 @@ class TestRepository {
         final List<Entry> entries = createTestEntries();
 
         assertTrue(repository.save(entries));
-        assertTrue(Files.exists(FILE_PATH));
+        assertTrue(ScoreRepository.DATA_FILE.exists());
         assertEquals(entries.size(), repository.load().size());
     }
 
@@ -106,7 +104,7 @@ class TestRepository {
      */
     @Test
     void shouldReturnEmptyListWhenFileNotExists() {
-        assertFalse(Files.exists(FILE_PATH));
+        assertFalse(ScoreRepository.DATA_FILE.exists());
         assertTrue(repository.load().isEmpty());
     }
 
@@ -147,7 +145,7 @@ class TestRepository {
      */
     @Test
     void shouldHandleCorruptedDataFile() throws IOException {
-        Files.write(FILE_PATH, "invalid data".getBytes(StandardCharsets.UTF_8));
+        Files.write(ScoreRepository.DATA_FILE.toPath(), "invalid data".getBytes(StandardCharsets.UTF_8));
 
         assertThrows(RuntimeException.class,
                 repository::load);
