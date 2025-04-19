@@ -24,7 +24,7 @@
         }
 
         interface Movable <<interface>> {
-            + {abstract} move(direction: Vector2D): void
+            +{abstract} move(currentPosition: Position, direction: Vector2D): Position
         }
 
         interface PlayableCharacter <<interface>> {
@@ -33,11 +33,29 @@
         }
 
         class Mario extends GameEntity implements PlayableCharacter, Movable {
+            - livesManager: LivesManager
+            - scoreManager: GameScoreManager
+            - currentState: MarioStateInterface
+            - startPosition: Position
             - velocity: Vector2D
-            - lives: Integer
-            - state : MarioState
-            + climb(direction: int): void
-            + useHammer(): void
+            - isOnGround: boolean
+            + changeState(MarioState): void
+            - changeState(MarioStateInterface): void
+            + collectItem(Collectible): void
+            + resetToInitialState(): void
+            + isAlive(): boolean
+        }
+
+        Mario *-- LivesManager : manages
+        Mario *-- MarioStateInterface : state
+
+        class LivesManager {
+            - {static} START_LIVES: int = 3
+            - lives: int
+            + loseLife(): void
+            + reset(): void
+            + getLives(): int
+            + isGameOver(): boolean
         }
 
         interface Villain <<interface>> {
@@ -126,6 +144,19 @@
         class Barrel extends Enemy
         class Fire extends Enemy
 
+        interface MarioStateInterface <<interface>> {
+            + move(Mario, Vector2D): Position
+            + jump(Mario): void
+            + onStateEnter(Mario): void
+            + onStateExit(Mario): void
+        }
+
+        abstract class AbstractMarioState implements MarioStateInterface
+        
+        class NormalState extends AbstractMarioState
+        class WithHammerState extends AbstractMarioState
+        class DeadState extends AbstractMarioState
+
         enum EnemyType {
             BARREL
             FIRE
@@ -133,8 +164,10 @@
 
         enum MarioState {
             NORMAL
-            WITHHAMMER
+            WITH_HAMMER
             DEAD
+            + createState(Mario): AbstractMarioState
+            + canTransitionTo(MarioState): boolean
         } 
 
         enum CollectibleType {
@@ -187,7 +220,7 @@
 
             **Transizioni**:
             ◄ NORMAL → WITHHAMMER (raccoglie martello)
-            ◄ ANY → DIE (perde tutte le vite)
+            ◄ NORMAL → DIE (perde tutte le vite)
 
             **Vantaggi**:
             → Logica ben organizzata per stato
