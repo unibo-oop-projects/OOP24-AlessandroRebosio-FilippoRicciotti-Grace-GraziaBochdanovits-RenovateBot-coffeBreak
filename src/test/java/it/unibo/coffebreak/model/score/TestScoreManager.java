@@ -55,7 +55,7 @@ class TestScoreManager {
      */
     @BeforeEach
     void setUp() {
-        Optional.of(ScoreRepository.DATA_FILE.delete());
+        tearDown();
         this.scoreManager = new GameScoreManager();
     }
 
