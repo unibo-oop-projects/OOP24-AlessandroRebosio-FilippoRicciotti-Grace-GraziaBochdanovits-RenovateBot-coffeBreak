@@ -28,7 +28,7 @@ public class WithHammerState extends AbstractMarioState {
      * Timer instance used to track and manage the duration of the hammer state.
      * The timer schedules an automatic state transition when the duration expires.
      */
-    private final Timer timer;
+    private Timer timer;
 
     /**
      * Creates a new WithHammerState for the specified Mario instance.
@@ -119,5 +119,34 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public MarioState getStateType() {
         return MarioState.WITH_HAMMER;
+    }
+
+    /**
+     * Returns the timer responsible for managing hammer state expiration.
+     * 
+     * @return the timer instance
+     */
+    protected Timer getTimer() {
+        return this.timer;
+    }
+
+    /**
+     * Sets a new timer. Used mainly for testing purposes.
+     * 
+     * @param timer the timer to set
+     */
+    protected void setTimer(final Timer timer) {
+        this.timer = timer;
+    }
+
+    /**
+     * Creates the {@link Timer} used to schedule the timeout for the hammer state.
+     * <p>
+     * This method can be overridden for testing purposes to provide a custom timer.
+     *
+     * @return a new {@link Timer} instance, set to run as a daemon thread
+     */
+    protected Timer createTimer() {
+        return new Timer("HammerStateTimer", true);
     }
 }

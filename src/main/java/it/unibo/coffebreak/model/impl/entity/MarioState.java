@@ -50,7 +50,7 @@ public enum MarioState {
 
         @Override
         public boolean canTransitionTo(final MarioState newState) {
-            return newState == NORMAL;
+            return newState == NORMAL || newState == DEAD;
         }
     },
 

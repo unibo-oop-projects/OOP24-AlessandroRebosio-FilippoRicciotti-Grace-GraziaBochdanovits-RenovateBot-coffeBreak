@@ -194,6 +194,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
             handleGameOver();
         } else {
             resetToInitialState();
+            changeState(MarioState.NORMAL);
         }
     }
 
@@ -203,15 +204,14 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      */
     private void handleGameOver() {
         changeState(MarioState.DEAD);
-        resetToInitialState();
         scoreManager.endGame("Player");
+        resetToInitialState();
     }
 
     /**
      * Resets Mario's physical state to the starting conditions.
      */
     private void resetToInitialState() {
-        changeState(MarioState.NORMAL);
         setPosition(startPosition);
         setVelocity(new Vector2D(0, 0));
     }
