@@ -27,6 +27,20 @@ public interface MarioStateInterface {
     Position move(Mario mario, Vector2D direction);
 
     /**
+     * Updates Mario's state-specific logic for each game frame.
+     * <p>
+     * This method is called every frame and should contain state-specific update logic,
+     * such as timing for temporary power-ups, animation state changes, or other
+     * time-dependent behavior.
+     *
+     * @param mario the Mario instance being updated, cannot be {@code null}
+     * @param deltaTime the time elapsed since the last frame in milliseconds
+     * @throws NullPointerException if {@code mario} is {@code null}
+     * @throws IllegalArgumentException if {@code deltaTime} is negative
+     */
+    void update(Mario mario, long deltaTime);
+
+    /**
      * Handles jump behavior specific to the current state.
      * Implementations may change Mario's state (e.g., to jumping state) and
      * apply appropriate physics for the jump.

@@ -65,6 +65,25 @@ public abstract class AbstractMarioState implements MarioStateInterface {
     /**
      * {@inheritDoc}
      * <p>
+     * Base implementation does nothing. Concrete states should override this to implement
+     * state-specific behavior that needs to be updated each frame.
+     * 
+     * @param mario the Mario instance being updated, cannot be null
+     * @param deltaTime the time elapsed since last frame in milliseconds
+     * @throws NullPointerException if {@code mario} is null
+     * @throws IllegalArgumentException if {@code deltaTime} is negative
+     */
+    @Override
+    public void update(final Mario mario, final long deltaTime) {
+        Objects.requireNonNull(mario);
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("Delta time cannot be negative");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
      * This implementation applies an upward force to Mario's velocity if he's not already jumping.
      * Sets the {@link #isJumping} flag to true when initiating a jump.
      *

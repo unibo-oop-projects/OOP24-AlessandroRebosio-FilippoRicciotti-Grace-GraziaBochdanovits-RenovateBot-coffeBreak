@@ -106,6 +106,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      */
     @Override
     public void update(final long deltaTime) {
+        currentState.update(this, deltaTime);
         final Vector2D displacement = new Vector2D(velocity.getX() * deltaTime / 1000.0f,
                                                     velocity.getY() * deltaTime / 1000.0f);
         setPosition(move(getPosition(), displacement));
