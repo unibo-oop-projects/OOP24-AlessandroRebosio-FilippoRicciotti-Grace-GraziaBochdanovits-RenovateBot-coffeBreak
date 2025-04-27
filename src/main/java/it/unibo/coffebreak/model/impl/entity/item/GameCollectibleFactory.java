@@ -36,10 +36,8 @@ public class GameCollectibleFactory implements CollectibleFactory {
     @Override
     public Collectible createHammer(final Position position, final Dimension dimension) {
         return buildCollectible(ItemType.HAMMER, position, dimension, collector -> {
-            if (collector instanceof Mario) {
-                if (((Mario) collector).isAlive()) {
-                    ((Mario) collector).changeState(MarioState.WITH_HAMMER);
-                }
+            if (collector instanceof Mario mario && mario.isAlive()) {
+                mario.changeState(MarioState.WITH_HAMMER);
             }
             // activate power-up)
         });
