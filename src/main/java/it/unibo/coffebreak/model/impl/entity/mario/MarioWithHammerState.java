@@ -20,6 +20,18 @@ public class MarioWithHammerState extends AbstractMarioState {
     private final long expirationTime;
 
     /**
+     * Creates a new WithHammerState for testing purposes with a specific expiration time.
+     *
+     * @param mario the Mario instance acquiring the hammer, cannot be null
+     * @param expirationTime the custom expiration time in milliseconds
+     * @throws NullPointerException if {@code mario} is null
+     */
+    public MarioWithHammerState(final Mario mario, final long expirationTime) {
+        super(mario);
+        this.expirationTime = expirationTime;
+    }
+
+    /**
      * Creates a new WithHammerState for the specified Mario instance.
      * Initializes the state and sets the expiration time for when Mario
      * should return to normal state.
@@ -28,8 +40,16 @@ public class MarioWithHammerState extends AbstractMarioState {
      * @throws NullPointerException if {@code mario} is null
      */
     public MarioWithHammerState(final Mario mario) {
-        super(mario);
-        this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
+        this(mario, System.currentTimeMillis() + HAMMER_DURATION);
+    }
+
+    /**
+     * Checks if the hammer state has expired.
+     *
+     * @return true if the current time is past the expiration time, false otherwise
+     */
+    public boolean isExpired() {
+        return System.currentTimeMillis() >= expirationTime;
     }
 
     /**
@@ -41,7 +61,7 @@ public class MarioWithHammerState extends AbstractMarioState {
      */
     @Override
     public void update(final Mario mario, final long deltaTime) {
-        if (System.currentTimeMillis() >= expirationTime) {
+        if (isExpired()) {
             mario.changeState(MarioState.NORMAL);
         }
     }
