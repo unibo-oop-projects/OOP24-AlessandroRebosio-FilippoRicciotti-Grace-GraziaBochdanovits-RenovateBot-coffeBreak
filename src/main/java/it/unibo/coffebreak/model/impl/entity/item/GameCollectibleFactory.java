@@ -3,6 +3,8 @@ package it.unibo.coffebreak.model.impl.entity.item;
 import it.unibo.coffebreak.model.api.entity.Entity;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
 import it.unibo.coffebreak.model.api.entity.item.CollectibleFactory;
+import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.Mario;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
 
@@ -34,6 +36,11 @@ public class GameCollectibleFactory implements CollectibleFactory {
     @Override
     public Collectible createHammer(final Position position, final Dimension dimension) {
         return buildCollectible(ItemType.HAMMER, position, dimension, collector -> {
+            if (collector instanceof Mario) {
+                if (((Mario) collector).isAlive()) {
+                    ((Mario) collector).changeState(MarioState.WITH_HAMMER);
+                }
+            }
             // activate power-up)
         });
     }
