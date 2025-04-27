@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.api.entity.item;
 
 import it.unibo.coffebreak.model.api.entity.Entity;
+import it.unibo.coffebreak.model.impl.entity.item.ItemType;
 
 /**
  * Represents a collectible item in the game world.
@@ -33,6 +34,13 @@ public interface Collectible {
      * @param collector the entity that collects the item, typically the player
      */
     void collect(Entity collector);
+
+    /**
+     * Gets the type of this collectible.
+     * 
+     * @return the ItemType of this collectible
+     */
+    ItemType getType();
 
     /**
      * Resets the collectible to its initial uncollected state.

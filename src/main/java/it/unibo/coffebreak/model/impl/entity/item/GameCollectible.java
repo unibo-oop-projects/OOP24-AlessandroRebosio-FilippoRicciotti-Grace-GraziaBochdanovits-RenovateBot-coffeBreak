@@ -84,10 +84,9 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
     }
 
     /**
-     * Gets the type of this collectible.
-     * 
-     * @return the ItemType of this collectible
+     * {@inheritDoc}
      */
+    @Override
     public ItemType getType() {
         return this.type;
     }
