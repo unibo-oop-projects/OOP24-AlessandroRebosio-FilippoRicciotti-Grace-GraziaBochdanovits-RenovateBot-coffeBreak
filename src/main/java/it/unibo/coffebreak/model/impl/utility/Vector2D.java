@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.impl.utility;
 
+import java.util.Objects;
+
 /**
  * Represents a 2D vector with x and y components.
  */
@@ -85,4 +87,37 @@ public class Vector2D {
         return new Vector2D(this.x * scalar, this.y * scalar);
     }
 
+    /**
+     * Compares this vector to the specified object for equality.
+     * Returns true if and only if:
+     * <ul>
+     *   <li>The argument is not null</li>
+     *   <li>The argument is a Vector2D object</li>
+     *   <li>Both vectors have exactly the same x and y components</li>
+     * </ul>
+     * 
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Vector2D vector2D = (Vector2D) obj;
+        return Float.compare(vector2D.x, x) == 0 && Float.compare(vector2D.y, y) == 0;
+    }
+
+    /**
+     * Returns a hash code value for this vector.
+     * 
+     * @return a hash code value based on the vector's components
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }
