@@ -47,7 +47,7 @@ public final class BarrelManager implements BarrelTransformationObserver {
     @Override
     public void onBarrelTransformedToFire(final Barrel barrel, final Vector2D newVelocity) {
         Objects.requireNonNull(barrel, "Barrel cannot be null");
-        Objects.requireNonNull(newVelocity, "Velocity vector cannot be null");
+        Objects.requireNonNull(newVelocity, "NewVelocity cannot be null");
         activeEnemies.remove(barrel);
         final Fire fire = new Fire(barrel.getPosition(), barrel.getDimension(), newVelocity);
         activeEnemies.add(fire);
