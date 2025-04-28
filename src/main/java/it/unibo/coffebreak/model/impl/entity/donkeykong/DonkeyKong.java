@@ -93,12 +93,7 @@ public final class DonkeyKong extends GameEntity implements Villain {
      */
     @Override
     public void throwBarrel() {
-        //observers.forEach(BarrelThrowObserver::onBarrelThrown);
-        observers.forEach(observer -> {
-            try {
-                observer.onBarrelThrown();
-            } catch (Exception e) { }
-        });
+        observers.forEach(BarrelThrowObserver::onBarrelThrown);
     }
 
     /**
