@@ -27,8 +27,8 @@ import it.unibo.coffebreak.model.api.score.Repository;
  */
 public class ScoreRepository implements Repository<Entry> {
 
-    /** The directory within the user's home where data is stored. */
-    public static final File DATA_DIR = new File(System.getProperty("user.home"), ".coffeBreak");
+    /** The Folder name used for files. */
+    private static final String FOLDER = ".coffeBreak";
 
     /** The name of the file that stores the serialized leaderboard data. */
     private static final String FILE_NAME = "dk_leaderboard.ser";
@@ -36,8 +36,23 @@ public class ScoreRepository implements Repository<Entry> {
     /** The file extension used for backup files. */
     private static final String BACKUP_EXT = ".bak";
 
+    /** The directory where the data files will be stored. */
+    public static final File DATA_DIR = new File(System.getProperty("user.home"), FOLDER);
+
     /** The file that holds the persistent leaderboard data. */
-    private static final File DATA_FILE = new File(DATA_DIR, FILE_NAME);
+    public static final File DATA_FILE = new File(DATA_DIR, FILE_NAME);
+
+    /** The file that holds the persistent leaderboard data. */
+    public static final File BACKUP_FILE = new File(DATA_DIR, FILE_NAME + BACKUP_EXT);
+
+    /**
+     * Constructor that ensures the data directory exists.
+     */
+    public ScoreRepository() {
+        if (!DATA_DIR.exists() && !DATA_DIR.mkdirs()) {
+            throw new RepositoryException("Could not create data directory: " + DATA_DIR.getAbsolutePath());
+        }
+    }
 
     /**
      * Saves a list of {@link Entry} objects to persistent storage.
@@ -93,14 +108,25 @@ public class ScoreRepository implements Repository<Entry> {
     }
 
     /**
+     * Deletes all repository files including the data directory.
+     * 
+     * @return true if all files were successfully deleted or didn't exist, false
+     *         otherwise
+     */
+    public static boolean deleteAllFiles() {
+        return (!DATA_FILE.exists() || DATA_FILE.delete())
+                && (!BACKUP_FILE.exists() || BACKUP_FILE.delete())
+                && (!DATA_DIR.exists() || DATA_DIR.delete());
+    }
+
+    /**
      * Creates a backup of the current leaderboard file.
      * 
      * @throws RepositoryException if the backup operation fails
      */
     private void createBackup() {
         try {
-            Files.copy(DATA_FILE.toPath(),
-                    new File(DATA_FILE.getParent(), FILE_NAME + BACKUP_EXT).toPath(),
+            Files.copy(DATA_FILE.toPath(), BACKUP_FILE.toPath(),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (final IOException e) {
             throw new RepositoryException("Backup creation failed", e);
@@ -114,10 +140,9 @@ public class ScoreRepository implements Repository<Entry> {
      * @throws RepositoryException if the restore operation fails
      */
     private boolean restoreFromBackup() {
-        final File backupFile = new File(DATA_FILE.getParent(), FILE_NAME + BACKUP_EXT);
-        if (backupFile.exists()) {
+        if (BACKUP_FILE.exists()) {
             try {
-                Files.copy(backupFile.toPath(), DATA_FILE.toPath(),
+                Files.copy(BACKUP_FILE.toPath(), DATA_FILE.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
                 return true;
             } catch (final IOException e) {
@@ -132,14 +157,19 @@ public class ScoreRepository implements Repository<Entry> {
      * Wraps lower-level IO and serialization exceptions.
      */
     public static class RepositoryException extends RuntimeException {
-
-        /**
-         * Serial version UID for consistent deserialization.
-         */
         private static final long serialVersionUID = 1L;
 
         /**
          * Creates an exception with detailed context.
+         * 
+         * @param message the operational context
+         */
+        public RepositoryException(final String message) {
+            super(message);
+        }
+
+        /**
+         * Creates an exception with detailed context and cause.
          * 
          * @param message the operational context
          * @param cause   the root failure cause

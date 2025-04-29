@@ -10,7 +10,8 @@ import it.unibo.coffebreak.model.api.score.Score;
 import it.unibo.coffebreak.model.impl.score.GameScore;
 
 /**
- * Test class for {@link Score} interface and {@link GameScore} implementation.
+ * Test class for {@link GameScore} implementation. Verifies score
+ * initialization, incrementing, and reset functionality.
  * 
  * @author Alessandro Rebosio
  */
@@ -28,6 +29,14 @@ class TestScore {
     @BeforeEach
     void init() {
         this.score = new GameScore();
+    }
+
+    /**
+     * Tests that a newly created GameScore has zero value.
+     */
+    @Test
+    void testInitialScoreIsZero() {
+        assertEquals(0, score.getScore());
     }
 
     /**

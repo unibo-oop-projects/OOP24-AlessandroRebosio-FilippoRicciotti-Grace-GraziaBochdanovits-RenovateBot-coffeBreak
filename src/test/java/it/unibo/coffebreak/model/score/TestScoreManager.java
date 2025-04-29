@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
-import it.unibo.coffebreak.model.impl.score.ScoreRepository;
 
 /**
  * Comprehensive test suite for {@link ScoreManager} interface and
@@ -65,7 +63,7 @@ class TestScoreManager {
      */
     @AfterAll
     static void tearDown() {
-        Optional.of(ScoreRepository.DATA_DIR.delete());
+        TestRepository.tearDown();
     }
 
     /**

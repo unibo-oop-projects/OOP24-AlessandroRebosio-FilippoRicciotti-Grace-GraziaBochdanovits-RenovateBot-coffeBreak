@@ -10,18 +10,8 @@ import it.unibo.coffebreak.model.api.score.Bonus;
 import it.unibo.coffebreak.model.impl.score.GameBonus;
 
 /**
- * Test class for verifying the behavior of {@link Bonus} interface
- * and its implementation {@link GameBonus}.
- * 
- * <p>
- * Tests cover:
- * <ul>
- * <li>Initial state verification</li>
- * <li>Bonus setting functionality</li>
- * <li>Bonus calculation behavior</li>
- * <li>Edge case handling</li>
- * <li>Error conditions</li>
- * </ul>
+ * Test class for {@link GameBonus} implementation. Verifies bonus
+ * initialization, setting, calculation, and edge cases.
  * 
  * @author Alessandro Rebosio
  */

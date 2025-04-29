@@ -53,6 +53,14 @@ class TestLeaderBoard {
     }
 
     /**
+     * Tests that constructor throws NullPointerException with null input.
+     */
+    @Test
+    void testConstructorWithNullListThrowsException() {
+        assertThrows(NullPointerException.class, () -> new GameLeaderBoard(null));
+    }
+
+    /**
      * Tests that entries are added in correct descending score order.
      */
     @Test
@@ -113,7 +121,7 @@ class TestLeaderBoard {
     void shouldAcceptEmptyPlayerNames() {
         final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
         leaderBoard.addEntry(entry);
-        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().get(0).getName());
+        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().getFirst().getName());
     }
 
     /**
