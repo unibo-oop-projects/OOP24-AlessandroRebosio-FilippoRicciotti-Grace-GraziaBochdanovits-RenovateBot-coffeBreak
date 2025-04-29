@@ -58,8 +58,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implNote Delegates to {@link Score#getScore()}
      */
     @Override
     public int getCurrentScore() {
@@ -68,8 +66,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implNote Delegates to {@link Bonus#getBonus()}
      */
     @Override
     public int getCurrentBonus() {
@@ -78,8 +74,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implNote Returns leaderboard snapshot
      */
     @Override
     public List<Entry> getLeaderBoard() {
@@ -98,8 +92,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implNote Delegates to {@link Bonus#calculate()}
      */
     @Override
     public void calculateBonus() {
@@ -108,14 +100,9 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implSpec Validates input before delegation
      */
     @Override
     public void earnPoints(final int amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Points amount cannot be negative");
-        }
         this.score.increase(amount);
     }
 
@@ -131,8 +118,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implNote Converts entire bonus to points
      */
     @Override
     public void endMap() {
@@ -141,14 +126,6 @@ public class GameScoreManager implements ScoreManager<Entry> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @implSpec Performs:
-     *           <ol>
-     *           <li>Name validation</li>
-     *           <li>Leaderboard update</li>
-     *           <li>Score reset</li>
-     *           <li>Conditional persistence</li>
-     *           </ol>
      */
     @Override
     public void endGame(final String name) {
@@ -157,11 +134,9 @@ public class GameScoreManager implements ScoreManager<Entry> {
             throw new IllegalArgumentException("Player name cannot be blank");
         }
 
-        this.leaderBoard.addEntry(new ScoreEntry(name, this.score.getScore()));
-        this.score.reset();
-
-        if (this.leaderBoard.isWritten()) {
+        if (this.leaderBoard.addEntry(new ScoreEntry(name, this.getCurrentScore()))) {
             this.repository.save(this.getLeaderBoard());
+            this.score.reset();
         }
     }
 }

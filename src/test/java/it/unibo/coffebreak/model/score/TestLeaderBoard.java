@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,15 @@ class TestLeaderBoard {
      */
     @BeforeEach
     void init() {
-        this.leaderBoard = new GameLeaderBoard();
+        this.leaderBoard = new GameLeaderBoard(new ArrayList<>());
+    }
+
+    /**
+     * Tests that constructor throws NullPointerException with null input.
+     */
+    @Test
+    void testConstructorWithNullListThrowsException() {
+        assertThrows(NullPointerException.class, () -> new GameLeaderBoard(null));
     }
 
     /**
@@ -63,9 +72,7 @@ class TestLeaderBoard {
         final List<Entry> expected = List.of(
                 new ScoreEntry(PLAYER_3, SCORE_3),
                 new ScoreEntry(PLAYER_2, SCORE_2),
-                new ScoreEntry(PLAYER_1, SCORE_1),
-                new ScoreEntry(EMPTY_NAME, 0),
-                new ScoreEntry(EMPTY_NAME, 0));
+                new ScoreEntry(PLAYER_1, SCORE_1));
 
         assertEquals(expected, leaderBoard.getLeaderBoard());
     }
@@ -108,27 +115,13 @@ class TestLeaderBoard {
     }
 
     /**
-     * Tests modification flag behavior.
-     */
-    @Test
-    void shouldTrackModifications() {
-        assertFalse(leaderBoard.isWritten());
-
-        leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
-        assertTrue(leaderBoard.isWritten());
-        assertFalse(leaderBoard.isWritten());
-
-        assertFalse(leaderBoard.isWritten());
-    }
-
-    /**
      * Tests handling of entries with empty names.
      */
     @Test
     void shouldAcceptEmptyPlayerNames() {
         final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
         leaderBoard.addEntry(entry);
-        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().get(0).getName());
+        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().getFirst().getName());
     }
 
     /**

@@ -59,8 +59,8 @@ class TestRepository {
      */
     @BeforeEach
     void setUp() {
-        this.repository = new ScoreRepository();
         tearDown();
+        this.repository = new ScoreRepository();
     }
 
     /**
@@ -69,7 +69,7 @@ class TestRepository {
      */
     @AfterAll
     static void tearDown() {
-        Optional.of(ScoreRepository.DATA_FILE.delete());
+        Optional.of(ScoreRepository.deleteAllFiles());
     }
 
     /**

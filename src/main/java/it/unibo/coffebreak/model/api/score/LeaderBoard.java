@@ -10,8 +10,7 @@ import java.util.List;
  * minimum score requirements.
  *
  * @param <X> the type of entries in this leaderboard, must implement
- *            {@link Comparable}
- *            or otherwise provide ordering capability
+ *            {@link Comparable} or otherwise provide ordering capability
  * 
  * @author Alessandro Rebosio
  */
@@ -37,15 +36,8 @@ public interface LeaderBoard<X> {
      * @throws NullPointerException if entry is null
      * @throws ClassCastException   if entry type is incompatible with this
      *                              leaderboard
+     * 
+     * @return a boolean, if it is true the element was added, otherwise false
      */
-    void addEntry(X entry);
-
-    /**
-     * Checks and resets the modification flag of this leaderboard.
-     * Useful for change detection without full comparison of entries.
-     *
-     * @return true if modified since last check or creation, false otherwise
-     * @apiNote This operation is stateful - calling the method resets the flag
-     */
-    boolean isWritten();
+    boolean addEntry(X entry);
 }

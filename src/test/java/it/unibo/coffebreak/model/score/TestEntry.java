@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,17 +12,8 @@ import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.impl.score.ScoreEntry;
 
 /**
- * Comprehensive test suite for {@link Entry} interface and {@link ScoreEntry}
- * implementation.
- * 
- * <p>
- * Tests verify:
- * <ul>
- * <li>Constructor validation and preconditions</li>
- * <li>Proper functioning of accessor methods</li>
- * <li>Immutable characteristics of entries</li>
- * <li>Edge cases in entry creation</li>
- * </ul>
+ * Test class for {@link ScoreEntry} implementation. Verifies entry creation,
+ * comparison, equality, and string representation.
  * 
  * @author Alessandro Rebosio
  */
@@ -56,11 +48,6 @@ class TestEntry {
 
     /**
      * Verifies constructor rejects null names.
-     * Checks that:
-     * <ul>
-     * <li>NullPointerException is thrown</li>
-     * <li>Exception contains proper message</li>
-     * </ul>
      */
     @Test
     void shouldRejectNullName() {
@@ -99,11 +86,6 @@ class TestEntry {
 
     /**
      * Tests getName() returns expected value.
-     * Verifies:
-     * <ul>
-     * <li>Returned name matches constructor argument</li>
-     * <li>Name comparison is case-sensitive</li>
-     * </ul>
      */
     @Test
     void shouldReturnCorrectName() {
@@ -115,11 +97,6 @@ class TestEntry {
 
     /**
      * Tests getScore() returns expected value.
-     * Verifies:
-     * <ul>
-     * <li>Returned score matches constructor argument</li>
-     * <li>Different score values are handled correctly</li>
-     * </ul>
      */
     @Test
     void shouldReturnCorrectScore() {
@@ -140,5 +117,58 @@ class TestEntry {
 
         final boolean isImmutable = ScoreEntry.class.getDeclaredFields()[0].getModifiers() == 26;
         assertTrue(isImmutable);
+    }
+
+    /**
+     * Tests compareTo orders entries by score descending.
+     */
+    @Test
+    void testCompareTo() {
+        final ScoreEntry highScore = new ScoreEntry(TEST_NAME, 1000);
+        final ScoreEntry mediumScore = new ScoreEntry("Player2", 500);
+        final ScoreEntry lowScore = new ScoreEntry("Player3", 100);
+
+        assertTrue(highScore.compareTo(mediumScore) < 0);
+        assertTrue(mediumScore.compareTo(lowScore) < 0);
+        assertTrue(lowScore.compareTo(highScore) > 0);
+        assertEquals(0, highScore.compareTo(new ScoreEntry("Player4", 1000)));
+    }
+
+    /**
+     * Tests equals method with different scenarios.
+     */
+    @Test
+    void testEquals() {
+        final ScoreEntry entry1 = new ScoreEntry(TEST_NAME, TEST_SCORE);
+        final ScoreEntry entry2 = new ScoreEntry(TEST_NAME, TEST_SCORE);
+        final ScoreEntry entry3 = new ScoreEntry("Player2", TEST_SCORE);
+        final ScoreEntry entry4 = new ScoreEntry(TEST_NAME, 900);
+
+        assertEquals(entry1, entry2);
+        assertNotEquals(entry1, entry3);
+        assertNotEquals(entry1, entry4);
+        assertNotEquals(entry1, null);
+        assertNotEquals(entry1, new Object());
+    }
+
+    /**
+     * Tests hashCode consistency with equals.
+     */
+    @Test
+    void testHashCode() {
+        final ScoreEntry entry1 = new ScoreEntry(TEST_NAME, TEST_SCORE);
+        final ScoreEntry entry2 = new ScoreEntry(TEST_NAME, TEST_SCORE);
+
+        assertEquals(entry1.hashCode(), entry2.hashCode());
+    }
+
+    /**
+     * Tests toString returns expected format.
+     */
+    @Test
+    void testToString() {
+        final ScoreEntry entry = new ScoreEntry(TEST_NAME, TEST_SCORE);
+        final String expected = "ScoreEntry[name=REB, score=1000]";
+        assertEquals(expected, entry.toString());
     }
 }
