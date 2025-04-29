@@ -4,15 +4,6 @@ package it.unibo.coffebreak.model.api.score;
  * Manages a numeric score value that can be incremented and reset.
  * The score always maintains a non-negative value.
  * 
- * <p>
- * Typical usage:
- * 
- * <pre>{@code
- * Score gameScore = new GameScore();
- * gameScore.increase(100);
- * int current = gameScore.getScore();
- * }</pre>
- * 
  * @author Alessandro Rebosio
  */
 public interface Score {

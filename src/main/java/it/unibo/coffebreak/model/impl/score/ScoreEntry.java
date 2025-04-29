@@ -8,8 +8,6 @@ import it.unibo.coffebreak.model.api.score.Entry;
 /**
  * Immutable implementation of {@link Entry} representing a player's score
  * entry.
- * This class is thread-safe and serializable, suitable for storage and network
- * transfer.
  * Natural ordering is based on score (descending), with name used for
  * tie-breaking in equality checks.
  * 
@@ -19,32 +17,19 @@ import it.unibo.coffebreak.model.api.score.Entry;
  * @author Alessandro Rebosio
  */
 public class ScoreEntry implements Entry, Serializable {
-    /**
-     * The serial version UID for consistent serialization/deserialization.
-     */
+
+    /** The serial version UID for consistent serialization/deserialization. */
     private static final long serialVersionUID = 1L;
 
-    /**
-     * The player's name for this entry.
-     * 
-     * @implSpec This field is:
-     *           - final (immutable)
-     *           - case-sensitive
-     *           - never null (validated in constructor)
-     */
+    /** The player's name for this entry. */
     private final String name;
 
-    /**
-     * The numeric score value.
-     * 
-     * @implSpec Higher values represent better performance. The field is final
-     *           (immutable).
-     */
+    /** The numeric score value. */
     private final int score;
 
     /**
      * Creates a new immutable score entry.
-     * 
+     *
      * @param name  the player's name (must not be null)
      * @param score the score value (any integer)
      * @throws NullPointerException if name is null
@@ -72,7 +57,7 @@ public class ScoreEntry implements Entry, Serializable {
 
     /**
      * Compares entries by score in descending order.
-     * 
+     *
      * @implNote Consistent with equals as required by {@link Comparable}
      * @throws NullPointerException if the argument is null
      */
@@ -83,7 +68,7 @@ public class ScoreEntry implements Entry, Serializable {
 
     /**
      * Tests for equality based on both name and score.
-     * 
+     *
      * @return true if the other object is a ScoreEntry with same name and score
      */
     @Override
@@ -100,7 +85,7 @@ public class ScoreEntry implements Entry, Serializable {
 
     /**
      * Returns a hash code combining name and score.
-     * 
+     *
      * @return hash code value consistent with equals
      */
     @Override
@@ -110,7 +95,7 @@ public class ScoreEntry implements Entry, Serializable {
 
     /**
      * Returns a string representation in format. "ScoreEntry[name=X, score=Y]"
-     * 
+     *
      * @return descriptive string representation
      */
     @Override
