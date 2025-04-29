@@ -69,7 +69,7 @@ class TestRepository {
      */
     @AfterAll
     static void tearDown() {
-        Optional.of(ScoreRepository.DATA_FILE.delete());
+        Optional.of(ScoreRepository.DATA_DIR.delete());
     }
 
     /**
@@ -80,7 +80,7 @@ class TestRepository {
         final List<Entry> entries = createTestEntries();
 
         assertTrue(repository.save(entries));
-        assertTrue(ScoreRepository.DATA_FILE.exists());
+        assertTrue(ScoreRepository.DATA_DIR.exists());
         assertEquals(entries.size(), repository.load().size());
     }
 
@@ -102,7 +102,7 @@ class TestRepository {
      */
     @Test
     void shouldReturnEmptyListWhenFileNotExists() {
-        assertFalse(ScoreRepository.DATA_FILE.exists());
+        assertFalse(ScoreRepository.DATA_DIR.exists());
         assertTrue(repository.load().isEmpty());
     }
 
@@ -143,7 +143,7 @@ class TestRepository {
      */
     @Test
     void shouldHandleCorruptedDataFile() throws IOException {
-        Files.write(ScoreRepository.DATA_FILE.toPath(), "invalid data".getBytes(StandardCharsets.UTF_8));
+        Files.write(ScoreRepository.DATA_DIR.toPath(), "invalid data".getBytes(StandardCharsets.UTF_8));
 
         assertThrows(RuntimeException.class,
                 repository::load);

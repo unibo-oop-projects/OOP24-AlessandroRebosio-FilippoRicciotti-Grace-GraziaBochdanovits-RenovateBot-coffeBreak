@@ -65,7 +65,7 @@ class TestScoreManager {
      */
     @AfterAll
     static void tearDown() {
-        Optional.of(ScoreRepository.DATA_FILE.delete());
+        Optional.of(ScoreRepository.DATA_DIR.delete());
     }
 
     /**

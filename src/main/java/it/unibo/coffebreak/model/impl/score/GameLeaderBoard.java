@@ -4,32 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.LeaderBoard;
 
 /**
- * Thread-safe implementation of {@link LeaderBoard} maintaining top
- * {@value #MAX_ENTRIES} scores.
- * Entries are automatically sorted in descending order and trimmed to capacity
- * when modified.
- * The implementation uses atomic operations for thread safety and includes:
- * <ul>
- * <li>Pre-allocated storage for memory efficiency</li>
- * <li>Automatic trimming of excess entries</li>
- * <li>Modification tracking via atomic flag</li>
- * </ul>
- * 
- * <p>
- * <b>Implementation Requirements:</b>
- * <ul>
- * <li>Mutable but thread-safe for concurrent access</li>
- * <li>Not persistent - contents are lost after JVM shutdown</li>
- * <li>Case-sensitive for entry names</li>
- * </ul>
+ * Basic implementation of {@link LeaderBoard} maintaining top
+ * {@value #MAX_ENTRIES} scores. Entries are automatically sorted in descending
+ * order and trimmed to capacity when modified.
  * 
  * @author Alessandro Rebosio
  */
@@ -41,32 +23,8 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     public static final int MAX_ENTRIES = 5;
 
-    /**
-     * Main storage for entries, maintained in descending score order.
-     * 
-     * @implNote The list implementation is:
-     *           <ul>
-     *           <li>Mutable for internal operations</li>
-     *           <li>Wrapped in unmodifiable view for public access</li>
-     *           <li>Initialized with default entries on construction</li>
-     *           </ul>
-     */
+    /** Main storage for entries, maintained in descending score order. */
     private final List<Entry> leaderBoard;
-
-    /**
-     * Tracks whether unsaved changes exist.
-     * 
-     * @implNote AtomicBoolean ensures thread-safe check-and-reset operations
-     */
-    private final AtomicBoolean isModified = new AtomicBoolean(false);
-
-    /**
-     * Creates a leaderboard pre-filled with default entries (empty names, zero
-     * scores).
-     */
-    public GameLeaderBoard() {
-        this.leaderBoard = createDefaultEntries();
-    }
 
     /**
      * Initializes leaderboard with provided entries, sorting and trimming to
@@ -79,9 +37,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      */
     public GameLeaderBoard(final List<Entry> leaderBoard) {
         Objects.requireNonNull(leaderBoard, "The list cannot be null");
-        this.leaderBoard = leaderBoard.isEmpty()
-                ? createDefaultEntries()
-                : leaderBoard;
+        this.leaderBoard = new ArrayList<>(leaderBoard);
         this.sortAndTrim();
     }
 
@@ -97,69 +53,38 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      * {@inheritDoc}
      */
     @Override
-    public void addEntry(final Entry entry) {
-        Objects.requireNonNull(entry);
+    public boolean addEntry(final Entry entry) {
+        Objects.requireNonNull(entry, "The entry cannot be null");
 
-        if (this.isEligible(entry)) {
-            this.leaderBoard.add(entry);
-            this.sortAndTrim();
-            this.isModified.set(true);
+        if (!this.isEligible(entry)) {
+            return false;
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isWritten() {
-        return this.isModified.getAndSet(false);
-    }
-
-    /**
-     * Generates default placeholder entries for new leaderboards.
-     *
-     * @return mutable list containing {@value #MAX_ENTRIES} entries with:
-     *         <ul>
-     *         <li>Empty string ("") as name</li>
-     *         <li>Zero (0) as score</li>
-     *         </ul>
-     * @implSpec The implementation:
-     *           <ul>
-     *           <li>Pre-allocates exact capacity for memory efficiency</li>
-     *           <li>Uses {@link ScoreEntry} as concrete implementation</li>
-     *           </ul>
-     */
-    private List<Entry> createDefaultEntries() {
-        return IntStream.range(0, MAX_ENTRIES)
-                .mapToObj(i -> new ScoreEntry("", 0))
-                .collect(Collectors.toCollection(() -> new ArrayList<>(MAX_ENTRIES)));
+        this.leaderBoard.add(entry);
+        this.sortAndTrim();
+        return true;
     }
 
     /**
      * Determines if an entry qualifies for inclusion in the leaderboard.
-     *
-     * @param entry the entry to evaluate
+     * 
+     * @param entry The entry to evaluate (must not be null)
      * @return true if either:
      *         <ul>
-     *         <li>Leaderboard has available capacity, OR</li>
-     *         <li>Entry's score exceeds the current lowest score</li>
+     *         <li>Leaderboard has available capacity (empty slots), OR</li>
+     *         <li>Entry's score exceeds the current lowest non-empty score</li>
      *         </ul>
-     * @implNote Comparison uses {@link Entry#compareTo} for consistency with
-     *           sorting
+     * @throws NullPointerException if entry is null
      */
     private boolean isEligible(final Entry entry) {
+        Objects.requireNonNull(entry, "Entry cannot be null");
+
         return this.leaderBoard.size() < MAX_ENTRIES
                 || entry.compareTo(this.leaderBoard.getLast()) < 0;
     }
 
     /**
      * Sorts entries in descending order and enforces capacity limit.
-     * 
-     * @implNote Operation sequence:
-     *           <ol>
-     *           <li>Sorts using natural ordering (highest first)</li>
-     *           <li>Discards excess entries beyond {@value #MAX_ENTRIES}</li>
-     *           </ol>
      */
     private void sortAndTrim() {
         this.leaderBoard.sort(Entry::compareTo);
