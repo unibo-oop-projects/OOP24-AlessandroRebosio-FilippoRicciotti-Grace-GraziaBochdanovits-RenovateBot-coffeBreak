@@ -55,6 +55,7 @@ public class Barrel extends Enemy {
      * @throws IllegalArgumentException if observer is null
      */
     public void addTransformationObserver(final BarrelTransformationObserver observer) {
+        Objects.requireNonNull(observer, "Observer cannot be null");
         transformationObservers.add(observer);
     }
 

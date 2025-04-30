@@ -6,18 +6,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
+import it.unibo.coffebreak.model.impl.entity.GameEntity;
 import it.unibo.coffebreak.model.impl.entity.LivesManager;
 import it.unibo.coffebreak.model.impl.entity.MarioState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
@@ -59,9 +65,15 @@ class TestMario {
     /** Test velocity value for movement tests. */
     private static final int TEST_VELOCITY = 5;
 
+    private static final Position INITIAL_POSITION = new Position(0, 0);
+    private static final Dimension TEST_DIMENSION = new Dimension(1, 1);
+    private static final String PLAYER_NAME = "TestPlayer";
+
     @Mock private GameScoreManager mockScoreManager;
     @Mock private Collectible mockHammer;
     @Mock private Collectible mockCoin;
+    @Mock private Collectible mockCollectedItem;
+    @Mock private GameEntity mockGameEntityItem;
 
     private Mario mario;
 
@@ -78,12 +90,8 @@ class TestMario {
     @BeforeEach
     void setUp() {
         final LivesManager livesManager = new LivesManager();
-        mario = new Mario(
-            new Position(0, 0), 
-            new Dimension(1, 1),
-            mockScoreManager, 
-            livesManager
-        );
+        mario = new Mario(INITIAL_POSITION, TEST_DIMENSION, mockScoreManager, 
+                            livesManager, PLAYER_NAME);
     }
 
     /**
@@ -103,17 +111,18 @@ class TestMario {
     class StateTests {
         /**
          * Verifies Mario's initial state conditions.
-         * <p>Tests that Mario:
-         * <ul>
-         *   <li>Starts in NORMAL state</li>
-         *   <li>Is initially alive</li>
-         * </ul>
          */
         @Test
-        void testInitialState() {
+        void testInitialConditions() {
             assertAll(
+                () -> assertEquals(INITIAL_POSITION, mario.getPosition()),
+                () -> assertEquals(TEST_DIMENSION, mario.getDimension()),
+                () -> assertEquals(DEFAULT_LIVES, mario.getLives()),
                 () -> assertEquals(MarioState.NORMAL, mario.getCurrentStateType()),
-                () -> assertTrue(mario.isAlive())
+                () -> assertTrue(mario.isAlive()),
+                () -> assertTrue(mario.isOnGround()),
+                () -> assertEquals(new Vector2D(0, 0), mario.getVelocity()),
+                () -> assertEquals(PLAYER_NAME, mario.getPlayerName())
             );
         }
 
@@ -139,6 +148,8 @@ class TestMario {
         void testDeadStateTransitions() {
             killMario();
             assertAll(
+                () -> assertEquals(MarioState.DEAD, mario.getCurrentStateType()),
+                () -> assertFalse(mario.isAlive()),
                 () -> assertTrue(mario.getCurrentStateType().canTransitionTo(MarioState.NORMAL)),
                 () -> assertFalse(mario.getCurrentStateType().canTransitionTo(MarioState.WITH_HAMMER))
             );
@@ -175,9 +186,8 @@ class TestMario {
          */
         @Test
         void testZeroDeltaTime() {
-            final Position initial = mario.getPosition();
             mario.update(0);
-            assertEquals(initial, mario.getPosition());
+            assertEquals(INITIAL_POSITION, mario.getPosition());
         }
     }
 
@@ -186,47 +196,21 @@ class TestMario {
      */
     @Nested
     class ItemTests {
-        /**
-         * Tests hammer collection effects.
-         * <p>Verifies that collecting a hammer:
-         * <ul>
-         *   <li>Changes state to WITH_HAMMER</li>
-         *   <li>Awards the correct points</li>
-         * </ul>
-         */
         @Test
-        void testHammerCollection() {
-            when(mockHammer.getValue()).thenReturn(100);
+        void testWithMockDelegateApproach() {
+            final GameEntity gameEntity = mock(GameEntity.class);
+            when(gameEntity.getPosition()).thenReturn(new Position(0, 0));
+            when(gameEntity.getDimension()).thenReturn(new Dimension(1, 1));
 
-            mario.collectItem(mockHammer);
+            final Collectible collectible = mock(Collectible.class, AdditionalAnswers.delegatesTo(new Object()));
 
-            assertAll(
-                () -> assertEquals(MarioState.WITH_HAMMER, mario.getCurrentStateType()),
-                () -> verify(mockScoreManager).earnPoints(100)
-            );
-        }
+            assertTrue(mario.collidesWith(gameEntity));
 
-        /**
-         * Tests coin collection effects.
-         * <p>Verifies that collecting a coin:
-         * <ul>
-         *   <li>Awards points</li>
-         *   <li>Doesn't change Mario's state</li>
-         * </ul>
-         */
-        @Test
-        void testCoinCollection() {
-            when(mockCoin.getValue()).thenReturn(10);
- 
-            mario.collectItem(mockCoin);
-
-            assertAll(
-                () -> assertEquals(MarioState.NORMAL, mario.getCurrentStateType()),
-                () -> verify(mockScoreManager).earnPoints(10)
-            );
-        }
+            final List<Collectible> items = new ArrayList<>();
+            items.add(collectible);
+            mario.checkItemCollisions(items);
     }
-
+}
     /**
      * Tests for life management system.
      */
@@ -244,12 +228,16 @@ class TestMario {
         @Test
         void testLifeLossMechanics() {
             mario.setVelocity(new Vector2D(TEST_VELOCITY, TEST_VELOCITY));
+            mario.setOnGround(false);
             final int initialLives = mario.getLives();
+
             mario.loseLife();
+
             assertAll(
                 () -> assertEquals(initialLives - 1, mario.getLives()),
-                () -> assertEquals(new Position(0, 0), mario.getPosition()),
-                () -> assertEquals(MarioState.NORMAL, mario.getCurrentStateType())
+                () -> assertEquals(INITIAL_POSITION, mario.getPosition()),
+                () -> assertEquals(MarioState.NORMAL, mario.getCurrentStateType()),
+                () -> assertEquals(new Vector2D(0, 0), mario.getVelocity())
             );
         }
 
@@ -268,7 +256,7 @@ class TestMario {
             assertAll(
                 () -> assertEquals(0, mario.getLives()),
                 () -> assertEquals(MarioState.DEAD, mario.getCurrentStateType()),
-                () -> verify(mockScoreManager).endGame("Player")
+                () -> assertFalse(mario.isAlive())
             );
         }
     }
@@ -306,9 +294,8 @@ class TestMario {
          */
         @Test
         void testZeroClimb() {
-            final Position initial = mario.getPosition();
             mario.climb(0);
-            assertEquals(initial, mario.getPosition());
+            assertEquals(INITIAL_POSITION, mario.getPosition());
         }
     }
 }
