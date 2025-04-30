@@ -87,8 +87,9 @@ public interface MarioStateInterface {
      * Default empty implementation.
      *
      * @param mario the Mario instance transitioning from this state, cannot be {@code null}
+     * @param playerName the name of the player for score tracking purposes, cannot be {@code null}
      */
-    default void onStateExit(Mario mario) { }
+    default void onStateExit(Mario mario, String playerName) { }
 
     /**
      * Determines if Mario can climb in the current state.

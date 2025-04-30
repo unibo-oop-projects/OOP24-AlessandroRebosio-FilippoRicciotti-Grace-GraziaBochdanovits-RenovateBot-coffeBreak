@@ -90,9 +90,10 @@ public class WithHammerState extends AbstractMarioState {
      * </ul>
      *
      * @param mario the Mario instance exiting this state
+     * @param playerName the name of the player for score tracking purposes
      */
     @Override
-    public void onStateExit(final Mario mario) {
+    public void onStateExit(final Mario mario, final String playerName) {
         timer.cancel();
         timer.purge();
     }

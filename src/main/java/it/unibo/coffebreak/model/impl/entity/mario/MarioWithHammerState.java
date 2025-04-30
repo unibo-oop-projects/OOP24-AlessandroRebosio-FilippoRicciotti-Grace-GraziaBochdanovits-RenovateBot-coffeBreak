@@ -99,9 +99,10 @@ public class MarioWithHammerState extends AbstractMarioState {
      * Currently this method does nothing but can be overridden for cleanup logic.
      *
      * @param mario the Mario instance exiting this state
+     * @param playerName the name of the player for score tracking purposes
      */
     @Override
-    public void onStateExit(final Mario mario) {
+    public void onStateExit(final Mario mario, final String playerName) {
         // Optional cleanup can be implemented here
     }
 

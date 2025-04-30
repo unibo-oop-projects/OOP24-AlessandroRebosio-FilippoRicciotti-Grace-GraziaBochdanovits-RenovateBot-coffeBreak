@@ -54,6 +54,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      * @param dimension the physical dimensions of Mario (cannot be null)
      * @param scoreManager the score manager to handle point accumulation (cannot be null)
      * @param livesManager the lives manager to handle life lost (cannot be null)
+     * @param playerName the name of the player for score tracking purposes (cannot be null)
      * @throws NullPointerException if any parameter is null
      */
     public Mario(final Position position, final Dimension dimension, 
