@@ -1,9 +1,9 @@
 package it.unibo.coffebreak.model.impl.entity.donkeykong;
 
 import it.unibo.coffebreak.model.api.entity.donkeykong.BarrelThrowObserver;
+import it.unibo.coffebreak.model.api.entity.donkeykong.Command;
 import it.unibo.coffebreak.model.api.entity.donkeykong.CommandFactory;
 import it.unibo.coffebreak.model.api.entity.donkeykong.Villain;
-import it.unibo.coffebreak.model.api.entity.Command;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;

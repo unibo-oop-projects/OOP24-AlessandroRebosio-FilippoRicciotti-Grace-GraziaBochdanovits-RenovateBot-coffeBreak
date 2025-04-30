@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
 import it.unibo.coffebreak.model.impl.entity.enemy.Enemy;
+import it.unibo.coffebreak.model.impl.entity.enemy.EnemyType;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;

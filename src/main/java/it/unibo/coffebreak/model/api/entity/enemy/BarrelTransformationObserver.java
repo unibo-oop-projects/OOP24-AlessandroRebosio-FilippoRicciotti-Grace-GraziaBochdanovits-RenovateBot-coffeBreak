@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.entity;
+package it.unibo.coffebreak.model.api.entity.enemy;
 
 import it.unibo.coffebreak.model.impl.entity.enemy.Barrel;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;

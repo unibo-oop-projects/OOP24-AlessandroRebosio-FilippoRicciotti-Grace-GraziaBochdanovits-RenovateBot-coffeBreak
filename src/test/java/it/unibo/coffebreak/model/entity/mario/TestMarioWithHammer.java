@@ -17,9 +17,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
-import it.unibo.coffebreak.model.impl.entity.mario.MarioWithHammerState;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.MarioWithHammerState;
 
 /**
  * Test class for {@link MarioWithHammerState}.

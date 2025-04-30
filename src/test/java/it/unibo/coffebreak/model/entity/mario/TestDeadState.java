@@ -10,9 +10,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
-import it.unibo.coffebreak.model.impl.entity.mario.DeadState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;

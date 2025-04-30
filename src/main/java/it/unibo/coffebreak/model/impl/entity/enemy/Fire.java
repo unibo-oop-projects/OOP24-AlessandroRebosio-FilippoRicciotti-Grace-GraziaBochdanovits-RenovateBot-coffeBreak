@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.impl.entity.enemy;
 
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;

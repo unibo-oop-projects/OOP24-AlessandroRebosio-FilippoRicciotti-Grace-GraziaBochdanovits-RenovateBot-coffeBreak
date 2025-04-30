@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entity.enemy;
 
-import it.unibo.coffebreak.model.api.entity.BarrelTransformationObserver;
+import it.unibo.coffebreak.model.api.entity.enemy.BarrelTransformationObserver;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 import java.util.List;
 import java.util.Objects;

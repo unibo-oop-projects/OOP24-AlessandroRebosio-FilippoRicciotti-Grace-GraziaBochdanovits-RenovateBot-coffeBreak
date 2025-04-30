@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.api.entity;
+package it.unibo.coffebreak.model.api.entity.mario;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 

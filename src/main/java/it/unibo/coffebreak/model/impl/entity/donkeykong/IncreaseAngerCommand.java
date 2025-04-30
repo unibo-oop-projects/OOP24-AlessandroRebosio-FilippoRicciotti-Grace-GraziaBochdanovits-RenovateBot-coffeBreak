@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entity.donkeykong;
 
-import it.unibo.coffebreak.model.api.entity.Command;
+import it.unibo.coffebreak.model.api.entity.donkeykong.Command;
 import it.unibo.coffebreak.model.api.entity.donkeykong.Villain;
 
 import java.util.Objects;

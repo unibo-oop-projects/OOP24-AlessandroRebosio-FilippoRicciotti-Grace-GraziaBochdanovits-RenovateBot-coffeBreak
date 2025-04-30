@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.entity.enemy;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.Movable;
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;

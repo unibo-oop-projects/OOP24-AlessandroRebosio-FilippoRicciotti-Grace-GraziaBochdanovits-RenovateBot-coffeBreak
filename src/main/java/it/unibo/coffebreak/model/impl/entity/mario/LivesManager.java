@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.entity;
+package it.unibo.coffebreak.model.impl.entity.mario;
 
 /**
  * A utility class responsible for managing the number of lives of the playable character.

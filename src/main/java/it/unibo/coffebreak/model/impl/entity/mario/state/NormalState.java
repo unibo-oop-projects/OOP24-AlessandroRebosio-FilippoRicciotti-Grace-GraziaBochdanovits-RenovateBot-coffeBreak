@@ -1,6 +1,8 @@
-package it.unibo.coffebreak.model.impl.entity.mario;
+package it.unibo.coffebreak.model.impl.entity.mario.state;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.AbstractMarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 
 /**
  * Represents Mario's default state without any special abilities or power-ups.

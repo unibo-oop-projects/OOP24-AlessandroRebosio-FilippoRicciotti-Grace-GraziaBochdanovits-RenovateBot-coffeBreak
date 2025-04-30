@@ -11,7 +11,7 @@ import static org.mockito.Mockito.verify;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.entity.BarrelTransformationObserver;
+import it.unibo.coffebreak.model.api.entity.enemy.BarrelTransformationObserver;
 import it.unibo.coffebreak.model.impl.entity.enemy.Barrel;
 import it.unibo.coffebreak.model.impl.entity.enemy.BarrelMovementStrategy;
 import it.unibo.coffebreak.model.impl.utility.Dimension;

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entity.BarrelTransformationObserver;
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
+import it.unibo.coffebreak.model.api.entity.enemy.BarrelTransformationObserver;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;

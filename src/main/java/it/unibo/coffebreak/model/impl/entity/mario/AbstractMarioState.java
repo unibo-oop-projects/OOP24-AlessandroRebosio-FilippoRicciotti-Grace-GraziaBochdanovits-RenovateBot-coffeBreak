@@ -2,7 +2,10 @@ package it.unibo.coffebreak.model.impl.entity.mario;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entity.MarioStateInterface;
+import it.unibo.coffebreak.model.api.entity.mario.MarioStateInterface;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 

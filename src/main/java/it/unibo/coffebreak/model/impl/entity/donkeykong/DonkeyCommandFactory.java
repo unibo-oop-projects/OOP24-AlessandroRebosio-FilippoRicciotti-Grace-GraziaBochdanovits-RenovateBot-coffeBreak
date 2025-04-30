@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.entity.donkeykong;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entity.Command;
+import it.unibo.coffebreak.model.api.entity.donkeykong.Command;
 import it.unibo.coffebreak.model.api.entity.donkeykong.CommandFactory;
 
 /**

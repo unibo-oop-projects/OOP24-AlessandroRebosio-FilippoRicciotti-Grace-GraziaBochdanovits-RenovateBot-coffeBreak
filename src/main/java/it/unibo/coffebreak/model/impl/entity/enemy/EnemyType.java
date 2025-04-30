@@ -1,8 +1,6 @@
-package it.unibo.coffebreak.model.impl.entity;
+package it.unibo.coffebreak.model.impl.entity.enemy;
 
 import it.unibo.coffebreak.model.api.entity.Movable;
-import it.unibo.coffebreak.model.impl.entity.enemy.BarrelMovementStrategy;
-import it.unibo.coffebreak.model.impl.entity.enemy.FireMovementStrategy;
 
 /**
  * Enumerates the different types of enemies in the game.

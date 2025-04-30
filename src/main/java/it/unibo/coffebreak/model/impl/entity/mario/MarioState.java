@@ -1,10 +1,8 @@
-package it.unibo.coffebreak.model.impl.entity;
+package it.unibo.coffebreak.model.impl.entity.mario;
 
-import it.unibo.coffebreak.model.impl.entity.mario.AbstractMarioState;
-import it.unibo.coffebreak.model.impl.entity.mario.DeadState;
-import it.unibo.coffebreak.model.impl.entity.mario.Mario;
-import it.unibo.coffebreak.model.impl.entity.mario.NormalState;
-import it.unibo.coffebreak.model.impl.entity.mario.WithHammerState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
 
 /**
  * Enumeration of all possible Mario states, implementing the State design pattern.

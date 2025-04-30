@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
+import it.unibo.coffebreak.model.impl.entity.enemy.EnemyType;
 import it.unibo.coffebreak.model.impl.entity.enemy.Fire;
 import it.unibo.coffebreak.model.impl.entity.enemy.FireMovementStrategy;
 import it.unibo.coffebreak.model.impl.utility.Dimension;

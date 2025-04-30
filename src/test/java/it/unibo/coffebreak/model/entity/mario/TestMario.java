@@ -24,9 +24,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.entity.LivesManager;
-import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.LivesManager;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;

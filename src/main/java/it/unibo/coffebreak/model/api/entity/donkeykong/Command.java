@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.entity;
+package it.unibo.coffebreak.model.api.entity.donkeykong;
 
 /**
  * Represents a command in the command pattern, encapsulating an action
