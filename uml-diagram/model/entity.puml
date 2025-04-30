@@ -59,12 +59,63 @@
         }
 
         interface Villain <<interface>> {
-            + {abstract} throwBarrel(): void
+            + throwBarrel(): void
+            + increaseAnger(): void
         }
 
         class DonkeyKong extends GameEntity implements Villain {
-            - angerLevel: Integer
+            - AngerManager angerManager
+            - List~BarrelThrowObserver~ observers
+            - CommandFactory commandFactory
+            + getAngerLevel() int
+            + registerObserver(BarrelThrowObserver) void
+            + notifyObservers() void
         }
+
+        class AngerManager {
+            - level: int = 1
+            - cooldowns: long[] = [5000, 3000, 1000]
+            + increaseLevel() void
+            + reset() void
+            + getCurrentCooldown() long
+        }
+
+        interface Command {
+            + execute(): void
+        }
+
+        class ThrowBarrelCommand implements Command {
+            - villain: Villain
+            + execute() void
+        }
+
+        class IncreaseAngerCommand implements Command {
+            - villain: Villain
+            + execute() void
+        }
+
+        interface CommandFactory {
+            + createThrowCommand(): Command
+            + createAngerCommand(): Command
+        }
+
+        class DonkeyCommandFactory implements CommandFactory{
+            - donkeyKong: DonkeyKong
+            + createThrowCommand() Command
+            + createAngerCommand() Command
+        }
+
+        interface BarrelThrowObserver {
+            + onBarrelTrow(): void
+        }
+
+        DonkeyKong *-- AngerManager
+        DonkeyKong *-- CommandFactory: uses
+        DonkeyKong o-- BarrelThrowObserver: notifies
+        ThrowBarrelCommand --> Villain: executes on
+        IncreaseAngerCommand --> Villain: executes on
+        DonkeyKong --> Barrel : creates >
+        BarrelManager --> DonkeyKong : uses
 
         interface Collectible <<interface>> {
             + {abstract} collect(): void
@@ -92,19 +143,25 @@
         }
 
         class BasicLadder extends GameEntity implements Climbable {
-            - climb: boolean
+            -DEFAULT_SPEED: float = 2.0
+            -climbable: boolean = true
+            +canClimb(): boolean
+            +getClimbSpeed(): float
+        }
+
+        class LadderDecorator implements Climbable {
+            - #wrapped: Climbable
             + canClimb(): boolean
             + getClimbSpeed(): float
         }
 
-        abstract class LadderDecorator <<abstract>> implements Climbable {
-            - #wrapped: Climbable
-            + {abstract} canClimb(): boolean
-            + {abstract} getClimbSpeed(): float
+        class FastLadder extends LadderDecorator {
+            -SPEED: float = 4.0
+            +getClimbSpeed(): float <<override>>
         }
 
-        class FastLadder extends LadderDecorator {
-            + getClimbSpeed(): float <<override: 2.5>>
+        class BrokenLadder extends LadderDecorator{
+            +canClimb(): boolean <<override>>
         }
 
         interface Platform <<interface>> {
@@ -112,13 +169,14 @@
             + {abstract} getFriction(): float
         }
 
-        class BasicPlatform extends GameEntity implements Platform {
-            - breakable: boolean
-            + canBreak(): boolean
-            + getFriction(): float
+        class BasicPlatform extends AbstractPlatform implements Platform {
+            -DEFAULT_FRICTION: float = 0.5
+            -breakable: boolean = false
+            +canBreak(): boolean
+            +getFriction(): float
         }
 
-        abstract class PlatformDecorator <<abstract>> implements Platform {
+        abstract class PlatformDecorator <<abstract>> extends AbstractPlatform implements Platform {
             - # wrapped: Platform
             + {abstract} canBreak(): boolean
             + {abstract} getFriction(): float
@@ -129,20 +187,45 @@
         }
 
         class MovingPlatform extends PlatformDecorator {
-            - velocity: Vector2D
-            + getFriction(): float <<override: 0.7>>
+            -FRICTION: float = 0.7
+            -velocity: Vector2D
+            +getFriction(): float <<override>>
+            +getVelocity(): Vector2D
+            +update(deltaTime: long): void <<override>>
         }
 
-        class GamePlatform extends GameEntity implements Platform {
-            - breakable: boolean
+        abstract class Enemy <<abstract>> extends GameEntity implements Movable {
+            - EnemyType state
+            - Vector2D velocity
+            - Movable movementStrategy
+            + update(long) void
+            + move(Vector2D) void
         }
 
-        abstract class Enemy <<abstract>> extends GameEntity implements Hostile, Movable {
-            - state : EnemyType
+        class Barrel extends Enemy {
+            - List~BarrelTransformationObserver~ transformationObservers
+            - boolean canTransformToFire
+            + addTransformationObserver(BarrelTransformationObserver) void
         }
-
-        class Barrel extends Enemy
         class Fire extends Enemy
+
+        class BarrelMovementStrategy implements Movable {
+            + move(Position, Vector2D) Position
+        }
+
+        class FireMovementStrategy implements Movable {
+            + move(Position, Vector2D) Position
+        }
+
+        interface BarrelTransformationObserver {
+            + onBarrelTransformedToFire(Barrel, Vector2D) void
+        }
+        Barrel *-- BarrelTransformationObserver
+
+        class BarrelManager implements BarrelTransformationObserver {
+            - List~Enemy~ activeEnemies
+            + onBarrelTransformedToFire(Barrel, Vector2D) void
+        }
 
         interface MarioStateInterface <<interface>> {
             + move(Mario, Vector2D): Position
@@ -160,6 +243,7 @@
         enum EnemyType {
             BARREL
             FIRE
+            + createMovementStrategy() Movable
         }
 
         enum MarioState {

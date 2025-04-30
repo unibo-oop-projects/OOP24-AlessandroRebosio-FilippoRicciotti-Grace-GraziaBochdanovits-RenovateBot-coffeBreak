@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.api.entity;
+package it.unibo.coffebreak.model.api.entity.mario;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
@@ -25,6 +25,20 @@ public interface MarioStateInterface {
      * @throws NullPointerException if either {@code mario} or {@code direction} is {@code null}
      */
     Position move(Mario mario, Vector2D direction);
+
+    /**
+     * Updates Mario's state-specific logic for each game frame.
+     * <p>
+     * This method is called every frame and should contain state-specific update logic,
+     * such as timing for temporary power-ups, animation state changes, or other
+     * time-dependent behavior.
+     *
+     * @param mario the Mario instance being updated, cannot be {@code null}
+     * @param deltaTime the time elapsed since the last frame in milliseconds
+     * @throws NullPointerException if {@code mario} is {@code null}
+     * @throws IllegalArgumentException if {@code deltaTime} is negative
+     */
+    void update(Mario mario, long deltaTime);
 
     /**
      * Handles jump behavior specific to the current state.
@@ -73,8 +87,9 @@ public interface MarioStateInterface {
      * Default empty implementation.
      *
      * @param mario the Mario instance transitioning from this state, cannot be {@code null}
+     * @param playerName the name of the player for score tracking purposes, cannot be {@code null}
      */
-    default void onStateExit(Mario mario) { }
+    default void onStateExit(Mario mario, String playerName) { }
 
     /**
      * Determines if Mario can climb in the current state.

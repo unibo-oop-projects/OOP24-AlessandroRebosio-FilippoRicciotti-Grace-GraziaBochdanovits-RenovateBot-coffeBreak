@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.entity.enemy;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.Movable;
-import it.unibo.coffebreak.model.impl.entity.EnemyType;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
@@ -57,10 +56,7 @@ public abstract class Enemy extends GameEntity {
      * @return the configured movement strategy (never {@code null})
      */
     private Movable createMovementStrategy() {
-        return switch (state) {
-            case BARREL -> new BarrelMovementStrategy();
-            case FIRE -> new FireMovementStrategy();
-        };
+        return state.createMovementStrategy();
     }
 
     /**
@@ -68,13 +64,15 @@ public abstract class Enemy extends GameEntity {
      * frame-rate independent movement calculations.
      *
      * @param deltaTime the time elapsed since last update in milliseconds (must be positive)
-     * @throws NullPointerException if deltaTime is null
+     * @throws IllegalArgumentException if deltaTime is negative
      */
     @Override
     public void update(final long deltaTime) {
-        Objects.requireNonNull(deltaTime, "DeltaTime cannot be null");
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("Delta time cannot be negative");
+        }
         final Vector2D updateVelocity = new Vector2D(velocity.getX() * deltaTime / 1000.0f,
-                                            velocity.getY() * deltaTime / 1000.0f);
+                                                        velocity.getY() * deltaTime / 1000.0f);
         move(updateVelocity);
         specificUpdate(deltaTime);
     }

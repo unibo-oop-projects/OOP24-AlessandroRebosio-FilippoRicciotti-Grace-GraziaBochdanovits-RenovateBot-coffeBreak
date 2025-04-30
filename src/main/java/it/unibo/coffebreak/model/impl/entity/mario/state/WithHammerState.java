@@ -1,9 +1,11 @@
-package it.unibo.coffebreak.model.impl.entity.mario;
+package it.unibo.coffebreak.model.impl.entity.mario.state;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.AbstractMarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 
 /**
  * Represents Mario's state when he has acquired a hammer power-up.
@@ -90,9 +92,10 @@ public class WithHammerState extends AbstractMarioState {
      * </ul>
      *
      * @param mario the Mario instance exiting this state
+     * @param playerName the name of the player for score tracking purposes
      */
     @Override
-    public void onStateExit(final Mario mario) {
+    public void onStateExit(final Mario mario, final String playerName) {
         timer.cancel();
         timer.purge();
     }

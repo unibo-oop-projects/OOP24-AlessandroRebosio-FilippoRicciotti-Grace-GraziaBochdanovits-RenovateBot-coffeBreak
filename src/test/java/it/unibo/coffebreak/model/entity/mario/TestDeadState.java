@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.entity.mario;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -9,14 +10,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
-import it.unibo.coffebreak.model.impl.entity.mario.DeadState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * Unit tests for {@link DeadState} implementation.
@@ -36,8 +41,10 @@ class TestDeadState {
 
     private static final Position TEST_POSITION = new Position(5, 5);
     private static final Vector2D TEST_DIRECTION = new Vector2D(1, 1);
+    private static final String PLAYER_NAME = "TestPlayer";
 
     @Mock private Mario mario;
+    @Mock private GameScoreManager mockScoreManager;
     private DeadState deadState;
 
     @BeforeEach
@@ -47,19 +54,29 @@ class TestDeadState {
 
     @Test
     void testMoveReturnsCurrentPosition() {
-        final Position deathPosition = TEST_POSITION;
-
-        when(mario.getPosition()).thenReturn(deathPosition);
-
-        final Vector2D direction = TEST_DIRECTION; 
-        final Position result = deadState.move(mario, direction);
-
-        assertEquals(deathPosition, result);
+        when(mario.getPosition()).thenReturn(TEST_POSITION);
+        final Position result = deadState.move(mario, TEST_DIRECTION);
+        assertEquals(TEST_POSITION, result);
+        verify(mario, never()).setPosition(any());
     }
 
     @Test
     void testClimbDoesNothing() {
         assertDoesNotThrow(() -> deadState.climb(mario, 1));
+        verifyNoInteractions(mario);
+    }
+
+    @Test
+    void testOnStateExitTriggersGameOver() {
+        when(mario.getScoreManager()).thenReturn(mockScoreManager);
+        deadState.onStateExit(mario, PLAYER_NAME);
+        verify(mockScoreManager).endGame(PLAYER_NAME);
+        verify(mario).resetToInitialState();
+    }
+
+    @Test
+    void testStateTypeIsDead() {
+        assertEquals(MarioState.DEAD, deadState.getStateType());
     }
 
     @Test
@@ -70,15 +87,5 @@ class TestDeadState {
     @Test
     void testCannotUseHammer() {
         assertFalse(deadState.canUseHammer());
-    }
-
-    @Test
-    void testStateTypeIsDead() {
-        assertEquals(MarioState.DEAD, deadState.getStateType());
-    }
-
-    @Test
-    void testOnStateExitDoesNotThrow() {
-        assertDoesNotThrow(() -> deadState.onStateExit(mario), "onStateExit should not throw any exception");
     }
 }

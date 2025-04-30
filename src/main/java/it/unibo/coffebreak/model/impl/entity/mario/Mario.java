@@ -1,14 +1,18 @@
 package it.unibo.coffebreak.model.impl.entity.mario;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
-import it.unibo.coffebreak.model.api.entity.MarioStateInterface;
+
 import it.unibo.coffebreak.model.api.entity.Movable;
-import it.unibo.coffebreak.model.api.entity.PlayableCharacter;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
+import it.unibo.coffebreak.model.api.entity.mario.MarioStateInterface;
+import it.unibo.coffebreak.model.api.entity.mario.PlayableCharacter;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.entity.LivesManager;
-import it.unibo.coffebreak.model.impl.entity.MarioState;
 import it.unibo.coffebreak.model.impl.entity.item.ItemType;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.utility.Position;
@@ -42,6 +46,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
     private final Position startPosition;
     private Vector2D velocity;
     private boolean isOnGround;
+    private final String playerName;
 
     /**
      * Constructs a new Mario instance with specified position, dimensions and score
@@ -51,10 +56,11 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      * @param dimension the physical dimensions of Mario (cannot be null)
      * @param scoreManager the score manager to handle point accumulation (cannot be null)
      * @param livesManager the lives manager to handle life lost (cannot be null)
+     * @param playerName the name of the player for score tracking purposes (cannot be null)
      * @throws NullPointerException if any parameter is null
      */
     public Mario(final Position position, final Dimension dimension, 
-                    final GameScoreManager scoreManager, final LivesManager livesManager) {
+                    final GameScoreManager scoreManager, final LivesManager livesManager, final String playerName) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
         this.startPosition = new Position(position.x(), position.y());
         this.velocity = new Vector2D(0, 0);
@@ -62,6 +68,10 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
         this.scoreManager = Objects.requireNonNull(scoreManager);
         this.currentState = new NormalState(this);
         this.isOnGround = true;
+        this.playerName = Objects.requireNonNull(playerName, "Player name cannot be null");
+        if (playerName.isBlank()) {
+            throw new IllegalArgumentException("Player name cannot be blank");
+        }
     }
 
     /**
@@ -77,7 +87,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
         if (!currentState.getStateType().canTransitionTo(newState.getStateType())) {
             throw new IllegalStateException("Invalid Transition");
         }
-        currentState.onStateExit(this);
+        currentState.onStateExit(this, playerName);
         this.currentState = newState;
         newState.onStateEnter(this);
     }
@@ -106,12 +116,45 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      */
     @Override
     public void update(final long deltaTime) {
+        currentState.update(this, deltaTime);
         final Vector2D displacement = new Vector2D(velocity.getX() * deltaTime / 1000.0f,
                                                     velocity.getY() * deltaTime / 1000.0f);
         setPosition(move(getPosition(), displacement));
 
         if (!isOnGround && getVelocity().getY() >= 0) {
             setOnGround(true);
+        }
+    }
+
+    /**
+     * Checks collisions with collectible items and collects those that collide with Mario.
+     * Only checks items that haven't been collected yet and removes collected items from the list.
+     * 
+     * <p>Execution flow:
+     * <ol>
+     *   <li>Skips check if Mario is not alive</li>
+     *   <li>Iterates through all items in the list</li>
+     *   <li>For each uncollected item that implements GameEntity:</li>
+         *   <ul>
+     *     <li>Checks collision with Mario</li>
+     *     <li>Triggers collection if collision occurs</li>
+     *     <li>Removes collected item from the list</li>
+     *   </ul>
+     * </ol>
+     *
+     * @param items the list of collectible items to check (may be empty but not null)
+     */
+    public void checkItemCollisions(final List<Collectible> items) {
+        if (!isAlive()) {
+            return;
+        }
+        final Iterator<Collectible> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            final Collectible item = iterator.next();
+            if (item instanceof GameEntity gameItem && !item.isCollected() && this.collidesWith(gameItem)) {
+                this.collectItem(item);
+                iterator.remove();
+            }
         }
     }
 
@@ -134,9 +177,9 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
         if (!item.isCollected()) {
             item.collect(this);
             scoreManager.earnPoints(item.getValue());
-            if (item.getValue() == ItemType.HAMMER.getValue()) {
+            /*if (item.getValue() == ItemType.HAMMER.getValue()) {
                 changeState(MarioState.WITH_HAMMER);
-            }
+            }*/
         }
     }
 
@@ -203,15 +246,16 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      * Called automatically when Mario loses his last life.
      */
     private void handleGameOver() {
+        if (playerName == null) {
+            throw new IllegalStateException("Player name must be set before game over");
+        }
         changeState(MarioState.DEAD);
-        scoreManager.endGame("Player");
-        resetToInitialState();
     }
 
     /**
      * Resets Mario's physical state to the starting conditions.
      */
-    private void resetToInitialState() {
+    public void resetToInitialState() {
         setPosition(startPosition);
         setVelocity(new Vector2D(0, 0));
     }
@@ -304,5 +348,13 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      */
     public GameScoreManager getScoreManager() {
         return scoreManager;
+    }
+
+    /**
+     * Gets the current player name.
+     * @return the player name (may be null if not set)
+     */
+    public String getPlayerName() {
+        return playerName;
     }
 }

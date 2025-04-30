@@ -1,8 +1,10 @@
-package it.unibo.coffebreak.model.impl.entity.mario;
+package it.unibo.coffebreak.model.impl.entity.mario.state;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.AbstractMarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.Mario;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
@@ -68,11 +70,16 @@ public class DeadState extends AbstractMarioState {
      * </ul>
      *
      * @param mario the Mario instance exiting this state
-     * @throws NullPointerException if {@code mario} is null
+     * @param playerName the name of the player for score tracking purposes
+     * @throws NullPointerException if {@code mario} is null or if {@code playerName} is null
      */
     @Override
-    public void onStateExit(final Mario mario) {
-        // to-do: Implement game over logic
+    public void onStateExit(final Mario mario, final String playerName) {
+        Objects.requireNonNull(mario, "Mario instance cannot be null");
+        Objects.requireNonNull(playerName, "Player name cannot be null");
+
+        mario.getScoreManager().endGame(playerName);
+        mario.resetToInitialState();
     }
 
     /**

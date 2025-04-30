@@ -26,8 +26,8 @@ public abstract class PlatformDecorator extends AbstractPlatform {
      * @throws IllegalArgumentException if basePlatform is {@code null}
      */
     public PlatformDecorator(final Platform basePlatform) {
-        super(Objects.requireNonNull(basePlatform, "Base platform cannot be null").getPlatformPosition(), 
-              basePlatform.getPlatformDimension());
+        super(((AbstractPlatform) Objects.requireNonNull(basePlatform)).getPosition(),
+                ((AbstractPlatform) basePlatform).getDimension());
         this.basePlatform = basePlatform;
     }
 

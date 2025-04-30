@@ -2,7 +2,10 @@ package it.unibo.coffebreak.model.impl.entity.mario;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entity.MarioStateInterface;
+import it.unibo.coffebreak.model.api.entity.mario.MarioStateInterface;
+import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
+import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
 import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Vector2D;
 
@@ -60,6 +63,25 @@ public abstract class AbstractMarioState implements MarioStateInterface {
         Objects.requireNonNull(direction);
         return new Position(mario.getPosition().x() + direction.getX(),
                             mario.getPosition().y() + direction.getY());
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Base implementation does nothing. Concrete states should override this to implement
+     * state-specific behavior that needs to be updated each frame.
+     * 
+     * @param mario the Mario instance being updated, cannot be null
+     * @param deltaTime the time elapsed since last frame in milliseconds
+     * @throws NullPointerException if {@code mario} is null
+     * @throws IllegalArgumentException if {@code deltaTime} is negative
+     */
+    @Override
+    public void update(final Mario mario, final long deltaTime) {
+        Objects.requireNonNull(mario);
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("Delta time cannot be negative");
+        }
     }
 
     /**

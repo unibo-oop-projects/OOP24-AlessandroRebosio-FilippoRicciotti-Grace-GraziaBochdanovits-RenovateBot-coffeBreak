@@ -62,7 +62,7 @@ public class MovingPlatform extends PlatformDecorator {
      */
     @Override
     public void update(final long deltaTime) {
-        this.setPosition(new Position(this.getPlatformPosition().x() + velocity.getX() * deltaTime / 1000.0f, 
-                                        this.getPlatformPosition().y() + velocity.getY() * deltaTime / 1000.0f));
+        this.setPosition(new Position(this.getPosition().x() + velocity.getX() * deltaTime / 1000.0f, 
+                                        this.getPosition().y() + velocity.getY() * deltaTime / 1000.0f));
     }
 }

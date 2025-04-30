@@ -23,30 +23,6 @@ public abstract class AbstractPlatform extends GameEntity implements Platform {
     }
 
     /**
-     * Gets the platform's position in game coordinates.
-     * This method provides access to the position stored in the parent {@link GameEntity} class.
-     *
-     * @return the platform's current position
-     * @see GameEntity#getPosition()
-     */
-    @Override
-    public final Position getPlatformPosition() {
-        return super.getPosition(); 
-    }
-
-    /**
-     * Gets the platform's physical dimensions.
-     * This method provides access to the dimensions stored in the parent {@link GameEntity} class.
-     *
-     * @return the platform's dimensions
-     * @see GameEntity#getDimension()
-     */
-    @Override
-    public final Dimension getPlatformDimension() {
-        return super.getDimension(); 
-    }
-
-    /**
      * Updates the platform's state.
      * The base implementation does nothing. Subclasses should override this method
      * to implement platform-specific behavior if needed.
