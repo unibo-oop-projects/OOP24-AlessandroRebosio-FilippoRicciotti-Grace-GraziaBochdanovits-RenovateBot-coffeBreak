@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.entity.mario;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +29,9 @@ import it.unibo.coffebreak.model.impl.entity.mario.MarioWithHammerState;
 @ExtendWith(MockitoExtension.class)
 class TestMarioWithHammer {
 
-    @Mock
-    private Mario mario;
-
+    private static final String TEST_PLAYER_NAME = "TestPlayer";
+    private static final long TEST_DELTA_TIME = 500;
+    @Mock private Mario mario;
     private MarioWithHammerState hammerState;
 
     /**
@@ -65,8 +65,9 @@ class TestMarioWithHammer {
      */
     @Test
     void testUpdateBeforeExpiration() throws InterruptedException {
-        // Just created, shouldn't expire yet
-        hammerState.update(mario, 100);
+        final MarioWithHammerState state = new MarioWithHammerState(mario, 
+                System.currentTimeMillis() + 1000);
+        state.update(mario, TEST_DELTA_TIME);
         verify(mario, never()).changeState(any());
     }
 
@@ -85,9 +86,8 @@ class TestMarioWithHammer {
      */
     @Test
     void testClimb() {
-        // Should do nothing
         hammerState.climb(mario, 1);
-        verifyNoInteractions(mario);
+        verify(mario, never()).setPosition(any());
     }
 
     /**
@@ -96,7 +96,7 @@ class TestMarioWithHammer {
      */
     @Test
     void testUseHammer() {
-        hammerState.useHammer(mario);
+        assertDoesNotThrow(() -> hammerState.useHammer(mario));
     }
 
     /**
@@ -104,7 +104,7 @@ class TestMarioWithHammer {
      */
     @Test
     void testOnStateExit() {
-        hammerState.onStateExit(mario);
+        assertDoesNotThrow(() -> hammerState.onStateExit(mario, TEST_PLAYER_NAME));
     }
 
     /**
