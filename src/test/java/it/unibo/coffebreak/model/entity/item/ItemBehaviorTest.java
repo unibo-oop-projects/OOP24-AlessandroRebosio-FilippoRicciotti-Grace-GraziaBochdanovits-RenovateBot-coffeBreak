@@ -17,7 +17,7 @@ import it.unibo.coffebreak.model.impl.utility.Position;
 import it.unibo.coffebreak.model.impl.utility.Dimension;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
-import it.unibo.coffebreak.model.impl.entity.MarioState;
+import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
 import it.unibo.coffebreak.model.impl.entity.item.GameCollectibleFactory;
 import it.unibo.coffebreak.model.impl.entity.item.ItemType;
 
