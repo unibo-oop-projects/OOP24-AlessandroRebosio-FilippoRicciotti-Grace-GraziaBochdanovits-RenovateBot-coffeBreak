@@ -44,40 +44,12 @@ public abstract class GameEntity implements Entity {
     }
 
     /**
-     * Updates the entity's state based on elapsed game time.
-     * 
-     * <p>Base implementation is empty, suitable for static entities that don't move or change state.
-     * Moving entities should override this method to implement their specific behavior.</p>
-     *
-     * @param deltaTime the time elapsed since last update in milliseconds (must be positive)
-     * @throws IllegalArgumentException if deltaTime is negative
-    */
-    public void update(final float deltaTime) {
-        // Base implementation does nothing (for static entities)
-    }
-    /**
-     * Checks if this entity's bounding box intersects with another entity's bounding box.
-     * 
-     * <p>Collision occurs when both entities overlap on both X and Y axes,
-     * including edge-to-edge contact.</p>
-     *
-     * @param other the entity to check collision with (not null)
-     * @return true if entities collide, false otherwise
-     * @throws NullPointerException if other is null
-     */
-    public boolean collidesWith(final GameEntity other) {
-        return this.getPosition().x() < other.getPosition().x() + other.getDimension().width()
-                && this.getPosition().x() + this.getDimension().width() > other.getPosition().x()
-                && this.getPosition().y() < other.getPosition().y() + other.getDimension().height()
-                && this.getPosition().y() + this.getDimension().height() > other.getPosition().y();
-    }
-
-    /**
      * Updates the entity's position in the game world.
      *
      * @param position the new position to set (cannot be {@code null})
      * @throws NullPointerException if position is {@code null}
      */
+    @Override
     public void setPosition(final Position position) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
     }

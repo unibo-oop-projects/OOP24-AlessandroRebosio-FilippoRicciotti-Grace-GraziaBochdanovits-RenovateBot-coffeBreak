@@ -9,6 +9,8 @@ import it.unibo.coffebreak.model.impl.utility.Position;
  *
  * @see Position
  * @see Dimension
+ * 
+ * @author Grazia Bochdanovits de Kavna
  */
 public interface Entity {
 
@@ -19,6 +21,13 @@ public interface Entity {
      * @see Position
      */
     Position getPosition();
+
+    /**
+     * Sets the current position of the Enity.
+     * 
+     * @param position the new position
+     */
+    void setPosition(Position position);
 
     /**
      * Gets the physical dimensions of this entity.
@@ -34,4 +43,12 @@ public interface Entity {
      * @param deltaTime the time elapsed since last update in milliseconds 
      */
     void update(long deltaTime);
+
+
+    /**
+     * Method that checks if Entity is colliding with another Entity.
+     * 
+     * @param other the other Entity
+     */
+    void onCollision(Entity other);
 }
