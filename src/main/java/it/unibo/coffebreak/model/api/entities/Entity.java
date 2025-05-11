@@ -40,13 +40,36 @@ public interface Entity {
     Dimension2D getDimension();
 
     /**
-     * Updates the entity's state based on elapsed game time.
-     * This method should be called periodically to update the entity's position,
-     * state, or any other time-dependent properties.
+     * Gets the current velocity vector of this entity.
      *
-     * @param deltaTime the time elapsed since last update in milliseconds
+     * @return the current {@link Vector2D} representing the entity's velocity
      */
-    void update(long deltaTime);
+    Vector2D getVelocity();
+
+    /**
+     * Sets the velocity vector of this entity.
+     * The velocity determines how the entity moves during each update cycle.
+     *
+     * @param vector the new velocity vector to set
+     */
+    void setVelocity(Vector2D vector);
+
+    /**
+     * Sets the horizontal facing direction of this entity.
+     * This affects both graphical representation and potentially movement behavior.
+     *
+     * @param facing {@code true} to face right (positive X direction),
+     *               {@code false} to face left (negative X direction)
+     */
+    void setFacingRight(boolean facing);
+
+    /**
+     * Checks if the entity is currently facing to the right.
+     * This is typically used for graphical representation or movement direction.
+     *
+     * @return {@code true} if the entity is facing right, {@code false} otherwise
+     */
+    boolean isFacingRight();
 
     /**
      * Checks if this entity intersects with another entity.
@@ -54,11 +77,11 @@ public interface Entity {
      * dimensions
      * of both entities.
      *
-     * @param entity the entity to check for intersection with
+     * @param other the entity to check for intersection with
      * @return {@code true} if this entity intersects with the given entity,
      *         {@code false} otherwise
      */
-    boolean intersect(Entity entity);
+    boolean intersect(Entity other);
 
     /**
      * Handles collision detection response with another entity.
@@ -73,34 +96,11 @@ public interface Entity {
     void onCollision(Entity other);
 
     /**
-     * Sets the velocity vector of this entity.
-     * The velocity determines how the entity moves during each update cycle.
+     * Updates the entity's state based on elapsed game time.
+     * This method should be called periodically to update the entity's position,
+     * state, or any other time-dependent properties.
      *
-     * @param vector the new velocity vector to set
+     * @param deltaTime the time elapsed since last update in milliseconds
      */
-    void setVelocity(Vector2D vector);
-
-    /**
-     * Gets the current velocity vector of this entity.
-     *
-     * @return the current {@link Vector2D} representing the entity's velocity
-     */
-    Vector2D getVelocity();
-
-    /**
-     * Checks if the entity is currently facing to the right.
-     * This is typically used for graphical representation or movement direction.
-     *
-     * @return {@code true} if the entity is facing right, {@code false} otherwise
-     */
-    boolean isFacingRight();
-
-    /**
-     * Sets the horizontal facing direction of this entity.
-     * This affects both graphical representation and potentially movement behavior.
-     *
-     * @param facing {@code true} to face right (positive X direction),
-     *               {@code false} to face left (negative X direction)
-     */
-    void setFacingRight(boolean facing);
+    void update(float deltaTime);
 }
