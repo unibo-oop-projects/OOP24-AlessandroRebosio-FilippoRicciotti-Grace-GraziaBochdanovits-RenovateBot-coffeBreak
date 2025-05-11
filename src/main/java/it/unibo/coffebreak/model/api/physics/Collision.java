@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.api.physics;
 
-import ch.qos.logback.core.model.Model;
+import it.unibo.coffebreak.model.api.Model;
 
 public interface Collision {
 
