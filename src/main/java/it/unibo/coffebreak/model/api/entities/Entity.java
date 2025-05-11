@@ -5,7 +5,8 @@ import it.unibo.coffebreak.model.impl.util.Position2D;
 import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
- * Represents a fundamental game entity with spatial properties and update capability.
+ * Represents a fundamental game entity with spatial properties and update
+ * capability.
  * Implementations can represent both static and dynamic game elements.
  *
  * @see Position2D
@@ -21,6 +22,15 @@ public interface Entity {
      * @return the current {@link Position2D} of this entity (never {@code null})
      */
     Position2D getPosition();
+
+    /**
+     * Sets the position of this entity in the game world.
+     * The position should represent the entity's center point in world coordinates.
+     *
+     * @param position the new position to set (must not be {@code null})
+     * @throws NullPointerException if the position parameter is null
+     */
+    void setPosition(Position2D position);
 
     /**
      * Gets the physical dimensions of this entity.
@@ -40,7 +50,8 @@ public interface Entity {
 
     /**
      * Checks if this entity intersects with another entity.
-     * The intersection is typically determined by comparing the position and dimensions
+     * The intersection is typically determined by comparing the position and
+     * dimensions
      * of both entities.
      *
      * @param entity the entity to check for intersection with
@@ -73,9 +84,11 @@ public interface Entity {
     boolean isFacingRight();
 
     /**
-     * Sets the entity's facing direction to right.
-     * This should affect both the graphical representation and potentially
-     * the movement direction of the entity.
+     * Sets the horizontal facing direction of this entity.
+     * This affects both graphical representation and potentially movement behavior.
+     *
+     * @param facing {@code true} to face right (positive X direction),
+     *               {@code false} to face left (negative X direction)
      */
-    void setFacingRight();
+    void setFacingRight(boolean facing);
 }
