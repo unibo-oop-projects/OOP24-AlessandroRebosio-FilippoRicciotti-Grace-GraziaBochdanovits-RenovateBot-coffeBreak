@@ -7,25 +7,63 @@ import it.unibo.coffebreak.model.impl.entities.GameEntity;
 import it.unibo.coffebreak.model.impl.util.Dimension2D;
 import it.unibo.coffebreak.model.impl.util.Position2D;
 
+/**
+ * An abstract base class representing a collectible game entity.
+ * Implements basic functionality for collectible objects, such as
+ * collision handling, collection status, and point value.
+ * 
+ * @author Alessandro Rebosio
+ */
 public abstract class GameCollectible extends GameEntity implements Collectible {
 
     private boolean collected;
     private final int value;
 
+    /**
+     * Constructs a new {@code GameCollectible} with the specified position,
+     * dimensions, and point value.
+     *
+     * @param position  the initial position of the collectible
+     * @param dimension the size of the collectible
+     * @param value     the number of points the collectible is worth
+     */
     public GameCollectible(Position2D position, Dimension2D dimension, int value) {
         super(position, dimension);
         this.collected = false;
         this.value = value;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This method does nothing by default. Subclasses may override it to provide
+     * custom collision behavior.
+     *
+     * @param other the entity this object has collided with
+     */
     @Override
     public void onCollision(Entity other) {
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * This method does nothing by default. Subclasses may override it to define
+     * behavior that should occur on each update.
+     *
+     * @param deltaTime the time elapsed since the last update
+     */
     @Override
     public void update(float deltaTime) {
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * Marks this collectible as collected and applies its effect to the player.
+     *
+     * @param player the character who collected the item
+     */
     @Override
     public void collect(Character player) {
         if (!this.collected) {
@@ -34,15 +72,32 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return true if this collectible has been collected, false otherwise
+     */
     @Override
     public boolean isCollected() {
         return this.collected;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the number of points this collectible is worth
+     */
     @Override
     public int getPointsValue() {
         return this.value;
     }
 
+    /**
+     * Applies the effect of the collectible to the given player.
+     * This method must be implemented by subclasses to define
+     * the specific behavior of the collectible.
+     *
+     * @param player the character who collected the item
+     */
     protected abstract void applyEffect(Character player);
 }
