@@ -61,6 +61,18 @@ public interface Entity {
     boolean intersect(Entity entity);
 
     /**
+     * Handles collision detection response with another entity.
+     * This method is invoked when a collision is detected between this entity and
+     * another entity,
+     * and should contain the logic to respond to the collision.
+     * 
+     * @param other the entity that collided with this entity (never {@code null})
+     * 
+     * @throws NullPointerException if the other parameter is null
+     */
+    void onCollision(Entity other);
+
+    /**
      * Sets the velocity vector of this entity.
      * The velocity determines how the entity moves during each update cycle.
      *
