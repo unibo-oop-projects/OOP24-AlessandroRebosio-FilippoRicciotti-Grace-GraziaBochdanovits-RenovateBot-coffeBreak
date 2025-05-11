@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.utility;
+package it.unibo.coffebreak.model.impl.util;
 
 /**
 * Represents a position in a 2D space with x and y coordinates.
@@ -6,5 +6,5 @@ package it.unibo.coffebreak.model.impl.utility;
  * @param x the x-coordinate of the position.
  * @param y the y-coordinate of the position.
  */
-public record Position(float x, float y) {
+public record Position2D(float x, float y) {
 }

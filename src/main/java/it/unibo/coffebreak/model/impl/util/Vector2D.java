@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.utility;
+package it.unibo.coffebreak.model.impl.util;
 
 import java.util.Objects;
 
