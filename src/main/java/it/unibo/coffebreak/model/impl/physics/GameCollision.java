@@ -56,8 +56,7 @@ public class GameCollision implements Collision {
         for (final Entity entity : model.getEntities()) {
             if (!entity.equals(mario) && mario.intersect(entity)) {
                 if (entity instanceof final Collectible item) {
-                    model.getScoreManager().earnPoints(item.getPointsValue());
-                    item.collect();
+                    item.collect(mario);
                 } else if (entity instanceof final Enemy enemy) {
                     this.handleEnemyCollision(mario, enemy);
                 } else if (entity instanceof final Platform platform) {
