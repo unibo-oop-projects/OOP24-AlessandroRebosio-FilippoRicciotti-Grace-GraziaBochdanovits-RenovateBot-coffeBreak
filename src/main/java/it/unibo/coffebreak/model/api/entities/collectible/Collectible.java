@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.api.entities.collectible;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.character.Character;
 
 /**
  * Represents a collectible item in the game world (e.g., Pauline's purse, hat,
@@ -14,7 +15,7 @@ public interface Collectible extends Entity {
     /**
      * Collects this item, triggering its effect (e.g., adding points).
      */
-    void collect();
+    void collect(Character player);
 
     /**
      * @return true if this item has been collected, false otherwise
