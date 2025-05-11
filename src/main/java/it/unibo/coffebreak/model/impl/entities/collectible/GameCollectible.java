@@ -27,7 +27,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param dimension the size of the collectible
      * @param value     the number of points the collectible is worth
      */
-    public GameCollectible(Position2D position, Dimension2D dimension, int value) {
+    public GameCollectible(final Position2D position, final Dimension2D dimension, final int value) {
         super(position, dimension);
         this.collected = false;
         this.value = value;
@@ -42,7 +42,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param other the entity this object has collided with
      */
     @Override
-    public void onCollision(Entity other) {
+    public void onCollision(final Entity other) {
     }
 
     /**
@@ -54,7 +54,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param deltaTime the time elapsed since the last update
      */
     @Override
-    public void update(float deltaTime) {
+    public void update(final float deltaTime) {
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param player the character who collected the item
      */
     @Override
-    public void collect(Character player) {
+    public void collect(final Character player) {
         if (!this.collected) {
             this.collected = true;
             this.applyEffect(player);
