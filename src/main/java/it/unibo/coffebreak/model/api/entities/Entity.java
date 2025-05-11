@@ -5,7 +5,8 @@ import it.unibo.coffebreak.model.impl.util.Position2D;
 import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
- * Represents a fundamental game entity with spatial properties and update capability.
+ * Represents a fundamental game entity with spatial properties and update
+ * capability.
  * Implementations can represent both static and dynamic game elements.
  *
  * @see Position2D
@@ -40,7 +41,8 @@ public interface Entity {
 
     /**
      * Checks if this entity intersects with another entity.
-     * The intersection is typically determined by comparing the position and dimensions
+     * The intersection is typically determined by comparing the position and
+     * dimensions
      * of both entities.
      *
      * @param entity the entity to check for intersection with
@@ -48,6 +50,18 @@ public interface Entity {
      *         {@code false} otherwise
      */
     boolean intersect(Entity entity);
+
+    /**
+     * Handles collision detection response with another entity.
+     * This method is invoked when a collision is detected between this entity and
+     * another entity,
+     * and should contain the logic to respond to the collision.
+     * 
+     * @param other the entity that collided with this entity (never {@code null})
+     * 
+     * @throws NullPointerException if the other parameter is null
+     */
+    void onCollision(Entity other);
 
     /**
      * Sets the velocity vector of this entity.
