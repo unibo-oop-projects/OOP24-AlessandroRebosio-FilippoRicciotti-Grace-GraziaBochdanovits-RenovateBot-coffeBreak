@@ -3,8 +3,8 @@ package it.unibo.coffebreak.model.impl.entity.item;
 import it.unibo.coffebreak.model.api.entity.Entity;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
 import it.unibo.coffebreak.model.api.entity.item.CollectibleFactory;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -32,7 +32,7 @@ public class GameCollectibleFactory implements CollectibleFactory {
      * {@inheritDoc}
      */
     @Override
-    public Collectible createHammer(final Position position, final Dimension dimension) {
+    public Collectible createHammer(final Position2D position, final Dimension2D dimension) {
         return buildCollectible(ItemType.HAMMER, position, dimension, collector -> {
             // activate power-up)
         });
@@ -42,7 +42,7 @@ public class GameCollectibleFactory implements CollectibleFactory {
      * {@inheritDoc}
      */
     @Override
-    public Collectible createCoin(final Position position, final Dimension dimension) {
+    public Collectible createCoin(final Position2D position, final Dimension2D dimension) {
         return buildCollectible(ItemType.COIN, position, dimension, collector -> {
             // Points are already handled via getValue; no extra effect
         });
@@ -52,7 +52,7 @@ public class GameCollectibleFactory implements CollectibleFactory {
      * {@inheritDoc}
      */
     @Override
-    public Collectible createBag(final Position position, final Dimension dimension) {
+    public Collectible createBag(final Position2D position, final Dimension2D dimension) {
         return buildCollectible(ItemType.BAG, position, dimension, collector -> {
             // Additional bag-specific logic can go here
         });
@@ -62,7 +62,7 @@ public class GameCollectibleFactory implements CollectibleFactory {
      * {@inheritDoc}
      */
     @Override
-    public Collectible createHat(final Position position, final Dimension dimension) {
+    public Collectible createHat(final Position2D position, final Dimension2D dimension) {
         return buildCollectible(ItemType.HAT, position, dimension, collector -> {
             // Add any hat-specific effect logic here
         });
@@ -79,7 +79,7 @@ public class GameCollectibleFactory implements CollectibleFactory {
      * @return a configured {@link Collectible} instance
      * @throws NullPointerException if any parameter is null
      */
-    private Collectible buildCollectible(final ItemType type, final Position position, final Dimension dimension,
+    private Collectible buildCollectible(final ItemType type, final Position2D position, final Dimension2D dimension,
             final Consumer<Entity> onCollected) {
         Objects.requireNonNull(type, "ItemType must not be null");
         Objects.requireNonNull(position, "Position must not be null");

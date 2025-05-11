@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entity.enemy;
 
 import it.unibo.coffebreak.model.api.entity.Movable;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Implements the movement strategy for fire-type enemies.
@@ -10,7 +10,7 @@ import it.unibo.coffebreak.model.impl.utility.Vector2D;
  * for fireballs or other projectile-like enemies.
  * 
  * @see Movable
- * @see Position
+ * @see Position2D
  * @see Vector2D
  */
 public class FireMovementStrategy implements Movable {
@@ -27,8 +27,8 @@ public class FireMovementStrategy implements Movable {
      * 
      */
     @Override
-    public Position move(final Position currentPosition, final Vector2D direction) {
-        return new Position(currentPosition.x() + direction.getX(),
+    public Position2D move(final Position2D currentPosition, final Vector2D direction) {
+        return new Position2D(currentPosition.x() + direction.getX(),
                             currentPosition.y() + direction.getY());
     }
 }

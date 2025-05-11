@@ -3,8 +3,8 @@ package it.unibo.coffebreak.model.impl.entity.platform;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.platform.Platform;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * A decorator that adds movement capability to a platform.
@@ -62,7 +62,7 @@ public class MovingPlatform extends PlatformDecorator {
      */
     @Override
     public void update(final long deltaTime) {
-        this.setPosition(new Position(this.getPosition().x() + velocity.getX() * deltaTime / 1000.0f, 
+        this.setPosition(new Position2D(this.getPosition().x() + velocity.getX() * deltaTime / 1000.0f, 
                                         this.getPosition().y() + velocity.getY() * deltaTime / 1000.0f));
     }
 }

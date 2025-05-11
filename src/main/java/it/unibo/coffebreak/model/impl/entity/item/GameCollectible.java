@@ -5,8 +5,8 @@ import java.util.Objects;
 import it.unibo.coffebreak.model.api.entity.Entity;
 import it.unibo.coffebreak.model.api.entity.item.Collectible;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Abstract base class for all collectible items in the game.
@@ -29,7 +29,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param type      the type of collectible (determines base value and behavior)
      * @throws IllegalArgumentException if any parameter is null
      */
-    public GameCollectible(final Position position, final Dimension dimension, final ItemType type) {
+    public GameCollectible(final Position2D position, final Dimension2D dimension, final ItemType type) {
         super(position, dimension);
         this.type = Objects.requireNonNull(type, "ItemType cannot be null");
         this.collected = false;

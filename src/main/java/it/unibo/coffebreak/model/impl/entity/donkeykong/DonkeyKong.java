@@ -5,8 +5,8 @@ import it.unibo.coffebreak.model.api.entity.donkeykong.Command;
 import it.unibo.coffebreak.model.api.entity.donkeykong.CommandFactory;
 import it.unibo.coffebreak.model.api.entity.donkeykong.Villain;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 import java.util.List;
 import java.util.Objects;
@@ -60,7 +60,7 @@ public final class DonkeyKong extends GameEntity implements Villain {
      * @param initialObservers optional list of initial observers (may be null)
      * @throws IllegalArgumentException if position, dimension or commandFactory is null
      */
-    public DonkeyKong(final Position position, final Dimension dimension, final CommandFactory commandFactory,
+    public DonkeyKong(final Position2D position, final Dimension2D dimension, final CommandFactory commandFactory,
                         final List<BarrelThrowObserver> initialObservers) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
         this.commandFactory = Objects.requireNonNull(commandFactory);

@@ -2,8 +2,8 @@ package it.unibo.coffebreak.model.impl.entity.platform;
 
 import it.unibo.coffebreak.model.api.entity.platform.Platform;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * An abstract base implementation of the {@link Platform} interface that extends {@link GameEntity}.
@@ -18,7 +18,7 @@ public abstract class AbstractPlatform extends GameEntity implements Platform {
      * @param position the initial position of the platform in game coordinates
      * @param dimension the physical dimensions of the platform
      */
-    public AbstractPlatform(final Position position, final Dimension dimension) {
+    public AbstractPlatform(final Position2D position, final Dimension2D dimension) {
         super(position, dimension);
     }
 

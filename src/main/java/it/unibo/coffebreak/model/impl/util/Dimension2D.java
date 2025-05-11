@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.utility;
+package it.unibo.coffebreak.model.impl.util;
 
 /**
  * Represents the dimensions of an object with width and height.
@@ -6,5 +6,5 @@ package it.unibo.coffebreak.model.impl.utility;
  * @param width  the width of the object.
  * @param height the height of the object.
  */
-public record Dimension(float width, float height) {
+public record Dimension2D(float width, float height) {
 }

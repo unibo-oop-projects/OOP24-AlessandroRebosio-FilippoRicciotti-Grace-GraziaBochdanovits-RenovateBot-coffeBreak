@@ -2,8 +2,8 @@ package it.unibo.coffebreak.model.impl.entity;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Represents Pauline, the character that needs to be rescued by Mario in the game.
@@ -29,7 +29,7 @@ public final class Pauline extends GameEntity {
      * @param dimension the hitbox dimensions (not null)
      * @throws IllegalArgumentException if any parameter is null
      */
-    public Pauline(final Position position, final Dimension dimension) {
+    public Pauline(final Position2D position, final Dimension2D dimension) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
         this.rescued = false;
     }

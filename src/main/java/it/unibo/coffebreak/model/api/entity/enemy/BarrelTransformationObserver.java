@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.api.entity.enemy;
 
 import it.unibo.coffebreak.model.impl.entity.enemy.Barrel;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * An observer interface for receiving notifications when a barrel undergoes

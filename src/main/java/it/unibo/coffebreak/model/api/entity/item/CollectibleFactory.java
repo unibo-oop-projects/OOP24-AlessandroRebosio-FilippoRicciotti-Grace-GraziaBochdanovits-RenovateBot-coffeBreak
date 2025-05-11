@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.api.entity.item;
 
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Factory interface for creating collectible items with configurable position
@@ -21,7 +21,7 @@ public interface CollectibleFactory {
      * @return a new hammer instance
      * @throws IllegalArgumentException if position or dimension is null
      */
-    Collectible createHammer(Position position, Dimension dimension);
+    Collectible createHammer(Position2D position, Dimension2D dimension);
 
     /**
      * Creates a coin collectible at specified position and size.
@@ -32,7 +32,7 @@ public interface CollectibleFactory {
      * @return a new coin instance
      * @throws IllegalArgumentException if position or dimension is null
      */
-    Collectible createCoin(Position position, Dimension dimension);
+    Collectible createCoin(Position2D position, Dimension2D dimension);
 
     /**
      * Creates a bag collectible at specified position and size.
@@ -43,7 +43,7 @@ public interface CollectibleFactory {
      * @return a new bag instance
      * @throws IllegalArgumentException if position or dimension is null
      */
-    Collectible createBag(Position position, Dimension dimension);
+    Collectible createBag(Position2D position, Dimension2D dimension);
 
     /**
      * Creates a hat collectible at specified position and size.
@@ -54,5 +54,5 @@ public interface CollectibleFactory {
      * @return a new hat instance
      * @throws IllegalArgumentException if position or dimension is null
      */
-    Collectible createHat(Position position, Dimension dimension);
+    Collectible createHat(Position2D position, Dimension2D dimension);
 }

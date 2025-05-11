@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.impl.entity.platform;
 
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Represents the most elementary type of platform in the game,
@@ -20,7 +20,7 @@ public class BasicPlatform extends AbstractPlatform {
      * @param position the position of the platform
      * @param dimension the dimension of the platform
      */
-    public BasicPlatform(final Position position, final Dimension dimension) {
+    public BasicPlatform(final Position2D position, final Dimension2D dimension) {
         super(position, dimension);
         this.breakable = false;
     }

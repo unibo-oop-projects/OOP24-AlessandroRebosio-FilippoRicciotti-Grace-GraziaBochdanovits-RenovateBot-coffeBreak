@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.enemy.BarrelTransformationObserver;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Concrete implementation of an enemy representing a rolling barrel.
@@ -41,7 +41,7 @@ public class Barrel extends Enemy {
      *  @param canTransformToFire whether this barrel can transform into fire
      * @throws IllegalArgumentException if any required parameter is null
      */
-    public Barrel(final Position position, final Dimension dimension, final Vector2D velocity, final Boolean canTransformToFire) {
+    public Barrel(final Position2D position, final Dimension2D dimension, final Vector2D velocity, final Boolean canTransformToFire) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension), 
               EnemyType.BARREL, Objects.requireNonNull(velocity));
         this.canTransformToFire = canTransformToFire;

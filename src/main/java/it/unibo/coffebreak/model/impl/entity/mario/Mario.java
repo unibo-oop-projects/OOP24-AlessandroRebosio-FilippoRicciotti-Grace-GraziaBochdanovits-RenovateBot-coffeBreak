@@ -14,9 +14,9 @@ import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
 import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
 import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Represents the main player character in the game, implementing both
@@ -43,7 +43,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
     private final GameScoreManager scoreManager;
     private MarioStateInterface currentState;
 
-    private final Position startPosition;
+    private final Position2D startPosition;
     private Vector2D velocity;
     private boolean isOnGround;
     private final String playerName;
@@ -59,10 +59,10 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      * @param playerName the name of the player for score tracking purposes (cannot be null)
      * @throws NullPointerException if any parameter is null
      */
-    public Mario(final Position position, final Dimension dimension, 
+    public Mario(final Position2D position, final Dimension2D dimension, 
                     final GameScoreManager scoreManager, final LivesManager livesManager, final String playerName) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
-        this.startPosition = new Position(position.x(), position.y());
+        this.startPosition = new Position2D(position.x(), position.y());
         this.velocity = new Vector2D(0, 0);
         this.livesManager = Objects.requireNonNull(livesManager);
         this.scoreManager = Objects.requireNonNull(scoreManager);
@@ -192,7 +192,7 @@ public class Mario extends GameEntity implements PlayableCharacter, Movable {
      * @throws NullPointerException if either parameter is null
      */
     @Override
-    public Position move(final Position currentPosition, final Vector2D direction) {
+    public Position2D move(final Position2D currentPosition, final Vector2D direction) {
         return currentState.move(this, direction);
     }
 

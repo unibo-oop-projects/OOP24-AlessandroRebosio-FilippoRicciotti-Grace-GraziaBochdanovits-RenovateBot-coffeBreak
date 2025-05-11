@@ -4,9 +4,9 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.Movable;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Abstract base class for all enemy entities in the game. Implements core movement
@@ -41,7 +41,7 @@ public abstract class Enemy extends GameEntity {
      * @param velocity the initial velocity (non-null)
      * @throws NullPointerException if any parameter is null
      */
-    public Enemy(final Position position, final Dimension dimension, final EnemyType state, final Vector2D velocity) {
+    public Enemy(final Position2D position, final Dimension2D dimension, final EnemyType state, final Vector2D velocity) {
         super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
         this.state = Objects.requireNonNull(state);
         this.velocity = new Vector2D(Objects.requireNonNull(velocity).getX(), velocity.getY());
@@ -84,7 +84,7 @@ public abstract class Enemy extends GameEntity {
      * @throws NullPointerException if direction is null
      */
     public void move(final Vector2D direction) {
-        final Position newPosition = movementStrategy.move(getPosition(), Objects.requireNonNull(direction));
+        final Position2D newPosition = movementStrategy.move(getPosition(), Objects.requireNonNull(direction));
         setPosition(newPosition);
     }
 

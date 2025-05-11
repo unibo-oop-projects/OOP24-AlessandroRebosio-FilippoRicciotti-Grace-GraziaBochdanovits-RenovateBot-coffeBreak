@@ -2,8 +2,8 @@ package it.unibo.coffebreak.model.impl.entity.ladder;
 
 import it.unibo.coffebreak.model.api.entity.ladder.Climbable;
 import it.unibo.coffebreak.model.impl.entity.GameEntity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * A basic implementation of a climbable ladder in the game world.
@@ -37,7 +37,7 @@ public class BasicLadder extends GameEntity implements Climbable {
      * @param dimension the physical dimensions of the ladder
      * @throws IllegalArgumentException if position or dimension are null (if applicable)
      */
-    public BasicLadder(final Position position, final Dimension dimension) {
+    public BasicLadder(final Position2D position, final Dimension2D dimension) {
         super(position, dimension);
         this.climbable = true;
     }

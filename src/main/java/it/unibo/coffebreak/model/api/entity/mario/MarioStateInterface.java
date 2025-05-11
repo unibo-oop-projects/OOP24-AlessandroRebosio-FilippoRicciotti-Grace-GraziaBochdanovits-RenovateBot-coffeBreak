@@ -2,8 +2,8 @@ package it.unibo.coffebreak.model.api.entity.mario;
 
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
 import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Defines the behavior interface for Mario's various states in the State Pattern implementation.
@@ -24,7 +24,7 @@ public interface MarioStateInterface {
      * @return the new calculated position
      * @throws NullPointerException if either {@code mario} or {@code direction} is {@code null}
      */
-    Position move(Mario mario, Vector2D direction);
+    Position2D move(Mario mario, Vector2D direction);
 
     /**
      * Updates Mario's state-specific logic for each game frame.

@@ -3,8 +3,8 @@ package it.unibo.coffebreak.model.impl.entity;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entity.Entity;
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Base abstract class for all game entities that have a physical representation.
@@ -20,16 +20,16 @@ public abstract class GameEntity implements Entity {
 
     /**
      * The current position of the entity in game world coordinates.
-     * Expressed as a {@link Position} object containing x and y coordinates.
+     * Expressed as a {@link Position2D} object containing x and y coordinates.
      */
-    private Position position;
+    private Position2D position;
 
     /**
      * The physical dimensions of the entity.
-     * Expressed as a {@link Dimension} object containing width and height.
+     * Expressed as a {@link Dimension2D} object containing width and height.
      * This field is marked {@code final} and cannot be modified after construction.
      */
-    private final Dimension dimension;
+    private final Dimension2D dimension;
 
     /**
      * Constructs a new game entity with the specified position and dimensions.
@@ -38,7 +38,7 @@ public abstract class GameEntity implements Entity {
      * @param dimension the dimensions of the entity (cannot be {@code null})
      * @throws NullPointerException if either position or dimension is {@code null}
      */
-    public GameEntity(final Position position, final Dimension dimension) {
+    public GameEntity(final Position2D position, final Dimension2D dimension) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
         this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
     }
@@ -78,7 +78,7 @@ public abstract class GameEntity implements Entity {
      * @param position the new position to set (cannot be {@code null})
      * @throws NullPointerException if position is {@code null}
      */
-    public void setPosition(final Position position) {
+    public void setPosition(final Position2D position) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
     }
 
@@ -88,7 +88,7 @@ public abstract class GameEntity implements Entity {
      * @return the current position of the entity (never {@code null})
      */
     @Override
-    public final Position getPosition() {
+    public final Position2D getPosition() {
         return this.position; 
     }
 
@@ -98,7 +98,7 @@ public abstract class GameEntity implements Entity {
      * @return the dimensions of the entity (never {@code null})
      */
     @Override
-    public final Dimension getDimension() {
+    public final Dimension2D getDimension() {
         return this.dimension;
     }
 }

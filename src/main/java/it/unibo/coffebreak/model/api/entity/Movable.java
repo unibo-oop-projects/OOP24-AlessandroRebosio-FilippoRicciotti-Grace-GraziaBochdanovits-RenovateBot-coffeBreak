@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.api.entity;
 
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Defines the behavior for movable game entities. Implementations of this interface
@@ -11,7 +11,7 @@ import it.unibo.coffebreak.model.impl.utility.Vector2D;
  * This interface follows the Strategy pattern, allowing different movement
  * algorithms to be applied to game entities dynamically.
  * 
- * @see Position
+ * @see Position2D
  * @see Vector2D
  */
 public interface Movable {
@@ -27,5 +27,5 @@ public interface Movable {
      *         (never {@code null})
      * 
      */
-    Position move(Position currentPosition, Vector2D direction);
+    Position2D move(Position2D currentPosition, Vector2D direction);
 }

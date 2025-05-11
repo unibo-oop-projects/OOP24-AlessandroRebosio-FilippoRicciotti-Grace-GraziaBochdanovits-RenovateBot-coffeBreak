@@ -5,8 +5,8 @@ import java.util.Objects;
 import it.unibo.coffebreak.model.impl.entity.mario.AbstractMarioState;
 import it.unibo.coffebreak.model.impl.entity.mario.Mario;
 import it.unibo.coffebreak.model.impl.entity.mario.MarioState;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Represents Mario's state when he has died in the game.
@@ -41,7 +41,7 @@ public class DeadState extends AbstractMarioState {
      * @throws NullPointerException if either {@code mario} or {@code direction} is null
      */
     @Override
-    public Position move(final Mario mario, final Vector2D direction) {
+    public Position2D move(final Mario mario, final Vector2D direction) {
         Objects.requireNonNull(direction, "Direction cannot be null");
         return mario.getPosition();
     }

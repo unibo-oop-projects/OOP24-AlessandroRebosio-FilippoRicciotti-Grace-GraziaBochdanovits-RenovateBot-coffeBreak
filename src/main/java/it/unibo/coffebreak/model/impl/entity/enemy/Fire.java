@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entity.enemy;
 
-import it.unibo.coffebreak.model.impl.utility.Dimension;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Dimension2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Represents a fire-type enemy in the game.
@@ -24,7 +24,7 @@ public class Fire extends Enemy {
      * @param dimension the dimension of the fire enemy
      * @param velocity the velocity of the fire enemy
      */
-    public Fire(final Position position, final Dimension dimension, final Vector2D velocity) {
+    public Fire(final Position2D position, final Dimension2D dimension, final Vector2D velocity) {
         super(position, dimension, EnemyType.FIRE, velocity);
     }
 

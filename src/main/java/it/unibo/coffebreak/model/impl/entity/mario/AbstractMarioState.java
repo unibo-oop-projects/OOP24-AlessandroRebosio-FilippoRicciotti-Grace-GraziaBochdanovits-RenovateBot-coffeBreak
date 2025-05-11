@@ -6,8 +6,8 @@ import it.unibo.coffebreak.model.api.entity.mario.MarioStateInterface;
 import it.unibo.coffebreak.model.impl.entity.mario.state.DeadState;
 import it.unibo.coffebreak.model.impl.entity.mario.state.NormalState;
 import it.unibo.coffebreak.model.impl.entity.mario.state.WithHammerState;
-import it.unibo.coffebreak.model.impl.utility.Position;
-import it.unibo.coffebreak.model.impl.utility.Vector2D;
+import it.unibo.coffebreak.model.impl.util.Position2D;
+import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Abstract base class implementing Mario's state behavior in the State Pattern.
@@ -58,10 +58,10 @@ public abstract class AbstractMarioState implements MarioStateInterface {
      * @throws NullPointerException if either {@code mario} or {@code direction} is null
      */
     @Override
-    public Position move(final Mario mario, final Vector2D direction) {
+    public Position2D move(final Mario mario, final Vector2D direction) {
         Objects.requireNonNull(mario);
         Objects.requireNonNull(direction);
-        return new Position(mario.getPosition().x() + direction.getX(),
+        return new Position2D(mario.getPosition().x() + direction.getX(),
                             mario.getPosition().y() + direction.getY());
     }
 
@@ -113,7 +113,7 @@ public abstract class AbstractMarioState implements MarioStateInterface {
     @Override
     public void climb(final Mario mario, final int direction) {
         Objects.requireNonNull(mario);
-        mario.setPosition(new Position(mario.getPosition().x(),
+        mario.setPosition(new Position2D(mario.getPosition().x(),
                                         mario.getPosition().y() + direction * CLIMB_SPEED));
     }
 
