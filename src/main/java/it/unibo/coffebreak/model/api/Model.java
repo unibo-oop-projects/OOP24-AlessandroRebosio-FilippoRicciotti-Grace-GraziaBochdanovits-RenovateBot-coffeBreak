@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 
@@ -36,4 +37,12 @@ public interface Model {
      * @return the score manager instance
      */
     ScoreManager<Entry> getScoreManager();
+
+
+    /**
+     * Method that changes the game Phase to a specified one
+     * @param phase specified Phase to switch to
+     */
+    void setState(Phases.PhaseType phase);
+
 }
