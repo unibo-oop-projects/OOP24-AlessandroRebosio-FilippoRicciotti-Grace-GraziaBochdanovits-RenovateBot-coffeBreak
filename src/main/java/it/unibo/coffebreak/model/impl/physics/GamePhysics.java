@@ -20,38 +20,65 @@ import it.unibo.coffebreak.model.impl.util.Vector2D;
 public record GamePhysics(float acceleration, float maxSpeed, float deceleration, float gravity) implements Physics {
 
     /**
-     * Updates the movement of the given {@link Entity} based on the direction of
-     * movement and elapsed time.
-     * Applies horizontal acceleration or deceleration depending on the direction,
-     * and always applies gravity.
-     * Then updates the entity's velocity and position accordingly.
+     * Updates the movement of the given {@link Entity} based on input direction and
+     * elapsed time.
+     * Handles horizontal movement with acceleration and deceleration, vertical
+     * movement with gravity, jumping, and climbing.
+     * <ul>
+     * <li><b>LEFT / RIGHT</b>: apply horizontal acceleration and update facing
+     * direction</li>
+     * <li><b>JUMP</b>: applies an upward force if the entity is on the ground</li>
+     * <li><b>UP / DOWN</b>: allows vertical climbing if the entity can climb</li>
+     * <li><b>NONE</b>: apply deceleration if no horizontal input</li>
+     * </ul>
      *
      * @param entity    the entity to update
-     * @param deltaTime the time elapsed since the last update, in seconds
-     * @param direction the direction of horizontal input (LEFT, RIGHT, or NONE)
+     * @param deltaTime time elapsed since the last update, in seconds
+     * @param direction the direction of input (movement or action)
      */
     @Override
     public void updateMovement(final Entity entity, final float deltaTime, final Direction direction) {
         float vX = entity.getVelocity().getX();
-        final float vY = entity.getVelocity().getY() + gravity * deltaTime;
+        float vY = entity.getVelocity().getY();
 
         switch (direction) {
-            case RIGHT:
+            case RIGHT -> {
                 vX += this.acceleration * deltaTime;
                 entity.setFacingRight(true);
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 vX -= this.acceleration * deltaTime;
                 entity.setFacingRight(false);
-                break;
-            default:
+            }
+            case NONE -> {
                 vX = applyDeceleration(vX, deltaTime);
+            }
+            default -> {
+            }
+        }
+
+        switch (direction) {
+            case JUMP -> {
+                // TODO: JUMP
+            }
+            case UP -> {
+                // TODO: UP
+            }
+            case DOWN -> {
+                // TODO: DOWN
+            }
+            case NONE -> {
+                vY += gravity * deltaTime;
+            }
+            default -> {
+            }
         }
 
         vX = clamp(vX);
         entity.setVelocity(new Vector2D(vX, vY));
         entity.setPosition(new Position2D(
-                entity.getPosition().x() + vX * deltaTime, entity.getPosition().y() + vY * deltaTime));
+                entity.getPosition().x() + vX * deltaTime,
+                entity.getPosition().y() + vY * deltaTime));
     }
 
     /**
