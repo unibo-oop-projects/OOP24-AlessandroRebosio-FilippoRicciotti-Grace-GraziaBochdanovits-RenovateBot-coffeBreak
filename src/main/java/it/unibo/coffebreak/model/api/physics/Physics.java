@@ -12,19 +12,38 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 public interface Physics {
 
     /**
-     * Represents the possible horizontal movement directions for entities.
+     * Represents possible movement directions for entities in the game.
+     * Used to control character movement and actions.
      */
     enum Direction {
         /**
-         * Movement towards the left side of the screen.
+         * Movement towards the left side of the screen (negative X-axis direction).
          */
         LEFT,
+
         /**
-         * Movement towards the right side of the screen.
+         * Movement towards the right side of the screen (positive X-axis direction).
          */
         RIGHT,
+
         /**
-         * No horizontal movement.
+         * Movement upwards (negative Y-axis direction, typically for climbing ladders).
+         */
+        UP,
+
+        /**
+         * Movement downwards (positive Y-axis direction, typically for descending
+         * ladders).
+         */
+        DOWN,
+
+        /**
+         * Jumping action (vertical movement with physics, independent of axis).
+         */
+        JUMP,
+
+        /**
+         * No movement or action (neutral state).
          */
         NONE
     }
