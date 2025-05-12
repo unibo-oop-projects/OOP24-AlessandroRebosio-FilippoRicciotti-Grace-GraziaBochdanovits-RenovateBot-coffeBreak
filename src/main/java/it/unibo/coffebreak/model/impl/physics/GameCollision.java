@@ -6,10 +6,6 @@ import java.util.Objects;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.entities.ladder.Ladder;
-import it.unibo.coffebreak.model.api.entities.platform.Platform;
 import it.unibo.coffebreak.model.api.physics.Collision;
 
 /**
@@ -55,15 +51,7 @@ public class GameCollision implements Collision {
 
         for (final Entity entity : model.getEntities()) {
             if (!entity.equals(mario) && mario.intersect(entity)) {
-                if (entity instanceof final Collectible item) {
-                    item.collect(mario);
-                } else if (entity instanceof final Enemy enemy) {
-                    this.handleEnemyCollision(mario, enemy);
-                } else if (entity instanceof final Platform platform) {
-                    this.handlePlatformCollision(mario, platform);
-                } else if (entity instanceof final Ladder ladder) {
-                    this.handleLadderCollision(mario, ladder);
-                }
+                entity.onCollision(mario);
             }
         }
     }
@@ -85,41 +73,5 @@ public class GameCollision implements Collision {
                 }
             }
         }
-    }
-
-    /**
-     * Handles the collision between the player character and an enemy.
-     * 
-     * @param mario the player character
-     * @param enemy the enemy entity
-     */
-    private void handleEnemyCollision(final Character mario, final Enemy enemy) {
-        // Custom logic for collision with enemy can be implemented here
-        Objects.requireNonNull(mario);
-        Objects.requireNonNull(enemy);
-    }
-
-    /**
-     * Handles the collision between the player character and a platform.
-     * 
-     * @param mario    the player character
-     * @param platform the platform entity
-     */
-    private void handlePlatformCollision(final Character mario, final Platform platform) {
-        // Custom logic for collision with platform can be implemented here
-        Objects.requireNonNull(mario);
-        Objects.requireNonNull(platform);
-    }
-
-    /**
-     * Handles the collision between the player character and a ladder.
-     * 
-     * @param mario  the player character
-     * @param ladder the ladder entity
-     */
-    private void handleLadderCollision(final Character mario, final Ladder ladder) {
-        // Custom logic for collision with ladder can be implemented here
-        Objects.requireNonNull(mario);
-        Objects.requireNonNull(ladder);
     }
 }
