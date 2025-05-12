@@ -36,7 +36,7 @@ public class Hammer extends AbstractCollectible {
      */
     @Override
     protected void applyEffect(final Character player) {
-        // player.getScoreManager().earnPoints(super.getPointsValue());
-        // player.setState()
+        // super.applyEffect(player);
+        // player.setState() with Hammer
     }
 }
