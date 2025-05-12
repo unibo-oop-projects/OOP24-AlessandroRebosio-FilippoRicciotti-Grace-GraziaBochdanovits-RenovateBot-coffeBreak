@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.api.phases;
 
+import it.unibo.coffebreak.controller.handle.Action;
+
 public interface Phases {
 
     enum PhaseType {
@@ -14,7 +16,7 @@ public interface Phases {
 
     void exitState();
 
-    void handleInput(); // TODO add Action
+    void handleInput(Action action); 
 
     void update(long deltaTime);
 }
