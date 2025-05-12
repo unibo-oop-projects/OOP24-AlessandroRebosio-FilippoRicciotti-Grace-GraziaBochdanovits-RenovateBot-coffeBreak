@@ -38,9 +38,9 @@ public interface Model {
      */
     ScoreManager<Entry> getScoreManager();
 
-
     /**
-     * Method that changes the game Phase to a specified one
+     * Method that changes the game Phase to a specified one.
+     * 
      * @param phase specified Phase to switch to
      */
     void setState(Phases.PhaseType phase);
