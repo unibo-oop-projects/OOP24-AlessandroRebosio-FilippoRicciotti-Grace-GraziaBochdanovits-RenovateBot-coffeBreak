@@ -29,12 +29,10 @@ public class GameLadder extends GameEntity implements Ladder {
 
     /**
      * {@inheritDoc}
-     * 
-     * Ladders do not perform any specific action on collision.
      */
     @Override
     public void onCollision(final Entity other) {
-        // No behavior on collision
+        // TODO: set player canClimb true
     }
 
     /**
@@ -44,6 +42,6 @@ public class GameLadder extends GameEntity implements Ladder {
      */
     @Override
     public void update(final float deltaTime) {
-        // No update needed
+        // TODO: remove this method after empty implementation in GameEntity
     }
 }
