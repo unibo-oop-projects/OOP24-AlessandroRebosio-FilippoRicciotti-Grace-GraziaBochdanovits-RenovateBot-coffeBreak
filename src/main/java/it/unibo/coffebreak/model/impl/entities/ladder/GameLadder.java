@@ -17,21 +17,14 @@ import it.unibo.coffebreak.model.impl.util.Position2D;
 public class GameLadder extends GameEntity implements Ladder {
 
     /**
-     * Whether the ladder is currently climbable.
-     */
-    private final boolean climb;
-
-    /**
      * Constructs a new {@code GameLadder} with the specified position, dimension,
      * and climbable state.
      *
      * @param position  the position of the ladder in the game world
      * @param dimension the size of the ladder
-     * @param climb     whether the ladder is currently climbable
      */
-    public GameLadder(final Position2D position, final Dimension2D dimension, final boolean climb) {
+    public GameLadder(final Position2D position, final Dimension2D dimension) {
         super(position, dimension);
-        this.climb = climb;
     }
 
     /**
@@ -52,15 +45,5 @@ public class GameLadder extends GameEntity implements Ladder {
     @Override
     public void update(final float deltaTime) {
         // No update needed
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return true if the ladder can be climbed; false otherwise
-     */
-    @Override
-    public boolean isClimbable() {
-        return this.climb;
     }
 }
