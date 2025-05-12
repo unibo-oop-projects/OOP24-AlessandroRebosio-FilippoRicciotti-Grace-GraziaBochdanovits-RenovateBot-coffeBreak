@@ -42,31 +42,36 @@ public record GamePhysics(float acceleration, float maxSpeed, float deceleration
         float vY = entity.getVelocity().getY();
 
         switch (direction) {
-            case RIGHT:
+            case RIGHT -> {
                 vX += this.acceleration * deltaTime;
                 entity.setFacingRight(true);
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 vX -= this.acceleration * deltaTime;
                 entity.setFacingRight(false);
-                break;
-            default:
+            }
+            case NONE -> {
                 vX = applyDeceleration(vX, deltaTime);
+            }
+            default -> {
+            }
         }
 
         switch (direction) {
-            case JUMP:
+            case JUMP -> {
                 // TODO: JUMP
-                break;
-            case UP:
+            }
+            case UP -> {
                 // TODO: UP
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 // TODO: DOWN
-                break;
-            default:
+            }
+            case NONE -> {
                 vY += gravity * deltaTime;
-                break;
+            }
+            default -> {
+            }
         }
 
         vX = clamp(vX);
