@@ -25,7 +25,7 @@ import it.unibo.coffebreak.model.api.physics.Collision;
  * @see Entity
  * @see Model
  * 
- * @author Alessandro
+ * @author Alessandro Rebosio
  */
 public class GameCollision implements Collision {
 
