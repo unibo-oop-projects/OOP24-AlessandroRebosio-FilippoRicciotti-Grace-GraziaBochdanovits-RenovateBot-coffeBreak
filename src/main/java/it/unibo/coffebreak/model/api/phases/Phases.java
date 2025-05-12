@@ -8,43 +8,45 @@ public interface Phases {
     enum PhaseType {
 
         /**
-         *Phasetype for when inside the menu 
+         * Phasetype for when inside the menu.
          */
         MENU,
         /**
-         *Phasetype for when playing the game 
+         * Phasetype for when playing the game.
          */
         IN_GAME,
         /**
-         *Phasetype for when inside the paused menu 
+         * Phasetype for when inside the paused menu.
          */
         PAUSE,
         /**
-         *Phasetype for when inside the Game Over menu
+         * Phasetype for when inside the Game Over menu.
          */
         GAME_OVER
     }
 
     /**
-     * method for signaling the entrance in a new Phase
+     * method for signaling the entrance in a new Phase.
      */
     void enterState();
 
     /**
-     * method for signaling a Phase leaving
+     * method for signaling a Phase leaving.
      */
     void exitState();
 
     /**
-     * method that handle input depending on the Phase the model is currently in
+     * method that handle input depending on the Phase the model is currently in.
+     * 
      * @param action
      * @param model
      */
-    void handleInput(Action action,Model model); 
+    void handleInput(Action action, Model model);
 
     /**
-     * Updates the logic of the current game Phase based on deltaTime
-     * @param deltaTime time in milliseconds since the last update call
+     * Updates the logic of the current game Phase based on deltaTime.
+     * 
+     * @param deltaTime time in milliseconds since the last update call.
      */
     void update(long deltaTime);
 }
