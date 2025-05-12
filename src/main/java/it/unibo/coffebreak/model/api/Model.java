@@ -4,8 +4,6 @@ import java.util.List;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
  * Represents the main model interface for the Coffee Break game.
@@ -30,10 +28,4 @@ public interface Model {
      */
     Character getPlayer();
 
-    /**
-     * Gets the score manager responsible for handling game scores.
-     * 
-     * @return the score manager instance
-     */
-    ScoreManager<Entry> getScoreManager();
 }
