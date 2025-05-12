@@ -1,7 +1,9 @@
-package it.unibo.coffebreak.model.api.score;
+package it.unibo.coffebreak.model.api.score.manager;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import it.unibo.coffebreak.model.api.score.Entry;
 
 /**
  * Manages all scoring-related operations for a game, including.

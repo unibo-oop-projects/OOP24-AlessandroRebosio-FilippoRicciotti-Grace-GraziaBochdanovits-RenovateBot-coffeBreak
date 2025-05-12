@@ -1,22 +1,27 @@
-package it.unibo.coffebreak.model.impl.score;
+package it.unibo.coffebreak.model.impl.score.manager;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.Bonus;
 import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.LeaderBoard;
-import it.unibo.coffebreak.model.api.score.Repository;
 import it.unibo.coffebreak.model.api.score.Score;
-import it.unibo.coffebreak.model.api.score.ScoreManager;
+import it.unibo.coffebreak.model.api.score.bonus.Bonus;
+import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
+import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
+import it.unibo.coffebreak.model.api.score.repository.Repository;
+import it.unibo.coffebreak.model.impl.score.GameScore;
+import it.unibo.coffebreak.model.impl.score.ScoreEntry;
+import it.unibo.coffebreak.model.impl.score.bonus.GameBonus;
+import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
+import it.unibo.coffebreak.model.impl.score.repository.ScoreRepository;
 
 /**
  * Default implementation of {@link ScoreManager} using.
  * <ul>
  * <li>{@link GameScore} for score tracking</li>
  * <li>{@link GameBonus} for bonus management</li>
- * <li>{@link GameLeaderBoard} for ranking</li>
+ * <li>{@link GameLeaderboard} for ranking</li>
  * <li>{@link ScoreRepository} for persistence</li>
  * </ul>
  * 
@@ -43,7 +48,7 @@ public class GameScoreManager implements ScoreManager<Entry> {
     private final Repository<Entry> repository;
 
     /** Maintains ranked player entries. */
-    private final LeaderBoard<Entry> leaderBoard;
+    private final Leaderboard<Entry> leaderBoard;
 
     /**
      * Creates a new manager with default component implementations.
@@ -53,7 +58,7 @@ public class GameScoreManager implements ScoreManager<Entry> {
         this.score = new GameScore();
         this.bonus = new GameBonus();
         this.repository = new ScoreRepository();
-        this.leaderBoard = new GameLeaderBoard(this.repository.load());
+        this.leaderBoard = new GameLeaderboard(this.repository.load());
     }
 
     /**
