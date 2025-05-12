@@ -55,6 +55,7 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
      */
     @Override
     public void update(final float deltaTime) {
+        // TODO: remove this method after empty implementation in GameEntity
     }
 
     /**
@@ -100,6 +101,6 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
      * @param player the character who collected the item
      */
     protected void applyEffect(final Character player) {
-        // player.getScoreManager().earnPoints(this.value);
+        // TODO: player.getScoreManager().earnPoints(this.value);
     }
 }
