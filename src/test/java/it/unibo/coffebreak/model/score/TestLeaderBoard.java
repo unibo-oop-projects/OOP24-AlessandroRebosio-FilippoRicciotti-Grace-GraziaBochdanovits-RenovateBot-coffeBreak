@@ -12,13 +12,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.LeaderBoard;
-import it.unibo.coffebreak.model.impl.score.GameLeaderBoard;
+import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
 import it.unibo.coffebreak.model.impl.score.ScoreEntry;
+import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
 
 /**
- * Comprehensive test suite for {@link LeaderBoard} interface and
- * {@link GameLeaderBoard} implementation.
+ * Comprehensive test suite for {@link Leaderboard} interface and
+ * {@link GameLeaderboard} implementation.
  * 
  * <p>
  * Tests verify:
@@ -42,14 +42,14 @@ class TestLeaderBoard {
     private static final int SCORE_3 = 3000;
     private static final String EMPTY_NAME = "";
 
-    private LeaderBoard<Entry> leaderBoard;
+    private Leaderboard<Entry> leaderBoard;
 
     /**
      * Initializes a fresh GameLeaderBoard instance before each test.
      */
     @BeforeEach
     void init() {
-        this.leaderBoard = new GameLeaderBoard(new ArrayList<>());
+        this.leaderBoard = new GameLeaderboard(new ArrayList<>());
     }
 
     /**
@@ -57,7 +57,7 @@ class TestLeaderBoard {
      */
     @Test
     void testConstructorWithNullListThrowsException() {
-        assertThrows(NullPointerException.class, () -> new GameLeaderBoard(null));
+        assertThrows(NullPointerException.class, () -> new GameLeaderboard(null));
     }
 
     /**
@@ -96,7 +96,7 @@ class TestLeaderBoard {
         final Entry lowScoreEntry = new ScoreEntry("NewPlayer", 50);
         leaderBoard.addEntry(lowScoreEntry);
 
-        assertEquals(GameLeaderBoard.MAX_ENTRIES, leaderBoard.getLeaderBoard().size());
+        assertEquals(GameLeaderboard.MAX_ENTRIES, leaderBoard.getLeaderBoard().size());
         assertFalse(leaderBoard.getLeaderBoard().contains(lowScoreEntry));
     }
 
@@ -128,7 +128,7 @@ class TestLeaderBoard {
      * Helper method to fill leaderboard to maximum capacity.
      */
     private void fillLeaderBoardToCapacity() {
-        for (int i = 1; i <= GameLeaderBoard.MAX_ENTRIES; i++) {
+        for (int i = 1; i <= GameLeaderboard.MAX_ENTRIES; i++) {
             leaderBoard.addEntry(new ScoreEntry("Player" + i, i * 100));
         }
     }

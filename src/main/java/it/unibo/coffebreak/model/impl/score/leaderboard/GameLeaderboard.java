@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.score;
+package it.unibo.coffebreak.model.impl.score.leaderboard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.LeaderBoard;
+import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
 
 /**
- * Basic implementation of {@link LeaderBoard} maintaining top
+ * Basic implementation of {@link Leaderboard} maintaining top
  * {@value #MAX_ENTRIES} scores. Entries are automatically sorted in descending
  * order and trimmed to capacity when modified.
  * 
  * @author Alessandro Rebosio
  */
-public class GameLeaderBoard implements LeaderBoard<Entry> {
+public class GameLeaderboard implements Leaderboard<Entry> {
 
     /**
      * Maximum capacity of the leaderboard (currently {@value}).
@@ -35,7 +35,7 @@ public class GameLeaderBoard implements LeaderBoard<Entry> {
      * @throws NullPointerException if leaderBoard is null
      * @apiNote If input contains duplicates, all will be retained until trimming
      */
-    public GameLeaderBoard(final List<Entry> leaderBoard) {
+    public GameLeaderboard(final List<Entry> leaderBoard) {
         Objects.requireNonNull(leaderBoard, "The list cannot be null");
         this.leaderBoard = new ArrayList<>(leaderBoard);
         this.sortAndTrim();

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.score;
+package it.unibo.coffebreak.model.api.score.leaderboard;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * 
  * @author Alessandro Rebosio
  */
-public interface LeaderBoard<X> {
+public interface Leaderboard<X> {
     /**
      * Returns an unmodifiable view of entries ranked from highest to lowest.
      * The returned list is a snapshot and won't reflect subsequent modifications.

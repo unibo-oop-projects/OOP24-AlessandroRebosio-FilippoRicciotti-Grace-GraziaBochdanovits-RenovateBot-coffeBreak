@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.score;
+package it.unibo.coffebreak.model.api.score.repository;
 
 import java.util.List;
 
