@@ -35,14 +35,14 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
 
     /**
      * {@inheritDoc}
-     * 
-     * This method does nothing by default. Subclasses may override it to provide
-     * custom collision behavior.
      *
      * @param other the entity this object has collided with
      */
     @Override
     public void onCollision(final Entity other) {
+        if (other instanceof final Character mario) {
+            this.collect(mario);
+        }
     }
 
     /**
