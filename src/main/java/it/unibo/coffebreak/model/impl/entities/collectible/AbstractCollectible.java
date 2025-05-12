@@ -14,10 +14,10 @@ import it.unibo.coffebreak.model.impl.util.Position2D;
  * 
  * @author Alessandro Rebosio
  */
-public abstract class GameCollectible extends GameEntity implements Collectible {
+public abstract class AbstractCollectible extends GameEntity implements Collectible {
 
     private boolean collected;
-    private final int value;
+    protected final int value;
 
     /**
      * Constructs a new {@code GameCollectible} with the specified position,
@@ -27,7 +27,7 @@ public abstract class GameCollectible extends GameEntity implements Collectible 
      * @param dimension the size of the collectible
      * @param value     the number of points the collectible is worth
      */
-    public GameCollectible(final Position2D position, final Dimension2D dimension, final int value) {
+    public AbstractCollectible(final Position2D position, final Dimension2D dimension, final int value) {
         super(position, dimension);
         this.collected = false;
         this.value = value;
