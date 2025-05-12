@@ -17,7 +17,7 @@ import it.unibo.coffebreak.model.impl.util.Position2D;
 public abstract class AbstractCollectible extends GameEntity implements Collectible {
 
     private boolean collected;
-    protected final int value;
+    private final int value;
 
     /**
      * Constructs a new {@code GameCollectible} with the specified position,
