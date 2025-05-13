@@ -43,9 +43,6 @@ public class InGamePhase implements Phases {
             case PAUSE:
                 model.setState(new PausePhase());
                 break;
-            case NEXT_LEVEL:
-                // TODO: change level to the next one
-                break;
             case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, JUMP:
                 // TODO: update phisics
                 break;
