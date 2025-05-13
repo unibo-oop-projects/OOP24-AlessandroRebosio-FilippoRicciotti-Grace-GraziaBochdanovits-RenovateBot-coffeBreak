@@ -8,7 +8,7 @@ import it.unibo.coffebreak.model.api.entities.character.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.physics.Physics.Direction;
 import it.unibo.coffebreak.model.impl.entities.GameEntity;
-import it.unibo.coffebreak.model.impl.entities.collectible.Hammer;
+import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.mario.states.ClimbingState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.DeadState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.JumpState;
