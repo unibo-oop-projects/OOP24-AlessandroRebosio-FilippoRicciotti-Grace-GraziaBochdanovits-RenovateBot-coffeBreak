@@ -9,10 +9,6 @@ public enum Action {
      */
     START,
     /**
-     * Action for changing level.
-     */
-    NEXT_LEVEL,
-    /**
      * Action for resuming the gameplay.
      */
     RESUME,
@@ -39,5 +35,9 @@ public enum Action {
     /**
      * Action for Jumping.
      */
-    JUMP
+    JUMP,
+    /**
+     * Action for going down.
+     */
+    MOVE_DOWN
 }
