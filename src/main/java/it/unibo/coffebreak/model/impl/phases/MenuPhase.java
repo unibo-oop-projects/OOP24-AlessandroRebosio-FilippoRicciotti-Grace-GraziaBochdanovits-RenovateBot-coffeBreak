@@ -43,7 +43,7 @@ public class MenuPhase implements Phases {
                 model.setState(new InGamePhase());
                 // TODO: model.start()
                 break;
-            case EXIT_GAME:
+            case EXIT_GAME: // TODO: change if you modified Action
                 // TODO: exit game
                 // TODO: model.stop()
                 break;

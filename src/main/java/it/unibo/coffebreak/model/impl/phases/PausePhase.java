@@ -32,13 +32,13 @@ public class PausePhase implements Phases {
     @Override
     public void handleInput(final Action action, final Model model) {
         switch (action) {
-            case RESUME:
+            case RESUME: // TODO: change to CONFIRM
                 model.setState(new InGamePhase());
                 break;
-            case EXIT_GAME:
-                // TODO: Exit game
+            case EXIT_GAME: // TODO: change if you modified Action, pass to menu
+                // TODO: model.setState(new MenuPhase)
                 break;
-            default:
+            default: // TODO: you can add the quit, but not as default
                 break;
 
         }
