@@ -40,22 +40,6 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof final Character mario) {
-            this.collect(mario);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * This method does nothing by default. Subclasses may override it to define
-     * behavior that should occur on each update.
-     *
-     * @param deltaTime the time elapsed since the last update
-     */
-    @Override
-    public void update(final float deltaTime) {
-        // TODO: remove this method after empty implementation in GameEntity
     }
 
     /**
@@ -98,9 +82,9 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
      * This method must be implemented by subclasses to define
      * the specific behavior of the collectible.
      *
-     * @param player the character who collected the item
+     * @param character the character who collected the item
      */
-    protected void applyEffect(final Character player) {
-        // TODO: player.getScoreManager().earnPoints(this.value);
+    protected void applyEffect(final Character character) {
+        character.getScoreManager().earnPoints(this.value);
     }
 }
