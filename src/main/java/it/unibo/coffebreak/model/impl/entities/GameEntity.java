@@ -3,9 +3,9 @@ package it.unibo.coffebreak.model.impl.entities;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.impl.util.Dimension2D;
-import it.unibo.coffebreak.model.impl.util.Position2D;
-import it.unibo.coffebreak.model.impl.util.Vector2D;
+import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.Position2D;
+import it.unibo.coffebreak.model.impl.common.Vector2D;
 
 /**
  * An abstract base class for all game entities, providing common functionality

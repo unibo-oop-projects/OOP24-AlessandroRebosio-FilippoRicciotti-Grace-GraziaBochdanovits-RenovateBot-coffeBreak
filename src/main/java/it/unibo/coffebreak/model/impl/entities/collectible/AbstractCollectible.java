@@ -3,9 +3,9 @@ package it.unibo.coffebreak.model.impl.entities.collectible;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntity;
-import it.unibo.coffebreak.model.impl.util.Dimension2D;
-import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * An abstract base class representing a collectible game entity.

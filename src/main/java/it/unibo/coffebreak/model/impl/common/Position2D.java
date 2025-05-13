@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.util;
+package it.unibo.coffebreak.model.impl.common;
 
 /**
  * Represents a position in a 2D space with x and y coordinates.

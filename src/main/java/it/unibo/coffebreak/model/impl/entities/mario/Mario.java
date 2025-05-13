@@ -7,6 +7,9 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.physics.Physics.Direction;
+import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.Position2D;
+import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntity;
 import it.unibo.coffebreak.model.impl.entities.collectible.Hammer;
 import it.unibo.coffebreak.model.impl.entities.mario.states.ClimbingState;
@@ -16,9 +19,6 @@ import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
 import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
-import it.unibo.coffebreak.model.impl.util.Dimension2D;
-import it.unibo.coffebreak.model.impl.util.Position2D;
-import it.unibo.coffebreak.model.impl.util.Vector2D;
 
 /**
  * Represents the main player character (Mario) in the game.

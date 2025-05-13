@@ -3,7 +3,7 @@ package it.unibo.coffebreak.model.impl.entities.mario.states;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
-import it.unibo.coffebreak.model.impl.util.Vector2D;
+import it.unibo.coffebreak.model.impl.common.Vector2D;
 
 /**
  * Represents Mario's state when climbing ladders.

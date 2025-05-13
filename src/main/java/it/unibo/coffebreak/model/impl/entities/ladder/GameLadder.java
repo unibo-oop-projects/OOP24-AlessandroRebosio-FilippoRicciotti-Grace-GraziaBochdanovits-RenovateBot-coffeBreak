@@ -2,9 +2,9 @@ package it.unibo.coffebreak.model.impl.entities.ladder;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.ladder.Ladder;
+import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntity;
-import it.unibo.coffebreak.model.impl.util.Dimension2D;
-import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Concrete implementation of a {@link Ladder} entity.
