@@ -39,10 +39,10 @@ public class GameOverPhase implements Phases {
     @Override
     public void handleInput(final Action action, final Model model) {
         switch (action) {
-            case Action.START:
+            case START:
                 model.setState(new InGamePhase());
                 break;
-            case Action.EXIT_GAME:
+            case EXIT_GAME:
                 // TODO: exit the game
                 break;
             default:
