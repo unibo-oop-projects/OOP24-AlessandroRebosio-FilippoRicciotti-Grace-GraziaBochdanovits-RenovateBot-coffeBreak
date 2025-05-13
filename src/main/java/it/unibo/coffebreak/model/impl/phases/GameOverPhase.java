@@ -39,11 +39,11 @@ public class GameOverPhase implements Phases {
     @Override
     public void handleInput(final Action action, final Model model) {
         switch (action) {
-            case START:
+            case START: // TODO: change to CONFIRM and it setPhase to Menu
                 model.setState(new InGamePhase());
                 break;
             case EXIT_GAME:
-                // TODO: exit the game
+                // TODO: make only CONFIRM, is only action you can do
                 break;
             default:
                 break;
