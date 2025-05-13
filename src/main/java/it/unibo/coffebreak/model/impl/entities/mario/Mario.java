@@ -132,7 +132,7 @@ public class Mario extends GameEntity implements Character {
      */
     @Override
     public void update(final float deltaTime) {
-        if (!isAlive() && !(currentState instanceof DeadState)) {
+        if (isGameOver() && !(currentState instanceof DeadState)) {
             changeState(new DeadState());
         }
         currentState.update(this, deltaTime);
@@ -155,6 +155,22 @@ public class Mario extends GameEntity implements Character {
             setVelocity(new Vector2D(getVelocity().getX(), JUMP_FORCE));
             isOnGround = false;
             isJumping = true;
+        }
+    }
+
+    /**
+     * Updates the entity's movement direction and facing orientation.
+     * 
+     * 
+     * @param direction The new movement direction (must not be {@code null}).
+     */
+    @Override
+    public void move(final Direction direction) {
+        this.currentDirection = direction;
+        if (direction == Direction.RIGHT) {
+            this.facingRight = true;
+        } else if (direction == Direction.LEFT) {
+            this.facingRight = false;
         }
     }
 
@@ -197,29 +213,14 @@ public class Mario extends GameEntity implements Character {
      */
     @Override
     public void onCollision(final Entity other) {
-        currentState.handleCollision(this, other);
-    }
-
-    /**
-     * Collects an item and applies its effects.
-     *
-     * @param item the collectible item
-     * @throws NullPointerException if item is null
-     * @throws IllegalStateException if Mario is dead
-     */
-    @Override
-    public void collectItem(final Collectible item) {
-        Objects.requireNonNull(item, "Item cannot be null");
-        if (!isAlive()) {
-            throw new IllegalStateException("Cannot collect items when dead");
-        }
-        if (!item.isCollected()) {
-            item.collect(this);
-            scoreManager.earnPoints(item.getPointsValue());
-            if (item instanceof Hammer) {
-                changeState(new WithHammerState());
+        if(other instanceof Collectible) {
+            ((Collectible)other).collect(this);
+            scoreManager.earnPoints(((Collectible)other).getPointsValue());
+            if (other instanceof Hammer) {
+                //apply hammer affect in qualche modo
             }
         }
+        currentState.handleCollision(this, other);
     }
 
     /**
@@ -228,7 +229,7 @@ public class Mario extends GameEntity implements Character {
     @Override
     public void loseLife() {
         livesManager.loseLife();
-        if (isAlive()) {
+        if (!isGameOver()) {
             changeState(new NormalState());
             resetToInitialState();
         } else {
@@ -269,11 +270,11 @@ public class Mario extends GameEntity implements Character {
     }
 
     /**
-     * @return true if Mario has remaining lives
+     * @return true if Mario has zero remaining lives
      */
     @Override
-    public boolean isAlive() {
-        return livesManager.getLives() > 0;
+    public boolean isGameOver() {
+        return !livesManager.isAlive();
     }
 
     /**
@@ -325,6 +326,14 @@ public class Mario extends GameEntity implements Character {
     }
 
     /**
+     * @return the current direction of the character
+     */
+    @Override
+    public Direction getCurrentDirection() {
+        return this.currentDirection;
+    }
+
+    /**
      * Sets whether Mario is on the ground and handles state transitions.
      *
      * @param onGround true if Mario is on solid ground
@@ -345,11 +354,6 @@ public class Mario extends GameEntity implements Character {
     @Override
     public void setFacingRight(final boolean facingRight) {
         this.facingRight = facingRight;
-        if (facingRight) {
-            this.currentDirection = Direction.RIGHT;
-        } else {
-            this.currentDirection = Direction.LEFT;
-        }
     }
 
 }

@@ -1,9 +1,9 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.impl.entities.mario.GameLivesManager;
-import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
+import it.unibo.coffebreak.model.api.physics.Physics.Direction;
+import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
 
 /**
  * Represents a character entity in the game world.
@@ -30,7 +30,13 @@ public interface Character extends Entity {
     /**
      * Makes the character perform a jump action.
      */
-    void jump(); // TODO: add move() method 
+    void jump();
+
+    /**
+     * Moves the character in a specific direction.
+     * @param direction The direction of movement (LEFT, RIGHT, NONE)
+     */
+    void move(Direction direction);
 
     /**
      * Starts the climbing action for the character.
@@ -46,14 +52,6 @@ public interface Character extends Entity {
      * Uses a special item (generalized for hammer usage).
      */
     void useSpecialItem(); // TODO: ha senso?
-
-    /**
-     * Collects an item and applies its effects to the character.
-     * 
-     * @param item the collectible item to be collected
-     */
-    void collectItem(Collectible item); // TODO: remove this method, on collision check if entity is instaceof
-                                        // final Collectible item and call item.collect(this);
 
     /**
      * Decrements the character's life count.
@@ -89,18 +87,18 @@ public interface Character extends Entity {
     boolean isOnGround();
 
     /**
-     * Checks if the character is alive.
-     * 
-     * @return true if the character has lives remaining, false otherwise
+     * Checks if the game is over, which typically happens when the number of lives reaches zero.
+     *
+     * @return true if the game is over (no lives left), false otherwise
      */
-    boolean isAlive(); // TODO: rename in GameOver
+    boolean isGameOver();
 
     /**
      * Gets the lives manager for the character.
      * 
      * @return the GameLivesManager instance managing the character's lives
      */
-    GameLivesManager getLivesManager(); // TODO: change type in LivesManager
+    LivesManager getLivesManager();
 
     /**
      * Gets the current number of lives the character has.
@@ -114,7 +112,7 @@ public interface Character extends Entity {
      * 
      * @return the GameScoreManager instance managing the character's score
      */
-    GameScoreManager getScoreManager(); // TODO: change type in ScoreManager
+    ScoreManager<Entry> getScoreManager();
 
     /**
      * Gets the name of the player controlling this character.
@@ -122,6 +120,13 @@ public interface Character extends Entity {
      * @return the player's name
      */
     String getPlayerName();
+
+    /**
+     * Gets the current direction of the player.
+     * 
+     * @return the player's direction
+     */
+    Direction getCurrentDirection();
 
     /**
      * Gets the current state of the character.
