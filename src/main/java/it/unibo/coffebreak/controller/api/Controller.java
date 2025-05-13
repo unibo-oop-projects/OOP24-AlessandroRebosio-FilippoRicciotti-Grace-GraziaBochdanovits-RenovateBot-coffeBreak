@@ -1,9 +1,9 @@
 package it.unibo.coffebreak.controller.api;
 
-import it.unibo.coffebreak.controller.api.command.Command;
+import it.unibo.coffebreak.model.api.Model;
 
 public interface Controller {
 
-    void proccessInput(Command command);
-    
+    void proccessInput(Model model);
+
 }
