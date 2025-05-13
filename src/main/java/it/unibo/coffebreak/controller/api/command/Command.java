@@ -1,9 +1,9 @@
-package it.unibo.coffebreak.controller.handle;
+package it.unibo.coffebreak.controller.api.command;
 
 /**
- * Enum list of possible game Actions.  // TODO: after change fix JavaDoc, move this file in controller/api/handle
+ * Enum list of possible game Actions.  // TODO: after change fix JavaDoc
  */
-public enum Action {
+public enum Command {
     /**
      * Action for starting the game.
      */

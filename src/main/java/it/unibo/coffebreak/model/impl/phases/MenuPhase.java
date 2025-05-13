@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.phases;
 
-import it.unibo.coffebreak.controller.handle.Action;
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.phases.Phases;
 
@@ -37,7 +37,7 @@ public class MenuPhase implements Phases {
      * {@inheritDoc}
      */
     @Override
-    public void handleInput(final Action action, final Model model) {
+    public void handleInput(final Command action, final Model model) {
         switch (action) {
             case START: // TODO: CONFIRM enter in game
                 model.setState(new InGamePhase());
