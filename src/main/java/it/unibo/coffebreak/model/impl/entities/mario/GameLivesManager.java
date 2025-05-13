@@ -43,8 +43,8 @@ public class GameLivesManager implements LivesManager {
      */
     @Override
     public void loseLife() {
-        if (lives > 0) {
-            lives--;
+        if (this.lives > 0) {
+            this.lives--;
         }
     }
 
@@ -60,10 +60,10 @@ public class GameLivesManager implements LivesManager {
     /**
      * {@inheritDoc}
      * 
-     * @return {@code true} if there are no lives remaining, {@code false} otherwise
+     * @return {@code true} if there are lives remaining, {@code false} otherwise
      */
     @Override
-    public boolean isGameOver() {
-        return lives <= 0;
+    public boolean isAlive() {
+        return this.lives > 0;
     }
 }

@@ -29,9 +29,9 @@ public interface LivesManager {
     void resetLives();
 
     /**
-     * Checks if the game is over, which typically happens when the number of lives reaches zero.
-     *
-     * @return true if the game is over (no lives left), false otherwise
+     * Checks if the character is alive.
+     * 
+     * @return true if the character has lives remaining, false otherwise
      */
-    boolean isGameOver(); // TODO: change with isAlive int > 0
+    boolean isAlive();
 }
