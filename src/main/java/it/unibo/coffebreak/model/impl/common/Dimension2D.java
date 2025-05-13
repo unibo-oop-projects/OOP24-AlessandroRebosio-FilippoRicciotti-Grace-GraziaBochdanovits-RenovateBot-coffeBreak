@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.util;
+package it.unibo.coffebreak.model.impl.common;
 
 /**
  * Represents the dimensions of an object with width and height.
