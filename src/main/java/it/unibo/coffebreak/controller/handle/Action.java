@@ -1,5 +1,8 @@
 package it.unibo.coffebreak.controller.handle;
 
+/**
+ * Enum list of possible game Actions
+ */
 public enum Action {
     /**
      * Action for starting the game.
@@ -32,5 +35,9 @@ public enum Action {
     /**
      * Action for moving right.
      */
-    MOVE_RIGHT
+    MOVE_RIGHT,
+    /**
+     * Action for Jumping
+     */
+    JUMP
 }
