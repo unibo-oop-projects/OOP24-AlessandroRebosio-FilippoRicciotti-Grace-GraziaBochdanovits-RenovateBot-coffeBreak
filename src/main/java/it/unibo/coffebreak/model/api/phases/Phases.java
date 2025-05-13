@@ -4,11 +4,11 @@ import it.unibo.coffebreak.controller.handle.Action;
 import it.unibo.coffebreak.model.api.Model;
 
 /**
- * Interface for handling Game Phases
+ * Interface for handling Game Phases.
  */
 public interface Phases {
     /**
-     * Enum List of Game Phases
+     * Enum List of Game Phases.
      */
     enum PhaseType {
 
@@ -43,8 +43,8 @@ public interface Phases {
     /**
      * method that handle input depending on the Phase the model is currently in.
      * 
-     * @param action
-     * @param model
+     * @param action Input to handle.
+     * @param model  the game model containing the possible Phase to change.
      */
     void handleInput(Action action, Model model);
 
