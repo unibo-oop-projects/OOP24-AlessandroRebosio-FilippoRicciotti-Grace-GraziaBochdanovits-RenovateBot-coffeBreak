@@ -39,11 +39,13 @@ public class MenuPhase implements Phases {
     @Override
     public void handleInput(final Action action, final Model model) {
         switch (action) {
-            case START:
+            case START: // TODO: CONFIRM enter in game
                 model.setState(new InGamePhase());
+                // TODO: model.start()
                 break;
             case EXIT_GAME:
                 // TODO: exit game
+                // TODO: model.stop()
                 break;
             default:
                 break;
