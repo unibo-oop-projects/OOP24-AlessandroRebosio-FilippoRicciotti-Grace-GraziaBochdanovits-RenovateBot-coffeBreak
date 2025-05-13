@@ -35,8 +35,8 @@ public abstract class AbstractCollectible extends GameEntity implements Collecti
 
     /**
      * {@inheritDoc}
-     *
-     * @param other the entity this object has collided with
+     * 
+     * Ladders do not perform any specific action on collision.
      */
     @Override
     public void onCollision(final Entity other) {
