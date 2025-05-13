@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.impl.physics;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.util.Position2D;
 import it.unibo.coffebreak.model.impl.util.Vector2D;
@@ -18,6 +19,9 @@ import it.unibo.coffebreak.model.impl.util.Vector2D;
  * @author Alessandro Rebosio
  */
 public record GamePhysics(float acceleration, float maxSpeed, float deceleration, float gravity) implements Physics {
+
+    private static final float CLIMB_SPEED = 10f;
+    private static final float JUMP_FORCE = 15f;
 
     /**
      * Updates the movement of the given {@link Entity} based on input direction and
@@ -57,21 +61,27 @@ public record GamePhysics(float acceleration, float maxSpeed, float deceleration
             }
         }
 
-        switch (direction) {
-            case JUMP -> {
-                // TODO: JUMP
+        if (entity instanceof final Character character) {
+            switch (direction) {
+                case JUMP -> {
+                    if (character.isOnGround()) {
+                        vY = -JUMP_FORCE;
+                    }
+                }
+                case UP -> {
+                    if (character.canClimb()) {
+                        vY = CLIMB_SPEED;
+                    }
+                }
+                case DOWN -> {
+                    if (character.canClimb()) {
+                        vY = -CLIMB_SPEED;
+                    }
+                }
+                default -> vY += gravity * deltaTime;
             }
-            case UP -> {
-                // TODO: UP
-            }
-            case DOWN -> {
-                // TODO: DOWN
-            }
-            case NONE -> {
-                vY += gravity * deltaTime;
-            }
-            default -> {
-            }
+        } else {
+            vY += gravity * deltaTime;
         }
 
         vX = clamp(vX);
