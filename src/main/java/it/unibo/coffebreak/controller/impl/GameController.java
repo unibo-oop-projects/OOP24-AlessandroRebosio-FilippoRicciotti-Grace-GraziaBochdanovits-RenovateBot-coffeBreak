@@ -49,7 +49,7 @@ public class GameController implements Controller {
     public void processInput(final Model model) {
         Command command = inputManager.getCommand();
         while (command != null) {
-            // TODO: model.handleCommand(command)
+            model.handleCommand(command);
             command = inputManager.getCommand();
         }
     }

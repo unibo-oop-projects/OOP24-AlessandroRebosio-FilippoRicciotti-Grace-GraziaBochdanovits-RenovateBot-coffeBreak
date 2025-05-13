@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
@@ -63,5 +64,13 @@ public class GameModel implements Model {
         currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
         currentPhase.enterState();
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleCommand(Command command) {
+        this.currentPhase.handleInput(command, this);
     }
 }

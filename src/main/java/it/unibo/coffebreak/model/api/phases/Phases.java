@@ -46,7 +46,7 @@ public interface Phases {
      * @param action Input to handle.
      * @param model  the game model containing the possible Phase to change.
      */
-    void handleInput(Command action, Model model);
+    void handleInput(Command action, Model model); // TODO: rename in handleAction and fix
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.
