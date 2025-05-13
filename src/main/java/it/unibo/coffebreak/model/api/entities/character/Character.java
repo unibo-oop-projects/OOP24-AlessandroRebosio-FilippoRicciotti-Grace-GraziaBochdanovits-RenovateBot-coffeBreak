@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.physics.Physics.Direction;
 import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
 
@@ -36,7 +35,7 @@ public interface Character extends Entity {
      * Moves the character in a specific direction.
      * @param direction The direction of movement (LEFT, RIGHT, NONE)
      */
-    void move(Direction direction);
+    //void move(Direction direction);
 
     /**
      * Starts the climbing action for the character.
@@ -120,13 +119,6 @@ public interface Character extends Entity {
      * @return the player's name
      */
     String getPlayerName();
-
-    /**
-     * Gets the current direction of the player.
-     * 
-     * @return the player's direction
-     */
-    Direction getCurrentDirection();
 
     /**
      * Gets the current state of the character.

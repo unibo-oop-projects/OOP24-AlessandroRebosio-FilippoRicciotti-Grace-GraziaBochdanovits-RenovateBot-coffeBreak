@@ -58,7 +58,7 @@ public abstract class GameEntity implements Entity {
      */
     @Override
     public Vector2D getVelocity() {
-        return new Vector2D(velocity.getX(), velocity.getY());
+        return new Vector2D(velocity.x(), velocity.y());
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class GameEntity implements Entity {
      */
     @Override
     public void setVelocity(final Vector2D vector) {
-        this.velocity = new Vector2D(vector.getX(), vector.getY());
+        this.velocity = new Vector2D(vector.x(), vector.y());
     }
 
     /**
@@ -123,7 +123,7 @@ public abstract class GameEntity implements Entity {
      * @param deltaTime the time elapsed since the last update in seconds
      */
     @Override
-    public void update(final float deltaTime) { // TODO: make it protected with empty impl
+    public void update(final float deltaTime) {
         // Base implementation does nothing
     }
 

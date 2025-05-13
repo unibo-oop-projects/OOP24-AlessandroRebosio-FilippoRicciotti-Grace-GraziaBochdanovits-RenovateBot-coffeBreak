@@ -6,18 +6,15 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.physics.Physics.Direction;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntity;
-import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.mario.states.ClimbingState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.DeadState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.JumpState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
-import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
 
 /**
@@ -46,27 +43,14 @@ import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
  */
 public class Mario extends GameEntity implements Character {
 
-    /** Horizontal acceleration when moving (in pixels/second²). */
-    private static final float MARIO_ACCELERATION = 10f;
-
-    /** Maximum horizontal movement speed (in pixels/second). */
-    private static final float MARIO_MAX_SPEED = 5f;
-
-    /** Deceleration when stopping (in pixels/second²). */
-    private static final float MARIO_DECELERATION = 8f;
-
-    /** Gravity force applied when falling (in pixels/second²). */
-    private static final float MARIO_GRAVITY = 9.8f;
-
     /** Initial upward velocity when jumping (in pixels/second). */
     private static final float JUMP_FORCE = -15f;
 
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
-    private final GamePhysics physics;
+    //private final GamePhysics physics;
     private CharacterState currentState;
     private final Position2D startPosition;
-    private Direction currentDirection = Direction.NONE;
     private boolean isOnGround;
     private boolean isClimbing;
     private boolean isJumping;
@@ -89,8 +73,6 @@ public class Mario extends GameEntity implements Character {
         this.livesManager = new GameLivesManager();
         this.scoreManager = Objects.requireNonNull(scoreManager);
         this.playerName = Objects.requireNonNull(playerName, "Player name cannot be null");
-        this.physics = new GamePhysics(MARIO_ACCELERATION, MARIO_MAX_SPEED, 
-                                     MARIO_DECELERATION, MARIO_GRAVITY);
         this.currentState = new NormalState();
     }
 
@@ -136,10 +118,10 @@ public class Mario extends GameEntity implements Character {
             changeState(new DeadState());
         }
         currentState.update(this, deltaTime);
-        if (!isClimbing) {
+        /*if (!isClimbing) {
             physics.updateMovement(this, deltaTime, currentDirection);
-        }
-        if (getVelocity().getY() == 0 && !isOnGround) {
+        }*/
+        if (getVelocity().y() == 0 && !isOnGround) {
             isOnGround = true;
             isJumping = false;
         }
@@ -152,25 +134,9 @@ public class Mario extends GameEntity implements Character {
     public void jump() {
         if (currentState.canJump() && isOnGround) {
             changeState(new JumpState());
-            setVelocity(new Vector2D(getVelocity().getX(), JUMP_FORCE));
+            setVelocity(new Vector2D(getVelocity().x(), JUMP_FORCE));
             isOnGround = false;
             isJumping = true;
-        }
-    }
-
-    /**
-     * Updates the entity's movement direction and facing orientation.
-     * 
-     * 
-     * @param direction The new movement direction (must not be {@code null}).
-     */
-    @Override
-    public void move(final Direction direction) {
-        this.currentDirection = direction;
-        if (direction == Direction.RIGHT) {
-            this.facingRight = true;
-        } else if (direction == Direction.LEFT) {
-            this.facingRight = false;
         }
     }
 
@@ -213,12 +179,12 @@ public class Mario extends GameEntity implements Character {
      */
     @Override
     public void onCollision(final Entity other) {
-        if(other instanceof Collectible) {
-            ((Collectible)other).collect(this);
-            scoreManager.earnPoints(((Collectible)other).getPointsValue());
-            if (other instanceof Hammer) {
+        if (other instanceof Collectible) {
+            ((Collectible) other).collect(this);
+            scoreManager.earnPoints(((Collectible) other).getPointsValue());
+            /*if (other instanceof Hammer) {
                 //apply hammer affect in qualche modo
-            }
+            }*/
         }
         currentState.handleCollision(this, other);
     }
@@ -323,14 +289,6 @@ public class Mario extends GameEntity implements Character {
     @Override
     public CharacterState getCharacterState() {
         return currentState;
-    }
-
-    /**
-     * @return the current direction of the character
-     */
-    @Override
-    public Direction getCurrentDirection() {
-        return this.currentDirection;
     }
 
     /**

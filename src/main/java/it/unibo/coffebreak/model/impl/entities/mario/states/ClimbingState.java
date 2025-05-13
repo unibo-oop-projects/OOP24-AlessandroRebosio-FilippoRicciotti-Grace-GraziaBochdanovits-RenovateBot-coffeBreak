@@ -43,7 +43,7 @@ public class ClimbingState implements CharacterState {
      */
     @Override
     public void onEnter(final Character character) {
-        character.setVelocity(new Vector2D(character.getVelocity().getX(), 0));
+        character.setVelocity(new Vector2D(character.getVelocity().x(), 0));
     }
 
     /**
