@@ -31,7 +31,7 @@ public class InGamePhase implements Phases {
      */
     @Override
     public void update(final long deltaTime) {
-
+        // TODO: 
     }
 
     /**
@@ -44,7 +44,7 @@ public class InGamePhase implements Phases {
                 model.setState(new PausePhase());
                 break;
             case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, JUMP:
-                // TODO: update phisics
+                // TODO: make different case for move
                 break;
             default:
                 break;
