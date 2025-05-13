@@ -4,6 +4,8 @@ package it.unibo.coffebreak.model.api.entities.character;
  * An interface that manages the lives of a character in the game.
  * It provides methods to handle the current number of lives, losing a life,
  * resetting lives, and checking if the game is over.
+ * 
+ * @author Grazia Bochdanovits de Kavna
  */
 public interface LivesManager {
 
