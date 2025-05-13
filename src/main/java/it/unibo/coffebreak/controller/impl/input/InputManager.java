@@ -18,7 +18,7 @@ import it.unibo.coffebreak.controller.api.input.Input;
  * operations, making it suitable for multi-threaded environments where input
  * might be generated from different threads than the one processing commands.
  * 
- * @autor Alessandro Rebosio
+ * @author Alessandro Rebosio
  */
 public class InputManager implements Input {
 
