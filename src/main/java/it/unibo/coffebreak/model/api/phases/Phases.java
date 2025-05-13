@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.api.phases;
 
-import it.unibo.coffebreak.controller.handle.Action;
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 
 /**
@@ -46,7 +46,7 @@ public interface Phases {
      * @param action Input to handle.
      * @param model  the game model containing the possible Phase to change.
      */
-    void handleInput(Action action, Model model);
+    void handleInput(Command action, Model model); // TODO: rename in handleAction and fix
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.

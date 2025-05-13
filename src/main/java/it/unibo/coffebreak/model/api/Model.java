@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.api;
 
 import java.util.List;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.phases.Phases;
@@ -35,4 +36,14 @@ public interface Model {
      * @param newPhase specified Phase to switch to
      */
     void setState(Phases newPhase);
+
+    /**
+     * Processes and executes the given command, modifying the game state
+     * accordingly.
+     * Implementations should define the specific behavior for each supported
+     * command type.
+     * 
+     * @param command the command to be executed (must not be null)
+     */
+    void handleCommand(Command command);
 }
