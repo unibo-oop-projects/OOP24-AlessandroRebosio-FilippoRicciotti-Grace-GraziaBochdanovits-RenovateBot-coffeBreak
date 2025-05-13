@@ -15,7 +15,7 @@ public class GameEngine implements Engine {
     /**
      * The target frame period in milliseconds (16ms ≈ 60 FPS).
      */
-    private final long period = 16;
+    private static final long PERIOD = 16;
 
     /**
      * {@inheritDoc}
@@ -46,11 +46,11 @@ public class GameEngine implements Engine {
      */
     protected void waitForNextFrame(final long cycleTime) {
         final long dt = System.currentTimeMillis() - cycleTime;
-        if (dt < period) {
+        if (dt < PERIOD) {
             try {
-                Thread.sleep(period - dt);
-            } catch (final Exception ex) {
-                // TODO: Handle interruption properly
+                Thread.sleep(PERIOD - dt);
+            } catch (final InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
         }
     }
