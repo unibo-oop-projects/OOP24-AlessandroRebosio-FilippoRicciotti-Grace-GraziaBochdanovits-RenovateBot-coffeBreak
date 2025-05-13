@@ -53,7 +53,7 @@ public interface Character extends Entity {
      * @param item the collectible item to be collected
      */
     void collectItem(Collectible item); // TODO: remove this method, on collision check if entity is instaceof
-                                        // Collectible and call .collect();
+                                        // final Collectible item and call item.collect(this);
 
     /**
      * Decrements the character's life count.
