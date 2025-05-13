@@ -1,25 +1,25 @@
 package it.unibo.coffebreak.controller.handle;
 
 /**
- * Enum list of possible game Actions.
+ * Enum list of possible game Actions.  // TODO: after change fix JavaDoc
  */
 public enum Action {
     /**
      * Action for starting the game.
      */
-    START,
+    START, // TODO: change to CONFIRM
     /**
      * Action for resuming the gameplay.
      */
-    RESUME,
+    RESUME, // TODO: remove
     /**
      * Action for quitting the game.
      */
-    EXIT_GAME,
+    EXIT_GAME, // TODO: remove
     /**
      * Action for pausing the gameplay.
      */
-    PAUSE,
+    PAUSE, // TODO: change to BACK or STOP, is for pause and exit 
     /**
      * Action for moving left.
      */
