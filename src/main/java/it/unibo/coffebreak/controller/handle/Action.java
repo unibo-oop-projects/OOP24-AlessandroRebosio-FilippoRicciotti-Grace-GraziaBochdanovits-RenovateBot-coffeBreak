@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.controller.handle;
 
 /**
- * Enum list of possible game Actions
+ * Enum list of possible game Actions.
  */
 public enum Action {
     /**
@@ -37,7 +37,7 @@ public enum Action {
      */
     MOVE_RIGHT,
     /**
-     * Action for Jumping
+     * Action for Jumping.
      */
     JUMP
 }

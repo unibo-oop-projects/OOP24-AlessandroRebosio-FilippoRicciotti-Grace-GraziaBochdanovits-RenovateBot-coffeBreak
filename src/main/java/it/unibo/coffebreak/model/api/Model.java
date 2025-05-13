@@ -41,7 +41,7 @@ public interface Model {
     /**
      * Method that changes the game Phase to a specified one.
      * 
-     * @param phase specified Phase to switch to
+     * @param newPhase specified Phase to switch to
      */
     void setState(Phases newPhase);
 
