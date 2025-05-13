@@ -69,8 +69,10 @@ public abstract class GameEntity implements Entity {
      */
     @Override
     public boolean intersect(final Entity entity) {
-        // TODO Auto-generated method stub
-        return false;
+        return this.getPosition().x() < entity.getPosition().x() + entity.getDimension().width()
+                && this.getPosition().x() + this.getDimension().width() > entity.getPosition().x()
+                && this.getPosition().y() < entity.getPosition().y() + entity.getDimension().height()
+                && this.getPosition().y() + this.getDimension().height() > entity.getPosition().y();
     }
 
     /**
@@ -112,4 +114,25 @@ public abstract class GameEntity implements Entity {
     public void setVelocity(final Vector2D vector) {
         this.velocity = new Vector2D(vector.getX(), vector.getY());
     }
+
+    /**
+     * Updates the entity's state based on the elapsed time.
+     * This base implementation does nothing and should be overridden by subclasses
+     * that need to implement time-based behavior.
+     *
+     * @param deltaTime the time elapsed since the last update in seconds
+     */
+    @Override
+    public void update(final float deltaTime) {
+        // Base implementation does nothing
+    }
+
+    /**
+     * Called when this entity collides with another entity.
+     * This method should be implemented by subclasses to define specific collision behavior.
+     *
+     * @param other the entity that this entity collided with
+     */
+    @Override
+    public abstract void onCollision(Entity other);
 }
