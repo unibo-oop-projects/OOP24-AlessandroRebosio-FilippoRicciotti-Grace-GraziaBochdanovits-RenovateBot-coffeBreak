@@ -43,6 +43,6 @@ public interface Model {
      * 
      * @param phase specified Phase to switch to
      */
-    void setState(Phases.PhaseType phase);
+    void setState(Phases newPhase);
 
 }
