@@ -3,8 +3,13 @@ package it.unibo.coffebreak.model.api.phases;
 import it.unibo.coffebreak.controller.handle.Action;
 import it.unibo.coffebreak.model.api.Model;
 
+/**
+ * Interface for handling Game Phases
+ */
 public interface Phases {
-
+    /**
+     * Enum List of Game Phases
+     */
     enum PhaseType {
 
         /**
