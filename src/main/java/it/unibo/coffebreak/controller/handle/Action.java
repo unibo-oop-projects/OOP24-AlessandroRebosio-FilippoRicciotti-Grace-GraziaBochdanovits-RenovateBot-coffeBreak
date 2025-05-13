@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.controller.handle;
 
 /**
- * Enum list of possible game Actions.  // TODO: after change fix JavaDoc
+ * Enum list of possible game Actions.  // TODO: after change fix JavaDoc, move this file in controller/api/handle
  */
 public enum Action {
     /**
