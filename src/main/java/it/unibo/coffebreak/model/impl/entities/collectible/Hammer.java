@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.impl.entities.collectible;
 
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
 import it.unibo.coffebreak.model.impl.util.Dimension2D;
 import it.unibo.coffebreak.model.impl.util.Position2D;
 
@@ -32,11 +33,11 @@ public class Hammer extends AbstractCollectible {
      * When collected, the hammer adds its value to the player's score and
      * may modify the player's state (e.g., granting special abilities).
      * 
-     * @param player the character that collected this hammer
+     * @param character the character that collected this hammer
      */
     @Override
-    protected void applyEffect(final Character player) {
-        // TODO: super.applyEffect(player);
-        // TODO: player.setState() with Hammer
+    protected void applyEffect(final Character character) {
+        super.applyEffect(character);
+        character.changeState(new WithHammerState());
     }
 }

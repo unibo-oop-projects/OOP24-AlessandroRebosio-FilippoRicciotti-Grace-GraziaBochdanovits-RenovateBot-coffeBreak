@@ -15,9 +15,9 @@ public interface Collectible extends Entity {
     /**
      * Collects this item, triggering its effect (e.g., adding points).
      * 
-     * @param player the character who collects this item
+     * @param character the character who collects this item
      */
-    void collect(Character player);
+    void collect(Character character);
 
     /**
      * @return true if this item has been collected, false otherwise
