@@ -4,6 +4,7 @@ import java.util.List;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.phases.Phases;
 
 /**
  * Represents the main model interface for the Coffee Break game.
@@ -28,4 +29,10 @@ public interface Model {
      */
     Character getPlayer();
 
+    /**
+     * Method that changes the game Phase to a specified one.
+     * 
+     * @param newPhase specified Phase to switch to
+     */
+    void setState(Phases newPhase);
 }
