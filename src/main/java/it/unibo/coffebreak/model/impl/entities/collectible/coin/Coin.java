@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entities.collectible.coin;
 
+import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
-import it.unibo.coffebreak.model.impl.util.Dimension2D;
-import it.unibo.coffebreak.model.impl.util.Position2D;
 
 /**
  * Represents a coin collectible item in the game. When collected by a player
