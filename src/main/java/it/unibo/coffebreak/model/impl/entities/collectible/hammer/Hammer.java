@@ -1,6 +1,7 @@
-package it.unibo.coffebreak.model.impl.entities.collectible;
+package it.unibo.coffebreak.model.impl.entities.collectible.hammer;
 
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
 import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
 import it.unibo.coffebreak.model.impl.util.Dimension2D;
 import it.unibo.coffebreak.model.impl.util.Position2D;

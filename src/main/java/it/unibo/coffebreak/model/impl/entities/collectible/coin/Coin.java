@@ -1,5 +1,6 @@
-package it.unibo.coffebreak.model.impl.entities.collectible;
+package it.unibo.coffebreak.model.impl.entities.collectible.coin;
 
+import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
 import it.unibo.coffebreak.model.impl.util.Dimension2D;
 import it.unibo.coffebreak.model.impl.util.Position2D;
 
