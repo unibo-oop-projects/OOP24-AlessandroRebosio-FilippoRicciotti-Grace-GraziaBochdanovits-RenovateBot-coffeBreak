@@ -3,101 +3,52 @@ package it.unibo.coffebreak.model.impl.util;
 import java.util.Objects;
 
 /**
- * Represents a 2D vector with x and y components.
+ * The {@code Vector2D} class represents a mathematical vector in a 2D space with x and y components.
+ * This immutable record provides basic vector operations such as addition and scalar multiplication,
+ * and properly implements equality comparison and hash code generation.
+ * 
+ * @param x the x-component of the vector
+ * @param y the y-component of the vector
  */
-public class Vector2D {
-
-    private float x;
-    private float y;
+public record Vector2D(float x, float y) {
 
     /**
-     * Constructs a new Vector2D with the specified components.
+     * Sums another vector to this vector, returning a new vector with components equal
+     * to the sum of the corresponding components of both vectors.
      *
-     * @param x the x-component of the vector.
-     * @param y the y-component of the vector.
+     * @param other the vector to add to this vector (must not be null)
+     * @return a new {@code Vector2D} representing the vector sum
+     * @throws NullPointerException if the provided vector is null
      */
-    public Vector2D(final float x, final float y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    /**
-     * Sets the x-component of the vector.
-     *
-     * @param x the new x-component.
-     */
-    public void setX(final float x) {
-        this.x = x;
-    }
-
-    /**
-     * Sets the y-component of the vector.
-     *
-     * @param y the new y-component.
-     */
-    public void setY(final float y) {
-        this.y = y;
-    }
-
-    /**
-     * Retrieves the x-component of the vector.
-     *
-     * @return the x-component.
-     */
-    public float getX() {
-        return this.x;
-    }
-
-    /**
-     * Retrieves the y-component of the vector.
-     *
-     * @return the y-component.
-     */
-    public float getY() {
-        return this.y;
-    }
-
-    /**
-     * Adds another vector to this vector.
-     *
-     * @param other the vector to add.
-     * @return the resulting vector.
-     */
-    public Vector2D add(final Vector2D other) {
+    public Vector2D sum(final Vector2D other) {
         return new Vector2D(this.x + other.x, this.y + other.y);
     }
 
     /**
-     * Subtracts another vector from this vector.
+     * Multiplies this vector by a scalar value, returning a new vector with each
+     * component multiplied by the scalar.
      *
-     * @param other the vector to subtract.
-     * @return the resulting vector.
-     */
-    public Vector2D subtract(final Vector2D other) {
-        return new Vector2D(this.x - other.x, this.y - other.y);
-    }
-
-    /**
-     * Multiplies this vector by a scalar.
-     *
-     * @param scalar the scalar to multiply by.
-     * @return the resulting vector.
+     * @param scalar the multiplication factor
+     * @return a new {@code Vector2D} representing the scaled vector
      */
     public Vector2D multiply(final float scalar) {
         return new Vector2D(this.x * scalar, this.y * scalar);
     }
 
     /**
-     * Compares this vector to the specified object for equality.
-     * Returns true if and only if:
+     * Compares this vector to the specified object for equality. The result is {@code true}
+     * if and only if:
      * <ul>
-     *   <li>The argument is not null</li>
-     *   <li>The argument is a Vector2D object</li>
+     *   <li>The argument is not {@code null}</li>
+     *   <li>The argument is a {@code Vector2D} object</li>
      *   <li>Both vectors have exactly the same x and y components</li>
      * </ul>
      * 
+     * <p>Note that floating-point comparison is performed using {@link Float#compare} to
+     * properly handle special cases like NaN and infinity values.
+     *
      * @param obj the object to compare with
-     * @return true if the objects are equal, false otherwise
+     * @return {@code true} if the objects are equal, {@code false} otherwise
      */
     @Override
     public boolean equals(final Object obj) {
@@ -112,9 +63,10 @@ public class Vector2D {
     }
 
     /**
-     * Returns a hash code value for this vector.
-     * 
-     * @return a hash code value based on the vector's components
+     * Returns a hash code value for this vector. The hash code is computed based on
+     * the vector's components using {@link Objects#hash}.
+     *
+     * @return a hash code value for this vector
      */
     @Override
     public int hashCode() {
