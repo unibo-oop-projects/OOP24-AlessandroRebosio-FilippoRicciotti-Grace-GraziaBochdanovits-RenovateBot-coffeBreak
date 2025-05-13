@@ -30,29 +30,30 @@ public interface Character extends Entity {
     /**
      * Makes the character perform a jump action.
      */
-    void jump();
+    void jump(); // TODO: add move() method 
 
     /**
      * Starts the climbing action for the character.
      */
-    void startClimbing();
+    void startClimbing(); // TODO: ha senso?
 
     /**
      * Stops the climbing action for the character.
      */
-    void stopClimbing();
+    void stopClimbing(); // TODO: ha senso?
 
     /**
      * Uses a special item (generalized for hammer usage).
      */
-    void useSpecialItem();
+    void useSpecialItem(); // TODO: ha senso?
 
     /**
      * Collects an item and applies its effects to the character.
      * 
      * @param item the collectible item to be collected
      */
-    void collectItem(Collectible item);
+    void collectItem(Collectible item); // TODO: remove this method, on collision check if entity is instaceof
+                                        // final Collectible item and call item.collect(this);
 
     /**
      * Decrements the character's life count.
@@ -92,14 +93,14 @@ public interface Character extends Entity {
      * 
      * @return true if the character has lives remaining, false otherwise
      */
-    boolean isAlive();
+    boolean isAlive(); // TODO: rename in GameOver
 
     /**
      * Gets the lives manager for the character.
      * 
      * @return the GameLivesManager instance managing the character's lives
      */
-    GameLivesManager getLivesManager();
+    GameLivesManager getLivesManager(); // TODO: change type in LivesManager
 
     /**
      * Gets the current number of lives the character has.
@@ -113,7 +114,7 @@ public interface Character extends Entity {
      * 
      * @return the GameScoreManager instance managing the character's score
      */
-    GameScoreManager getScoreManager();
+    GameScoreManager getScoreManager(); // TODO: change type in ScoreManager
 
     /**
      * Gets the name of the player controlling this character.

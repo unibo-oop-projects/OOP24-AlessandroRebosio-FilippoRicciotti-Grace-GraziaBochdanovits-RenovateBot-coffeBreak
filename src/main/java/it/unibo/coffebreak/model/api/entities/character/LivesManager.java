@@ -33,5 +33,5 @@ public interface LivesManager {
      *
      * @return true if the game is over (no lives left), false otherwise
      */
-    boolean isGameOver();
+    boolean isGameOver(); // TODO: change with isAlive int > 0
 }
