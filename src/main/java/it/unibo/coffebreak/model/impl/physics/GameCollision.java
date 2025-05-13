@@ -51,7 +51,7 @@ public class GameCollision implements Collision {
 
         for (final Entity entity : model.getEntities()) {
             if (!entity.equals(mario) && mario.intersect(entity)) {
-                entity.onCollision(mario);
+                mario.onCollision(entity);
             }
         }
     }
