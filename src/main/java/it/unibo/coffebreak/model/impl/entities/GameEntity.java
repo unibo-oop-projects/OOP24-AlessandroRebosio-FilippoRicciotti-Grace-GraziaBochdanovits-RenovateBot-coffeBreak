@@ -123,7 +123,7 @@ public abstract class GameEntity implements Entity {
      * @param deltaTime the time elapsed since the last update in seconds
      */
     @Override
-    public void update(final float deltaTime) {
+    public void update(final float deltaTime) { // TODO: make it protected with empty impl
         // Base implementation does nothing
     }
 
