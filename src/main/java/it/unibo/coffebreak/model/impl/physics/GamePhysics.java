@@ -13,16 +13,13 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  */
 public record GamePhysics() implements Physics {
 
-    /** The acceleration due to gravity (m/s^2) */
-    private static final float GRAVITY = 9.81f;
-
-    /** The base movement speed for horizontal and vertical movement */
+    /** The base movement speed for horizontal and vertical movement. */
     private static final float BASE_SPEED = 0.1f;
 
-    /** The force applied when jumping */
+    /** The force applied when jumping. */
     private static final float JUMP_FORCE = 10f;
 
-    /** A zero vector used for no movement */
+    /** A zero vector used for no movement. */
     private static final Vector2D ZERO_VECTOR = new Vector2D(0f, 0f);
 
     /**
@@ -47,10 +44,10 @@ public record GamePhysics() implements Physics {
     @Override
     public Vector2D calculateY(final float deltaTime, final Command command) {
         return switch (command) {
-            case MOVE_UP -> verticalMovement(deltaTime, -BASE_SPEED);
-            case MOVE_DOWN -> verticalMovement(deltaTime, BASE_SPEED);
+            case MOVE_UP -> verticalMovement(deltaTime, BASE_SPEED);
+            case MOVE_DOWN -> verticalMovement(deltaTime, -BASE_SPEED);
             case JUMP -> verticalMovement(deltaTime, JUMP_FORCE);
-            default -> applyGravity(deltaTime);
+            default -> verticalMovement(deltaTime, -BASE_SPEED);
         };
     }
 
@@ -75,15 +72,5 @@ public record GamePhysics() implements Physics {
      */
     private Vector2D verticalMovement(final float deltaTime, final float speed) {
         return new Vector2D(0f, speed).multiply(deltaTime);
-    }
-
-    /**
-     * Applies gravity to create a downward acceleration vector.
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return a Vector2D representing gravity's effect
-     */
-    private Vector2D applyGravity(final float deltaTime) {
-        return new Vector2D(0f, -GRAVITY).multiply(deltaTime);
     }
 }
