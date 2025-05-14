@@ -585,30 +585,49 @@ Ovviamente \textit{il contenuto della sezione non impatterà il voto finale}.
 \appendix
 \chapter{Guida utente}
 
-Capitolo in cui si spiega come utilizzare il software. Nel caso in cui il suo uso sia del tutto
-banale, tale capitolo può essere omesso.
-%
-A tal riguardo, si fa presente agli studenti che i docenti non hanno mai utilizzato il software
-prima, per cui aspetti che sembrano del tutto banali a chi ha sviluppato l'applicazione possono non
-esserlo per chi la usa per la prima volta.
-%
-Se, ad esempio, per cominciare una partita con un videogioco è necessario premere la barra
-spaziatrice, o il tasto ``P'', è necessario che gli studenti lo segnalino.
-
-\subsection*{Elementi positivi}
+\section{Inizio del Gioco}
+All'avvio dell'applicazione, l'unico strumento a disposizione sarà la tastiera. Ci si troverà nel menu principale, dove sarà possibile visualizzare la leaderboard. Le uniche azioni disponibili saranno:
 
 \begin{itemize}
-	\item Si istruisce in modo semplice l'utente sull'uso dell'applicazione, eventualmente facendo uso di schermate e descrizioni.
+    \item Avviare una nuova partita tramite il tasto \texttt{ENTER}
+    \item Uscire dal gioco premendo il tasto \texttt{Q}
 \end{itemize}
 
-\subsection*{Elementi negativi}
+\section{Durante il Gioco}
+Dopo aver premuto \texttt{ENTER}, inizierà il primo livello. L'obiettivo del giocatore è raggiungere la principessa, raccogliendo power-up ed evitando i nemici.
+
+\subsection*{Comandi disponibili:}
 \begin{itemize}
-	\item Si descrivono in modo eccessivamente minuzioso tutte le caratteristiche, anche minori, del software in oggetto.
-	\item Manca una descrizione che consenta ad un utente qualunque di utilizzare almeno le funzionalità primarie dell'applicativo.
+    \item Movimento del personaggio:
+    \begin{itemize}
+        \item \texttt{FRECCIA SU}: Muovi in alto
+        \item \texttt{FRECCIA GIÙ}: Muovi in basso
+        \item \texttt{FRECCIA DESTRA}: Muovi a destra
+        \item \texttt{FRECCIA SINISTRA}: Muovi a sinistra
+    \end{itemize}
+    \item \texttt{BARRA SPAZIATRICE}: Salto
+    \item \texttt{ESC}: Pausa del gioco
 \end{itemize}
+
+\section{Menu di Pausa}
+Nel menu di pausa saranno disponibili le seguenti opzioni:
+\begin{itemize}
+    \item \texttt{ENTER}: Riprendi il livello
+    \item \texttt{ESC}: Esci dal livello (torna al menu principale)
+    \item \texttt{Q}: Esci dal gioco
+\end{itemize}
+
+\section{Game Over}
+Quando il personaggio perderà tutte le vite, si entrerà nella schermata di Game Over dove:
+\begin{itemize}
+    \item Dovrai inserire il tuo nome (3 lettere) e premere \texttt{ENTER}
+    \item Il nome verrà richiesto solo se il punteggio è tra i primi 5
+    \item Dopo l'inserimento si tornerà al menu principale
+    \item Il punteggio verrà salvato nella leaderboard
+\end{itemize}
+
 
 \chapter{Esercitazioni di laboratorio}
-
 \section{alessandro.rebosio@studio.unibo.it}
 
 \begin{itemize}
