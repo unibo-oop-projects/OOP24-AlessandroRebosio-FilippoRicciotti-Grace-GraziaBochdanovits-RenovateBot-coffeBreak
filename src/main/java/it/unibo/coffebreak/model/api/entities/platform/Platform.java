@@ -40,4 +40,11 @@ public interface Platform extends Entity {
      * @return true if the entity can stand on this platform, false otherwise
      */
     boolean isSupporting(Entity entity);
+
+    /**
+     * Checks if this platform is breakable.
+     * 
+     * @return true if the platform can break, false otherwise
+     */
+    boolean canBreak();
 }
