@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.core.impl;
 
+import it.unibo.coffebreak.controller.api.Controller;
+import it.unibo.coffebreak.controller.impl.GameController;
 import it.unibo.coffebreak.core.api.Engine;
 
 /**
@@ -17,6 +19,16 @@ public class GameEngine implements Engine {
      */
     private static final long PERIOD = 16;
 
+    private final Controller controller;
+
+    /**
+     * Constructs a new {@code GameEngine} instance with its own internal
+     * {@link Controller}.
+     */
+    public GameEngine() {
+        this.controller = new GameController();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -26,7 +38,7 @@ public class GameEngine implements Engine {
         while (true) {
             final long currentCycle = System.currentTimeMillis();
             // TODO: final long elapsed = currentCycle - previusCycle;
-
+            controller.processInput();
             this.waitForNextFrame(currentCycle);
             // TODO: previusCycle = currentCycle;
         }

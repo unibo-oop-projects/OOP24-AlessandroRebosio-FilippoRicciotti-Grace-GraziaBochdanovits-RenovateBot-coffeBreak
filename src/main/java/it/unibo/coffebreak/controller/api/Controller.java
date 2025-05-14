@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.controller.api;
 
 import it.unibo.coffebreak.controller.api.input.Input;
-import it.unibo.coffebreak.model.api.Model;
 
 /**
  * Defines the controller component in the MVC (Model-View-Controller) pattern.
@@ -26,11 +25,6 @@ public interface Controller {
      * Processes input and updates the model accordingly.
      * This method serves as the main entry point for the controller's logic,
      * where input is interpreted and appropriate model changes are triggered.
-     *
-     * @param model the game model to be updated based on processed input
-     * @throws IllegalArgumentException if the provided model is null
-     * @throws IllegalStateException    if the controller cannot process input in
-     *                                  its current state
      */
-    void processInput(Model model);
+    void processInput();
 }
