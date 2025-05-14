@@ -4,7 +4,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.ladder.Ladder;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.GameEntity;
+import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
 /**
  * Concrete implementation of a {@link Ladder} entity.
@@ -14,7 +14,7 @@ import it.unibo.coffebreak.model.impl.entities.GameEntity;
  * 
  * @author Alessandro Rebosio
  */
-public class GameLadder extends GameEntity implements Ladder {
+public class GameLadder extends AbstractEntity implements Ladder {
 
     /**
      * Constructs a new {@code GameLadder} with the specified position, dimension,

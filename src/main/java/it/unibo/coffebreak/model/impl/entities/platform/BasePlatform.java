@@ -22,7 +22,7 @@ import it.unibo.coffebreak.model.impl.entities.mario.Mario;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class BasePlatform extends GameEntity implements Platform {
+public class BasePlatform extends AbstractEntity implements Platform {
 
     private final Slope slope;
     private final boolean breakable;

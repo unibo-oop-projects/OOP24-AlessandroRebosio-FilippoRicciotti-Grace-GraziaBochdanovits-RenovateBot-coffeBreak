@@ -5,7 +5,7 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.GameEntity;
+import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
 /**
  * An abstract base class representing a collectible game entity.
@@ -14,7 +14,7 @@ import it.unibo.coffebreak.model.impl.entities.GameEntity;
  * 
  * @author Alessandro Rebosio
  */
-public abstract class AbstractCollectible extends GameEntity implements Collectible {
+public abstract class AbstractCollectible extends AbstractEntity implements Collectible {
 
     private boolean collected;
     private final int value;

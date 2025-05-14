@@ -16,7 +16,7 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  * @see Entity
  * @author Grazia Bochdanovits de Kavna
  */
-public abstract class GameEntity implements Entity {
+public abstract class AbstractEntity implements Entity {
 
     private Position2D position;
     private final Dimension2D dimension;
@@ -30,7 +30,7 @@ public abstract class GameEntity implements Entity {
      * @param dimension the dimensions of the entity (cannot be {@code null})
      * @throws NullPointerException if either position or dimension is {@code null}
      */
-    public GameEntity(final Position2D position, final Dimension2D dimension) {
+    public AbstractEntity(final Position2D position, final Dimension2D dimension) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
         this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
         this.velocity = new Vector2D(0, 0);

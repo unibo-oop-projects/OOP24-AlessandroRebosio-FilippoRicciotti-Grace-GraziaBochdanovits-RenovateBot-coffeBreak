@@ -9,7 +9,7 @@ import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
-import it.unibo.coffebreak.model.impl.entities.GameEntity;
+import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.mario.states.ClimbingState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.DeadState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.JumpState;
@@ -41,7 +41,7 @@ import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends GameEntity implements Character {
+public class Mario extends AbstractEntity implements Character {
 
     /** Initial upward velocity when jumping (in pixels/second). */
     private static final float JUMP_FORCE = -15f;

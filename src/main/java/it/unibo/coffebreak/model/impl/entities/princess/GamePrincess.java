@@ -1,12 +1,10 @@
 package it.unibo.coffebreak.model.impl.entities.princess;
 
-import java.util.Objects;
-
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.princess.Princess;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.GameEntity;
+import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
 /**
  * Concrete implementation of the {@link Princess} interface.
@@ -15,7 +13,7 @@ import it.unibo.coffebreak.model.impl.entities.GameEntity;
  * 
  * @author Grazia Bochdanovits de kavna
  */
-public class PrincessImpl extends GameEntity implements Princess {
+public class GamePrincess extends AbstractEntity implements Princess {
 
     private boolean rescued;
 
@@ -27,8 +25,8 @@ public class PrincessImpl extends GameEntity implements Princess {
      * @param dimension the dimensions of the princess entity (cannot be null)
      * @throws NullPointerException if either position or dimension are null
      */
-    public PrincessImpl(final Position2D position, final Dimension2D dimension) {
-        super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
+    public GamePrincess(final Position2D position, final Dimension2D dimension) {
+        super(position, dimension);
         this.rescued = false;
     }
 
