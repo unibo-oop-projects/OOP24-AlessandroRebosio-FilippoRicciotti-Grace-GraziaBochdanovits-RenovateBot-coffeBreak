@@ -5,6 +5,8 @@ import it.unibo.coffebreak.model.api.Model;
 
 /**
  * Interface for handling Game Phases.
+ * 
+ * @author Filippo Ricciotti
  */
 public interface Phases {
     /**
@@ -33,12 +35,12 @@ public interface Phases {
     /**
      * method for signaling the entrance in a new Phase.
      */
-    void enterState();
+    void enterPhase();
 
     /**
      * method for signaling a Phase leaving.
      */
-    void exitState();
+    void exitPhase();
 
     /**
      * method that handle input depending on the Phase the model is currently in.
@@ -46,23 +48,12 @@ public interface Phases {
      * @param action Input to handle.
      * @param model  the game model containing the possible Phase to change.
      */
-    void handleInput(Command action, Model model); // TODO: rename in handleAction and fix
+    void handleAction(Command action, Model model);
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.
      * 
      * @param deltaTime time in milliseconds since the last update call.
      */
-    void update(long deltaTime);
+    void update(float deltaTime);
 }
-
-/*
- * TODO: Create an abstract implementation of this interface, where onEnter and
- * onExit are empty methods. Make handleAction a protected abstract method and
- * modifiy a protected update(float deltaTime) method where the only instruction
- * is this.deltaTime = deltaTime, the same for enterPhase and exitPhaseIn the
- * subclasses, call super.update(deltaTime). Then, make GameOverPhase,
- * InGamePhase, MenuPhase, and PausePhase extend this abstract class, and
- * override only handleAction, moving each of them into a directory with its
- * name. (e.g. impl/phases/gameOver/GameOverPhase.java)
- */

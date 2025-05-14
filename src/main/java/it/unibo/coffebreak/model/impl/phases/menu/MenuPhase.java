@@ -1,49 +1,30 @@
-package it.unibo.coffebreak.model.impl.phases;
+package it.unibo.coffebreak.model.impl.phases.menu;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
+import it.unibo.coffebreak.model.impl.phases.ingame.InGamePhase;
 
 /**
  * Implementation of {@link Phases} interface;
  * <p>
  * Represents the <b>Main Menu</b> phase of the game.
  * </p>
+ * @author Filippo Ricciotti
  */
-public class MenuPhase implements Phases {
-
+public class MenuPhase extends AbstractPhases {
     /**
      * {@inheritDoc}
      */
     @Override
-    public void enterState() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void exitState() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final long deltaTime) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleInput(final Command action, final Model model) {
+    public void handleAction(final Command action, final Model model) {
         switch (action) {
-            case START: // TODO: CONFIRM enter in game
+            case ENTER:
                 model.setState(new InGamePhase());
                 // TODO: model.start()
                 break;
-            case EXIT_GAME: // TODO: change if you modified Action
+            case QUIT:
                 // TODO: exit game
                 // TODO: model.stop()
                 break;
