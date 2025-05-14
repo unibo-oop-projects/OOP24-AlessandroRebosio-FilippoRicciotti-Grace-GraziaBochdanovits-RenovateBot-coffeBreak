@@ -33,12 +33,12 @@ public interface Phases {
     /**
      * method for signaling the entrance in a new Phase.
      */
-    void enterState();
+    void enterPhase();
 
     /**
      * method for signaling a Phase leaving.
      */
-    void exitState();
+    void exitPhase();
 
     /**
      * method that handle input depending on the Phase the model is currently in.
@@ -46,7 +46,7 @@ public interface Phases {
      * @param action Input to handle.
      * @param model  the game model containing the possible Phase to change.
      */
-    void handleInput(Command action, Model model); // TODO: rename in handleAction and fix
+    void handleAction(Command action, Model model);
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.
