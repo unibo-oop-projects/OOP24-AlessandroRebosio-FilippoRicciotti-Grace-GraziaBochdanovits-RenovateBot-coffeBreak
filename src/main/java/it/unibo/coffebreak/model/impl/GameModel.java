@@ -70,7 +70,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void handleCommand(final Command command) {
+    public void handleCommand(final Command command) { // TODO: fix and add another method specified in Model.java
         this.currentPhase.handleAction(command, this);
     }
 }
