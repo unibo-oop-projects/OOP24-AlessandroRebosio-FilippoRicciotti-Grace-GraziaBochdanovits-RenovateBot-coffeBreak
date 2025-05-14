@@ -7,7 +7,7 @@ import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.platform.Platform;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.GameEntity;
+import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 
 /**
@@ -22,10 +22,9 @@ import it.unibo.coffebreak.model.impl.entities.mario.Mario;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class BasePlatform extends AbstractEntity implements Platform {
+public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
     private final Slope slope;
-    private final boolean breakable;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
@@ -33,12 +32,10 @@ public class BasePlatform extends AbstractEntity implements Platform {
      * @param position the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimensions of the platform (cannot be null)
      * @param slope the slope orientation of the platform (cannot be null)
-     * @throws NullPointerException if any parameter is null
      */
-    public BasePlatform(final Position2D position, final Dimension2D dimension, final Slope slope) {
-        super(Objects.requireNonNull(position), Objects.requireNonNull(dimension));
+    public AbstractPlatform(final Position2D position, final Dimension2D dimension, final Slope slope) {
+        super(position, dimension);
         this.slope = Objects.requireNonNull(slope);
-        this.breakable = true;
     }
 
     /**
@@ -69,11 +66,7 @@ public class BasePlatform extends AbstractEntity implements Platform {
         // Intentionally left blank
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public boolean canBreak() {
-        return this.breakable;
-    }
+    public abstract boolean canBreak();
+
 }
