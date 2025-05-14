@@ -5,27 +5,31 @@ import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 
 /**
- * Implementation of {@link Physics} that handles 2D game physics calculations.
- * This record provides concrete physics computations for game entities
- * including:
- * <ul>
- * <li>Movement with acceleration </li>
- * <li>Gravity application</li>
- * </ul>
- *
- * <p>
- * The physics system uses frame-rate independent calculations based on delta
- * time.
+ * Implementation of the Physics interface for a game environment.
+ * This record handles basic 2D movement physics including gravity, jumping,
+ * and horizontal movement with constant speed.
  * 
  * @author Alessandro Rebosio
  */
 public record GamePhysics() implements Physics {
 
+    /** The acceleration due to gravity (m/s^2) */
     private static final float GRAVITY = 9.81f;
+
+    /** The base movement speed for horizontal and vertical movement */
     private static final float BASE_SPEED = 0.1f;
+
+    /** The force applied when jumping */
     private static final float JUMP_FORCE = 10f;
+
+    /** A zero vector used for no movement */
     private static final Vector2D ZERO_VECTOR = new Vector2D(0f, 0f);
 
+    /**
+     * {@inheritDoc}
+     * Calculates horizontal movement based on left/right commands.
+     * Returns zero vector for non-horizontal movement commands.
+     */
     @Override
     public Vector2D calculateX(final float deltaTime, final Command command) {
         return switch (command) {
@@ -35,6 +39,11 @@ public record GamePhysics() implements Physics {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     * Calculates vertical movement based on up/down/jump commands.
+     * Applies gravity when no vertical movement command is given.
+     */
     @Override
     public Vector2D calculateY(final float deltaTime, final Command command) {
         return switch (command) {
@@ -45,14 +54,35 @@ public record GamePhysics() implements Physics {
         };
     }
 
+    /**
+     * Creates a horizontal movement vector.
+     * 
+     * @param deltaTime the time elapsed since last update
+     * @param speed     the speed of movement (positive for right, negative for
+     *                  left)
+     * @return a Vector2D representing horizontal movement
+     */
     private Vector2D horizontalMovement(final float deltaTime, final float speed) {
         return new Vector2D(speed, 0f).multiply(deltaTime);
     }
 
+    /**
+     * Creates a vertical movement vector.
+     * 
+     * @param deltaTime the time elapsed since last update
+     * @param speed     the speed of movement (positive for down, negative for up)
+     * @return a Vector2D representing vertical movement
+     */
     private Vector2D verticalMovement(final float deltaTime, final float speed) {
         return new Vector2D(0f, speed).multiply(deltaTime);
     }
 
+    /**
+     * Applies gravity to create a downward acceleration vector.
+     * 
+     * @param deltaTime the time elapsed since last update
+     * @return a Vector2D representing gravity's effect
+     */
     private Vector2D applyGravity(final float deltaTime) {
         return new Vector2D(0f, -GRAVITY).multiply(deltaTime);
     }
