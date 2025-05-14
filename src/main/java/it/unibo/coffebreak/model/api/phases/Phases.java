@@ -53,16 +53,5 @@ public interface Phases {
      * 
      * @param deltaTime time in milliseconds since the last update call.
      */
-    void update(long deltaTime);
+    void update(float deltaTime);
 }
-
-/*
- * TODO: Create an abstract implementation of this interface, where onEnter and
- * onExit are empty methods. Make handleAction a protected abstract method and
- * modifiy a protected update(float deltaTime) method where the only instruction
- * is this.deltaTime = deltaTime, the same for enterPhase and exitPhaseIn the
- * subclasses, call super.update(deltaTime). Then, make GameOverPhase,
- * InGamePhase, MenuPhase, and PausePhase extend this abstract class, and
- * override only handleAction, moving each of them into a directory with its
- * name. (e.g. impl/phases/gameOver/GameOverPhase.java)
- */

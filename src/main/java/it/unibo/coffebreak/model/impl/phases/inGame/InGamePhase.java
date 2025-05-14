@@ -1,8 +1,10 @@
-package it.unibo.coffebreak.model.impl.phases;
+package it.unibo.coffebreak.model.impl.phases.ingame;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
+import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
 
 /**
  * Implementation of {@link Phases} interface;
@@ -10,37 +12,15 @@ import it.unibo.coffebreak.model.api.phases.Phases;
  * Represents the <b>In Game phase</b> of the game.
  * </p>
  */
-public class InGamePhase implements Phases {
+public class InGamePhase extends AbstractPhases {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void enterState() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void exitState() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(final long deltaTime) {
-        // TODO: 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleInput(final Command action, final Model model) {
+    public void handleAction(final Command action, final Model model) {
         switch (action) {
-            case PAUSE:
+            case ESC:
                 model.setState(new PausePhase());
                 break;
             case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, JUMP:
