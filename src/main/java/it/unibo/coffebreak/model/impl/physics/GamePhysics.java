@@ -14,13 +14,13 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
 public record GamePhysics() implements Physics {
 
     /** The base movement speed for horizontal and vertical movement. */
-    private static final float BASE_SPEED = 0.1f;
+    public static final float BASE_SPEED = 0.1f;
 
     /** The force applied when jumping. */
-    private static final float JUMP_FORCE = 10f;
+    public static final float JUMP_FORCE = 10f;
 
     /** A zero vector used for no movement. */
-    private static final Vector2D ZERO_VECTOR = new Vector2D(0f, 0f);
+    public static final Vector2D ZERO_VECTOR = new Vector2D(0f, 0f);
 
     /**
      * {@inheritDoc}
