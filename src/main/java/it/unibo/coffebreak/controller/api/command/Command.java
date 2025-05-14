@@ -1,43 +1,39 @@
 package it.unibo.coffebreak.controller.api.command;
 
 /**
- * Enum list of possible game Actions.  // TODO: after change fix JavaDoc
+ * Enum list of possible game Commmands.
  */
 public enum Command {
     /**
-     * Action for starting the game.
+     * Command for enterin the game.
      */
-    START, // TODO: change to CONFIRM
+    ENTER,
     /**
-     * Action for resuming the gameplay.
+     * Command for quitting the game.
      */
-    RESUME, // TODO: remove
+    QUIT,
     /**
-     * Action for quitting the game.
+     * Command for pausing the gameplay.
      */
-    EXIT_GAME, // TODO: remove
+    STOP,
     /**
-     * Action for pausing the gameplay.
-     */
-    PAUSE, // TODO: change to BACK or STOP, is for pause and exit 
-    /**
-     * Action for moving left.
+     * Command for moving left.
      */
     MOVE_LEFT,
     /**
-     * Action for moving up.
+     * Command for moving up.
      */
     MOVE_UP,
     /**
-     * Action for moving right.
+     * Command for moving right.
      */
     MOVE_RIGHT,
     /**
-     * Action for Jumping.
+     * Command for Jumping.
      */
     JUMP,
     /**
-     * Action for going down.
+     * Command for going down.
      */
     MOVE_DOWN
 }
