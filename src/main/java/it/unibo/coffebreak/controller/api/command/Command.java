@@ -7,7 +7,13 @@ package it.unibo.coffebreak.controller.api.command;
  */
 public enum Command {
     /**
-     * Command for enterin the game.
+     * Command for entering a new game,
+     * <p>
+     * for unpausing the game
+     * </p>
+     * <p>
+     * or getting back to the main menu when the <b>Game is Over</b>.
+     * </p>
      */
     ENTER,
     /**
@@ -15,7 +21,10 @@ public enum Command {
      */
     QUIT,
     /**
-     * Command for pausing the gameplay.
+     * Command for pausing the gameplay when in game
+     * <p>
+     * or getting back to the main menu when the game is paused.
+     * </p>
      */
     ESC,
     /**
