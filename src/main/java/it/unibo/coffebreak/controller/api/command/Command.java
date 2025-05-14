@@ -17,23 +17,24 @@ public enum Command {
      */
     ESC,
     /**
-     * Command for moving left.
-     */
-    MOVE_LEFT,
-    /**
      * Command for moving up.
      */
     MOVE_UP,
+    /**
+     * Command for going down.
+     */
+    MOVE_DOWN,
     /**
      * Command for moving right.
      */
     MOVE_RIGHT,
     /**
+     * Command for moving left.
+     */
+    MOVE_LEFT,
+    /**
      * Command for Jumping.
      */
-    JUMP,
-    /**
-     * Command for going down.
-     */
-    MOVE_DOWN
+    JUMP
+
 }
