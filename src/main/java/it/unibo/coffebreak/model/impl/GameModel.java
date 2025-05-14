@@ -10,7 +10,7 @@ import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.impl.phases.MenuPhase;
+import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
 
 /**
  * A concrete implementation of the {@link Model}.
@@ -33,7 +33,7 @@ public class GameModel implements Model {
         this.player = null;
 
         currentPhase = new MenuPhase();
-        currentPhase.enterState();
+        currentPhase.enterPhase();
     }
 
     /**
@@ -60,9 +60,9 @@ public class GameModel implements Model {
      */
     @Override
     public void setState(final Phases newPhase) {
-        currentPhase.exitState();
+        currentPhase.exitPhase();
         currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
-        currentPhase.enterState();
+        currentPhase.enterPhase();
 
     }
 
@@ -71,6 +71,6 @@ public class GameModel implements Model {
      */
     @Override
     public void handleCommand(final Command command) {
-        this.currentPhase.handleInput(command, this);
+        this.currentPhase.handleAction(command, this);
     }
 }
