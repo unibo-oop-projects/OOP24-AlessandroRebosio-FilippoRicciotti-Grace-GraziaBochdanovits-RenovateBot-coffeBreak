@@ -12,6 +12,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
  * <p>
  * Represents the <b>Paused</b> phase of the game.
  * </p>
+ * @author Filippo Ricciotti
  */
 public class PausePhase extends AbstractPhases {
 

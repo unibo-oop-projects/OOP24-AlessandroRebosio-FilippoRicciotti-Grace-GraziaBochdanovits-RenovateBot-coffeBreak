@@ -11,6 +11,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
  * <p>
  * Represents the <b>Game Over</b> phase of the game.
  * </p>
+ * @author Filippo Ricciotti
  */
 public class GameOverPhase extends AbstractPhases {
     /**

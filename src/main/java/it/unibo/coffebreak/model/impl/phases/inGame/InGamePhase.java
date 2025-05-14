@@ -11,6 +11,7 @@ import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
  * <p>
  * Represents the <b>In Game phase</b> of the game.
  * </p>
+ * @author Filippo Ricciotti
  */
 public class InGamePhase extends AbstractPhases {
 

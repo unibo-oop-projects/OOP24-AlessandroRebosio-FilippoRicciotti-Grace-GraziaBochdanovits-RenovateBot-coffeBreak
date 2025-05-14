@@ -11,6 +11,7 @@ import it.unibo.coffebreak.model.impl.phases.ingame.InGamePhase;
  * <p>
  * Represents the <b>Main Menu</b> phase of the game.
  * </p>
+ * @author Filippo Ricciotti
  */
 public class MenuPhase extends AbstractPhases {
     /**

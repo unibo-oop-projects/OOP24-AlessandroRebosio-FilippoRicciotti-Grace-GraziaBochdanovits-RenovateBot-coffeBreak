@@ -5,6 +5,8 @@ import it.unibo.coffebreak.model.api.Model;
 
 /**
  * Interface for handling Game Phases.
+ * 
+ * @author Filippo Ricciotti
  */
 public interface Phases {
     /**

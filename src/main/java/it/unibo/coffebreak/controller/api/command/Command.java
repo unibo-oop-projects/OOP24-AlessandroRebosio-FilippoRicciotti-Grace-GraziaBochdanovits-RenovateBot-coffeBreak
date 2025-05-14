@@ -2,6 +2,8 @@ package it.unibo.coffebreak.controller.api.command;
 
 /**
  * Enum list of possible game Commmands.
+ * 
+ * @author Filippo Ricciotti
  */
 public enum Command {
     /**
