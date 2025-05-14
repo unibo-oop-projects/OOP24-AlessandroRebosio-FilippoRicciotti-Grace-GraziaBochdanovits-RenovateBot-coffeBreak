@@ -12,7 +12,7 @@ public interface Phases {
     /**
      * Enum List of Game Phases.
      */
-    enum PhaseType {
+    enum PhaseType { // TODO: remove is useless
 
         /**
          * Phasetype for when inside the menu.

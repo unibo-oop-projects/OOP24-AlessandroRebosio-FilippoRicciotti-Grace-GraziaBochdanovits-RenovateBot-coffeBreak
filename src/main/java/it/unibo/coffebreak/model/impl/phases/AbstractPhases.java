@@ -12,6 +12,9 @@ import it.unibo.coffebreak.model.api.phases.Phases;
  * @author Filippo Ricciotti
  */
 public abstract class AbstractPhases implements Phases {
+
+    // TODO: private float deltaTime
+
     /**
      * {@inheritDoc}
      */
@@ -31,6 +34,7 @@ public abstract class AbstractPhases implements Phases {
      */
     @Override
     public void update(final float deltaTime) {
+        // TODO: this.deltaTime = deltaTime
     }
 
     /**
