@@ -45,5 +45,7 @@ public interface Model {
      * 
      * @param command the command to be executed (must not be null)
      */
-    void handleCommand(Command command);
+    void handleCommand(Command command); // TODO: remove this method, is useless, and add Phases getCurrentPhases(), in
+                                         // GameModel return the currentPhase, fix error in GameController, on line 66,
+                                         // change with this.model.getCurrentPhase().handleCommand(command)
 }

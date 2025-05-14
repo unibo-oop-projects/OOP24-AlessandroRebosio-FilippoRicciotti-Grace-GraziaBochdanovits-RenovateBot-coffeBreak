@@ -37,6 +37,6 @@ public abstract class AbstractPhases implements Phases {
      * {@inheritDoc}
      */
     @Override
-    public abstract void handleAction(Command action, Model model);
+    public abstract void handleAction(Command action, Model model); // TODO: change param. name action to command
 
 }
