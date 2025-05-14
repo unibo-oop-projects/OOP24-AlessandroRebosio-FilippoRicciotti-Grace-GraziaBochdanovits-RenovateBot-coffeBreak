@@ -15,7 +15,7 @@ public enum Command {
     /**
      * Command for pausing the gameplay.
      */
-    STOP,
+    ESC,
     /**
      * Command for moving left.
      */
