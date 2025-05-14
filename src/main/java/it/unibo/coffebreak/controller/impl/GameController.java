@@ -37,6 +37,14 @@ public class GameController implements Controller {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Input getInputManager() {
+        return this.inputManager;
+    }
+
+    /**
      * Processes all available input commands and updates the game model.
      * This method continuously polls the input manager for commands until
      * no more commands are available, executing each command in sequence.
