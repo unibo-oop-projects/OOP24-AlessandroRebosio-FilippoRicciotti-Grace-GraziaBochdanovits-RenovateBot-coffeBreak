@@ -23,15 +23,16 @@ public interface Phases {
     /**
      * method that handle input depending on the Phase the model is currently in.
      * 
-     * @param action Input to handle.
-     * @param model  the game model containing the possible Phase to change.
+     * @param command Input to handle.
+     * @param model   the game model containing the possible Phase to change.
      */
     void handleCommand(Model model, Command command);
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.
      * 
+     * @param model     model to update
      * @param deltaTime time in milliseconds since the last update call.
      */
-    void update(float deltaTime);
+    void update(Model model, float deltaTime);
 }
