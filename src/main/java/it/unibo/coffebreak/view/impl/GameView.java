@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view;
+package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JPanel;
 import it.unibo.coffebreak.controller.api.Controller;
