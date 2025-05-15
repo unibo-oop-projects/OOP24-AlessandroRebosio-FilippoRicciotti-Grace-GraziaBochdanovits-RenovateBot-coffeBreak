@@ -10,9 +10,7 @@ import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
-import it.unibo.coffebreak.model.impl.entities.mario.states.ClimbingState;
-import it.unibo.coffebreak.model.impl.entities.mario.states.DeadState;
-import it.unibo.coffebreak.model.impl.entities.mario.states.JumpState;
+import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
 import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
@@ -33,28 +31,18 @@ import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
  * <p>States supported:
  * <ul>
  *   <li>{@link NormalState} - Default ground movement</li>
- *   <li>{@link JumpState} - Jumping/falling physics</li>
- *   <li>{@link ClimbingState} - Ladder climbing behavior</li>
  *   <li>{@link WithHammerState} - Hammer power-up mode</li>
- *   <li>{@link DeadState} - Game over state</li>
  * </ul>
  * 
  * @author Grazia Bochdanovits de Kavna
  */
 public class Mario extends AbstractEntity implements Character {
 
-    /** Initial upward velocity when jumping (in pixels/second). */
-    private static final float JUMP_FORCE = -15f;
-
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
-    //private final GamePhysics physics;
     private CharacterState currentState;
     private final Position2D startPosition;
     private boolean isOnGround;
-    private boolean isClimbing;
-    private boolean isJumping;
-    private boolean facingRight = true;
     private final String playerName;
 
     /**
@@ -85,10 +73,8 @@ public class Mario extends AbstractEntity implements Character {
     @Override
     public void changeState(final CharacterState newState) {
         Objects.requireNonNull(newState, "New state cannot be null");
-        if (currentState != null) {
-            currentState.onExit(this);
-        }
-        currentState = newState;
+        currentState.onExit(this);
+        this.currentState = Objects.requireNonNull(newState);
         currentState.onEnter(this);
     }
 
@@ -103,8 +89,6 @@ public class Mario extends AbstractEntity implements Character {
         setPosition(startPosition);
         setOnGround(true);
         setFacingRight(true); 
-        isClimbing = false;
-        isJumping = false;
     }
 
     /**
@@ -114,62 +98,17 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void update(final float deltaTime) {
-        if (isGameOver() && !(currentState instanceof DeadState)) {
-            changeState(new DeadState());
-        }
         currentState.update(this, deltaTime);
-        /*if (!isClimbing) {
-            physics.updateMovement(this, deltaTime, currentDirection);
-        }*/
-        if (getVelocity().y() == 0 && !isOnGround) {
-            isOnGround = true;
-            isJumping = false;
-        }
     }
 
     /**
-     * Makes Mario jump if he's on the ground and the current state allows jumping.
+     * Makes Mario jump if he's on the ground.
      */
     @Override
     public void jump() {
         if (currentState.canJump() && isOnGround) {
-            changeState(new JumpState());
-            setVelocity(new Vector2D(getVelocity().x(), JUMP_FORCE));
-            isOnGround = false;
-            isJumping = true;
+            setOnGround(false);
         }
-    }
-
-    /**
-     * Starts climbing behavior if Mario is touching a ladder.
-     */
-    @Override
-    public void startClimbing() {
-        if (currentState.canClimb()) {
-            isClimbing = true;
-            changeState(new ClimbingState());
-        }
-    }
-
-    /**
-     * Stops climbing behavior and returns to normal state.
-     */
-    @Override
-    public void stopClimbing() {
-        isClimbing = false;
-        if (currentState instanceof ClimbingState) {
-            changeState(new NormalState());
-        }
-    }
-
-    /**
-     * Uses Mario's current special item (e.g., hammer attack).
-     */
-    @Override
-    public void useSpecialItem() {
-        /*if (currentState.canUseSpecialItem()) {
-            // Implementation would trigger hammer attack
-        }*/
     }
 
     /**
@@ -182,9 +121,9 @@ public class Mario extends AbstractEntity implements Character {
         if (other instanceof Collectible) {
             ((Collectible) other).collect(this);
             scoreManager.earnPoints(((Collectible) other).getPointsValue());
-            /*if (other instanceof Hammer) {
-                //apply hammer affect in qualche modo
-            }*/
+        }
+        if (other instanceof Hammer) {
+            changeState(new WithHammerState());
         }
         currentState.handleCollision(this, other);
     }
@@ -198,33 +137,8 @@ public class Mario extends AbstractEntity implements Character {
         if (!isGameOver()) {
             changeState(new NormalState());
             resetToInitialState();
-        } else {
-            changeState(new DeadState());
         }
-    }
-
-    /**
-     * @return true if Mario is currently jumping
-     */
-    @Override
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * @return true if Mario is currently climbing a ladder
-     */
-    @Override
-    public boolean isClimbing() {
-        return isClimbing;
-    }
-
-    /**
-     * @return true if Mario can climb in his current state
-     */
-    @Override
-    public boolean canClimb() {
-        return currentState.canClimb();
+        //TODO: gameOver
     }
 
     /**
@@ -241,14 +155,6 @@ public class Mario extends AbstractEntity implements Character {
     @Override
     public boolean isGameOver() {
         return !livesManager.isAlive();
-    }
-
-    /**
-     * @return true if Mario is facing right
-     */
-    @Override
-    public boolean isFacingRight() {
-        return facingRight;
     }
 
     /**
@@ -284,14 +190,6 @@ public class Mario extends AbstractEntity implements Character {
     }
 
     /**
-     * @return the current character state
-     */
-    @Override
-    public CharacterState getCharacterState() {
-        return currentState;
-    }
-
-    /**
      * Sets whether Mario is on the ground and handles state transitions.
      *
      * @param onGround true if Mario is on solid ground
@@ -299,19 +197,6 @@ public class Mario extends AbstractEntity implements Character {
     @Override
     public void setOnGround(final boolean onGround) {
         isOnGround = onGround;
-        if (onGround && currentState instanceof JumpState) {
-            changeState(new NormalState());
-        }
-    }
-
-    /**
-     * Sets Mario's facing direction.
-     *
-     * @param facingRight true to face right, false to face left
-     */
-    @Override
-    public void setFacingRight(final boolean facingRight) {
-        this.facingRight = facingRight;
     }
 
 }

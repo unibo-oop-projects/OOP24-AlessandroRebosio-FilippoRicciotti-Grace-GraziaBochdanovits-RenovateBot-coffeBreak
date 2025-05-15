@@ -32,51 +32,9 @@ public interface Character extends Entity {
     void jump();
 
     /**
-     * Moves the character in a specific direction.
-     * @param direction The direction of movement (LEFT, RIGHT, NONE)
-     */
-    //void move(Direction direction);
-
-    /**
-     * Starts the climbing action for the character.
-     */
-    void startClimbing(); // TODO: ha senso?
-
-    /**
-     * Stops the climbing action for the character.
-     */
-    void stopClimbing(); // TODO: ha senso?
-
-    /**
-     * Uses a special item (generalized for hammer usage).
-     */
-    void useSpecialItem(); // TODO: ha senso?
-
-    /**
      * Decrements the character's life count.
      */
     void loseLife();
-
-    /**
-     * Checks if the character is currently jumping.
-     * 
-     * @return true if the character is jumping, false otherwise
-     */
-    boolean isJumping();
-
-    /**
-     * Checks if the character is currently climbing.
-     * 
-     * @return true if the character is climbing, false otherwise
-     */
-    boolean isClimbing();
-
-    /**
-     * Checks if the character has the ability to climb.
-     * 
-     * @return true if the character can climb, false otherwise
-     */
-    boolean canClimb();
 
     /**
      * Checks if the character is currently on the ground.
@@ -119,13 +77,6 @@ public interface Character extends Entity {
      * @return the player's name
      */
     String getPlayerName();
-
-    /**
-     * Gets the current state of the character.
-     * 
-     * @return the current CharacterState
-     */
-    CharacterState getCharacterState();
 
     /**
      * Sets whether the character is on the ground.

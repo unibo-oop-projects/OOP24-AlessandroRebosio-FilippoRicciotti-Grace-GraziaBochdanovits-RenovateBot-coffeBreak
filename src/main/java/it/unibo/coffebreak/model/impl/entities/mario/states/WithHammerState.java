@@ -24,8 +24,6 @@ import it.unibo.coffebreak.model.api.entities.character.CharacterState;
  *     </ul>
  *   </li>
  * </ul>
- *
- * <p>Duration: The hammer effect lasts for {#HAMMER_DURATION}ms (5 seconds).
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -105,27 +103,11 @@ public class WithHammerState implements CharacterState {
     }
 
     /**
-     * @return true - Mario maintains full movement control with hammer
-     */
-    @Override
-    public boolean canMove() {
-        return true;
-    }
-
-    /**
      * @return true - Mario can jump while wielding hammer
      */
     @Override
     public boolean canJump() {
         return true;
-    }
-
-    /**
-     * @return false - Climbing is disabled while wielding hammer
-     */
-    @Override
-    public boolean canClimb() {
-        return false;
     }
 
     /**

@@ -37,19 +37,9 @@ public interface CharacterState {
     void handleCollision(Character character, Entity other);
 
     /**
-     * @return true if the character can move horizontally in this state
-     */
-    boolean canMove();
-
-    /**
      * @return true if the character can jump in this state
      */
     boolean canJump();
-
-    /**
-     * @return true if the character can climb in this state
-     */
-    boolean canClimb();
 
     /**
      * @return true if the character can use special items in this state
