@@ -1,25 +1,24 @@
 package it.unibo.coffebreak.controller.api;
 
-import it.unibo.coffebreak.controller.api.input.Input;
-
 /**
- * Defines the controller component in the MVC (Model-View-Controller) pattern.
- * The controller acts as an intermediary between the view (input) and the
- * model, processing user input and updating the model accordingly.
+ * The Controller component in the MVC (Model-View-Controller) pattern.
+ * Acts as the intermediary between View (input) and Model (game state),
+ * processing user input and updating the model accordingly.
  * 
  * @author Alessandro Rebosio
  */
 public interface Controller {
 
     /**
-     * Returns the input manager responsible for handling and queueing user input
-     * commands.
-     * The input manager acts as a bridge between user input events (from the view)
-     * and the command processing system in the controller.
+     * Notifies the controller about a user input event.
+     * 
+     * <p>
+     * The controller will translate this raw input into game commands
+     * according to its current key bindings and state.
      *
-     * @return the {@link Input} manager instance used by this controller
+     * @param keyCode the physical key code received from input system
      */
-    Input getInputManager();
+    void notifyInput(int keyCode);
 
     /**
      * Processes input and updates the model accordingly.

@@ -14,24 +14,15 @@ import it.unibo.coffebreak.controller.impl.input.InputManager;
  * game state accordingly. It uses an {@link InputManager} to queue and
  * retrieve commands, and a {@link Model} implementation to reflect changes in
  * the game state.
- *
- * <p>
- * Design principles:
- * <ul>
- * <li>User inputs are translated into {@link Command} objects</li>
- * <li>Commands are processed in sequence from a queue</li>
- * <li>The internal {@link Model} is updated based on those commands</li>
- * </ul>
- * 
- * <p>
- * This implementation encapsulates its dependencies and provides access to
- * the input interface via {@link #getInputManager()}.
  * 
  * @author Alessandro Rebosio
  */
 public class GameController implements Controller {
 
+    /** Manages input command queue and key bindings. */
     private final Input inputManager;
+
+    /** The game model to update based on commands. */
     private final Model model;
 
     /**
@@ -44,13 +35,15 @@ public class GameController implements Controller {
     }
 
     /**
-     * Returns the input manager used to enqueue user commands.
-     *
-     * @return the {@link Input} interface for submitting commands
+     * {@inheritDoc}
+     * 
+     * <p>
+     * This implementation delegates to the {@link InputManager}
+     * to queue the input for later processing.
      */
     @Override
-    public Input getInputManager() {
-        return this.inputManager;
+    public void notifyInput(final int keyCode) {
+        this.inputManager.notifyInput(keyCode);
     }
 
     /**
