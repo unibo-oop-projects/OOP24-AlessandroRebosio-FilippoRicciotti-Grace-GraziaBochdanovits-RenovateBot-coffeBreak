@@ -35,11 +35,10 @@ public interface Input {
     /**
      * Notifies the input system of a new raw input event.
      * 
-     * @param keyCode the key code representing the input event
-     * @throws IllegalArgumentException if the keyCode is not a valid input
+     * @param keyEvent the key code representing the input event
      * @throws NullPointerException     if the command is null
      */
-    void notifyInput(int keyCode);
+    void notifyInput(int keyEvent);
 
     /**
      * Binds a specific key code to a game command.

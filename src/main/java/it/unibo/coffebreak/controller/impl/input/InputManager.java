@@ -77,7 +77,6 @@ public class InputManager implements Input {
      * Adds a new command to the queue for processing.
      *
      * @param keyEvent the command to be added to the queue
-     * @throws IllegalArgumentException if the command is {@code null}
      */
     @Override
     public void notifyInput(final int keyEvent) {
