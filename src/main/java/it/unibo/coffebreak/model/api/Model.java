@@ -24,6 +24,13 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
+     * Gets the current phase of the game.
+     * 
+     * @return a game Phase
+     */
+    Phases getCurrenPhase();
+
+    /**
      * Gets the player character.
      * 
      * @return the player character, or null if no player is set

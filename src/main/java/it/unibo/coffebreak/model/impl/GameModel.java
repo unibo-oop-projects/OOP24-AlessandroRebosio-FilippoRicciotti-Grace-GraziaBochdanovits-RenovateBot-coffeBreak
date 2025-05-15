@@ -73,4 +73,12 @@ public class GameModel implements Model {
     public void notifyCommand(final Command command) { // TODO: fix and add another method specified in Model.java
         this.currentPhase.handleCommand(this, command);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Phases getCurrenPhase() {
+        return this.currentPhase;
+    }
 }
