@@ -104,14 +104,14 @@ public class InputManager implements Input {
      * Initializes the default key bindings for common game controls.
      */
     private void initializeDefaultBindings() {
-        keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
-        keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESC);
-        keyBindings.put(KeyEvent.VK_Q, Command.QUIT);
-        keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
-        keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
-        keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
-        keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
-        keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
+        this.keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
+        this.keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESC);
+        this.keyBindings.put(KeyEvent.VK_Q, Command.QUIT);
+        this.keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
+        this.keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
+        this.keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
+        this.keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
+        this.keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
     }
 
 }
