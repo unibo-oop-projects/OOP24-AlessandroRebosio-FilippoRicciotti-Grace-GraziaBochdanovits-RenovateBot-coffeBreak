@@ -1,6 +1,8 @@
 package it.unibo.coffebreak.controller.impl.input;
 
-import java.util.Objects;
+import java.awt.event.KeyEvent;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -22,14 +24,18 @@ import it.unibo.coffebreak.controller.api.input.Input;
  */
 public class InputManager implements Input {
 
-    private final Queue<Command> queue;
+    private final Map<Integer, Command> keyBindings;
+    private final Queue<Integer> queue;
 
     /**
      * Constructs a new InputManager with an empty command queue.
      * The underlying queue is thread-safe and non-blocking.
      */
     public InputManager() {
+        this.keyBindings = new HashMap<>();
         this.queue = new ConcurrentLinkedQueue<>();
+
+        this.keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
     }
 
     /**
@@ -40,7 +46,7 @@ public class InputManager implements Input {
      */
     @Override
     public Command getCommand() {
-        return this.queue.poll();
+        return this.keyBindings.get(this.queue.poll());
     }
 
     /**
@@ -50,8 +56,7 @@ public class InputManager implements Input {
      * @throws IllegalArgumentException if the command is {@code null}
      */
     @Override
-    public void notifyCommand(final Command command) {
-        Objects.requireNonNull(command, "Command cannot be null");
-        this.queue.add(command);
+    public void notifyCommand(final int keyEvent) {
+        this.queue.add(keyEvent);
     }
 }

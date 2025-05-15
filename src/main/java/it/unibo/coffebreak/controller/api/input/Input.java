@@ -33,8 +33,8 @@ public interface Input {
      * This method can be used to implement command queuing or to allow external
      * systems to inject commands into the input pipeline.
      *
-     * @param command the {@link Command} to be processed by the input system
+     * @param keyEvent the {@link Command} to be processed by the input system
      * @throws IllegalArgumentException if the provided command is null
      */
-    void notifyCommand(Command command);
+    void notifyCommand(int keyEvent);
 }
