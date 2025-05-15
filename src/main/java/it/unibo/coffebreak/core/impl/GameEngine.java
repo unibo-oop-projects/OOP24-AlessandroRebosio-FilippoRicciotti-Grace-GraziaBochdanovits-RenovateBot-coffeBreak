@@ -43,7 +43,7 @@ public class GameEngine implements Engine {
             final long currentCycle = System.currentTimeMillis();
             // TODO: final long elapsed = currentCycle - previusCycle;
             controller.processInput();
-
+            this.view.render();
             this.waitForNextFrame(currentCycle);
             // TODO: previusCycle = currentCycle;
         }

@@ -2,6 +2,8 @@ package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JPanel;
 import it.unibo.coffebreak.controller.api.Controller;
+import it.unibo.coffebreak.view.api.View;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Serial;
@@ -20,7 +22,7 @@ import java.io.Serial;
  * 
  * @author Alessandro Rebosio
  */
-public class GameView extends JPanel implements KeyListener {
+public class GameView extends JPanel implements KeyListener, View {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -61,5 +63,14 @@ public class GameView extends JPanel implements KeyListener {
     @Override
     public void keyReleased(final KeyEvent e) {
         // Not used
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void render() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'render'");
     }
 }
