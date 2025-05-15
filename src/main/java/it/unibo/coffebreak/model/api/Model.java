@@ -24,13 +24,6 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
-     * Gets the current phase of the game.
-     * 
-     * @return a game Phase
-     */
-    Phases getCurrenPhase();
-
-    /**
      * Gets the player character.
      * 
      * @return the player character, or null if no player is set
@@ -52,7 +45,5 @@ public interface Model {
      * 
      * @param command the command to be executed (must not be null)
      */
-    void notifyCommand(Command command); // TODO: remove this method, is useless, and add Phases getCurrentPhases(), in
-                                         // GameModel return the currentPhase, fix error in GameController, on line 66,
-                                         // change with this.model.getCurrentPhase().handleCommand(command, this.model)
+    void notifyCommand(Command command);
 }
