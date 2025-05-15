@@ -12,6 +12,7 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
 import it.unibo.coffebreak.model.impl.entities.tank.GameTank;
+import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 
 /**
  * Concrete implementation of a rolling barrel enemy in the game world.
@@ -40,8 +41,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
 
     private final Physics physics;
     private final boolean canTransformToFire;
-    private Slope oldSlope;
-    private Slope currentSlope = Slope.RIGHT;
+    private Command currentDirection = Command.MOVE_RIGHT;
+    private boolean isOnPlatform;
 
     /**
      * Constructs a new game barrel with specified properties.
@@ -49,14 +50,13 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * @param position the initial position of the barrel (cannot be null)
      * @param dimension the physical dimensions of the barrel (cannot be null)
      * @param canTransformToFire whether the barrel can turn into fire when destroyed
-     * @param physics the physics system to use for movement calculations (cannot be null)
      * @throws NullPointerException if position, dimension or physics are null
      */
-    public GameBarrel(final Position2D position, final Dimension2D dimension,
-                     final boolean canTransformToFire, final Physics physics) {
+    public GameBarrel(final Position2D position, final Dimension2D dimension, final boolean canTransformToFire) {
         super(position, dimension);
         this.canTransformToFire = canTransformToFire;
-        this.physics = physics;
+        this.physics = new GamePhysics();
+        this.isOnPlatform = false;
     }
 
     /**
@@ -70,17 +70,15 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof Platform) {
-            final Platform platform = (Platform) other;
-            if (platform.getSlope() != Slope.FLAT) {
-                oldSlope = currentSlope;
-                currentSlope = platform.getSlope();
-            }
+        if (other instanceof final Platform platform) {
+            isOnPlatform = true;
+            currentDirection = platform.getSlope() == Slope.RIGHT 
+                                ? Command.MOVE_RIGHT : Command.MOVE_LEFT;
         }
+
         if (other instanceof GameTank) {
             destroy();
         }
-        //TODO: per ora tralascio
     }
 
     /**
@@ -99,10 +97,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
         }
 
         final Vector2D movement = calculateHorizontalMovement(deltaTime);
-        final Vector2D gravity = physics.calculateY(deltaTime, null);
-        final Vector2D totalMovement = movement.sum(gravity);
+        final Vector2D gravity = physics.calculateY(deltaTime, 
+            isOnPlatform ? Command.NONE : Command.MOVE_DOWN);
 
-        setPosition(getPosition().sum(totalMovement));
+        setPosition(getPosition().sum(movement.sum(gravity)));
+        isOnPlatform = false;
     }
 
     /**
@@ -112,13 +111,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * @return the horizontal movement vector adjusted for barrel speed
      */
     private Vector2D calculateHorizontalMovement(final float deltaTime) {
-        final Command direction = switch (currentSlope) {
-            case LEFT -> Command.MOVE_LEFT;
-            case RIGHT -> Command.MOVE_RIGHT;
-            case FLAT -> oldSlope == Slope.LEFT ? Command.MOVE_RIGHT : Command.MOVE_LEFT;
-        };
-
-        return physics.calculateX(deltaTime, direction).multiply(BARREL_SPEED);
+        return physics.calculateX(deltaTime, currentDirection).multiply(BARREL_SPEED);
     }
 
     /**
@@ -131,13 +124,4 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
         return this.canTransformToFire;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return the current slope direction the barrel is following
-     */
-    @Override
-    public Slope getCurrentDirection() {
-        return currentSlope;
-    }
 }
