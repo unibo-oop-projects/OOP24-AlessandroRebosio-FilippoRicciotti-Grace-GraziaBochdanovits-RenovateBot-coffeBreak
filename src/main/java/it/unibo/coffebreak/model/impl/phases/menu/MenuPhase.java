@@ -11,6 +11,7 @@ import it.unibo.coffebreak.model.impl.phases.ingame.InGamePhase;
  * <p>
  * Represents the <b>Main Menu</b> phase of the game.
  * </p>
+ * 
  * @author Filippo Ricciotti
  */
 public class MenuPhase extends AbstractPhases {
@@ -18,7 +19,7 @@ public class MenuPhase extends AbstractPhases {
      * {@inheritDoc}
      */
     @Override
-    public void handleAction(final Command action, final Model model) {
+    public void handleCommand(final Command action, final Model model) {
         switch (action) {
             case ENTER:
                 model.setState(new InGamePhase());
