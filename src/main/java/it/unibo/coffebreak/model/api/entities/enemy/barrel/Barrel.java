@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.model.api.entities.enemy.barrel;
 
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.entities.platform.Platform;
 
 /**
  * Represents a barrel enemy in the game world.
@@ -19,7 +18,6 @@ import it.unibo.coffebreak.model.api.entities.platform.Platform;
  * </ul>
  * 
  * @see Enemy
- * @see Platform.Slope
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Barrel extends Enemy {
@@ -42,14 +40,4 @@ public interface Barrel extends Enemy {
      */
     boolean canTransformToFire();
 
-    /**
-     * Gets the current rolling direction of the barrel.
-     * <p>
-     * The direction is determined by the slope of the platform the barrel is on.
-     * </p>
-     * 
-     * @return the current slope direction the barrel is following
-     * @see Platform.Slope
-     */
-    Platform.Slope getCurrentDirection();
 }
