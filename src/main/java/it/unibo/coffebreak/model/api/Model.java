@@ -47,5 +47,10 @@ public interface Model {
      */
     void notifyCommand(Command command);
 
+    /**
+     * Updates the game logic based on time.
+     *
+     * @param deltaTime time in seconds since last update
+     */
     void update(float deltaTime);
 }

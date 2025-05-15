@@ -8,26 +8,21 @@ import it.unibo.coffebreak.controller.api.input.Input;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
 
 /**
- * Implementation of {@link Controller} that manages the game's control flow.
- * <p>
- * This controller is responsible for processing user input and updating the
- * game state accordingly. It uses an {@link InputManager} to queue and
- * retrieve commands, and a {@link Model} implementation to reflect changes in
- * the game state.
+ * Main game controller implementation.
+ * Uses an InputManager to handle commands and a Model to update the game state.
  * 
  * @author Alessandro Rebosio
  */
 public class GameController implements Controller {
 
-    /** Manages input command queue and key bindings. */
+    /** Handles input and command management. */
     private final Input inputManager;
 
-    /** The game model to update based on commands. */
+    /** The main game model. */
     private final Model model;
 
     /**
-     * Constructs a new {@code GameController} instance with its own internal
-     * {@link InputManager} and {@link GameModel}.
+     * Creates a new game controller with default input and model.
      */
     public GameController() {
         this.inputManager = new InputManager();
@@ -35,11 +30,7 @@ public class GameController implements Controller {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * <p>
-     * This implementation delegates to the {@link InputManager}
-     * to queue the input for later processing.
+     * Adds a new input event to the input manager.
      */
     @Override
     public void notifyInput(final int keyCode) {
@@ -47,10 +38,7 @@ public class GameController implements Controller {
     }
 
     /**
-     * Processes all queued input commands and updates the game model.
-     * <p>
-     * Commands are retrieved from the input manager one by one and applied
-     * to the model via {@link Model#notifyCommand(Command)}.
+     * Retrieves and applies all input commands to the model.
      */
     @Override
     public void processInput() {
@@ -61,6 +49,9 @@ public class GameController implements Controller {
         }
     }
 
+    /**
+     * Updates the model based on time passed.
+     */
     @Override
     public void updateModel(final float deltaTime) {
         this.model.update(deltaTime);
