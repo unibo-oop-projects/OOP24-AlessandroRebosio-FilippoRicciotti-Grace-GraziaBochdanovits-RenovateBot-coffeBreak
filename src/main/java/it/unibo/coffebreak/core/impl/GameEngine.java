@@ -34,15 +34,17 @@ public class GameEngine implements Engine {
      */
     @Override
     public void run() {
-        // TODO: long previusCycle = System.currentTimeMillis();
+        long previusCycle = System.currentTimeMillis();
         while (true) {
             final long currentCycle = System.currentTimeMillis();
-            // TODO: final long elapsed = currentCycle - previusCycle;
-            controller.processInput();
+            final long deltaTime = currentCycle - previusCycle;
+
+            this.controller.processInput();
+            this.controller.updateModel(deltaTime);
             this.waitForNextFrame(currentCycle);
-            // TODO: previusCycle = currentCycle;
+
+            previusCycle = currentCycle;
         }
-        // TODO: renderGameOver()
     }
 
     /**
