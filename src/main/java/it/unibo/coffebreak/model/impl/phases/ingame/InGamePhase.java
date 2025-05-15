@@ -5,6 +5,7 @@ import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
 import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
+import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Implementation of {@link Phases} interface;
@@ -31,6 +32,21 @@ public class InGamePhase extends AbstractPhases {
         }
     }
 
-    // TODO: override void update() apply gameLogic character move() check
-    // collision, check gameOver, checkNextLevel
+    /***
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final Model model, final float deltaTime) {
+
+        // if game is not over
+        final GameCollision collision = new GameCollision();
+        collision.checkCollision(model);
+
+        // TODO: checkNextLevel
+
+        // TODO: check gameOver
+
+        // TODO: check character movement
+    }
+
 }

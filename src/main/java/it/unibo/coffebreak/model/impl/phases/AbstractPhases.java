@@ -31,7 +31,7 @@ public abstract class AbstractPhases implements Phases {
      * {@inheritDoc}
      */
     @Override
-    public void update(final float deltaTime) {
+    public void update(final Model model, final float deltaTime) {
     }
 
     /**
