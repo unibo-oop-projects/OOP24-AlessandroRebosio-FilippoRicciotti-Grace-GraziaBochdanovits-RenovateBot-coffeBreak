@@ -50,13 +50,13 @@ public class GameController implements Controller {
      * Processes all queued input commands and updates the game model.
      * <p>
      * Commands are retrieved from the input manager one by one and applied
-     * to the model via {@link Model#handleCommand(Command)}.
+     * to the model via {@link Model#notifyCommand(Command)}.
      */
     @Override
     public void processInput() {
         Command command = inputManager.getCommand();
         while (command != null) {
-            this.model.handleCommand(command);
+            this.model.notifyCommand(command);
             command = inputManager.getCommand();
         }
     }
