@@ -73,4 +73,9 @@ public class GameModel implements Model {
     public void notifyCommand(final Command command) {
         this.currentPhase.handleCommand(this, command);
     }
+
+    @Override
+    public void update(final float deltaTime) {
+        this.currentPhase.update(this, deltaTime);
+    }
 }

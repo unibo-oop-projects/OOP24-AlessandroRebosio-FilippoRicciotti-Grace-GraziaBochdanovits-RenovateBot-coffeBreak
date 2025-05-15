@@ -20,6 +20,8 @@ public interface Controller {
      */
     void notifyInput(int keyCode);
 
+    void updateModel(float deltaTime);
+
     /**
      * Processes input and updates the model accordingly.
      * This method serves as the main entry point for the controller's logic,

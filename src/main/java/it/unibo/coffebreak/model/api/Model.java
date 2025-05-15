@@ -46,4 +46,6 @@ public interface Model {
      * @param command the command to be executed (must not be null)
      */
     void notifyCommand(Command command);
+
+    void update(float deltaTime);
 }

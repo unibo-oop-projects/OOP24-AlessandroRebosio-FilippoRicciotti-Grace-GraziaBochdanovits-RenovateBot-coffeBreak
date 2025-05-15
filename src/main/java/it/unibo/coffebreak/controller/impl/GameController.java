@@ -60,4 +60,9 @@ public class GameController implements Controller {
             command = inputManager.getCommand();
         }
     }
+
+    @Override
+    public void updateModel(final float deltaTime) {
+        this.model.update(deltaTime);
+    }
 }
