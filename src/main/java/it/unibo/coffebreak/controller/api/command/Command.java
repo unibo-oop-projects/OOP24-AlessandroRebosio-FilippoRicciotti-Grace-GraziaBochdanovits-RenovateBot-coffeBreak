@@ -46,6 +46,10 @@ public enum Command {
     /**
      * Command for Jumping.
      */
-    JUMP
+    JUMP,
+    /**
+     * Command representing no action/input.
+     */
+    NONE
 
 }
