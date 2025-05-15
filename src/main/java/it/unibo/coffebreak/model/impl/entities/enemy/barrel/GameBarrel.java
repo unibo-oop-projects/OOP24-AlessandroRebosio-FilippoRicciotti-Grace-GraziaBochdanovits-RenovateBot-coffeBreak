@@ -10,6 +10,8 @@ import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
+import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
+import it.unibo.coffebreak.model.impl.entities.tank.GameTank;
 
 /**
  * Concrete implementation of a rolling barrel enemy in the game world.
@@ -31,14 +33,13 @@ import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameBarrel extends AbstractEntity implements Barrel {
+public class GameBarrel extends AbstractEnemy implements Barrel {
 
     /** The constant rolling speed of the barrel. */
     private static final float BARREL_SPEED = 1.5f;
 
     private final Physics physics;
     private final boolean canTransformToFire;
-    private boolean isDestroyed;
     private Slope oldSlope;
     private Slope currentSlope = Slope.RIGHT;
 
@@ -76,7 +77,10 @@ public class GameBarrel extends AbstractEntity implements Barrel {
                 currentSlope = platform.getSlope();
             }
         }
-        //TODO: implement other collision checks
+        if (other instanceof GameTank) {
+            destroy();
+        }
+        //TODO: per ora tralascio
     }
 
     /**
@@ -90,7 +94,7 @@ public class GameBarrel extends AbstractEntity implements Barrel {
      */
     @Override
     public void roll(final float deltaTime) {
-        if (isDestroyed) {
+        if (isDestroyed()) {
             return;
         }
 
@@ -115,25 +119,6 @@ public class GameBarrel extends AbstractEntity implements Barrel {
         };
 
         return physics.calculateX(deltaTime, direction).multiply(BARREL_SPEED);
-    }
-
-    /**
-     * {@inheritDoc}
-     * Marks the barrel as destroyed, removing it from gameplay.
-     */
-    @Override
-    public void destroy() {
-        this.isDestroyed = true;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return true if the barrel has been destroyed, false otherwise
-     */
-    @Override
-    public boolean isDestroyed() {
-        return this.isDestroyed;
     }
 
     /**

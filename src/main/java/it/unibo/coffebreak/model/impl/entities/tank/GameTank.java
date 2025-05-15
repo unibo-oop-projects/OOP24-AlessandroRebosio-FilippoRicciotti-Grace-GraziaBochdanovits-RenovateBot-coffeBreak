@@ -33,19 +33,11 @@ public class GameTank extends AbstractEntity implements Tank {
 
     /**
      * Handles collision events with other game entities.
-     * <p>
-     * When colliding with barrels, this implementation should:
-     * <ol>
-     *   <li>Transform the barrel into a fire entity</li>
-     *   <li>Trigger visual effects</li>
-     *   <li>Remove the original barrel from the game</li>
-     * </ol>
-     * </p>
      *
-     * @param other the entity that collided with this tank (typically a barrel)
+     * @param other the entity that collided with this tank
      */
     @Override
     public void onCollision(final Entity other) {
-        //TODO: anche qui pattern Observer per notificare il GameModel (?)
     }
+
 }
