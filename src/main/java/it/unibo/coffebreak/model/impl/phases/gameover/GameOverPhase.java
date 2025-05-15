@@ -19,8 +19,8 @@ public class GameOverPhase extends AbstractPhases {
      * {@inheritDoc}
      */
     @Override
-    public void handleCommand(final Command action, final Model model) {
-        switch (action) {
+    public void handleCommand(final Model model, final Command command) {
+        switch (command) {
             case ENTER:
                 model.setState(new MenuPhase());
                 break;
