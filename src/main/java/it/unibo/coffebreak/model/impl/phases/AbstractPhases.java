@@ -13,8 +13,6 @@ import it.unibo.coffebreak.model.api.phases.Phases;
  */
 public abstract class AbstractPhases implements Phases {
 
-    // TODO: private float deltaTime
-
     /**
      * {@inheritDoc}
      */
@@ -34,13 +32,12 @@ public abstract class AbstractPhases implements Phases {
      */
     @Override
     public void update(final float deltaTime) {
-        // TODO: this.deltaTime = deltaTime
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract void handleAction(Command action, Model model); // TODO: change param. name action to command
+    public abstract void handleAction(Command action, Model model); // TODO: change param. name action to command, rename in handleCommand
 
 }

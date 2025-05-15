@@ -12,7 +12,7 @@ public interface Phases {
     /**
      * Enum List of Game Phases.
      */
-    enum PhaseType { // TODO: remove is useless
+    enum PhaseType { // TODO: remove this enum is useless
 
         /**
          * Phasetype for when inside the menu.
@@ -48,7 +48,7 @@ public interface Phases {
      * @param action Input to handle.
      * @param model  the game model containing the possible Phase to change.
      */
-    void handleAction(Command action, Model model); // TODO: change param. name action to command
+    void handleAction(Command action, Model model); // TODO: change param. name action to command, and rename it handleCommand
 
     /**
      * Updates the logic of the current game Phase based on deltaTime.

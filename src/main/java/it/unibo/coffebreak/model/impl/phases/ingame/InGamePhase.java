@@ -15,14 +15,12 @@ import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
  */
 public class InGamePhase extends AbstractPhases {
 
-
-    // TODO: override void update() super.update(deltaTime) and gameLogic 
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public void handleAction(final Command action, final Model model) {
+    public void handleAction(final Command action, final Model model) { // TODO: here i want only command, that not
+                                                                        // modify the player, only ESC
         switch (action) {
             case ESC:
                 model.setState(new PausePhase());
@@ -35,4 +33,5 @@ public class InGamePhase extends AbstractPhases {
         }
     }
 
+    // TODO: override void update() apply gameLogic character move() check collision, check gameOver, checkNextLevel
 }
