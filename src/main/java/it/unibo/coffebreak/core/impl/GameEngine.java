@@ -3,6 +3,7 @@ package it.unibo.coffebreak.core.impl;
 import it.unibo.coffebreak.controller.api.Controller;
 import it.unibo.coffebreak.controller.impl.GameController;
 import it.unibo.coffebreak.core.api.Engine;
+import it.unibo.coffebreak.view.impl.GameView;
 
 /**
  * Implementation of {@link Engine} that manages the game loop with a fixed
@@ -21,12 +22,15 @@ public class GameEngine implements Engine {
 
     private final Controller controller;
 
+    private final GameView view;
+
     /**
      * Constructs a new {@code GameEngine} instance with its own internal
      * {@link Controller}.
      */
     public GameEngine() {
         this.controller = new GameController();
+        this.view = new GameView(this.controller);
     }
 
     /**
@@ -39,6 +43,7 @@ public class GameEngine implements Engine {
             final long currentCycle = System.currentTimeMillis();
             // TODO: final long elapsed = currentCycle - previusCycle;
             controller.processInput();
+
             this.waitForNextFrame(currentCycle);
             // TODO: previusCycle = currentCycle;
         }
