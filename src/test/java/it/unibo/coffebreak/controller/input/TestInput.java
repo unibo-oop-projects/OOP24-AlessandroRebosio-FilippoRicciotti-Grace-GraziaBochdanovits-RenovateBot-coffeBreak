@@ -45,8 +45,8 @@ class TestInput {
      */
     @Test
     void testNotifyAndGetCommand() {
-        this.inputManager.notifyInput(KeyEvent.VK_UP);
-        this.inputManager.notifyInput(KeyEvent.VK_DOWN);
+        this.inputManager.registerKeyPress(KeyEvent.VK_UP);
+        this.inputManager.registerKeyPress(KeyEvent.VK_DOWN);
 
         assertEquals(Command.MOVE_UP, this.inputManager.getCommand());
         assertEquals(Command.MOVE_DOWN, this.inputManager.getCommand());
@@ -67,7 +67,7 @@ class TestInput {
     @Test
     void testBindKey() {
         this.inputManager.bindKey(KeyEvent.VK_W, Command.JUMP);
-        this.inputManager.notifyInput(KeyEvent.VK_W);
+        this.inputManager.registerKeyPress(KeyEvent.VK_W);
 
         assertEquals(Command.JUMP, this.inputManager.getCommand());
 
@@ -88,8 +88,8 @@ class TestInput {
      */
     @Test
     void testClearQueue() {
-        this.inputManager.notifyInput(KeyEvent.VK_SPACE);
-        this.inputManager.notifyInput(KeyEvent.VK_LEFT);
+        this.inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+        this.inputManager.registerKeyPress(KeyEvent.VK_LEFT);
         this.inputManager.clearQueue();
 
         assertNull(this.inputManager.getCommand());
@@ -107,7 +107,7 @@ class TestInput {
      */
     @Test
     void testUnknownKeyCodeReturnsNull() {
-        this.inputManager.notifyInput(-1);
+        this.inputManager.registerKeyPress(-1);
         assertNull(this.inputManager.getCommand());
     }
 }

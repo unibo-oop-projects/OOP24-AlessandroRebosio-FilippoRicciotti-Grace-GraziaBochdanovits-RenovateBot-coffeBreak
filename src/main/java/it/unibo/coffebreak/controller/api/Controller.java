@@ -17,14 +17,14 @@ public interface Controller {
      *
      * @param keyCode the key code representing the user input
      */
-    void notifyInput(int keyCode);
+    void handleKeyDown(int keyCode);
 
     /**
      * Removes a previously notified input event, if applicable.
      *
      * @param keyCode the key code to remove from active inputs
      */
-    void removeInput(int keyCode);
+    void handleKeyUp(int keyCode);
 
     /**
      * Updates the game model based on the time elapsed since the last update.
