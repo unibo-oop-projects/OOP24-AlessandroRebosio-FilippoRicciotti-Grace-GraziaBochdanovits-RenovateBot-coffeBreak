@@ -30,8 +30,10 @@ public interface Controller {
      * Updates the game model based on the time elapsed since the last update.
      *
      * @param deltaTime time in seconds since the last update call
+     * 
+     * @return true, if model is Running, false otherwise
      */
-    void updateModel(float deltaTime);
+    boolean updateModel(float deltaTime);
 
     /**
      * Processes all queued inputs and updates the game model accordingly.

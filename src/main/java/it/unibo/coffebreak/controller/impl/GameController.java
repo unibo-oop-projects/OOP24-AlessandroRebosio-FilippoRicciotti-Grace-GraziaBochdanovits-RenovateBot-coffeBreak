@@ -63,7 +63,10 @@ public class GameController implements Controller {
      * Updates the model based on time passed.
      */
     @Override
-    public void updateModel(final float deltaTime) {
-        this.model.update(deltaTime);
+    public boolean updateModel(final float deltaTime) {
+        if (this.model.isRunning()) {
+            this.model.update(deltaTime);
+        }
+        return this.model.isRunning();
     }
 }
