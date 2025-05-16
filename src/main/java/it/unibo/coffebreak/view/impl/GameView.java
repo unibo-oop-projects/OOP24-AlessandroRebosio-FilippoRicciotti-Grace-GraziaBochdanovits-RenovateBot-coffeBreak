@@ -6,6 +6,7 @@ import it.unibo.coffebreak.controller.api.Controller;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Objects;
 
@@ -46,6 +47,14 @@ public class GameView extends JFrame implements KeyListener {
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
+    }
+
+    /**
+     * Programmatically closes the game window.
+     * This method properly dispatches a window closing event.
+     */
+    public void closeGame() {
+        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     /**
