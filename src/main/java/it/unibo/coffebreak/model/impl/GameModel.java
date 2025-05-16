@@ -24,6 +24,8 @@ public class GameModel implements Model {
     private final Character player;
     private Phases currentPhase;
 
+    private boolean running;
+
     /**
      * Constructs a new GameModel with empty entities list,
      * no player character, and a new GameScoreManager instance.
@@ -34,6 +36,8 @@ public class GameModel implements Model {
 
         currentPhase = new MenuPhase();
         currentPhase.enterPhase();
+
+        this.running = true;
     }
 
     /**
@@ -80,5 +84,21 @@ public class GameModel implements Model {
     @Override
     public void update(final float deltaTime) {
         this.currentPhase.update(this, deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRunning() {
+        return this.running;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() {
+        this.running = false;
     }
 }

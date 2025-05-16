@@ -53,4 +53,17 @@ public interface Model {
      * @param deltaTime time in seconds since last update
      */
     void update(float deltaTime);
+
+    /**
+     * Checks if the game simulation is currently running.
+     * 
+     * @return true if the game is running, false otherwise
+     */
+    boolean isRunning();
+
+    /**
+     * Stops the game simulation and triggers any necessary cleanup.
+     * After calling this method, isRunning() should return false.
+     */
+    void stop();
 }
