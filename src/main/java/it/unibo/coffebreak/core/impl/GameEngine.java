@@ -55,6 +55,15 @@ public class GameEngine implements Engine {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() {
+        this.running = false;
+        this.view.close();
+    }
+
+    /**
      * Waits the necessary time to maintain consistent frame timing.
      * If the current frame completed faster than the target period,
      * this method sleeps the remaining time.

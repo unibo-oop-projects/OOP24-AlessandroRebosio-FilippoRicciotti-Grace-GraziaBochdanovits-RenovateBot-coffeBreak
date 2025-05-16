@@ -10,8 +10,11 @@ public interface Engine {
 
     /**
      * Starts and runs the main game loop.
-     * 
-     * @throws IllegalStateException if the engine cannot start or run properly
      */
     void run();
+
+    /**
+     * Stop the main game loop.
+     */
+    void stop();
 }
