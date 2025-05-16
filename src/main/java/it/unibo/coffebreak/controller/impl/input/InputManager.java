@@ -105,7 +105,7 @@ public class InputManager implements Input {
      */
     private void initializeDefaultBindings() {
         this.keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
-        this.keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESC);
+        this.keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESCAPE);
         this.keyBindings.put(KeyEvent.VK_Q, Command.QUIT);
         this.keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
         this.keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
