@@ -26,7 +26,7 @@ public enum Command {
      * or getting back to the main menu when the game is paused.
      * </p>
      */
-    ESC,
+    ESCAPE,
     /**
      * Command for moving up.
      */
@@ -50,6 +50,16 @@ public enum Command {
     /**
      * Command representing no action/input.
      */
-    NONE
+    NONE;
+
+    public Command getInverseDirection() {
+        return switch (this) {
+            case MOVE_UP -> MOVE_DOWN;
+            case MOVE_DOWN -> MOVE_UP;
+            case MOVE_LEFT -> MOVE_RIGHT;
+            case MOVE_RIGHT -> MOVE_LEFT;
+            default -> NONE;
+        };
+    }
 
 }
