@@ -1,8 +1,9 @@
 package it.unibo.coffebreak.view.impl;
 
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import it.unibo.coffebreak.controller.api.Controller;
 
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Serial;
@@ -12,7 +13,7 @@ import java.util.Objects;
  * The main game view component.
  * 
  * <p>
- * This class extends {@link JPanel} and listens for keyboard input.
+ * This class extends {@link JFrame} and listens for keyboard input.
  * Key events are passed to the game {@link Controller} for processing.
  * </p>
  * 
@@ -22,10 +23,12 @@ import java.util.Objects;
  * 
  * @author Alessandro Rebosio
  */
-public class GameView extends JPanel implements KeyListener {
+public class GameView extends JFrame implements KeyListener {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 500;
 
     /** Reference to the game controller. */
     private final transient Controller controller;
@@ -37,7 +40,12 @@ public class GameView extends JPanel implements KeyListener {
      */
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
-        this.addKeyListener(this);
+        super.setTitle("Coffe Break");
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.setSize(new Dimension(WIDTH, HEIGHT));
+        super.setLocationRelativeTo(null);
+        super.addKeyListener(this);
+        super.setVisible(true);
     }
 
     /**
