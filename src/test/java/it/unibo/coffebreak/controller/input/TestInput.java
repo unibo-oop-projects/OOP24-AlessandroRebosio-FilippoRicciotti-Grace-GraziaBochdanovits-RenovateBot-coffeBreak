@@ -46,10 +46,13 @@ class TestInput {
     @Test
     void testNotifyAndGetCommand() {
         this.inputManager.notifyInput(KeyEvent.VK_UP);
-        this.inputManager.notifyInput(KeyEvent.VK_DOWN);
-
         assertEquals(Command.MOVE_UP, this.inputManager.getCommand());
+        this.inputManager.removeInput(KeyEvent.VK_UP);
+
+        this.inputManager.notifyInput(KeyEvent.VK_DOWN);
         assertEquals(Command.MOVE_DOWN, this.inputManager.getCommand());
+        this.inputManager.removeInput(KeyEvent.VK_DOWN);
+
         assertNull(this.inputManager.getCommand());
     }
 
