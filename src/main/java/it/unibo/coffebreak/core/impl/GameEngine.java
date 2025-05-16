@@ -44,7 +44,7 @@ public class GameEngine implements Engine {
 
             this.controller.processInput();
             this.controller.updateModel(deltaTime);
-            this.view.render();
+            this.view.repaint();
 
             this.waitForNextFrame(currentCycle);
 

@@ -12,7 +12,7 @@ import it.unibo.coffebreak.controller.api.command.Command;
  * <p>
  * Usage pattern:
  * <ul>
- * <li>Input events are notified via {@link #notifyInput(int)}</li>
+ * <li>Input events are notified via {@link #registerKeyPress(int)}</li>
  * <li>The controller retrieves pending commands using
  * {@link #getCommand()}</li>
  * <li>Commands are executed by the game logic</li>
@@ -39,14 +39,14 @@ public interface Input {
      * @param keyCode the key code representing the user input
      * @throws NullPointerException if the key code is invalid or unmapped
      */
-    void notifyInput(int keyCode);
+    void registerKeyPress(int keyCode);
 
     /**
      * Removes the association between the specified key code and its command.
      * 
      * @param keyCode the key code to remove from bindings
      */
-    void removeInput(int keyCode);
+    void registerKeyRelease(int keyCode);
 
     /**
      * Binds a key code to a specific command.
