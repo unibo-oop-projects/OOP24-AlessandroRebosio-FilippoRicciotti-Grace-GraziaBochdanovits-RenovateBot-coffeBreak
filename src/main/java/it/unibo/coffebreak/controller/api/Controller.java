@@ -16,6 +16,8 @@ public interface Controller {
      */
     void notifyInput(int keyCode);
 
+    void removeInput(int keyCode);
+
     /**
      * Updates the game model based on time passed.
      *

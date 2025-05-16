@@ -4,7 +4,9 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Objects;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import it.unibo.coffebreak.controller.api.command.Command;
@@ -41,11 +43,13 @@ public class InputManager implements Input {
      */
     private final Map<Integer, Command> keyBindings;
 
+    private final Set<Command> pressedKeys;
+
     /**
      * Thread-safe queue for storing incoming input events before processing.
      * Uses a non-blocking concurrent implementation suitable for game loops.
      */
-    private final Queue<Integer> queue;
+    private final Queue<Command> queue;
 
     /**
      * Constructs a new InputManager with default key bindings.
@@ -60,6 +64,7 @@ public class InputManager implements Input {
      */
     public InputManager() {
         this.keyBindings = new HashMap<>();
+        this.pressedKeys = new HashSet<>();
         this.queue = new ConcurrentLinkedQueue<>();
 
         initializeDefaultBindings();
@@ -70,7 +75,7 @@ public class InputManager implements Input {
      */
     @Override
     public Command getCommand() {
-        return this.keyBindings.get(this.queue.poll());
+        return this.queue.poll();
     }
 
     /**
@@ -80,7 +85,16 @@ public class InputManager implements Input {
      */
     @Override
     public void notifyInput(final int keyEvent) {
-        this.queue.add(keyEvent);
+        final Command command = this.keyBindings.get(keyEvent);
+        if (command != null && !pressedKeys.contains(command.getInverseDirection())) {
+            this.pressedKeys.add(command);
+            this.queue.add(command);
+        }
+    }
+
+    @Override
+    public void removeInput(int keyCode) {
+        this.pressedKeys.remove(this.keyBindings.get(keyCode));
     }
 
     /**

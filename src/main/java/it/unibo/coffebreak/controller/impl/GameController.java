@@ -37,6 +37,11 @@ public class GameController implements Controller {
         this.inputManager.notifyInput(keyCode);
     }
 
+    @Override
+    public void removeInput(int keyCode) {
+        this.inputManager.removeInput(keyCode);
+    }
+
     /**
      * Retrieves and applies all input commands to the model.
      */

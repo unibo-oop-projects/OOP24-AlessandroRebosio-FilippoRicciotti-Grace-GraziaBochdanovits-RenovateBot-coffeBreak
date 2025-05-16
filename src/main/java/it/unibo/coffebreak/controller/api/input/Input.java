@@ -40,6 +40,8 @@ public interface Input {
      */
     void notifyInput(int keyEvent);
 
+    void removeInput(int keyCode);
+
     /**
      * Binds a specific key code to a game command.
      * 
