@@ -7,6 +7,7 @@ import it.unibo.coffebreak.view.api.View;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.Serial;
+import java.util.Objects;
 
 /**
  * The main game view component.
@@ -36,7 +37,7 @@ public class GameView extends JPanel implements KeyListener, View {
      * @param controller the controller to notify of key events
      */
     public GameView(final Controller controller) {
-        this.controller = controller;
+        this.controller =  Objects.requireNonNull(controller, "Controller cannot be null");
     }
 
     /**

@@ -3,8 +3,8 @@ package it.unibo.coffebreak.controller.impl.input;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Objects;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -64,7 +64,7 @@ public class InputManager implements Input {
      */
     public InputManager() {
         this.keyBindings = new HashMap<>();
-        this.pressedKeys = new HashSet<>();
+        this.pressedKeys = EnumSet.noneOf(Command.class);
         this.queue = new ConcurrentLinkedQueue<>();
 
         initializeDefaultBindings();
@@ -92,8 +92,11 @@ public class InputManager implements Input {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void removeInput(int keyCode) {
+    public void removeInput(final int keyCode) {
         this.pressedKeys.remove(this.keyBindings.get(keyCode));
     }
 
