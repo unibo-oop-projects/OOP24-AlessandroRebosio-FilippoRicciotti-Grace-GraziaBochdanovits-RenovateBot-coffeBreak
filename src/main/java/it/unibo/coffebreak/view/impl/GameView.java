@@ -2,7 +2,6 @@ package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JPanel;
 import it.unibo.coffebreak.controller.api.Controller;
-import it.unibo.coffebreak.view.api.View;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -23,7 +22,7 @@ import java.util.Objects;
  * 
  * @author Alessandro Rebosio
  */
-public class GameView extends JPanel implements KeyListener, View {
+public class GameView extends JPanel implements KeyListener {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -37,7 +36,8 @@ public class GameView extends JPanel implements KeyListener, View {
      * @param controller the controller to notify of key events
      */
     public GameView(final Controller controller) {
-        this.controller =  Objects.requireNonNull(controller, "Controller cannot be null");
+        this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
+        this.addKeyListener(this);
     }
 
     /**
@@ -55,7 +55,7 @@ public class GameView extends JPanel implements KeyListener, View {
      */
     @Override
     public void keyPressed(final KeyEvent e) {
-        this.controller.notifyInput(e.getKeyCode());
+        this.controller.handleKeyDown(e.getKeyCode());
     }
 
     /**
@@ -63,15 +63,6 @@ public class GameView extends JPanel implements KeyListener, View {
      */
     @Override
     public void keyReleased(final KeyEvent e) {
-        this.controller.removeInput(e.getKeyCode());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void render() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'render'");
+        this.controller.handleKeyUp(e.getKeyCode());
     }
 }
