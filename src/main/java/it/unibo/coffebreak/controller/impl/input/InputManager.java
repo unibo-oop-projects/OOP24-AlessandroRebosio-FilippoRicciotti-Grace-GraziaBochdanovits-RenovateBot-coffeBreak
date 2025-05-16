@@ -3,8 +3,8 @@ package it.unibo.coffebreak.controller.impl.input;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 import java.util.Objects;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -27,7 +27,7 @@ import it.unibo.coffebreak.controller.api.input.Input;
  * <p>
  * The class maintains an internal mapping between physical key codes
  * ({@link KeyEvent} constants) and logical game commands. When a key event
- * is received via {@link #notifyInput(int)}, it's converted to a command
+ * is received via {@link #registerKeyPress(int)}, it's converted to a command
  * based on the current bindings and added to the processing queue.
  * 
  * @see Command
@@ -43,6 +43,9 @@ public class InputManager implements Input {
      */
     private final Map<Integer, Command> keyBindings;
 
+    /**
+     * Tracks currently pressed keys by storing their associated commands.
+     */
     private final Set<Command> pressedKeys;
 
     /**
@@ -64,7 +67,7 @@ public class InputManager implements Input {
      */
     public InputManager() {
         this.keyBindings = new HashMap<>();
-        this.pressedKeys = new HashSet<>();
+        this.pressedKeys = EnumSet.noneOf(Command.class);
         this.queue = new ConcurrentLinkedQueue<>();
 
         initializeDefaultBindings();
@@ -84,7 +87,7 @@ public class InputManager implements Input {
      * @param keyEvent the command to be added to the queue
      */
     @Override
-    public void notifyInput(final int keyEvent) {
+    public void registerKeyPress(final int keyEvent) {
         final Command command = this.keyBindings.get(keyEvent);
         if (command != null && !pressedKeys.contains(command.getInverseDirection())) {
             this.pressedKeys.add(command);
@@ -92,8 +95,11 @@ public class InputManager implements Input {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void removeInput(int keyCode) {
+    public void registerKeyRelease(final int keyCode) {
         this.pressedKeys.remove(this.keyBindings.get(keyCode));
     }
 

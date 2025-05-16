@@ -3,21 +3,21 @@ package it.unibo.coffebreak.controller.api.input;
 import it.unibo.coffebreak.controller.api.command.Command;
 
 /**
- * An interface for handling user input and translating it into game commands.
- * Follows the Command pattern to decouple input detection from command
- * execution.
+ * Interface for handling user input and converting it into game commands.
+ * <p>
+ * This interface follows the Command Pattern to separate input handling from
+ * command execution.
+ * </p>
  * 
  * <p>
- * Implementations should handle raw input events and convert them into
- * appropriate {@link Command} objects that can be processed by the game logic.
- * 
- * <p>
- * Typical usage:
- * <ol>
- * <li>Input events are captured and notified via {@link #notifyInput(int)}
- * <li>The game loop polls for commands via {@link #getNextCommand()}
- * <li>Commands are executed by the game controller
- * </ol>
+ * Usage pattern:
+ * <ul>
+ * <li>Input events are notified via {@link #registerKeyPress(int)}</li>
+ * <li>The controller retrieves pending commands using
+ * {@link #getCommand()}</li>
+ * <li>Commands are executed by the game logic</li>
+ * </ul>
+ * </p>
  * 
  * @see Command
  * 
@@ -27,28 +27,34 @@ public interface Input {
 
     /**
      * Retrieves the next available command from the input queue.
-     * 
-     * @return the next {@link Command} ready for processing.
+     *
+     * @return the next {@link Command}, or {@code null} if no commands are
+     *         available
      */
     Command getCommand();
 
     /**
-     * Notifies the input system of a new raw input event.
+     * Notifies the input system of a new input event.
      * 
-     * @param keyEvent the key code representing the input event
-     * @throws NullPointerException     if the command is null
+     * @param keyCode the key code representing the user input
+     * @throws NullPointerException if the key code is invalid or unmapped
      */
-    void notifyInput(int keyEvent);
-
-    void removeInput(int keyCode);
+    void registerKeyPress(int keyCode);
 
     /**
-     * Binds a specific key code to a game command.
+     * Removes the association between the specified key code and its command.
      * 
-     * @param keyCode the physical key code to bind
-     * @param command the command to associate with the key
-     * 
-     * @return the previous command bound to this key, or null if unbound
+     * @param keyCode the key code to remove from bindings
+     */
+    void registerKeyRelease(int keyCode);
+
+    /**
+     * Binds a key code to a specific command.
+     *
+     * @param keyCode the key code to bind
+     * @param command the command to associate with the key code
+     * @return the previous command bound to this key, or {@code null} if there was
+     *         none
      */
     Command bindKey(int keyCode, Command command);
 

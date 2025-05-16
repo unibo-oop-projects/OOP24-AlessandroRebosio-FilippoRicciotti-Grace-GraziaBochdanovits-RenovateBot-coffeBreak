@@ -33,23 +33,28 @@ public class GameController implements Controller {
      * Adds a new input event to the input manager.
      */
     @Override
-    public void notifyInput(final int keyCode) {
-        this.inputManager.notifyInput(keyCode);
-    }
-
-    @Override
-    public void removeInput(int keyCode) {
-        this.inputManager.removeInput(keyCode);
+    public void handleKeyDown(final int keyCode) {
+        this.inputManager.registerKeyPress(keyCode);
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleKeyUp(final int keyCode) {
+        this.inputManager.registerKeyRelease(keyCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * Retrieves and applies all input commands to the model.
      */
     @Override
     public void processInput() {
         Command command = inputManager.getCommand();
         while (command != null) {
-            this.model.notifyCommand(command);
+            this.model.executeCommand(command);
             command = inputManager.getCommand();
         }
     }

@@ -45,7 +45,7 @@ public interface Model {
      * 
      * @param command the command to be executed (must not be null)
      */
-    void notifyCommand(Command command);
+    void executeCommand(Command command);
 
     /**
      * Updates the game logic based on time.
