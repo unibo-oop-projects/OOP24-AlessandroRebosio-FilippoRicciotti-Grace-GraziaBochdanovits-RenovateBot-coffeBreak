@@ -20,6 +20,8 @@ public class GameEngine implements Engine {
      */
     private static final long PERIOD = 16;
 
+    private volatile boolean running = true;
+
     private final Controller controller;
     private final GameView view;
 
@@ -38,13 +40,13 @@ public class GameEngine implements Engine {
     @Override
     public void run() {
         long previusCycle = System.currentTimeMillis();
-        while (true) {
+        while (this.running) {
             final long currentCycle = System.currentTimeMillis();
             final long deltaTime = currentCycle - previusCycle;
 
             this.controller.processInput();
             this.controller.updateModel(deltaTime);
-            this.view.repaint();
+            this.view.update();
 
             this.waitForNextFrame(currentCycle);
 
