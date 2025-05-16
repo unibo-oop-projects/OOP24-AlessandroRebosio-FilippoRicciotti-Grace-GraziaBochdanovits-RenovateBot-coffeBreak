@@ -2,6 +2,7 @@ package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JFrame;
 import it.unibo.coffebreak.controller.api.Controller;
+import it.unibo.coffebreak.view.api.View;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -24,7 +25,7 @@ import java.util.Objects;
  * 
  * @author Alessandro Rebosio
  */
-public class GameView extends JFrame implements KeyListener {
+public class GameView extends JFrame implements View {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -50,11 +51,19 @@ public class GameView extends JFrame implements KeyListener {
     }
 
     /**
-     * Programmatically closes the game window.
-     * This method properly dispatches a window closing event.
+     * {@inheritDoc}
      */
-    public void closeGame() {
+    @Override
+    public void close() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update() {
+        this.repaint();
     }
 
     /**
@@ -82,4 +91,5 @@ public class GameView extends JFrame implements KeyListener {
     public void keyReleased(final KeyEvent e) {
         this.controller.handleKeyUp(e.getKeyCode());
     }
+
 }
