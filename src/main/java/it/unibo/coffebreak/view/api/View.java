@@ -1,21 +1,29 @@
 package it.unibo.coffebreak.view.api;
 
+import java.awt.event.KeyListener;
+
 /**
  * Represents the View component in the MVC architecture.
  * <p>
- * The View is responsible for displaying the game state to the user.
- * This interface defines a method to render the current visual state.
+ * The View is responsible for displaying the game state to the user
+ * and handling user input. Implementations should provide:
  * </p>
+ * <ul>
+ * <li>Visual rendering of game state
+ * <li>Input handling capabilities
+ * <li>Window management
+ * </ul>
  * 
+ * @author Alessandro Rebosio
  */
-public interface View {
+public interface View extends KeyListener {
+    /**
+     * Closes the game view and releases resources.
+     */
+    void close();
 
     /**
-     * Renders the current state of the game.
-     * <p>
-     * This method should update the graphical interface to reflect
-     * the latest state of the game model.
-     * </p>
+     * Updates the view with the current game state.
      */
-    void render();
+    void update();
 }
