@@ -62,7 +62,7 @@ public class GameView extends JPanel implements KeyListener, View {
      */
     @Override
     public void keyReleased(final KeyEvent e) {
-        // Not used
+        this.controller.removeInput(e.getKeyCode());
     }
 
     /**
