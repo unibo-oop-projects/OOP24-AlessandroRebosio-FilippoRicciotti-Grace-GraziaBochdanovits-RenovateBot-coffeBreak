@@ -1,57 +1,79 @@
 package it.unibo.coffebreak.controller.api.command;
 
 /**
- * Enum list of possible game Commmands.
+ * Enumeration of all possible game commands.
+ * <p>
+ * These commands represent user inputs used to interact with the game,
+ * such as movement, control actions, or menu navigation.
+ * </p>
  * 
  * @author Filippo Ricciotti
  */
 public enum Command {
     /**
-     * Command for entering a new game,
+     * Command to start a new game,
      * <p>
-     * for unpausing the game
+     * resume the game if it was paused,
      * </p>
      * <p>
-     * or getting back to the main menu when the <b>Game is Over</b>.
+     * or return to the main menu after the <b>Game Over</b> screen.
      * </p>
      */
     ENTER,
+
     /**
-     * Command for quitting the game.
+     * Command to quit the game.
      */
     QUIT,
+
     /**
-     * Command for pausing the gameplay when in game
+     * Command to pause the game during gameplay,
      * <p>
-     * or getting back to the main menu when the game is paused.
+     * or return to the main menu when the game is paused.
      * </p>
      */
     ESCAPE,
+
     /**
-     * Command for moving up.
+     * Command to move the character or cursor upward.
      */
     MOVE_UP,
+
     /**
-     * Command for going down.
+     * Command to move the character or cursor downward.
      */
     MOVE_DOWN,
+
     /**
-     * Command for moving right.
+     * Command to move the character or cursor to the right.
      */
     MOVE_RIGHT,
+
     /**
-     * Command for moving left.
+     * Command to move the character or cursor to the left.
      */
     MOVE_LEFT,
+
     /**
-     * Command for Jumping.
+     * Command to make the character jump.
      */
     JUMP,
+
     /**
-     * Command representing no action/input.
+     * Command representing no input or action.
      */
     NONE;
 
+    /**
+     * Returns the opposite directional command, if applicable.
+     * <p>
+     * For example, {@code MOVE_LEFT} returns {@code MOVE_RIGHT}, and vice versa.
+     * If the command has no directional opposite, {@code NONE} is returned.
+     * </p>
+     *
+     * @return the opposite directional {@code Command}, or {@code NONE} if
+     *         undefined
+     */
     public Command getInverseDirection() {
         return switch (this) {
             case MOVE_UP -> MOVE_DOWN;
@@ -61,5 +83,4 @@ public enum Command {
             default -> NONE;
         };
     }
-
 }

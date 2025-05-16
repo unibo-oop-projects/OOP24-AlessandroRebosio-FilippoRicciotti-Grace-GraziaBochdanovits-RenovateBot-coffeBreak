@@ -26,7 +26,7 @@ public class PausePhase extends AbstractPhases {
             case ENTER:
                 model.setState(new InGamePhase());
                 break;
-            case ESC:
+            case ESCAPE:
                 model.setState(new MenuPhase());
                 break;
             case QUIT:

@@ -24,7 +24,7 @@ public class InGamePhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
 
         switch (command) {
-            case ESC:
+            case ESCAPE:
                 model.setState(new PausePhase());
                 break;
             default:
