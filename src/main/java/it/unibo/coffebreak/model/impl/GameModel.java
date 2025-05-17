@@ -13,8 +13,11 @@ import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
 
 /**
- * A concrete implementation of the {@link Model}.
- * This class maintains the game state including entities, player, and scores.
+ * Concrete implementation of the game model.
+ * <p>
+ * Maintains the game state including entities, player, and phase management.
+ * Provides thread-safe access to model state.
+ * </p>
  * 
  * @author Alessandro Rebosio
  */
