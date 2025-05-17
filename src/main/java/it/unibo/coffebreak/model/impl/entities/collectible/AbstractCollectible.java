@@ -36,7 +36,7 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
     /**
      * {@inheritDoc}
      * 
-     * Ladders do not perform any specific action on collision.
+     * Collectible do not perform any specific action on collision.
      */
     @Override
     public void onCollision(final Entity other) {
