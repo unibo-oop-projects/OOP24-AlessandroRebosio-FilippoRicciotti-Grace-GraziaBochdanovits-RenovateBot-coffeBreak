@@ -72,13 +72,6 @@ public interface Character extends Entity {
     ScoreManager<Entry> getScoreManager();
 
     /**
-     * Gets the name of the player controlling this character.
-     * 
-     * @return the player's name
-     */
-    String getPlayerName();
-
-    /**
      * Sets whether the character is on the ground.
      * 
      * @param onGround true to set the character as on the ground, false otherwise

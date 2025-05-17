@@ -43,7 +43,6 @@ public class Mario extends AbstractEntity implements Character {
     private CharacterState currentState;
     private final Position2D startPosition;
     private boolean isOnGround;
-    private final String playerName;
 
     /**
      * Creates a new Mario instance.
@@ -51,16 +50,14 @@ public class Mario extends AbstractEntity implements Character {
      * @param position the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
      * @param scoreManager the score manager to track points
-     * @param playerName the name of the player controlling Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
     public Mario(final Position2D position, final Dimension2D dimension,
-                final GameScoreManager scoreManager, final String playerName) {
+                final GameScoreManager scoreManager) {
         super(position, dimension);
         this.startPosition = new Position2D(position.x(), position.y());
         this.livesManager = new GameLivesManager();
         this.scoreManager = Objects.requireNonNull(scoreManager);
-        this.playerName = Objects.requireNonNull(playerName, "Player name cannot be null");
         this.currentState = new NormalState();
     }
 
@@ -179,14 +176,6 @@ public class Mario extends AbstractEntity implements Character {
     @Override
     public GameScoreManager getScoreManager() {
         return scoreManager;
-    }
-
-    /**
-     * @return the player's name
-     */
-    @Override
-    public String getPlayerName() {
-        return playerName;
     }
 
     /**
