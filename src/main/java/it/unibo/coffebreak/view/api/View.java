@@ -5,13 +5,11 @@ import java.awt.event.KeyListener;
 /**
  * Represents the View component in the MVC architecture.
  * <p>
- * The View is responsible for displaying the game state to the user
- * and handling user input. Implementations should provide:
- * </p>
+ * Responsibilities include:
  * <ul>
- * <li>Visual rendering of game state
- * <li>Input handling capabilities
- * <li>Window management
+ * <li>Displaying the game state to the user</li>
+ * <li>Handling user input events</li>
+ * <li>Managing the game window</li>
  * </ul>
  * 
  * @author Alessandro Rebosio
@@ -24,6 +22,7 @@ public interface View extends KeyListener {
 
     /**
      * Updates the view with the current game state.
+     * Typically called once per frame.
      */
-    void update();
+    void updateView();
 }
