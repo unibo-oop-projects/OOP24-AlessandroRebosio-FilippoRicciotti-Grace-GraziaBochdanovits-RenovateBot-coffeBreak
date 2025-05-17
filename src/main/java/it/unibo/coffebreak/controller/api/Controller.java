@@ -49,5 +49,5 @@ public interface Controller {
      * 
      * @see Model#isRunning()
      */
-    public boolean isGameActive();
+    boolean isGameActive();
 }
