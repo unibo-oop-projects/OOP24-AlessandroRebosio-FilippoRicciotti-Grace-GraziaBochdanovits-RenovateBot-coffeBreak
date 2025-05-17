@@ -1,42 +1,40 @@
 package it.unibo.coffebreak.controller.api;
 
 /**
- * Represents the game controller in the MVC (Model-View-Controller) pattern.
+ * The game controller in the MVC (Model-View-Controller) pattern.
  * <p>
- * The controller handles user input, translates it into game commands,
- * and updates the game model accordingly. It acts as a bridge between
- * the view (input events) and the model (game state).
+ * Acts as the intermediary between the view (user input) and the model
+ * (game logic). Handles input processing and coordinates model updates.
  * </p>
  * 
  * @author Alessandro Rebosio
  */
 public interface Controller {
-
     /**
-     * Notifies the controller of a new user input event.
+     * Handles a key press event by forwarding it to the input system.
      *
-     * @param keyCode the key code representing the user input
+     * @param keyCode the key code of the pressed key
      */
     void handleKeyDown(int keyCode);
 
     /**
-     * Removes a previously notified input event, if applicable.
+     * Handles a key release event by forwarding it to the input system.
      *
-     * @param keyCode the key code to remove from active inputs
+     * @param keyCode the key code of the released key
      */
     void handleKeyUp(int keyCode);
 
     /**
-     * Updates the game model based on the time elapsed since the last update.
+     * Updates the game model based on the elapsed time.
      *
-     * @param deltaTime time in seconds since the last update call
-     * 
-     * @return true, if model is Running, false otherwise
+     * @param deltaTime the time elapsed since the last update (in seconds)
+     * @return true if the game should continue running, false otherwise
      */
     boolean updateModel(float deltaTime);
 
     /**
-     * Processes all queued inputs and updates the game model accordingly.
+     * Processes all pending input commands and applies them to the game model.
+     * Should be called once per frame to ensure responsive controls.
      */
     void processInput();
 }
