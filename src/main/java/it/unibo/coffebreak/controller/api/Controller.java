@@ -25,16 +25,29 @@ public interface Controller {
     void handleKeyUp(int keyCode);
 
     /**
-     * Updates the game model based on the elapsed time.
-     *
-     * @param deltaTime the time elapsed since the last update (in seconds)
-     * @return true if the game should continue running, false otherwise
-     */
-    boolean updateModel(float deltaTime);
-
-    /**
      * Processes all pending input commands and applies them to the game model.
      * Should be called once per frame to ensure responsive controls.
      */
     void processInput();
+
+    /**
+     * Updates the game model based on the elapsed time.
+     *
+     * @param deltaTime the time elapsed since the last update (in seconds)
+     */
+    void updateModel(float deltaTime);
+
+    /**
+     * Checks if the game should continue running.
+     * <p>
+     * This method combines the game's logical state (from controller)
+     * with the model's running state to determine if the game loop should continue.
+     * </p>
+     * 
+     * @return {@code true} if the game should continue running,
+     *         {@code false} if the game should terminate.
+     * 
+     * @see Model#isRunning()
+     */
+    public boolean isGameActive();
 }

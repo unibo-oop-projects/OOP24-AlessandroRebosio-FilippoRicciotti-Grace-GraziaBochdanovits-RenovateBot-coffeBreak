@@ -81,17 +81,18 @@ public class GameController implements Controller {
     /**
      * {@inheritDoc}
      * <p>
-     * Updates the game state based on elapsed time, but only
-     * if the game is currently in a running state.
-     * 
-     * @return {@code true} if the game should continue running,
-     *         {@code false} if the game has ended
+     * Updates the game state based on elapsed time.
      */
     @Override
-    public boolean updateModel(final float deltaTime) {
-        if (this.model.isRunning()) {
-            this.model.update(deltaTime);
-        }
+    public void updateModel(final float deltaTime) {
+        this.model.update(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isGameActive() {
         return this.model.isRunning();
     }
 }

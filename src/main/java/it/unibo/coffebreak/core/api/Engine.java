@@ -12,10 +12,4 @@ public interface Engine {
      * The implementation should handle game timing, updates, and rendering.
      */
     void run();
-
-    /**
-     * Stops the game loop and performs any necessary cleanup.
-     * After calling this method, the game should exit gracefully.
-     */
-    void stop();
 }
