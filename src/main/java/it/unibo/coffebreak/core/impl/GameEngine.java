@@ -21,7 +21,6 @@ public class GameEngine implements Engine {
     private static final long PERIOD = 16;
 
     private volatile boolean running = true;
-
     private final Controller controller;
     private final GameView view;
 

@@ -8,21 +8,29 @@ import it.unibo.coffebreak.controller.api.input.Input;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
 
 /**
- * Main game controller implementation.
- * Uses an InputManager to handle commands and a Model to update the game state.
+ * Concrete implementation of the game {@link Controller}.
+ * <p>
+ * Bridges input handling and model updates in the MVC pattern by:
+ * <ul>
+ * <li>Receiving input events from the view</li>
+ * <li>Translating them into game commands</li>
+ * <li>Applying commands to the model</li>
+ * </ul>
  * 
  * @author Alessandro Rebosio
  */
 public class GameController implements Controller {
 
-    /** Handles input and command management. */
     private final Input inputManager;
-
-    /** The main game model. */
     private final Model model;
 
     /**
-     * Creates a new game controller with default input and model.
+     * Constructs a new GameController with default dependencies.
+     * Initializes:
+     * <ul>
+     * <li>{@link InputManager} for input handling</li>
+     * <li>{@link GameModel} as the game logic implementation</li>
+     * </ul>
      */
     public GameController() {
         this.inputManager = new InputManager();
@@ -30,7 +38,10 @@ public class GameController implements Controller {
     }
 
     /**
-     * Adds a new input event to the input manager.
+     * {@inheritDoc}
+     * <p>
+     * Forwards the key press event to the input manager for processing.
+     * The actual command generation depends on current key bindings.
      */
     @Override
     public void handleKeyDown(final int keyCode) {
@@ -39,6 +50,9 @@ public class GameController implements Controller {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Notifies the input manager that a key has been released,
+     * which may affect continuous commands like movement.
      */
     @Override
     public void handleKeyUp(final int keyCode) {
@@ -47,8 +61,13 @@ public class GameController implements Controller {
 
     /**
      * {@inheritDoc}
-     * 
-     * Retrieves and applies all input commands to the model.
+     * <p>
+     * Processes all pending input commands by:
+     * <ol>
+     * <li>Retrieving commands from the input queue</li>
+     * <li>Executing each command on the model</li>
+     * </ol>
+     * Continues until the input queue is empty.
      */
     @Override
     public void processInput() {
@@ -60,7 +79,13 @@ public class GameController implements Controller {
     }
 
     /**
-     * Updates the model based on time passed.
+     * {@inheritDoc}
+     * <p>
+     * Updates the game state based on elapsed time, but only
+     * if the game is currently in a running state.
+     * 
+     * @return {@code true} if the game should continue running,
+     *         {@code false} if the game has ended
      */
     @Override
     public boolean updateModel(final float deltaTime) {
