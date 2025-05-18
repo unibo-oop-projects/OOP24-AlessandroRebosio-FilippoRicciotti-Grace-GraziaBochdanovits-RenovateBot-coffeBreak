@@ -96,6 +96,26 @@ public final class ResourceLoader implements Resource {
         });
     }
 
+    /**
+     * Loads an audio clip from the specified path, caching it for future use.
+     * <p>
+     * Supported audio formats depend on the Java Sound API implementation,
+     * but typically include WAV, AIFF, and AU formats.
+     * </p>
+     * 
+     * @param path the path to the audio resource, relative to the classpath
+     * @return the loaded Clip instance
+     * @throws IOException                   if an I/O error occurs while reading
+     *                                       the audio file
+     * @throws UnsupportedAudioFileException if the audio file format is not
+     *                                       supported
+     * @throws LineUnavailableException      if a clip cannot be opened because the
+     *                                       audio
+     *                                       line is unavailable
+     * @throws ResourceException             if the resource cannot be found or
+     *                                       loaded
+     */
+
     @Override
     public Clip loadClip(final String path)
             throws IOException, UnsupportedAudioFileException, LineUnavailableException {
@@ -105,12 +125,12 @@ public final class ResourceLoader implements Resource {
                     throw new ResourceException("Audio resource not found: " + p);
                 }
 
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
-                Clip clip = AudioSystem.getClip();
+                final AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
+                final Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 return clip;
             } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-                throw new ResourceException("Failed to load clip: " + e);
+                throw new ResourceException("Failed to load clip: " + path, e);
             }
         });
     }
@@ -122,6 +142,13 @@ public final class ResourceLoader implements Resource {
         IMAGE_CACHE.values().forEach(BufferedImage::flush);
         IMAGE_CACHE.clear();
         FONT_CACHE.clear();
+        SOUND_CACHE.values().forEach(clip -> {
+            if (clip.isRunning()) {
+                clip.stop();
+            }
+            clip.close();
+        });
+        SOUND_CACHE.clear();
     }
 
     /**

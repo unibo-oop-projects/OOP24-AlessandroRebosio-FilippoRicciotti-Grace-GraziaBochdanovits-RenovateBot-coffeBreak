@@ -38,5 +38,20 @@ public interface Resource {
      */
     Font loadFont(String path) throws IOException, FontFormatException;
 
-    public Clip loadClip(final String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException;
+    /**
+     * Loads an audio clip from the specified classpath location.
+     * <p>
+     * Supported audio formats are implementation dependent but typically include
+     * WAV, AIFF, and AU formats.
+     * </p>
+     *
+     * @param path the classpath-relative path to the audio resource
+     * @return the loaded {@link Clip}
+     * @throws IOException                   if the resource cannot be accessed or
+     *                                       read
+     * @throws UnsupportedAudioFileException if the audio format is not supported
+     * @throws LineUnavailableException      if the system cannot open an audio line
+     *                                       for playback
+     */
+    Clip loadClip(String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException;
 }
