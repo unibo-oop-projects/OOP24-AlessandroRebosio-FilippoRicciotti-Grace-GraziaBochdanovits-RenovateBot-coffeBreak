@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view;
+package it.unibo.coffebreak.view.resources;
 
 import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
