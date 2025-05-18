@@ -29,6 +29,14 @@ import it.unibo.coffebreak.view.api.resources.Resource;
  * @author Alessandro Rebosio
  */
 public final class ResourceLoader implements Resource {
+
+    /**
+     * The path to the "Press Start 2P" TrueType font resource within the classpath.
+     * <p>
+     * This font is typically used for retro-style UI elements.
+     */
+    public static final String FONT_PATH = "/fonts/PressStart2P-Regular.ttf";
+
     private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
 
@@ -37,7 +45,7 @@ public final class ResourceLoader implements Resource {
      */
     public ResourceLoader() {
         try {
-            loadFont("/fonts/PressStart2P-Regular.ttf");
+            this.loadFont(FONT_PATH);
         } catch (IOException | FontFormatException e) {
             throw new IllegalStateException("Error while loading resources", e);
         }

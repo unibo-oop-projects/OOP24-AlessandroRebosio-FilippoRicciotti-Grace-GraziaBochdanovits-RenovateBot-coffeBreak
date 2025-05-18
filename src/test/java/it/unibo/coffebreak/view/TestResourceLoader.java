@@ -26,9 +26,6 @@ import org.junit.jupiter.api.Test;
  */
 class TestResourceLoader {
 
-    /** Path to the test font file. */
-    private static final String TEST_FONT = "/fonts/PressStart2P-Regular.ttf";
-
     /** Path to a non-existent resource for negative testing. */
     private static final String INVALID_PATH = "/invalid/path.txt";
 
@@ -53,18 +50,18 @@ class TestResourceLoader {
      */
     @Test
     void testFontLoading() throws IOException, FontFormatException {
-        final Font font = this.loader.loadFont(TEST_FONT);
+        final Font font = this.loader.loadFont(ResourceLoader.FONT_PATH);
         assertNotNull(font);
         assertEquals("Press Start 2P Regular", font.getName());
 
-        final Font cachedFont = this.loader.loadFont(TEST_FONT);
+        final Font cachedFont = this.loader.loadFont(ResourceLoader.FONT_PATH);
         assertSame(font, cachedFont);
     }
 
     /**
      * Tests successful imgae loading functionality.
      * 
-     * @throws IOException         if an I/O error occurs during font loading
+     * @throws IOException if an I/O error occurs during font loading
      */
     @Test
     void testImageLoading() throws IOException {
