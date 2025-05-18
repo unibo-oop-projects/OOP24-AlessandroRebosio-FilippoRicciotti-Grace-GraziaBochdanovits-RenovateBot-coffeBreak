@@ -8,10 +8,6 @@ CoffeBreak ha le stesse meccaniche di Donkey Kong. Uno studente cerca di farsi l
 - **GitHub**: [this-Grace](https://github.com/this-Grace)
 - **Email**: [grazia.bochdanovits@studio.unibo.it](mailto:grazia.bochdanovits@studio.unibo.it)
 
-#### Lorenzo Boccuzzi
-- **GitHub**: [DREAMSOLDIERc404](https://github.com/DREAMSOLDIERc404)
-- **Email**: [lorenzo.boccuzzi@studio.unibo.it](mailto:lorenzo.boccuzzi@studio.unibo.it)
-
 #### Alessandro Rebosio
 - **GitHub**: [alessandrorebosio](https://github.com/alessandrorebosio)
 - **Email**: [alessandro.rebosio@studio.unibo.it](mailto:alessandro.rebosio@studio.unibo.it)

@@ -1,40 +1,53 @@
 package it.unibo.coffebreak.controller.api;
 
 /**
- * Represents the game controller in the MVC (Model-View-Controller) pattern.
+ * The game controller in the MVC (Model-View-Controller) pattern.
  * <p>
- * The controller handles user input, translates it into game commands,
- * and updates the game model accordingly. It acts as a bridge between
- * the view (input events) and the model (game state).
+ * Acts as the intermediary between the view (user input) and the model
+ * (game logic). Handles input processing and coordinates model updates.
  * </p>
  * 
  * @author Alessandro Rebosio
  */
 public interface Controller {
-
     /**
-     * Notifies the controller of a new user input event.
+     * Handles a key press event by forwarding it to the input system.
      *
-     * @param keyCode the key code representing the user input
+     * @param keyCode the key code of the pressed key
      */
     void handleKeyDown(int keyCode);
 
     /**
-     * Removes a previously notified input event, if applicable.
+     * Handles a key release event by forwarding it to the input system.
      *
-     * @param keyCode the key code to remove from active inputs
+     * @param keyCode the key code of the released key
      */
     void handleKeyUp(int keyCode);
 
     /**
-     * Updates the game model based on the time elapsed since the last update.
+     * Processes all pending input commands and applies them to the game model.
+     * Should be called once per frame to ensure responsive controls.
+     */
+    void processInput();
+
+    /**
+     * Updates the game model based on the elapsed time.
      *
-     * @param deltaTime time in seconds since the last update call
+     * @param deltaTime the time elapsed since the last update (in seconds)
      */
     void updateModel(float deltaTime);
 
     /**
-     * Processes all queued inputs and updates the game model accordingly.
+     * Checks if the game should continue running.
+     * <p>
+     * This method combines the game's logical state (from controller)
+     * with the model's running state to determine if the game loop should continue.
+     * </p>
+     * 
+     * @return {@code true} if the game should continue running,
+     *         {@code false} if the game should terminate.
+     * 
+     * @see Model#isRunning()
      */
-    void processInput();
+    boolean isGameActive();
 }

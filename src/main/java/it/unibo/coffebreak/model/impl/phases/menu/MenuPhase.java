@@ -26,8 +26,7 @@ public class MenuPhase extends AbstractPhases {
                 // TODO: model.start()
                 break;
             case QUIT:
-                // TODO: Notify the controller of the quit, which will in turn notify the view,
-                // and the application will close.
+                model.stop();
                 break;
             default:
                 break;

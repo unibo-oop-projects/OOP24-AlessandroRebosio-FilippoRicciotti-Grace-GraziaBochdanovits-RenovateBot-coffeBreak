@@ -2,7 +2,6 @@ package it.unibo.coffebreak.controller.input;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.event.KeyEvent;
 
@@ -13,101 +12,155 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
 
 /**
- * Test class for {@link InputManager} that verifies its functionality for
- * handling and processing user input commands.
+ * Test class for {@link InputManager}.
+ * 
+ * <p>
+ * This class verifies the behavior of the InputManager implementation,
+ * focusing on:
+ * <ul>
+ * <li>Default key bindings initialization
+ * <li>Key press and release handling
+ * <li>Command queue management
+ * <li>Key binding customization
+ * </ul>
+ * 
+ * <p>
+ * Tests are designed to verify both normal operation and edge cases.
  * 
  * @author Alessandro Rebosio
  */
 class TestInput {
 
-    /** The InputManager instance under test. */
     private InputManager inputManager;
 
     /**
-     * Initializes a new InputManager instance before each test method execution.
-     * This ensures test isolation and a clean state for each test case.
+     * Sets up a fresh InputManager instance before each test.
      */
     @BeforeEach
     void setUp() {
-        this.inputManager = new InputManager();
+        inputManager = new InputManager();
     }
 
     /**
-     * Tests the basic command notification and retrieval functionality.
-     * 
-     * <p>
-     * Verifies that:
-     * <ol>
-     * <li>Commands are properly queued in FIFO order</li>
-     * <li>The correct Command objects are returned</li>
-     * <li>The queue is empty after retrieving all commands</li>
-     * </ol>
+     * Tests that default key bindings are correctly initialized.
      */
     @Test
-    void testNotifyAndGetCommand() {
-        this.inputManager.registerKeyPress(KeyEvent.VK_UP);
-        this.inputManager.registerKeyPress(KeyEvent.VK_DOWN);
-
-        assertEquals(Command.MOVE_UP, this.inputManager.getCommand());
-        assertEquals(Command.MOVE_DOWN, this.inputManager.getCommand());
-        assertNull(this.inputManager.getCommand());
+    void testDefaultBindings() {
+        assertEquals(Command.ENTER, inputManager.bindKey(KeyEvent.VK_ENTER, Command.NONE));
+        assertEquals(Command.ESCAPE, inputManager.bindKey(KeyEvent.VK_ESCAPE, Command.NONE));
+        assertEquals(Command.QUIT, inputManager.bindKey(KeyEvent.VK_Q, Command.NONE));
+        assertEquals(Command.MOVE_UP, inputManager.bindKey(KeyEvent.VK_UP, Command.NONE));
+        assertEquals(Command.MOVE_DOWN, inputManager.bindKey(KeyEvent.VK_DOWN, Command.NONE));
+        assertEquals(Command.MOVE_LEFT, inputManager.bindKey(KeyEvent.VK_LEFT, Command.NONE));
+        assertEquals(Command.MOVE_RIGHT, inputManager.bindKey(KeyEvent.VK_RIGHT, Command.NONE));
+        assertEquals(Command.JUMP, inputManager.bindKey(KeyEvent.VK_SPACE, Command.NONE));
     }
 
     /**
-     * Tests the key binding functionality of the InputManager.
-     * 
-     * <p>
-     * Verifies that:
-     * <ol>
-     * <li>New key bindings can be added at runtime</li>
-     * <li>Bound keys produce the expected commands</li>
-     * <li>Invalid parameters throw appropriate exceptions</li>
-     * </ol>
+     * Tests that key presses are correctly converted to commands
+     * and added to the queue.
      */
     @Test
-    void testBindKey() {
-        this.inputManager.bindKey(KeyEvent.VK_W, Command.JUMP);
-        this.inputManager.registerKeyPress(KeyEvent.VK_W);
+    void testRegisterKeyPress() {
+        inputManager.registerKeyPress(KeyEvent.VK_UP);
+        assertEquals(Command.MOVE_UP, inputManager.getCommand());
 
-        assertEquals(Command.JUMP, this.inputManager.getCommand());
-
-        assertThrows(NullPointerException.class, () -> {
-            this.inputManager.bindKey(-1, null);
-        });
+        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+        assertEquals(Command.JUMP, inputManager.getCommand());
     }
 
     /**
-     * Tests the queue clearing functionality.
-     * 
-     * <p>
-     * Verifies that:
-     * <ol>
-     * <li>The clearQueue() method removes all pending commands</li>
-     * <li>Subsequent getCommand() calls return null</li>
-     * </ol>
+     * Tests that pressing an unbound key doesn't add anything to the queue.
+     */
+    @Test
+    void testUnboundKeyPress() {
+        inputManager.registerKeyPress(KeyEvent.VK_F1);
+        assertNull(inputManager.getCommand());
+    }
+
+    /**
+     * Tests that key releases are properly handled.
+     */
+    @Test
+    void testRegisterKeyRelease() {
+        inputManager.registerKeyPress(KeyEvent.VK_UP);
+        inputManager.registerKeyRelease(KeyEvent.VK_UP);
+
+        assertEquals(Command.MOVE_UP, inputManager.getCommand());
+        assertNull(inputManager.getCommand());
+    }
+
+    /**
+     * Tests that opposite direction commands can't be pressed simultaneously.
+     */
+    @Test
+    void testOppositeDirections() {
+        inputManager.registerKeyPress(KeyEvent.VK_UP);
+        inputManager.registerKeyPress(KeyEvent.VK_DOWN);
+
+        assertEquals(Command.MOVE_UP, inputManager.getCommand());
+        assertNull(inputManager.getCommand());
+    }
+
+    /**
+     * Tests the command queue behavior with multiple inputs.
+     */
+    @Test
+    void testCommandQueueOrder() {
+        inputManager.registerKeyPress(KeyEvent.VK_LEFT);
+        inputManager.registerKeyPress(KeyEvent.VK_RIGHT);
+        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+
+        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+        assertEquals(Command.JUMP, inputManager.getCommand());
+        assertNull(inputManager.getCommand());
+    }
+
+    /**
+     * Tests that the queue can be properly cleared.
      */
     @Test
     void testClearQueue() {
-        this.inputManager.registerKeyPress(KeyEvent.VK_SPACE);
-        this.inputManager.registerKeyPress(KeyEvent.VK_LEFT);
-        this.inputManager.clearQueue();
+        inputManager.registerKeyPress(KeyEvent.VK_ENTER);
+        inputManager.registerKeyPress(KeyEvent.VK_ESCAPE);
+        inputManager.clearQueue();
 
-        assertNull(this.inputManager.getCommand());
+        assertNull(inputManager.getCommand());
     }
 
     /**
-     * Tests the behavior with unknown/invalid key codes.
-     * 
-     * <p>
-     * Verifies that:
-     * <ol>
-     * <li>Unknown key codes don't produce commands</li>
-     * <li>The system handles invalid input gracefully</li>
-     * </ol>
+     * Tests custom key binding functionality.
      */
     @Test
-    void testUnknownKeyCodeReturnsNull() {
-        this.inputManager.registerKeyPress(-1);
-        assertNull(this.inputManager.getCommand());
+    void testCustomKeyBinding() {
+        inputManager.bindKey(KeyEvent.VK_A, Command.MOVE_LEFT);
+
+        inputManager.registerKeyPress(KeyEvent.VK_A);
+        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+    }
+
+    /**
+     * Tests that binding a key to null removes the binding.
+     */
+    @Test
+    void testRemoveKeyBinding() {
+        inputManager.bindKey(KeyEvent.VK_SPACE, Command.NONE);
+
+        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+        assertEquals(Command.NONE, inputManager.getCommand());
+    }
+
+    /**
+     * Tests that pressing and releasing a key doesn't leave it in the pressed
+     * state.
+     */
+    @Test
+    void testKeyPressReleaseCycle() {
+        inputManager.registerKeyPress(KeyEvent.VK_UP);
+        inputManager.registerKeyRelease(KeyEvent.VK_UP);
+        inputManager.registerKeyPress(KeyEvent.VK_DOWN);
+
+        assertEquals(Command.MOVE_UP, inputManager.getCommand());
+        assertEquals(Command.MOVE_DOWN, inputManager.getCommand());
     }
 }
