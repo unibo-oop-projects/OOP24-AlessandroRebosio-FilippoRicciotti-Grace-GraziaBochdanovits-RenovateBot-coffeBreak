@@ -9,6 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import it.unibo.coffebreak.view.api.resources.Resource;
 
@@ -39,6 +44,7 @@ public final class ResourceLoader implements Resource {
 
     private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
+    private static final Map<String, Clip> SOUND_CACHE = new HashMap<>();
 
     /**
      * Instantiates a new Game resources.
@@ -99,12 +105,58 @@ public final class ResourceLoader implements Resource {
     }
 
     /**
+     * Loads an audio clip from the specified path, caching it for future use.
+     * <p>
+     * Supported audio formats depend on the Java Sound API implementation,
+     * but typically include WAV, AIFF, and AU formats.
+     * </p>
+     * 
+     * @param path the path to the audio resource, relative to the classpath
+     * @return the loaded Clip instance
+     * @throws IOException                   if an I/O error occurs while reading
+     *                                       the audio file
+     * @throws UnsupportedAudioFileException if the audio file format is not
+     *                                       supported
+     * @throws LineUnavailableException      if a clip cannot be opened because the
+     *                                       audio
+     *                                       line is unavailable
+     * @throws ResourceException             if the resource cannot be found or
+     *                                       loaded
+     */
+
+    @Override
+    public Clip loadClip(final String path)
+            throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        return SOUND_CACHE.computeIfAbsent(path, p -> {
+            try (InputStream is = getClass().getResourceAsStream(p)) {
+                if (is == null) {
+                    throw new ResourceException("Audio resource not found: " + p);
+                }
+
+                final AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
+                final Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                return clip;
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+                throw new ResourceException("Failed to load clip: " + path, e);
+            }
+        });
+    }
+
+    /**
      * Clears all cached resources and releases native resources.
      */
     public static void clearCache() {
         IMAGE_CACHE.values().forEach(BufferedImage::flush);
         IMAGE_CACHE.clear();
         FONT_CACHE.clear();
+        SOUND_CACHE.values().forEach(clip -> {
+            if (clip.isRunning()) {
+                clip.stop();
+            }
+            clip.close();
+        });
+        SOUND_CACHE.clear();
     }
 
     /**
