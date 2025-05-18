@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Font;
-import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,7 @@ class TestResourceLoader {
 
     @Test
     void testInvalidImagePath() {
-        final Exception exception = assertThrows(IOException.class, () -> this.loader.loadImage(INVALID_PATH));
+        final Exception exception = assertThrows(RuntimeException.class, () -> this.loader.loadImage(INVALID_PATH));
         assertTrue(exception.getMessage().contains("Resource not found"));
     }
 
