@@ -4,6 +4,7 @@ import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
+
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,6 +74,25 @@ class TestResourceLoader {
     }
 
     /**
+     * Tests successful sound loading functionality.
+     * 
+     * @throws IOException                   if an I/O error occurs during font
+     *                                       loading
+     * @throws UnsupportedAudioFileException if the font data does not conform to
+     *                                       the expected
+     *                                       format
+     * @throws LineUnavailableException
+     */
+    @Test
+    void testSoundLoading() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        final Clip clip = this.loader.loadClip(ResourceLoader.JUMP_SOUND);
+
+        assertNotNull(clip, "Clip should not be null after loading");
+        assertFalse(clip.isRunning(), "Clip should not be running immediately after loading");
+        assertTrue(clip.isOpen(), "Clip should be open after loading");
+    }
+
+    /**
      * Tests handling of invalid font paths.
      */
     @Test
@@ -84,6 +108,15 @@ class TestResourceLoader {
     void testInvalidImagePath() {
         final Exception exception = assertThrows(RuntimeException.class, () -> this.loader.loadImage(INVALID_PATH));
         assertTrue(exception.getMessage().contains("Resource not found"));
+    }
+
+    /**
+     * Tests handling of invalid image paths.
+     */
+    @Test
+    void testInvalidClipPath() {
+        final Exception exception = assertThrows(RuntimeException.class, () -> this.loader.loadClip(INVALID_PATH));
+        assertTrue(exception.getMessage().contains("Audio resource not found"));
     }
 
     /**

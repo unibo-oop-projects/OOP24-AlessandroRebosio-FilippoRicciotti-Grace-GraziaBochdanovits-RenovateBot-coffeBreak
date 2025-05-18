@@ -42,6 +42,11 @@ public final class ResourceLoader implements Resource {
      */
     public static final String FONT_PATH = "/fonts/PressStart2P-Regular.ttf";
 
+    /**
+     * The path to the "JUMP" sound.
+     */
+    public static final String JUMP_SOUND = "/sfx/jump.wav";
+
     private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
     private static final Map<String, Clip> SOUND_CACHE = new HashMap<>();
@@ -52,7 +57,9 @@ public final class ResourceLoader implements Resource {
     public ResourceLoader() {
         try {
             this.loadFont(FONT_PATH);
-        } catch (IOException | FontFormatException e) {
+
+            this.loadClip(JUMP_SOUND);
+        } catch (IOException | FontFormatException | UnsupportedAudioFileException | LineUnavailableException e) {
             throw new IllegalStateException("Error while loading resources", e);
         }
     }
@@ -105,23 +112,10 @@ public final class ResourceLoader implements Resource {
     }
 
     /**
-     * Loads an audio clip from the specified path, caching it for future use.
-     * <p>
-     * Supported audio formats depend on the Java Sound API implementation,
-     * but typically include WAV, AIFF, and AU formats.
-     * </p>
+     * {@inheritDoc}
      * 
-     * @param path the path to the audio resource, relative to the classpath
-     * @return the loaded Clip instance
-     * @throws IOException                   if an I/O error occurs while reading
-     *                                       the audio file
-     * @throws UnsupportedAudioFileException if the audio file format is not
-     *                                       supported
-     * @throws LineUnavailableException      if a clip cannot be opened because the
-     *                                       audio
-     *                                       line is unavailable
-     * @throws ResourceException             if the resource cannot be found or
-     *                                       loaded
+     * @throws ResourceException if the resource cannot be found or
+     *                           loaded
      */
 
     @Override
