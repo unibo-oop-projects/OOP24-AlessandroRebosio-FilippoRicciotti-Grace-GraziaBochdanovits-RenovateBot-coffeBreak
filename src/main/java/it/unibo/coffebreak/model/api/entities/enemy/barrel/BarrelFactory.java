@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.api.entities.enemy.barrel;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 
 /**
@@ -14,8 +15,9 @@ public interface BarrelFactory {
      * 
      * @param position the initial position
      * @param canTransformToFire whether the barrel can transform to fire
+     * @param initialDirection the direction on the barrel
      * @return a new Barrel instance
      */
-    Barrel createBarrel(Position2D position, boolean canTransformToFire);
+    Barrel createBarrel(Position2D position, boolean canTransformToFire, Command initialDirection);
 }
 

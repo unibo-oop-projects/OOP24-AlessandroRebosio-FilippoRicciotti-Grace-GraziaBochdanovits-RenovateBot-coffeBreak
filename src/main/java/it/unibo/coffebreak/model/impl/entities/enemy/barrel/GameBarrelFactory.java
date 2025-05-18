@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.enemy.barrel;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
@@ -40,9 +41,13 @@ public class GameBarrelFactory implements BarrelFactory {
      * @return a new {@link GameBarrel} instance
      */
     @Override
-    public Barrel createBarrel(final Position2D position, final boolean canTransformToFire) {
-        final GameBarrel barrel = new GameBarrel(position, DEFAULT_BARREL_DIMENSION, canTransformToFire);
-        barrel.setVelocity(new Vector2D(THROW_SPEED_X, THROW_SPEED_Y));
+    public Barrel createBarrel(final Position2D position, final boolean canTransformToFire,
+                                final Command initialDirection) {
+        final GameBarrel barrel = new GameBarrel(position, DEFAULT_BARREL_DIMENSION, 
+                                               canTransformToFire, initialDirection);
+        barrel.setVelocity(new Vector2D(initialDirection == Command.MOVE_RIGHT 
+                                            ? THROW_SPEED_X : -THROW_SPEED_X, 
+                                        -THROW_SPEED_Y));
         return barrel;
     }
 }
