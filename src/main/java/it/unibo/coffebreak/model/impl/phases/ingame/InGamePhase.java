@@ -5,7 +5,7 @@ import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
 import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
-import it.unibo.coffebreak.model.impl.physics.GameCollision;
+import it.unibo.coffebreak.model.impl.physics.collision.GameCollision;
 
 /**
  * Implementation of {@link Phases} interface;

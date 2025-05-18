@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.physics;
+package it.unibo.coffebreak.model.api.physics.collision;
 
 import it.unibo.coffebreak.model.api.Model;
 
