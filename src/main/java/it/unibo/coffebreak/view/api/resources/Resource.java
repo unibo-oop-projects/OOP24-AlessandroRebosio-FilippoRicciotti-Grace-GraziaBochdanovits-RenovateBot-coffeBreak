@@ -28,10 +28,9 @@ public interface Resource {
      * Loads a font from the specified path with the given size.
      *
      * @param path the path to the font resource, relative to the classpath
-     * @param size the point size of the font
      * @return the loaded Font
      * @throws IOException         if the resource cannot be found or read
      * @throws FontFormatException if the font file is in an invalid format
      */
-    Font loadFont(String path, float size) throws IOException, FontFormatException;
+    Font loadFont(String path) throws IOException, FontFormatException;
 }

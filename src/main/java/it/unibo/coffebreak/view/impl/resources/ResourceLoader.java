@@ -33,6 +33,17 @@ public final class ResourceLoader implements Resource {
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
 
     /**
+     * Instantiates a new Game resources.
+     */
+    public ResourceLoader() {
+        try {
+            loadFont("/fonts/PressStart2P-Regular.ttf");
+        } catch (IOException | FontFormatException e) {
+            throw new IllegalStateException("Error while loading resources", e);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @throws ResourceException if the image cannot be loaded (wraps IOException)
@@ -66,14 +77,13 @@ public final class ResourceLoader implements Resource {
      *                           FontFormatException)
      */
     @Override
-    public Font loadFont(final String path, final float size) throws IOException, FontFormatException {
-        final String cacheKey = path + "|" + size;
-        return FONT_CACHE.computeIfAbsent(cacheKey, k -> {
+    public Font loadFont(final String path) throws IOException, FontFormatException {
+        return FONT_CACHE.computeIfAbsent(path, k -> {
             try (InputStream is = getClass().getResourceAsStream(path)) {
                 if (is == null) {
                     throw new ResourceException("Font not found: " + path);
                 }
-                return Font.createFont(Font.TRUETYPE_FONT, is).deriveFont(size);
+                return Font.createFont(Font.TRUETYPE_FONT, is);
             } catch (FontFormatException | IOException e) {
                 throw new ResourceException("Failed to load font: " + path, e);
             }
