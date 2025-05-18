@@ -28,8 +28,9 @@ public class GameView extends JFrame implements View {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 600;
 
     /** Reference to the game controller. */
     private final transient Controller controller;
@@ -43,7 +44,7 @@ public class GameView extends JFrame implements View {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.setSize(new Dimension(WIDTH, HEIGHT));
+        super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
@@ -61,7 +62,7 @@ public class GameView extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void update() {
+    public void updateView() {
         this.repaint();
     }
 

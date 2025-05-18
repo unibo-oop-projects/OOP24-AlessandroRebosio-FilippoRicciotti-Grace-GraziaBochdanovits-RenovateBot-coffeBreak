@@ -19,40 +19,22 @@ import it.unibo.coffebreak.controller.api.input.Input;
  * <p>
  * This implementation features:
  * <ul>
- * <li>Thread-safe command queue using {@link ConcurrentLinkedQueue}
- * <li>Configurable key bindings via {@link #bindKey(int, Command)}
- * <li>Input buffering for smooth command processing
+ * <li>Key-to-command bindings configuration</li>
+ * <li>Input event queuing</li>
+ * <li>Press/release state tracking</li>
  * </ul>
- * 
  * <p>
- * The class maintains an internal mapping between physical key codes
- * ({@link KeyEvent} constants) and logical game commands. When a key event
- * is received via {@link #registerKeyPress(int)}, it's converted to a command
- * based on the current bindings and added to the processing queue.
- * 
- * @see Command
- * @see java.awt.event.KeyEvent
+ * Uses ConcurrentLinkedQueue for thread-safe command processing and
+ * prevents opposite direction commands from being active simultaneously.
+ * </p>
  * 
  * @author Alessandro Rebosio
  */
 public class InputManager implements Input {
 
-    /**
-     * The default key bindings for common game commands.
-     * Can be modified at runtime via {@link #bindKey(int, Command)}.
-     */
     private final Map<Integer, Command> keyBindings;
-
-    /**
-     * Tracks currently pressed keys by storing their associated commands.
-     */
     private final Set<Command> pressedKeys;
-
-    /**
-     * Thread-safe queue for storing incoming input events before processing.
-     * Uses a non-blocking concurrent implementation suitable for game loops.
-     */
-    private final Queue<Command> queue;
+    private final Queue<Command> commandQueue;
 
     /**
      * Constructs a new InputManager with default key bindings.
@@ -68,56 +50,72 @@ public class InputManager implements Input {
     public InputManager() {
         this.keyBindings = new HashMap<>();
         this.pressedKeys = EnumSet.noneOf(Command.class);
-        this.queue = new ConcurrentLinkedQueue<>();
-
-        initializeDefaultBindings();
+        this.commandQueue = new ConcurrentLinkedQueue<>();
+        this.initializeDefaultBindings();
     }
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Retrieves and removes the next command from the queue.
+     * Returns {@code null} if no commands are available.
      */
     @Override
     public Command getCommand() {
-        return this.queue.poll();
+        return this.commandQueue.poll();
     }
 
     /**
-     * Adds a new command to the queue for processing.
-     *
-     * @param keyEvent the command to be added to the queue
+     * {@inheritDoc}
+     * <p>
+     * Processing logic:
+     * <ol>
+     * <li>Looks up command bound to the key</li>
+     * <li>Verifies the inverse command isn't active</li>
+     * <li>Adds to active commands set</li>
+     * <li>Queues the command for processing</li>
+     * </ol>
      */
     @Override
-    public void registerKeyPress(final int keyEvent) {
-        final Command command = this.keyBindings.get(keyEvent);
-        if (command != null && !pressedKeys.contains(command.getInverseDirection())) {
+    public void registerKeyPress(final int keyCode) {
+        final Command command = this.keyBindings.get(keyCode);
+        if (command != null && !this.pressedKeys.contains(command.getInverseDirection())) {
             this.pressedKeys.add(command);
-            this.queue.add(command);
+            this.commandQueue.add(command);
         }
     }
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Removes the command associated with the released key
+     * from the active commands set.
      */
     @Override
     public void registerKeyRelease(final int keyCode) {
-        this.pressedKeys.remove(this.keyBindings.get(keyCode));
+        this.pressedKeys.remove(keyBindings.get(keyCode));
     }
 
     /**
      * {@inheritDoc}
+     * 
+     * @throws NullPointerException if the command parameter is null
      */
     @Override
     public Command bindKey(final int keyCode, final Command command) {
-        Objects.requireNonNull(command, "The command connt be null");
+        Objects.requireNonNull(command, "Command cannot be null");
         return this.keyBindings.put(keyCode, command);
     }
 
     /**
      * {@inheritDoc}
+     * <p>
+     * Clears all pending commands while maintaining
+     * current key bindings and active key states.
      */
     @Override
     public void clearQueue() {
-        this.queue.clear();
+        this.commandQueue.clear();
     }
 
     /**
@@ -133,5 +131,4 @@ public class InputManager implements Input {
         this.keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
         this.keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
     }
-
 }

@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl.physics;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
@@ -48,12 +49,9 @@ public class GameCollision implements Collision {
      */
     private void checkMarioCollisions(final Model model) {
         final Character mario = model.getPlayer();
-
-        for (final Entity entity : model.getEntities()) {
-            if (!entity.equals(mario) && mario.intersect(entity)) {
-                mario.onCollision(entity);
-            }
-        }
+        model.getEntities().stream()
+                .filter(entity -> !entity.equals(mario) && mario.intersect(entity))
+                .forEach(mario::onCollision);
     }
 
     /**
@@ -63,15 +61,14 @@ public class GameCollision implements Collision {
      * @param entities the list of all entities in the game
      */
     private void checkEntityCollisions(final List<Entity> entities) {
-        for (int i = 0; i < entities.size(); i++) {
+        IntStream.range(0, entities.size()).forEach(i -> {
             final Entity a = entities.get(i);
-            for (int j = i + 1; j < entities.size(); j++) {
-                final Entity b = entities.get(j);
-                if (a.intersect(b)) {
-                    a.onCollision(b);
-                    b.onCollision(a);
-                }
-            }
-        }
+            entities.subList(i + 1, entities.size()).stream()
+                    .filter(a::intersect)
+                    .forEach(b -> {
+                        b.onCollision(a);
+                        a.onCollision(b);
+                    });
+        });
     }
 }

@@ -8,14 +8,15 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.phases.Phases;
 
 /**
- * Represents the main model interface for the Coffee Break game.
+ * Represents the main model interface for the game.
+ * <p>
  * The model acts as the central point for accessing game entities,
- * player character, and score management functionality.
+ * player character, and game state management.
+ * </p>
  * 
  * @author Alessandro Rebosio
  */
 public interface Model {
-
     /**
      * Gets all entities currently present in the game world.
      * 
@@ -31,24 +32,23 @@ public interface Model {
     Character getPlayer();
 
     /**
-     * Method that changes the game Phase to a specified one.
+     * Changes the current game phase to the specified one.
      * 
-     * @param newPhase specified Phase to switch to
+     * @param newPhase the phase to switch to
+     * @throws NullPointerException if newPhase is null
      */
     void setState(Phases newPhase);
 
     /**
-     * Processes and executes the given command, modifying the game state
-     * accordingly.
-     * Implementations should define the specific behavior for each supported
-     * command type.
+     * Processes and executes the given game command.
      * 
-     * @param command the command to be executed (must not be null)
+     * @param command the command to be executed
+     * @throws NullPointerException if command is null
      */
     void executeCommand(Command command);
 
     /**
-     * Updates the game logic based on time.
+     * Updates the game logic based on elapsed time.
      *
      * @param deltaTime time in seconds since last update
      */
@@ -63,7 +63,6 @@ public interface Model {
 
     /**
      * Stops the game simulation and triggers any necessary cleanup.
-     * After calling this method, isRunning() should return false.
      */
     void stop();
 }

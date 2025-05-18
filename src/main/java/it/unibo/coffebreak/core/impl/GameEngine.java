@@ -21,7 +21,6 @@ public class GameEngine implements Engine {
     private static final long PERIOD = 16;
 
     private volatile boolean running = true;
-
     private final Controller controller;
     private final GameView view;
 
@@ -40,29 +39,23 @@ public class GameEngine implements Engine {
     @Override
     public void run() {
         long previusCycle = System.currentTimeMillis();
-        while (this.running) {
+        while (this.shouldContinueRunning()) {
             final long currentCycle = System.currentTimeMillis();
             final long deltaTime = currentCycle - previusCycle;
 
             this.controller.processInput();
-            if (!this.controller.updateModel(deltaTime)) {
-                this.stop();
-            }
-            this.view.update();
+            this.controller.updateModel(deltaTime);
+            this.view.updateView();
 
             this.waitForNextFrame(currentCycle);
 
             previusCycle = currentCycle;
         }
+        this.view.close();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() {
-        this.running = false;
-        this.view.close();
+    private boolean shouldContinueRunning() {
+        return this.running && this.controller.isGameActive();
     }
 
     /**
