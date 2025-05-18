@@ -5,6 +5,10 @@ import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 /**
  * Provides an interface for loading and managing graphical resources such as
  * images and fonts.
@@ -33,4 +37,6 @@ public interface Resource {
      * @throws FontFormatException if the font file is in an invalid format
      */
     Font loadFont(String path) throws IOException, FontFormatException;
+
+    public Clip loadClip(final String path) throws IOException, UnsupportedAudioFileException, LineUnavailableException;
 }
