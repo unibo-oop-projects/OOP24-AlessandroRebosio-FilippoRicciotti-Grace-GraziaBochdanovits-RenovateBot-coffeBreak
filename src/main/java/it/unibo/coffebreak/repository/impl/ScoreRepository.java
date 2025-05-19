@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.score.repository;
+package it.unibo.coffebreak.repository.impl;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,48 +9,35 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.score.entry.Entry;
-import it.unibo.coffebreak.model.api.score.repository.FileManager;
-import it.unibo.coffebreak.model.api.score.repository.Repository;
+import it.unibo.coffebreak.repository.api.Repository;
+import it.unibo.coffebreak.repository.api.manager.FileManager;
+import it.unibo.coffebreak.repository.impl.manager.GameFileManager;
 
 /**
- * File-based implementation of {@link Repository} for {@link Entry} objects
- * using Java serialization. Stores data in a fixed location in the user's home
- * directory.
- * 
- * This class ensures backup and recovery in case of data corruption or load
- * failure.
- * 
- * @author Alessandro Rebosio
+ * A file-based repository implementation using Java serialization
+ * for storing and loading Entry objects. Supports backup and recovery.
  */
-
 public class ScoreRepository implements Repository<Entry> {
 
-    /** The Folder name used for files. */
     private static final String FOLDER = ".coffeBreak";
-
-    /** The name of the file that stores the serialized leaderboard data. */
     private static final String FILE_NAME = "dk_leaderboard.ser";
 
     private final FileManager fileManager;
 
     /**
-     * Constructor that ensures the data directory exists.
+     * Constructs a new ScoreRepository with default file manager.
      */
     public ScoreRepository() {
-        this.fileManager = new ScoreFileManager(FOLDER, FILE_NAME);
+        this.fileManager = new GameFileManager(FOLDER, FILE_NAME);
     }
 
     /**
-     * Saves a list of {@link Entry} objects to persistent storage.
-     * If the file already exists, a backup is created before overwriting it.
-     * 
-     * @param list the list of entries to save
-     * @return true if the save was successful, false otherwise
-     * @throws RepositoryException if an I/O error occurs
+     * {@inheritDoc}
      */
     @Override
     public boolean save(final List<Entry> list) {
-        if (Objects.requireNonNull(list, "The list cannot be null").isEmpty()) {
+        Objects.requireNonNull(list, "List cannot be null");
+        if (list.isEmpty()) {
             return true;
         }
 
@@ -59,18 +46,13 @@ public class ScoreRepository implements Repository<Entry> {
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(fileManager.getDataFile()))) {
             oos.writeObject(list);
             return true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RepositoryException("Error while saving data", e);
         }
     }
 
     /**
-     * Loads the list of {@link Entry} objects from persistent storage.
-     * If an error occurs during deserialization, the system attempts to restore
-     * from a backup.
-     * 
-     * @return the list of loaded entries, or an empty list if no data is found
-     * @throws RepositoryException if the load fails and backup cannot be restored
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -90,14 +72,11 @@ public class ScoreRepository implements Repository<Entry> {
     }
 
     /**
-     * Deletes all repository files including the data directory.
-     * 
-     * @return true if all files were successfully deleted or didn't exist, false
-     *         otherwise
+     * {@inheritDoc}
      */
     @Override
     public boolean deleteAllFiles() {
-        return this.fileManager.deleteAll();
+        return fileManager.deleteAll();
     }
 
     /**

@@ -9,11 +9,11 @@ import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.score.bonus.Bonus;
 import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
-import it.unibo.coffebreak.model.api.score.repository.Repository;
 import it.unibo.coffebreak.model.impl.score.bonus.GameBonus;
 import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
-import it.unibo.coffebreak.model.impl.score.repository.ScoreRepository;
+import it.unibo.coffebreak.repository.api.Repository;
+import it.unibo.coffebreak.repository.impl.ScoreRepository;
 
 /**
  * Default implementation of {@link ScoreManager} using.
