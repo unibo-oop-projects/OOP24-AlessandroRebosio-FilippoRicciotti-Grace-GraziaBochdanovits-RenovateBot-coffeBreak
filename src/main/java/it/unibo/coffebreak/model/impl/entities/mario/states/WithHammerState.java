@@ -58,7 +58,7 @@ public class WithHammerState implements CharacterState {
      *
      * @return true if the current time is past the expiration time, false otherwise
      */
-    private boolean isExpired() {
+    public boolean isExpired() {
         return System.currentTimeMillis() >= expirationTime;
     }
 
