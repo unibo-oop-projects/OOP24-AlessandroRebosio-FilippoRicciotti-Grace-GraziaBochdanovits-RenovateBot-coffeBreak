@@ -2,7 +2,6 @@ package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
-import it.unibo.coffebreak.model.api.score.entry.Entry;
 
 /**
  * Represents a character entity in the game world.
@@ -69,7 +68,7 @@ public interface Character extends Entity {
      * 
      * @return the GameScoreManager instance managing the character's score
      */
-    ScoreManager<Entry> getScoreManager();
+    ScoreManager getScoreManager();
 
     /**
      * Gets the name of the player controlling this character.

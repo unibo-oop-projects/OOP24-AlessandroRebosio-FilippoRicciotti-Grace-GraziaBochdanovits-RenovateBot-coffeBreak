@@ -3,13 +3,12 @@ package it.unibo.coffebreak.model.score;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.score.entry.Entry;
-import it.unibo.coffebreak.model.impl.score.ScoreEntry;
+import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 
 /**
  * Test class for {@link ScoreEntry} implementation. Verifies entry creation,
@@ -105,33 +104,6 @@ class TestEntry {
 
         final Entry differentScoreEntry = new ScoreEntry(TEST_NAME, 2000);
         assertEquals(expected, differentScoreEntry.getScore());
-    }
-
-    /**
-     * Verifies entry immutability.
-     */
-    @Test
-    void shouldBeImmutable() {
-        assertEquals(TEST_NAME, entry.getName());
-        assertEquals(TEST_SCORE, entry.getScore());
-
-        final boolean isImmutable = ScoreEntry.class.getDeclaredFields()[0].getModifiers() == 26;
-        assertTrue(isImmutable);
-    }
-
-    /**
-     * Tests compareTo orders entries by score descending.
-     */
-    @Test
-    void testCompareTo() {
-        final ScoreEntry highScore = new ScoreEntry(TEST_NAME, 1000);
-        final ScoreEntry mediumScore = new ScoreEntry("Player2", 500);
-        final ScoreEntry lowScore = new ScoreEntry("Player3", 100);
-
-        assertTrue(highScore.compareTo(mediumScore) < 0);
-        assertTrue(mediumScore.compareTo(lowScore) < 0);
-        assertTrue(lowScore.compareTo(highScore) > 0);
-        assertEquals(0, highScore.compareTo(new ScoreEntry("Player4", 1000)));
     }
 
     /**

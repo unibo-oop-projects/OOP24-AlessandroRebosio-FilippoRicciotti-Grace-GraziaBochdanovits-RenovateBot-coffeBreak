@@ -22,7 +22,7 @@ public interface Leaderboard {
      * @return immutable list of entries in descending order, never null but may be
      *         empty
      */
-    List<Entry> getLeaderBoard();
+    List<Entry> getTopScores();
 
     /**
      * Attempts to add a new entry to the leaderboard if it meets ranking criteria.

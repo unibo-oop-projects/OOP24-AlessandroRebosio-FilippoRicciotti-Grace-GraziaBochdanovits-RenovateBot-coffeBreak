@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.score.entry.Entry;
-import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
  * Comprehensive test suite for {@link ScoreManager} interface and
@@ -45,7 +45,7 @@ class TestScoreManager {
     private static final int SCORE_XLARGE = 2000;
     private static final int BONUS_VALUE = 250;
 
-    private ScoreManager<Entry> scoreManager;
+    private ScoreManager scoreManager;
 
     /**
      * Initializes a fresh GameScoreManager and cleans up test files before each

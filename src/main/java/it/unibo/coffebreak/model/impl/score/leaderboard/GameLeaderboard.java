@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.impl.score.leaderboard;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
  * 
  * @author Alessandro Rebosio
  */
-public class GameLeaderboard implements Leaderboard<Entry> {
+public class GameLeaderboard implements Leaderboard {
 
     /**
      * Maximum capacity of the leaderboard (currently {@value}).
@@ -24,29 +24,28 @@ public class GameLeaderboard implements Leaderboard<Entry> {
     public static final int MAX_ENTRIES = 5;
 
     /** Main storage for entries, maintained in descending score order. */
-    private final List<Entry> leaderBoard;
+    private final List<Entry> entries;
 
     /**
      * Initializes leaderboard with provided entries, sorting and trimming to
      * capacity.
      *
-     * @param leaderBoard initial entries (null triggers NPE, empty list uses
-     *                    defaults)
+     * @param entries initial entries (null triggers NPE, empty list uses
+     *                defaults)
      * @throws NullPointerException if leaderBoard is null
      * @apiNote If input contains duplicates, all will be retained until trimming
      */
-    public GameLeaderboard(final List<Entry> leaderBoard) {
-        Objects.requireNonNull(leaderBoard, "The list cannot be null");
-        this.leaderBoard = new ArrayList<>(leaderBoard);
-        this.sortAndTrim();
+    public GameLeaderboard(final List<Entry> entries) {
+        Objects.requireNonNull(entries, "The list cannot be null");
+        this.entries = new ArrayList<>(entries);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Entry> getLeaderBoard() {
-        return Collections.unmodifiableList(this.leaderBoard);
+    public List<Entry> getTopScores() {
+        return this.entries.stream().limit(MAX_ENTRIES).toList();
     }
 
     /**
@@ -55,42 +54,9 @@ public class GameLeaderboard implements Leaderboard<Entry> {
     @Override
     public boolean addEntry(final Entry entry) {
         Objects.requireNonNull(entry, "The entry cannot be null");
+        final boolean isAdded = this.entries.add(entry);
+        this.entries.sort(Comparator.comparingInt(Entry::getScore).reversed());
 
-        if (!this.isEligible(entry)) {
-            return false;
-        }
-
-        this.leaderBoard.add(entry);
-        this.sortAndTrim();
-        return true;
-    }
-
-    /**
-     * Determines if an entry qualifies for inclusion in the leaderboard.
-     * 
-     * @param entry The entry to evaluate (must not be null)
-     * @return true if either:
-     *         <ul>
-     *         <li>Leaderboard has available capacity (empty slots), OR</li>
-     *         <li>Entry's score exceeds the current lowest non-empty score</li>
-     *         </ul>
-     * @throws NullPointerException if entry is null
-     */
-    private boolean isEligible(final Entry entry) {
-        Objects.requireNonNull(entry, "Entry cannot be null");
-
-        return this.leaderBoard.size() < MAX_ENTRIES
-                || entry.compareTo(this.leaderBoard.getLast()) < 0;
-    }
-
-    /**
-     * Sorts entries in descending order and enforces capacity limit.
-     */
-    private void sortAndTrim() {
-        this.leaderBoard.sort(Entry::compareTo);
-
-        if (this.leaderBoard.size() > MAX_ENTRIES) {
-            this.leaderBoard.subList(MAX_ENTRIES, this.leaderBoard.size()).clear();
-        }
+        return isAdded;
     }
 }
