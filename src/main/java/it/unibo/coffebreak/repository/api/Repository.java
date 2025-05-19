@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.repository.api;
 
-import java.util.List;
-
 /**
  * Defines a repository interface for storing and retrieving elements of a given
  * type.
@@ -16,18 +14,18 @@ public interface Repository<T> {
     /**
      * Saves the provided list of elements, replacing existing data.
      *
-     * @param list the list of elements to save
+     * @param data the list of elements to save
      * @return true if save was successful, false otherwise
      * @throws NullPointerException if the list is null
      */
-    boolean save(List<T> list);
+    boolean save(T data);
 
     /**
      * Loads all elements from persistent storage.
      *
      * @return a list of elements, or an empty list if none exist
      */
-    List<T> load();
+    T load();
 
     /**
      * Deletes all data files used by the repository.

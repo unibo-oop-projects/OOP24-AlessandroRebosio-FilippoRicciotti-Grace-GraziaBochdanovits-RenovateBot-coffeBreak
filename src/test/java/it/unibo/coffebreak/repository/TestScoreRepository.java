@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +30,7 @@ class TestScoreRepository {
     private static final int SCORE1 = 1500;
     private static final int SCORE2 = 1200;
 
-    private ScoreRepository repository;
+    private ScoreRepository<List<Entry>> repository;
 
     private Entry entry1;
     private Entry entry2;
@@ -40,7 +41,7 @@ class TestScoreRepository {
      */
     @BeforeEach
     void setUp() {
-        repository = new ScoreRepository();
+        repository = new ScoreRepository<>(ArrayList::new);
         entry1 = new ScoreEntry("Mario", SCORE1);
         entry2 = new ScoreEntry("Luigi", SCORE2);
     }

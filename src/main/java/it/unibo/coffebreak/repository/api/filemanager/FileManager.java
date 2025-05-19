@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.repository.api.manager;
+package it.unibo.coffebreak.repository.api.filemanager;
 
 import java.nio.file.Path;
 

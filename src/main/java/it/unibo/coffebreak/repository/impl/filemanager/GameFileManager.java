@@ -1,11 +1,11 @@
-package it.unibo.coffebreak.repository.impl.manager;
+package it.unibo.coffebreak.repository.impl.filemanager;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import it.unibo.coffebreak.repository.api.manager.FileManager;
+import it.unibo.coffebreak.repository.api.filemanager.FileManager;
 
 /**
  * Basic file manager implementation handling data file and backup operations.
