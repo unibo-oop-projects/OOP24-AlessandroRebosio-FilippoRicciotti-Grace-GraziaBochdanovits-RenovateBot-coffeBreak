@@ -3,6 +3,7 @@ package it.unibo.coffebreak.model.impl.entities.mario.states;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 
 /**
@@ -57,21 +58,20 @@ public class NormalState implements CharacterState {
      */
     @Override
     public void handleCollision(final Character character, final Entity other) {
+        if (other instanceof Barrel) {
+            character.loseLife();
+        }
+        /*if (other instanceof Ladder) {
+            //TODO: gestire climb up/down quando collide con ladder
+        }*/
     }
 
     /**
-     * @return true, as Mario can jump when in normal state
+     * {@inheritDoc}
      */
     @Override
-    public boolean canJump() {
+    public boolean canClimb() {
         return true;
     }
 
-    /**
-     * @return false, as Mario needs to be in {@link WithHammerState} to use special items
-     */
-    @Override
-    public boolean canUseSpecialItem() {
-        return false;
-    }
 }

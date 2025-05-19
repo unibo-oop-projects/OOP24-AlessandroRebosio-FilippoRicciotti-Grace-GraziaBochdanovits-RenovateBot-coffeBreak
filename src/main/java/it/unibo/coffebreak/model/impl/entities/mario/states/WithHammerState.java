@@ -3,6 +3,7 @@ package it.unibo.coffebreak.model.impl.entities.mario.states;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
+import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 
 /**
  * Represents Mario's state when equipped with a hammer.
@@ -100,21 +101,17 @@ public class WithHammerState implements CharacterState {
      */
     @Override
     public void handleCollision(final Character character, final Entity other) {
+        if (other instanceof final Enemy enemy) {
+            enemy.destroy();
+        }
     }
 
     /**
-     * @return true - Mario can jump while wielding hammer
+     * {@inheritDoc}
      */
     @Override
-    public boolean canJump() {
-        return true;
+    public boolean canClimb() {
+        return false;
     }
 
-    /**
-     * @return true - Allows hammer special attacks
-     */
-    @Override
-    public boolean canUseSpecialItem() {
-        return true;
-    }
 }
