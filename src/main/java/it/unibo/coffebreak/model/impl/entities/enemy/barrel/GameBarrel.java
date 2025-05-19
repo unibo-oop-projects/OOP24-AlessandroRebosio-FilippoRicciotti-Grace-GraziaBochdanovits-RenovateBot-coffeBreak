@@ -41,7 +41,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
 
     private final Physics physics;
     private final boolean canTransformToFire;
-    private Command currentDirection = Command.MOVE_RIGHT;
+    private Command currentDirection;
     private boolean isOnPlatform;
 
     /**
@@ -50,11 +50,14 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * @param position the initial position of the barrel (cannot be null)
      * @param dimension the physical dimensions of the barrel (cannot be null)
      * @param canTransformToFire whether the barrel can turn into fire when destroyed
+     * @param initialDirection the initial direction of the barrel
      * @throws NullPointerException if position, dimension or physics are null
      */
-    public GameBarrel(final Position2D position, final Dimension2D dimension, final boolean canTransformToFire) {
+    public GameBarrel(final Position2D position, final Dimension2D dimension, 
+                        final boolean canTransformToFire, final Command initialDirection) {
         super(position, dimension);
         this.canTransformToFire = canTransformToFire;
+        this.currentDirection = initialDirection;
         this.physics = new GamePhysics();
         this.isOnPlatform = false;
     }
@@ -96,22 +99,12 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
             return;
         }
 
-        final Vector2D movement = calculateHorizontalMovement(deltaTime);
+        final Vector2D movement = physics.calculateX(deltaTime, currentDirection).multiply(BARREL_SPEED);
         final Vector2D gravity = physics.calculateY(deltaTime, 
             isOnPlatform ? Command.NONE : Command.MOVE_DOWN);
 
         setPosition(getPosition().sum(movement.sum(gravity)));
         isOnPlatform = false;
-    }
-
-    /**
-     * Calculates horizontal movement vector based on current slope direction.
-     *
-     * @param deltaTime the time elapsed since last frame (in seconds)
-     * @return the horizontal movement vector adjusted for barrel speed
-     */
-    private Vector2D calculateHorizontalMovement(final float deltaTime) {
-        return physics.calculateX(deltaTime, currentDirection).multiply(BARREL_SPEED);
     }
 
     /**

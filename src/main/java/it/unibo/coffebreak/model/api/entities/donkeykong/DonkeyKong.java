@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.model.api.entities.donkeykong;
 
+import java.util.Optional;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 
 /**
  * Represents Donkey Kong, the iconic arcade game character who throws barrels.
@@ -22,6 +25,16 @@ public interface DonkeyKong extends Entity {
      *   <li>Register the barrel with the game world</li>
      * </ul>
      *
+     * @return the newly created and thrown {@link Barrel} instance
      */
-    void throwBarrel();
+    Barrel throwBarrel();
+
+    /**
+     * Attempts to throw a barrel. This method may return an empty Optional if 
+     * Donkey Kong cannot throw a barrel at this time.
+     *
+     * @return an {@link Optional} containing the thrown {@link Barrel} if successful,
+     *         or an empty {@link Optional} if no barrel was thrown
+     */
+    Optional<Barrel> tryThrowBarrel();
 }

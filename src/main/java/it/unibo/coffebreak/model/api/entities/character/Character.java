@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
@@ -27,8 +28,38 @@ public interface Character extends Entity {
 
     /**
      * Makes the character perform a jump action.
+     * 
+     * @param deltaTime time since last frame in seconds
      */
-    void jump();
+    void jump(float deltaTime);
+
+    /**
+     * Moves the character left at standard movement speed.
+     *
+     * @param deltaTime time since last frame in seconds
+     */
+    void moveLeft(float deltaTime);
+
+    /**
+     * Moves the character right at standard movement speed.
+     *
+     * @param deltaTime time since last frame in seconds
+     */
+    void moveRight(float deltaTime);
+
+    /**
+     * Makes the character climb upwards when on a ladder.
+     *
+     * @param deltaTime time since last frame in seconds
+     */
+    void climbUp(float deltaTime);
+
+    /**
+     * Makes the character climb downwards when on a ladder.
+     *
+     * @param deltaTime time since last frame in seconds
+     */
+    void climbDown(float deltaTime);
 
     /**
      * Decrements the character's life count.
@@ -71,17 +102,17 @@ public interface Character extends Entity {
     ScoreManager getScoreManager();
 
     /**
-     * Gets the name of the player controlling this character.
-     * 
-     * @return the player's name
+     * Gets the physics controller responsible for movement calculations.
+     *
+     * @return the Physics implementation for this character
      */
-    String getPlayerName();
+    Physics getPlayerPhysics();
 
     /**
-     * Sets whether the character is on the ground.
+     * Gets the current character State.
      * 
-     * @param onGround true to set the character as on the ground, false otherwise
+     * @return the current character state
      */
-    void setOnGround(boolean onGround);
+    CharacterState getCurrentState();
 
 }

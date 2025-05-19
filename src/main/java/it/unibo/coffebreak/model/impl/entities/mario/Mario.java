@@ -2,10 +2,13 @@ package it.unibo.coffebreak.model.impl.entities.mario;
 
 import java.util.Objects;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.api.entities.platform.Platform;
+import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
@@ -34,16 +37,19 @@ import it.unibo.coffebreak.model.impl.score.GameScoreManager;
  *   <li>{@link WithHammerState} - Hammer power-up mode</li>
  * </ul>
  * 
+ * @see AbstractEntity
+ * @see Character
  * @author Grazia Bochdanovits de Kavna
  */
 public class Mario extends AbstractEntity implements Character {
 
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
+    private final Physics physics;
     private CharacterState currentState;
     private final Position2D startPosition;
     private boolean isOnGround;
-    private final String playerName;
+    private boolean isClimbing;
 
     /**
      * Creates a new Mario instance.
@@ -51,17 +57,19 @@ public class Mario extends AbstractEntity implements Character {
      * @param position the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
      * @param scoreManager the score manager to track points
-     * @param playerName the name of the player controlling Mario
+     * @param physics the physics component of Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
     public Mario(final Position2D position, final Dimension2D dimension,
-                final GameScoreManager scoreManager, final String playerName) {
+                final GameScoreManager scoreManager, final Physics physics) {
         super(position, dimension);
         this.startPosition = new Position2D(position.x(), position.y());
         this.livesManager = new GameLivesManager();
         this.scoreManager = Objects.requireNonNull(scoreManager);
-        this.playerName = Objects.requireNonNull(playerName, "Player name cannot be null");
+        this.physics = Objects.requireNonNull(physics);
         this.currentState = new NormalState();
+        this.isOnGround = true;
+        this.isClimbing = false;
     }
 
     /**
@@ -74,7 +82,7 @@ public class Mario extends AbstractEntity implements Character {
     public void changeState(final CharacterState newState) {
         Objects.requireNonNull(newState, "New state cannot be null");
         currentState.onExit(this);
-        this.currentState = Objects.requireNonNull(newState);
+        this.currentState = newState;
         currentState.onEnter(this);
     }
 
@@ -87,7 +95,7 @@ public class Mario extends AbstractEntity implements Character {
         changeState(new NormalState());
         setVelocity(new Vector2D(0, 0));
         setPosition(startPosition);
-        setOnGround(true);
+        isOnGround = true;
         setFacingRight(true); 
     }
 
@@ -98,17 +106,11 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void update(final float deltaTime) {
-        currentState.update(this, deltaTime);
-    }
-
-    /**
-     * Makes Mario jump if he's on the ground.
-     */
-    @Override
-    public void jump() {
-        if (currentState.canJump() && isOnGround) {
-            setOnGround(false);
+        if (!isOnGround && !isClimbing) {
+            setVelocity(getVelocity().sum(physics.calculateY(deltaTime, Command.NONE)));
         }
+        setPosition(getPosition().sum(getVelocity().multiply(deltaTime)));
+        currentState.update(this, deltaTime);
     }
 
     /**
@@ -118,14 +120,74 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void onCollision(final Entity other) {
+        if (other instanceof Platform) {
+            isOnGround = true;
+            isClimbing = false;
+        }
         if (other instanceof Collectible) {
             ((Collectible) other).collect(this);
             scoreManager.earnPoints(((Collectible) other).getPointsValue());
         }
         if (other instanceof Hammer) {
+            isClimbing = false;
             changeState(new WithHammerState());
         }
         currentState.handleCollision(this, other);
+    }
+
+    /**
+     * Makes Mario jump if he's on the ground.
+     */
+    @Override
+    public void jump(final float deltaTime) {
+        if (isOnGround) {
+            setVelocity(physics.calculateY(deltaTime, Command.JUMP));
+            isOnGround = false;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveLeft(final float deltaTime) {
+        if (!isClimbing) {
+            setFacingRight(false);
+            final Vector2D movement = physics.calculateX(deltaTime, Command.MOVE_LEFT);
+            setVelocity(new Vector2D(movement.x(), getVelocity().y()));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveRight(final float deltaTime) {
+        if (!isClimbing) {
+            setFacingRight(true);
+            final Vector2D movement = physics.calculateX(deltaTime, Command.MOVE_RIGHT);
+            setVelocity(new Vector2D(movement.x(), getVelocity().y()));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void climbUp(final float deltaTime) {
+        if (currentState.canClimb()) {
+            setVelocity(physics.calculateY(deltaTime, Command.MOVE_UP));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void climbDown(final float deltaTime) {
+        if (currentState.canClimb()) {
+            setVelocity(physics.calculateY(deltaTime, Command.MOVE_DOWN));
+        }
     }
 
     /**
@@ -146,7 +208,7 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public boolean isOnGround() {
-        return isOnGround;
+        return this.isOnGround;
     }
 
     /**
@@ -162,7 +224,7 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public GameLivesManager getLivesManager() {
-        return livesManager;
+        return this.livesManager;
     }
 
     /**
@@ -178,25 +240,22 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public GameScoreManager getScoreManager() {
-        return scoreManager;
+        return this.scoreManager;
     }
 
     /**
-     * @return the player's name
+     * {@inheritDoc}
      */
     @Override
-    public String getPlayerName() {
-        return playerName;
+    public Physics getPlayerPhysics() {
+        return this.physics;
     }
 
     /**
-     * Sets whether Mario is on the ground and handles state transitions.
-     *
-     * @param onGround true if Mario is on solid ground
+     * @return the current Mario state
      */
     @Override
-    public void setOnGround(final boolean onGround) {
-        isOnGround = onGround;
+    public CharacterState getCurrentState() {
+        return this.currentState;
     }
-
 }
