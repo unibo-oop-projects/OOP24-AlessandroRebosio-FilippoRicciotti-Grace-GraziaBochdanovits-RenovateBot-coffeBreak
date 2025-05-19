@@ -108,4 +108,11 @@ public interface Character extends Entity {
      */
     Physics getPlayerPhysics();
 
+    /**
+     * Gets the current character State.
+     * 
+     * @return the current character state
+     */
+    CharacterState getCurrentState();
+
 }

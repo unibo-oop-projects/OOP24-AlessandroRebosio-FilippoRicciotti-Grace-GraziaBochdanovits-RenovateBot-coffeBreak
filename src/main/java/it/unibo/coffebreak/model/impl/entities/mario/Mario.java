@@ -68,6 +68,11 @@ public class Mario extends AbstractEntity implements Character {
         this.scoreManager = Objects.requireNonNull(scoreManager);
         this.physics = Objects.requireNonNull(physics);
         this.currentState = new NormalState();
+<<<<<<< HEAD
+=======
+        this.isOnGround = true;
+        this.isClimbing = false;
+>>>>>>> test-entity
     }
 
     /**
@@ -247,5 +252,12 @@ public class Mario extends AbstractEntity implements Character {
     @Override
     public Physics getPlayerPhysics() {
         return this.physics;
+    }
+
+    /**
+     * @return the current Mario state
+     */
+    public CharacterState getCurrentState() {
+        return this.currentState;
     }
 }
