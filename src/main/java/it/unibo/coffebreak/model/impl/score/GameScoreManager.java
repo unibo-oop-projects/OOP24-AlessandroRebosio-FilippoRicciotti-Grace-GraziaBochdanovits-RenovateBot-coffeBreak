@@ -1,20 +1,19 @@
-package it.unibo.coffebreak.model.impl.score.manager;
+package it.unibo.coffebreak.model.impl.score;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.Entry;
 import it.unibo.coffebreak.model.api.score.Score;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.score.bonus.Bonus;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
-import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
-import it.unibo.coffebreak.model.api.score.repository.Repository;
-import it.unibo.coffebreak.model.impl.score.GameScore;
-import it.unibo.coffebreak.model.impl.score.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.bonus.GameBonus;
+import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
-import it.unibo.coffebreak.model.impl.score.repository.ScoreRepository;
+import it.unibo.coffebreak.repository.api.Repository;
+import it.unibo.coffebreak.repository.impl.ScoreRepository;
 
 /**
  * Default implementation of {@link ScoreManager} using.
@@ -36,7 +35,7 @@ import it.unibo.coffebreak.model.impl.score.repository.ScoreRepository;
  * 
  * @author Alessandro Rebosio
  */
-public class GameScoreManager implements ScoreManager<Entry> {
+public class GameScoreManager implements ScoreManager {
 
     /** Manages the player's core score value. */
     private final Score score;
@@ -48,7 +47,7 @@ public class GameScoreManager implements ScoreManager<Entry> {
     private final Repository<Entry> repository;
 
     /** Maintains ranked player entries. */
-    private final Leaderboard<Entry> leaderBoard;
+    private final Leaderboard leaderBoard;
 
     /**
      * Creates a new manager with default component implementations.
@@ -82,7 +81,7 @@ public class GameScoreManager implements ScoreManager<Entry> {
      */
     @Override
     public List<Entry> getLeaderBoard() {
-        return this.leaderBoard.getLeaderBoard();
+        return this.leaderBoard.getTopScores();
     }
 
     /**
@@ -134,8 +133,7 @@ public class GameScoreManager implements ScoreManager<Entry> {
      */
     @Override
     public void endGame(final String name) {
-        Objects.requireNonNull(name, "Name cannot be null");
-        if (name.isBlank()) {
+        if (Objects.requireNonNull(name, "Name cannot be null").isBlank()) {
             throw new IllegalArgumentException("Player name cannot be blank");
         }
 

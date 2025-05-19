@@ -2,8 +2,7 @@ package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.physics.Physics;
-import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
  * Represents a character entity in the game world.
@@ -100,7 +99,7 @@ public interface Character extends Entity {
      * 
      * @return the GameScoreManager instance managing the character's score
      */
-    ScoreManager<Entry> getScoreManager();
+    ScoreManager getScoreManager();
 
     /**
      * Gets the physics controller responsible for movement calculations.

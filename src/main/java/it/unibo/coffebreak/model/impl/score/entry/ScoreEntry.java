@@ -1,9 +1,8 @@
-package it.unibo.coffebreak.model.impl.score;
+package it.unibo.coffebreak.model.impl.score.entry;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 
 /**
  * Immutable implementation of {@link Entry} representing a player's score
@@ -11,21 +10,18 @@ import it.unibo.coffebreak.model.api.score.Entry;
  * Natural ordering is based on score (descending), with name used for
  * tie-breaking in equality checks.
  * 
+ * @param name  the player name
+ * @param score the score made by player
+ * 
  * @see Comparable
  * @see Serializable
  * 
  * @author Alessandro Rebosio
  */
-public class ScoreEntry implements Entry, Serializable {
+public record ScoreEntry(String name, int score) implements Entry {
 
     /** The serial version UID for consistent serialization/deserialization. */
     private static final long serialVersionUID = 1L;
-
-    /** The player's name for this entry. */
-    private final String name;
-
-    /** The numeric score value. */
-    private final int score;
 
     /**
      * Creates a new immutable score entry.
@@ -53,44 +49,6 @@ public class ScoreEntry implements Entry, Serializable {
     @Override
     public int getScore() {
         return this.score;
-    }
-
-    /**
-     * Compares entries by score in descending order.
-     *
-     * @implNote Consistent with equals as required by {@link Comparable}
-     * @throws NullPointerException if the argument is null
-     */
-    @Override
-    public int compareTo(final Entry o) {
-        return Integer.compare(Objects.requireNonNull(o).getScore(), this.score);
-    }
-
-    /**
-     * Tests for equality based on both name and score.
-     *
-     * @return true if the other object is a ScoreEntry with same name and score
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || this.getClass() != obj.getClass()) {
-            return false;
-        }
-        final ScoreEntry that = (ScoreEntry) obj;
-        return this.score == that.score && Objects.equals(this.name, that.name);
-    }
-
-    /**
-     * Returns a hash code combining name and score.
-     *
-     * @return hash code value consistent with equals
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name, this.score);
     }
 
     /**

@@ -1,9 +1,9 @@
-package it.unibo.coffebreak.model.api.score.manager;
+package it.unibo.coffebreak.model.api.score;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 
 /**
  * Manages all scoring-related operations for a game, including.
@@ -14,12 +14,9 @@ import it.unibo.coffebreak.model.api.score.Entry;
  * <li>Game session lifecycle</li>
  * </ul>
  * 
- * @param <X> the type of entries stored in the leaderboard, must implement
- *            {@link Entry}
- * 
  * @author Alessandro Rebosio
  */
-public interface ScoreManager<X> {
+public interface ScoreManager {
 
     /**
      * Gets the player's current accumulated score.
@@ -40,7 +37,7 @@ public interface ScoreManager<X> {
      * 
      * @return list of entries sorted in descending score order (never null)
      */
-    List<X> getLeaderBoard();
+    List<Entry> getLeaderBoard();
 
     /**
      * Gets the highest score from the leaderboard.

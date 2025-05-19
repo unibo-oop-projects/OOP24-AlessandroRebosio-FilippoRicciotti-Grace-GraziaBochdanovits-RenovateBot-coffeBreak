@@ -16,7 +16,7 @@ import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
-import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
  * Represents the main player character (Mario) in the game.
