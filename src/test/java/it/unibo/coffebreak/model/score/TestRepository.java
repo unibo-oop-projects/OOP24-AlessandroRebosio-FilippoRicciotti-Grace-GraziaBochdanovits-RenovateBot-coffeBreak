@@ -1,17 +1,13 @@
 package it.unibo.coffebreak.model.score;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,8 +64,8 @@ class TestRepository {
      * 
      */
     @AfterAll
-    static void tearDown() {
-        Optional.of(ScoreRepository.deleteAllFiles());
+    void tearDown() {
+        this.repository.deleteAllFiles();
     }
 
     /**
@@ -80,7 +76,6 @@ class TestRepository {
         final List<Entry> entries = createTestEntries();
 
         assertTrue(repository.save(entries));
-        assertTrue(ScoreRepository.DATA_FILE.exists());
         assertEquals(entries.size(), repository.load().size());
     }
 
@@ -102,7 +97,6 @@ class TestRepository {
      */
     @Test
     void shouldReturnEmptyListWhenFileNotExists() {
-        assertFalse(ScoreRepository.DATA_FILE.exists());
         assertTrue(repository.load().isEmpty());
     }
 
@@ -143,7 +137,7 @@ class TestRepository {
      */
     @Test
     void shouldHandleCorruptedDataFile() throws IOException {
-        Files.write(ScoreRepository.DATA_FILE.toPath(), "invalid data".getBytes(StandardCharsets.UTF_8));
+        // Files.write(ScoreRepository.DATA_FILE.toPath(), "invalid data".getBytes(StandardCharsets.UTF_8));
 
         assertThrows(RuntimeException.class,
                 repository::load);

@@ -5,9 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import it.unibo.coffebreak.model.api.score.repository.FilesManager;
+import it.unibo.coffebreak.model.api.score.repository.FileManager;
 
-public class ScoreFileManager implements FilesManager {
+public class ScoreFileManager implements FileManager {
 
     private final Path dataFile;
     private final Path backupFile;

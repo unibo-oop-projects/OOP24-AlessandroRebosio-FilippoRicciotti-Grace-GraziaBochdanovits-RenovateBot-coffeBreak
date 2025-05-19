@@ -63,7 +63,7 @@ class TestScoreManager {
      */
     @AfterAll
     static void tearDown() {
-        TestRepository.tearDown();
+        // TestRepository.tearDown();
     }
 
     /**

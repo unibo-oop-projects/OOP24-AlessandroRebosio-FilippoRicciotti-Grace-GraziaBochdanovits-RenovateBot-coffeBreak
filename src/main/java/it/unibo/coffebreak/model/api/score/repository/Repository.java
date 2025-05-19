@@ -31,4 +31,6 @@ public interface Repository<X> {
      * @return a new list containing all stored elements, empty list if none exist
      */
     List<X> load();
+
+    public boolean deleteAllFiles();
 }

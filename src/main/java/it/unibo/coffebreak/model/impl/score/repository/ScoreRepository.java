@@ -1,18 +1,15 @@
 package it.unibo.coffebreak.model.impl.score.repository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.score.entry.Entry;
+import it.unibo.coffebreak.model.api.score.repository.FileManager;
 import it.unibo.coffebreak.model.api.score.repository.Repository;
 
 /**
@@ -25,6 +22,7 @@ import it.unibo.coffebreak.model.api.score.repository.Repository;
  * 
  * @author Alessandro Rebosio
  */
+
 public class ScoreRepository implements Repository<Entry> {
 
     /** The Folder name used for files. */
@@ -33,25 +31,13 @@ public class ScoreRepository implements Repository<Entry> {
     /** The name of the file that stores the serialized leaderboard data. */
     private static final String FILE_NAME = "dk_leaderboard.ser";
 
-    /** The file extension used for backup files. */
-    private static final String BACKUP_EXT = ".bak";
-
-    /** The directory where the data files will be stored. */
-    public static final File DATA_DIR = new File(System.getProperty("user.home"), FOLDER);
-
-    /** The file that holds the persistent leaderboard data. */
-    public static final File DATA_FILE = new File(DATA_DIR, FILE_NAME);
-
-    /** The file that holds the persistent leaderboard data. */
-    public static final File BACKUP_FILE = new File(DATA_DIR, FILE_NAME + BACKUP_EXT);
+    private final FileManager fileManager;
 
     /**
      * Constructor that ensures the data directory exists.
      */
     public ScoreRepository() {
-        if (!DATA_DIR.exists() && !DATA_DIR.mkdirs()) {
-            throw new RepositoryException("Could not create data directory: " + DATA_DIR.getAbsolutePath());
-        }
+        this.fileManager = new ScoreFileManager(FOLDER, FILE_NAME);
     }
 
     /**
@@ -64,20 +50,16 @@ public class ScoreRepository implements Repository<Entry> {
      */
     @Override
     public boolean save(final List<Entry> list) {
-        Objects.requireNonNull(list, "The list cannot be null");
-
-        if (list.isEmpty()) {
+        if (Objects.requireNonNull(list, "The list cannot be null").isEmpty()) {
             return true;
         }
 
-        if (DATA_FILE.exists()) {
-            this.createBackup();
-        }
+        fileManager.createBackup();
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(fileManager.getDataFile()))) {
             oos.writeObject(list);
             return true;
-        } catch (final IOException e) {
+        } catch (IOException e) {
             throw new RepositoryException("Error while saving data", e);
         }
     }
@@ -93,14 +75,14 @@ public class ScoreRepository implements Repository<Entry> {
     @Override
     @SuppressWarnings("unchecked")
     public List<Entry> load() {
-        if (!DATA_FILE.exists()) {
+        if (!Files.exists(fileManager.getDataFile())) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(DATA_FILE))) {
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(fileManager.getDataFile()))) {
             return (List<Entry>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            if (this.restoreFromBackup()) {
+            if (fileManager.restoreFromBackup()) {
                 return load();
             }
             throw new RepositoryException("Error while loading data", e);
@@ -113,43 +95,9 @@ public class ScoreRepository implements Repository<Entry> {
      * @return true if all files were successfully deleted or didn't exist, false
      *         otherwise
      */
-    public static boolean deleteAllFiles() {
-        return (!DATA_FILE.exists() || DATA_FILE.delete())
-                && (!BACKUP_FILE.exists() || BACKUP_FILE.delete())
-                && (!DATA_DIR.exists() || DATA_DIR.delete());
-    }
-
-    /**
-     * Creates a backup of the current leaderboard file.
-     * 
-     * @throws RepositoryException if the backup operation fails
-     */
-    private void createBackup() {
-        try {
-            Files.copy(DATA_FILE.toPath(), BACKUP_FILE.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (final IOException e) {
-            throw new RepositoryException("Backup creation failed", e);
-        }
-    }
-
-    /**
-     * Attempts to restore the leaderboard file from a backup.
-     * 
-     * @return true if the restore was successful, false otherwise
-     * @throws RepositoryException if the restore operation fails
-     */
-    private boolean restoreFromBackup() {
-        if (BACKUP_FILE.exists()) {
-            try {
-                Files.copy(BACKUP_FILE.toPath(), DATA_FILE.toPath(),
-                        StandardCopyOption.REPLACE_EXISTING);
-                return true;
-            } catch (final IOException e) {
-                throw new RepositoryException("Backup restore failed", e);
-            }
-        }
-        return false;
+    @Override
+    public boolean deleteAllFiles() {
+        return this.fileManager.deleteAll();
     }
 
     /**
