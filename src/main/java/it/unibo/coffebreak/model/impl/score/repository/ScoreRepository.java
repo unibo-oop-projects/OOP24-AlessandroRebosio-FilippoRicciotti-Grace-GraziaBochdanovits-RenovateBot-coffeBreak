@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.repository.Repository;
 
 /**

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.repository.Repository;
 import it.unibo.coffebreak.model.impl.score.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.repository.ScoreRepository;

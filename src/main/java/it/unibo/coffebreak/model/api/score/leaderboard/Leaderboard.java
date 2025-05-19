@@ -2,19 +2,19 @@ package it.unibo.coffebreak.model.api.score.leaderboard;
 
 import java.util.List;
 
+import it.unibo.coffebreak.model.api.score.entry.Entry;
+
 /**
- * Represents a ranked collection of entries, typically used to track top scores
- * in a game.
+ * Represents a ranked collection of {@link Entry}, typically used to track top
+ * scores in a game.
+ * <p>
  * The leaderboard maintains entries in descending order of their score/ranking.
  * Implementations may impose additional constraints like maximum capacity or
  * minimum score requirements.
  *
- * @param <X> the type of entries in this leaderboard, must implement
- *            {@link Comparable} or otherwise provide ordering capability
- * 
  * @author Alessandro Rebosio
  */
-public interface Leaderboard<X> {
+public interface Leaderboard {
     /**
      * Returns an unmodifiable view of entries ranked from highest to lowest.
      * The returned list is a snapshot and won't reflect subsequent modifications.
@@ -22,7 +22,7 @@ public interface Leaderboard<X> {
      * @return immutable list of entries in descending order, never null but may be
      *         empty
      */
-    List<X> getLeaderBoard();
+    List<Entry> getLeaderBoard();
 
     /**
      * Attempts to add a new entry to the leaderboard if it meets ranking criteria.
@@ -34,10 +34,8 @@ public interface Leaderboard<X> {
      *
      * @param entry the entry to add, must not be null
      * @throws NullPointerException if entry is null
-     * @throws ClassCastException   if entry type is incompatible with this
-     *                              leaderboard
      * 
      * @return a boolean, if it is true the element was added, otherwise false
      */
-    boolean addEntry(X entry);
+    boolean addEntry(Entry entry);
 }

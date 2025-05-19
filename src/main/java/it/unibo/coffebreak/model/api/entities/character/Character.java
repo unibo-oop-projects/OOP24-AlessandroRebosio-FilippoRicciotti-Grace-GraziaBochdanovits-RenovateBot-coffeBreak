@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 
 /**
  * Represents a character entity in the game world.

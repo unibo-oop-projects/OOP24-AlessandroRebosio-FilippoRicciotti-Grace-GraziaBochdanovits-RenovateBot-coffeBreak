@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
 import it.unibo.coffebreak.model.impl.score.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
