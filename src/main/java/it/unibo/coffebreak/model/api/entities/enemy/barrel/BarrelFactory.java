@@ -14,10 +14,9 @@ public interface BarrelFactory {
      * Creates a new barrel instance.
      * 
      * @param position the initial position
-     * @param canTransformToFire whether the barrel can transform to fire
      * @param initialDirection the direction on the barrel
      * @return a new Barrel instance
      */
-    Barrel createBarrel(Position2D position, boolean canTransformToFire, Command initialDirection);
+    Barrel createBarrel(Position2D position, Command initialDirection);
 }
 
