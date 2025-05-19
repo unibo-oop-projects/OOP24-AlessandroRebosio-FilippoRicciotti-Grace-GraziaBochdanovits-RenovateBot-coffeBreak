@@ -11,9 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.score.Entry;
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
-import it.unibo.coffebreak.model.impl.score.ScoreEntry;
+import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
 
 /**
@@ -42,7 +42,7 @@ class TestLeaderBoard {
     private static final int SCORE_3 = 3000;
     private static final String EMPTY_NAME = "";
 
-    private Leaderboard<Entry> leaderBoard;
+    private Leaderboard leaderBoard;
 
     /**
      * Initializes a fresh GameLeaderBoard instance before each test.
@@ -74,7 +74,7 @@ class TestLeaderBoard {
                 new ScoreEntry(PLAYER_2, SCORE_2),
                 new ScoreEntry(PLAYER_1, SCORE_1));
 
-        assertEquals(expected, leaderBoard.getLeaderBoard());
+        assertEquals(expected, leaderBoard.getTopScores());
     }
 
     /**
@@ -96,8 +96,8 @@ class TestLeaderBoard {
         final Entry lowScoreEntry = new ScoreEntry("NewPlayer", 50);
         leaderBoard.addEntry(lowScoreEntry);
 
-        assertEquals(GameLeaderboard.MAX_ENTRIES, leaderBoard.getLeaderBoard().size());
-        assertFalse(leaderBoard.getLeaderBoard().contains(lowScoreEntry));
+        assertEquals(GameLeaderboard.MAX_ENTRIES, leaderBoard.getTopScores().size());
+        assertFalse(leaderBoard.getTopScores().contains(lowScoreEntry));
     }
 
     /**
@@ -110,8 +110,8 @@ class TestLeaderBoard {
         final Entry highScoreEntry = new ScoreEntry("Champion", Integer.MAX_VALUE);
         leaderBoard.addEntry(highScoreEntry);
 
-        assertTrue(leaderBoard.getLeaderBoard().contains(highScoreEntry));
-        assertEquals(highScoreEntry, leaderBoard.getLeaderBoard().get(0));
+        assertTrue(leaderBoard.getTopScores().contains(highScoreEntry));
+        assertEquals(highScoreEntry, leaderBoard.getTopScores().get(0));
     }
 
     /**
@@ -121,7 +121,7 @@ class TestLeaderBoard {
     void shouldAcceptEmptyPlayerNames() {
         final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
         leaderBoard.addEntry(entry);
-        assertEquals(EMPTY_NAME, leaderBoard.getLeaderBoard().getFirst().getName());
+        assertEquals(EMPTY_NAME, leaderBoard.getTopScores().getFirst().getName());
     }
 
     /**
