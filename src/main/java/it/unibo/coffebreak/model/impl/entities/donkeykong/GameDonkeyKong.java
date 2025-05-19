@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.donkeykong;
 
 import java.util.Optional;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
@@ -21,22 +22,16 @@ import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrelFactory;
  * 
  * @see DonkeyKong
  * @see AbstractEntity
+ * @author Grazia Bochdanovits de Kavna
  */
 public class GameDonkeyKong extends AbstractEntity implements DonkeyKong {
 
     /**
-     * The fixed interval between barrel throws in milliseconds.
+     * The interval between barrel throws in milliseconds.
      */
     private static final long BARREL_THROW_INTERVAL = 3000;
 
-    /**
-     * The timestamp of the last barrel throw.
-     */
     private long lastThrowTime;
-
-    /**
-     * The factory used to create new barrel instances.
-     */
     private final BarrelFactory barrelFactory;
 
     /**
@@ -45,6 +40,7 @@ public class GameDonkeyKong extends AbstractEntity implements DonkeyKong {
      * @param position the initial position of Donkey Kong (cannot be null)
      * @param dimension the physical dimensions of the character (cannot be null)
      * @throws NullPointerException if position or dimension are null
+     * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
     public GameDonkeyKong(final Position2D position, final Dimension2D dimension) {
         super(position, dimension);
@@ -52,31 +48,29 @@ public class GameDonkeyKong extends AbstractEntity implements DonkeyKong {
     }
 
     /**
-     * Updates Donkey Kong's state based on game time.
-     * 
-     * @param deltaTime the time elapsed since last update in milliseconds
+     * {@inheritDoc}
+     * <p>
+     * Current implementation does nothing as Donkey Kong doesn't require
+     * periodic updates beyond barrel throwing.
+     * </p>
      */
     @Override
     public void update(final float deltaTime) {
         // Intentionally empty
     }
 
-     /**
+    /**
      * Creates and throws a new barrel from Donkey Kong's position.
      * <p>
-     * Implementation details:
-     * <ul>
-     *   <li>Creates a basic barrel (non-fire variant)</li>
-     *   <li>Uses Donkey Kong's current position as starting point</li>
-     *   <li>Barrel velocity is set by the {@link GameBarrelFactory}</li>
-     * </ul>
+     * The barrel's starting position is slightly offset from
+     * Donkey Kong's current position.
+     * </p>
      * 
      * @return the newly created {@link Barrel} instance
      */
     @Override
     public Barrel throwBarrel() {
-        //TODO: calcola posizione che non sia proprio quella di DK
-        return barrelFactory.createBarrel(getPosition(), false);
+        return barrelFactory.createBarrel(getPosition(), Command.MOVE_RIGHT);
     }
 
     /**
@@ -99,16 +93,10 @@ public class GameDonkeyKong extends AbstractEntity implements DonkeyKong {
     }
 
     /**
-     * Handles collision with other game entities.
-     * <p>
-     * Current implementation does nothing. Override to implement specific
-     * collision behavior (e.g., reacting to player attacks).
-     * </p>
-     * 
-     * @param other the entity that collided with Donkey Kong
+     * {@inheritDoc}
      */
     @Override
     public void onCollision(final Entity other) {
-        // Intentionally left blank - implement collision logic in subclasses
+        // Intentionally left blank
     }
 }
