@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.impl.score;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -44,7 +45,7 @@ public class GameScoreManager implements ScoreManager {
     private final Bonus bonus;
 
     /** Persists leaderboard data between sessions. */
-    private final Repository<Entry> repository;
+    private final Repository<List<Entry>> repository;
 
     /** Maintains ranked player entries. */
     private final Leaderboard leaderBoard;
@@ -56,7 +57,7 @@ public class GameScoreManager implements ScoreManager {
     public GameScoreManager() {
         this.score = new GameScore();
         this.bonus = new GameBonus();
-        this.repository = new ScoreRepository();
+        this.repository = new ScoreRepository<>(ArrayList::new);
         this.leaderBoard = new GameLeaderboard(this.repository.load());
     }
 
