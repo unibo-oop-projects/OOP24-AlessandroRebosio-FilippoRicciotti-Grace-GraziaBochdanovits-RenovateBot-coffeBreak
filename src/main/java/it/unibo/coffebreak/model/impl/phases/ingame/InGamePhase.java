@@ -6,6 +6,7 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
 import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
+import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Implementation of {@link Phases} interface;
@@ -26,6 +27,8 @@ public class InGamePhase extends AbstractPhases {
             case ESCAPE:
                 model.setState(new PausePhase());
                 break;
+            // TODO: case LEFT, RIGHT, MOVE_UP, MOVE_DOWN, JUMP call
+            // model.getPlayer().ifPresent(player -> player.setCommand(command));
             default:
                 break;
         }
@@ -45,7 +48,7 @@ public class InGamePhase extends AbstractPhases {
                 .map(Movable.class::cast)
                 .forEach(e -> e.move(deltaTime));
 
-        model.checkCollision();
+        GameCollision.checkCollision(model);
 
         // TODO: nextLevel
 

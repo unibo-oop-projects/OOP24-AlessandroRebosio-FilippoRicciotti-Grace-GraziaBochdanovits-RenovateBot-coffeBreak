@@ -87,11 +87,6 @@ public interface Model {
     void update(float deltaTime);
 
     /**
-     * Checks Collision of all entities in Game.
-     */
-    void checkCollision();
-
-    /**
      * Checks if the game simulation is currently running.
      * 
      * @return true if the game is running, false otherwise

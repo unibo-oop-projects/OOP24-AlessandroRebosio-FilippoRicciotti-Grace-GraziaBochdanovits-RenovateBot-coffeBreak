@@ -14,9 +14,7 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.api.physics.Collision;
 import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
-import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Concrete implementation of the game model.
@@ -30,8 +28,6 @@ import it.unibo.coffebreak.model.impl.physics.GameCollision;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private final Collision gameCollision;
-
     private Phases currentPhase;
 
     private boolean running;
@@ -42,7 +38,6 @@ public class GameModel implements Model {
      */
     public GameModel() {
         this.entities = new ArrayList<>();
-        this.gameCollision = new GameCollision();
 
         currentPhase = new MenuPhase();
         currentPhase.enterPhase();
@@ -118,14 +113,6 @@ public class GameModel implements Model {
     @Override
     public void update(final float deltaTime) {
         this.currentPhase.update(this, deltaTime);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void checkCollision() {
-        this.gameCollision.checkCollision(this);
     }
 
     /**
