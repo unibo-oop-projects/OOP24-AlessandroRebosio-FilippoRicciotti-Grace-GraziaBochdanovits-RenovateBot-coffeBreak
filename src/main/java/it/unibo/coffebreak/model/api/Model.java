@@ -1,11 +1,14 @@
 package it.unibo.coffebreak.model.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.model.api.entities.princess.Princess;
 import it.unibo.coffebreak.model.api.phases.Phases;
 
 /**
@@ -26,18 +29,39 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
-     * Gets the player character.
-     * 
-     * @return the player character, or null if no player is set
+     * Retrieves the player character entity, if present.
+     *
+     * @return an {@link Optional} containing the player character, or an empty
+     *         {@code Optional} if not present
      */
-    Character getPlayer();
+    Optional<Character> getPlayer();
 
     /**
-     * Gets Donkey Kong.
-     * 
-     * @return the Donkey Kong entity, or null if no DK is set
+     * Retrieves the Donkey Kong entity, if present.
+     *
+     * @return an {@link Optional} containing the Donkey Kong entity, or an empty
+     *         {@code Optional} if not present
      */
-    DonkeyKong getDK();
+    Optional<DonkeyKong> getDonkeyKong();
+
+    /**
+     * Retrieves the Princess entity, if present.
+     *
+     * @return an {@link Optional} containing the Princess entity, or an empty
+     *         {@code Optional} if not present
+     */
+    Optional<Princess> getPrincess();
+
+    /**
+     * Adds a barrel to the game model.
+     * The barrel will be included in the list of active entities if it is not null.
+     *
+     * @param barrel the {@link Barrel} to be added; must not be {@code null}
+     * @return {@code true} if the barrel was added successfully, {@code false}
+     *         otherwise
+     * @throws NullPointerException if {@code barrel} is {@code null}
+     */
+    boolean addBarrel(Barrel barrel);
 
     /**
      * Changes the current game phase to the specified one.

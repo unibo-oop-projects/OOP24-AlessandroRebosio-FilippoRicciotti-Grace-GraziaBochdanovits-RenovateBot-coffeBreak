@@ -38,7 +38,8 @@ public class InGamePhase extends AbstractPhases {
     public void update(final Model model, final float deltaTime) {
         // TODO: check player move
 
-        model.getDK().tryThrowBarrel().ifPresent(model.getEntities()::add);
+        // TODO: to fix
+        // model.getDK().tryThrowBarrel().ifPresent(model.getEntities()::add);
 
         model.getEntities().stream() // TODO: generalize for Enemy change roll to move, also for Mario
                 .filter(Barrel.class::isInstance)
@@ -49,7 +50,7 @@ public class InGamePhase extends AbstractPhases {
 
         // TODO: nextLevel
 
-        // TODO: isGameOver and set State 
+        // TODO: isGameOver and set State
     }
 
 }
