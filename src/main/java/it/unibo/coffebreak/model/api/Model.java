@@ -5,6 +5,7 @@ import java.util.List;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.model.api.phases.Phases;
 
 /**
@@ -32,6 +33,13 @@ public interface Model {
     Character getPlayer();
 
     /**
+     * Gets Donkey Kong.
+     * 
+     * @return the Donkey Kong entity, or null if no DK is set
+     */
+    DonkeyKong getDK();
+
+    /**
      * Changes the current game phase to the specified one.
      * 
      * @param newPhase the phase to switch to
@@ -53,6 +61,11 @@ public interface Model {
      * @param deltaTime time in seconds since last update
      */
     void update(float deltaTime);
+
+    /**
+     * Checks Collision of all entities in Game.
+     */
+    void checkCollision();
 
     /**
      * Checks if the game simulation is currently running.

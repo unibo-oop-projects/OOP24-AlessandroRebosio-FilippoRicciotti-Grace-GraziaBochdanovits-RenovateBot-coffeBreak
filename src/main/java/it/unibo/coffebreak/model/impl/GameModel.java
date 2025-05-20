@@ -9,8 +9,11 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.api.physics.Collision;
 import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
+import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Concrete implementation of the game model.
@@ -25,7 +28,10 @@ public class GameModel implements Model {
 
     private final List<Entity> entities;
     private final Character player;
+    private final DonkeyKong dk;
     private Phases currentPhase;
+
+    private final Collision gameCollision;
 
     private boolean running;
 
@@ -36,9 +42,12 @@ public class GameModel implements Model {
     public GameModel() {
         this.entities = new ArrayList<>();
         this.player = null;
+        this.dk = null;
 
         currentPhase = new MenuPhase();
         currentPhase.enterPhase();
+
+        this.gameCollision = new GameCollision();
 
         this.running = true;
     }
@@ -58,6 +67,14 @@ public class GameModel implements Model {
     @Override
     public Character getPlayer() {
         return this.player;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DonkeyKong getDK() {
+        return this.dk;
     }
 
     /**
@@ -87,6 +104,14 @@ public class GameModel implements Model {
     @Override
     public void update(final float deltaTime) {
         this.currentPhase.update(this, deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkCollision() {
+        this.gameCollision.checkCollision(this);
     }
 
     /**
