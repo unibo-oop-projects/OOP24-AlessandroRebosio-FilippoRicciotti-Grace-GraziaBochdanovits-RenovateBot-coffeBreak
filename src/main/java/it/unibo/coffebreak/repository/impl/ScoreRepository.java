@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 
+import it.unibo.coffebreak.model.api.score.entry.Entry;
 import it.unibo.coffebreak.repository.api.Repository;
 import it.unibo.coffebreak.repository.api.filemanager.FileManager;
 import it.unibo.coffebreak.repository.impl.filemanager.GameFileManager;
@@ -16,39 +17,30 @@ import it.unibo.coffebreak.repository.impl.filemanager.GameFileManager;
  * A file-based repository implementation using Java serialization
  * for storing and loading Entry objects. Supports backup and recovery.
  * 
- * @param <T> the type of elements to be persisted
- * 
  * @author Alessandro Rebosio
  */
-public class ScoreRepository<T> implements Repository<T> {
+public class ScoreRepository implements Repository<List<Entry>> {
 
     private static final String FOLDER = ".coffeBreak";
     private static final String FILE_NAME = "dk_leaderboard.ser";
 
     private final FileManager fileManager;
-    private final Supplier<T> defaultSupplier;
 
     /**
-     * Constructs a new {@code ScoreRepository} instance using a default file
-     * manager and a supplier to provide default values when no data is available.
-     *
-     * @param defaultSupplier a {@link Supplier} that provides a default instance
-     *                        of {@code T} when no data file exists or recovery
-     *                        fails; must not be {@code null}
-     * @throws NullPointerException if {@code defaultSupplier} is {@code null}
+     * Constructs a new {@code ScoreRepository} instance using the default file
+     * manager. Initializes an empty list when no data file is available.
      */
-    public ScoreRepository(final Supplier<T> defaultSupplier) {
+    public ScoreRepository() {
         this.fileManager = new GameFileManager(FOLDER, FILE_NAME);
-        this.defaultSupplier = Objects.requireNonNull(defaultSupplier, "Default supplier cannot be null");
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean save(final T data) {
+    public boolean save(final List<Entry> data) {
         Objects.requireNonNull(data, "List cannot be null");
-        if (data instanceof final List list && list.isEmpty()) {
+        if (data.isEmpty()) {
             return true;
         }
 
@@ -67,13 +59,13 @@ public class ScoreRepository<T> implements Repository<T> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public T load() {
+    public List<Entry> load() {
         if (!Files.exists(fileManager.getDataFile())) {
-            return defaultSupplier.get();
+            return new ArrayList<>();
         }
 
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(fileManager.getDataFile()))) {
-            return (T) ois.readObject();
+            return (List<Entry>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             if (fileManager.restoreFromBackup()) {
                 return load();

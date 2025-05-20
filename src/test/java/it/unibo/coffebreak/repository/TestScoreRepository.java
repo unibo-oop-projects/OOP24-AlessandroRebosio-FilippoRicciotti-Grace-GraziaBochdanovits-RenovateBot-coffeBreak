@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.repository;
 
 import it.unibo.coffebreak.model.api.score.entry.Entry;
+import it.unibo.coffebreak.repository.api.Repository;
 import it.unibo.coffebreak.repository.impl.ScoreRepository;
 import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 
@@ -9,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +30,7 @@ class TestScoreRepository {
     private static final int SCORE1 = 1500;
     private static final int SCORE2 = 1200;
 
-    private ScoreRepository<List<Entry>> repository;
+    private Repository<List<Entry>> repository;
 
     private Entry entry1;
     private Entry entry2;
@@ -41,7 +41,7 @@ class TestScoreRepository {
      */
     @BeforeEach
     void setUp() {
-        repository = new ScoreRepository<>(ArrayList::new);
+        repository = new ScoreRepository();
         entry1 = new ScoreEntry("Mario", SCORE1);
         entry2 = new ScoreEntry("Luigi", SCORE2);
     }
