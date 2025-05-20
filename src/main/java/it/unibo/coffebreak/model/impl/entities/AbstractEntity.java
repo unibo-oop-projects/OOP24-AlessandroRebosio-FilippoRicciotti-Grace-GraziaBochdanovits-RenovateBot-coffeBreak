@@ -3,7 +3,7 @@ package it.unibo.coffebreak.model.impl.entities;
 import java.util.Objects;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 
@@ -19,7 +19,7 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
 public abstract class AbstractEntity implements Entity {
 
     private Position2D position;
-    private final Dimension2D dimension;
+    private final BoundingBox2D dimension;
     private Vector2D velocity;
     private boolean isFacingRight;
 
@@ -30,7 +30,7 @@ public abstract class AbstractEntity implements Entity {
      * @param dimension the dimensions of the entity (cannot be {@code null})
      * @throws NullPointerException if either position or dimension is {@code null}
      */
-    public AbstractEntity(final Position2D position, final Dimension2D dimension) {
+    public AbstractEntity(final Position2D position, final BoundingBox2D dimension) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
         this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
         this.velocity = new Vector2D(0, 0);
@@ -41,7 +41,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public Dimension2D getDimension() {
+    public BoundingBox2D getDimension() {
         return this.dimension;
     }
 

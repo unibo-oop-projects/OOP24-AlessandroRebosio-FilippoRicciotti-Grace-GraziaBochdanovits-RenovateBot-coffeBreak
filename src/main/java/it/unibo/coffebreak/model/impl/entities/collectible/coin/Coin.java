@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.collectible.coin;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
 
@@ -23,7 +23,7 @@ public class Coin extends AbstractCollectible {
      * @param dimension the 2D dimensions (size) of the coin
      * @param value     the point value this coin is worth when collected
      */
-    public Coin(final Position2D position, final Dimension2D dimension, final int value) {
+    public Coin(final Position2D position, final BoundingBox2D dimension, final int value) {
         super(position, dimension, value);
     }
 }

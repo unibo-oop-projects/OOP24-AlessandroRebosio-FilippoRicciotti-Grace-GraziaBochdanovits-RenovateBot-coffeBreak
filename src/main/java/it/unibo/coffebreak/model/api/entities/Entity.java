@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.api.entities;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 
@@ -10,7 +10,7 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  * Implementations can represent both static and dynamic game elements.
  *
  * @see Position2D
- * @see Dimension2D
+ * @see BoundingBox2D
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -35,9 +35,9 @@ public interface Entity { // TODO: and the end remove unused method and simplify
     /**
      * Gets the physical dimensions of this entity.
      *
-     * @return the {@link Dimension2D} of this entity (never {@code null})
+     * @return the {@link BoundingBox2D} of this entity (never {@code null})
      */
-    Dimension2D getDimension();
+    BoundingBox2D getDimension();
 
     /**
      * Gets the current velocity vector of this entity.

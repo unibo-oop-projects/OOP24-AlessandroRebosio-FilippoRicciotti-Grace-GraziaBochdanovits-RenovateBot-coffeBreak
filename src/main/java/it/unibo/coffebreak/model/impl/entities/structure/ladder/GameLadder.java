@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.structure.ladder;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.structure.Ladder;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
@@ -23,7 +23,7 @@ public class GameLadder extends AbstractEntity implements Ladder {
      * @param position  the position of the ladder in the game world
      * @param dimension the size of the ladder
      */
-    public GameLadder(final Position2D position, final Dimension2D dimension) {
+    public GameLadder(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 

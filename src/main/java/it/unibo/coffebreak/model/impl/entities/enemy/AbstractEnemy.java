@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.impl.entities.enemy;
 
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
@@ -40,7 +40,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      * @param dimension the size/dimensions of the enemy (cannot be null)
      * @throws NullPointerException if position or dimension are null
      */
-    public AbstractEnemy(final Position2D position, final Dimension2D dimension) {
+    public AbstractEnemy(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 

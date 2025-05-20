@@ -7,7 +7,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrelFactory;
@@ -42,7 +42,7 @@ public class DonkeyKong extends AbstractEntity implements Antagonist {
      * @throws NullPointerException     if position or dimension are null
      * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
-    public DonkeyKong(final Position2D position, final Dimension2D dimension) {
+    public DonkeyKong(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
         this.barrelFactory = new GameBarrelFactory();
     }

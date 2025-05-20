@@ -5,7 +5,7 @@ import java.util.Random;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 
@@ -30,7 +30,7 @@ public class GameBarrelFactory implements BarrelFactory {
     private static final double FIRE_BARREL_PROBABILITY = 0.4;
 
     /** The default dimensions for created barrels (1.0f x 1.0f). */
-    private static final Dimension2D DEFAULT_BARREL_DIMENSION = new Dimension2D(1.0f, 1.0f);
+    private static final BoundingBox2D DEFAULT_BARREL_DIMENSION = new BoundingBox2D(1.0f, 1.0f);
 
     /** The horizontal velocity component for thrown barrels. */
     private static final float THROW_SPEED_X = 2.5f;

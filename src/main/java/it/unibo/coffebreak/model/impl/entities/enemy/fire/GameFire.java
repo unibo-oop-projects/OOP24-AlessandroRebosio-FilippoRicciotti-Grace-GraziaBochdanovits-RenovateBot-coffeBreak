@@ -3,7 +3,7 @@ package it.unibo.coffebreak.model.impl.entities.enemy.fire;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
@@ -23,7 +23,7 @@ public class GameFire extends AbstractEnemy implements Fire, Movable {
      * @param position  the initial position of the fire in 2D space
      * @param dimension the dimensions (width and height) of the fire
      */
-    public GameFire(final Position2D position, final Dimension2D dimension) {
+    public GameFire(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 

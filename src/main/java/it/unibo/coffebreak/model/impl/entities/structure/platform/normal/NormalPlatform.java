@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.structure.platform.normal;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.AbstractPlatform;
 
@@ -20,7 +20,7 @@ public class NormalPlatform extends AbstractPlatform {
      * @param dimension the 2D dimensions of the platform (cannot be null)
      * @param slope the slope orientation of the platform (cannot be null)
      */
-    public NormalPlatform(final Position2D position, final Dimension2D dimension, final Slope slope) {
+    public NormalPlatform(final Position2D position, final BoundingBox2D dimension, final Slope slope) {
         super(position, dimension, slope);
     }
 

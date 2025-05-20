@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.structure.tank;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.structure.Tank;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
@@ -27,7 +27,7 @@ public class GameTank extends AbstractEntity implements Tank {
      * @param dimension the physical size of the tank (cannot be null)
      * @throws NullPointerException if position or dimension are null
      */
-    public GameTank(final Position2D position, final Dimension2D dimension) {
+    public GameTank(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 

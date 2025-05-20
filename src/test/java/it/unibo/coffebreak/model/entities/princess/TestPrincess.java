@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.entities.npc.Target;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.npc.princess.Princess;
 
@@ -33,7 +33,7 @@ class TestPrincess {
     private static final Position2D TEST_POSITION = new Position2D(10.0f, 20.0f);
 
     /** Test dimension used for princess initialization. */
-    private static final Dimension2D TEST_DIMENSION = new Dimension2D(5.0f, 10.0f);
+    private static final BoundingBox2D TEST_DIMENSION = new BoundingBox2D(5.0f, 10.0f);
 
     /** The princess instance under test. */
     private Princess princess;

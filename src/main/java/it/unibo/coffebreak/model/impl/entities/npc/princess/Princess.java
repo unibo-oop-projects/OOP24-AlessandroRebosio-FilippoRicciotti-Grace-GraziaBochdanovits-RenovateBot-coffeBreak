@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.npc.princess;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.npc.Target;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
@@ -26,7 +26,7 @@ public class Princess extends AbstractEntity implements Target {
      * @param dimension the dimensions of the princess entity (cannot be null)
      * @throws NullPointerException if either position or dimension are null
      */
-    public Princess(final Position2D position, final Dimension2D dimension) {
+    public Princess(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
         this.rescued = false;
     }

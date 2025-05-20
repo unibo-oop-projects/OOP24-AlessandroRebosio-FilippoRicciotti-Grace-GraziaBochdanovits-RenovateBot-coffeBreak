@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.entities.structure.Tank;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
 
@@ -31,7 +31,7 @@ class TestGameTank {
     private static final Position2D TEST_POSITION = new Position2D(15.0f, 30.0f);
 
     /** Test dimension used for tank initialization. */
-    private static final Dimension2D TEST_DIMENSION = new Dimension2D(8.0f, 12.0f);
+    private static final BoundingBox2D TEST_DIMENSION = new BoundingBox2D(8.0f, 12.0f);
 
     /** The tank instance under test. */
     private GameTank tank;

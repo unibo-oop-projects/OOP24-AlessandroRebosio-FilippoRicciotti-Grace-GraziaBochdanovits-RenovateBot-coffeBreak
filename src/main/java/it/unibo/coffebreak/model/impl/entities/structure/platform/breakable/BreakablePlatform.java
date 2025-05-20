@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.structure.platform.breakable;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.AbstractPlatform;
 
@@ -26,7 +26,7 @@ public class BreakablePlatform extends AbstractPlatform {
      * @param slope the inclination of the platform (cannot be null)
      * @throws NullPointerException if any parameter is null
      */
-    public BreakablePlatform(final Position2D position, final Dimension2D dimension, final Slope slope) {
+    public BreakablePlatform(final Position2D position, final BoundingBox2D dimension, final Slope slope) {
         super(position, dimension, slope);
     }
 

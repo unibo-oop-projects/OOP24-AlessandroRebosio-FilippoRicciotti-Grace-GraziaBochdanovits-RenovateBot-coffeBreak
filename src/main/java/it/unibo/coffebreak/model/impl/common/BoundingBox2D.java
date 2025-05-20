@@ -6,5 +6,5 @@ package it.unibo.coffebreak.model.impl.common;
  * @param width  the width of the object.
  * @param height the height of the object.
  */
-public record Dimension2D(float width, float height) {
+public record BoundingBox2D(float width, float height) {
 }

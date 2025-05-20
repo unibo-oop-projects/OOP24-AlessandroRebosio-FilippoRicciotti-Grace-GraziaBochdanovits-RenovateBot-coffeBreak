@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.model.api.entities.structure.Platform.Slope;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.normal.NormalPlatform;
 
@@ -23,7 +23,7 @@ import it.unibo.coffebreak.model.impl.entities.structure.platform.normal.NormalP
 class TestNormalPlatform {
 
     private static final Position2D TEST_POSITION = new Position2D(10.0f, 20.0f);
-    private static final Dimension2D TEST_DIMENSION = new Dimension2D(30.0f, 5.0f);
+    private static final BoundingBox2D TEST_DIMENSION = new BoundingBox2D(30.0f, 5.0f);
 
     /**
      * Tests that NormalPlatform correctly reports it cannot break.
