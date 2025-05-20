@@ -23,9 +23,4 @@ public interface Collectible extends Entity {
      * @return true if this item has been collected, false otherwise
      */
     boolean isCollected();
-
-    /**
-     * @return the point value awarded when this item is collected
-     */
-    int getPointsValue();
 }
