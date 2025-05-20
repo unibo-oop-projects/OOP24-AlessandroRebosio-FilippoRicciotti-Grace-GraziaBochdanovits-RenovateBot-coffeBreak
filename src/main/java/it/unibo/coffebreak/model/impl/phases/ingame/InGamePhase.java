@@ -75,9 +75,18 @@ public class InGamePhase extends AbstractPhases {
 
         // TODO: nextLevel if Target isRescued
 
+        model.getPlayer().ifPresent(p -> p.getScoreManager().calculateBonus(deltaTime));
+
         model.getPlayer()
                 .filter(Character::isGameOver)
                 .ifPresent(p -> model.setState(new GameOverPhase()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void exitPhase(final Model model) {
+        model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(""));
+    }
 }

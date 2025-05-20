@@ -50,8 +50,10 @@ public interface ScoreManager {
     /**
      * Updates the bonus value according to game-specific rules.
      * Typically reduces the bonus over time.
+     * 
+     * @param deltaTime the time elapsed since the last update (in seconds)
      */
-    void calculateBonus();
+    void calculateBonus(float deltaTime);
 
     /**
      * Adds points to the current score.
@@ -76,11 +78,21 @@ public interface ScoreManager {
     void endMap();
 
     /**
-     * Finalizes the game session and saves results.
+     * Finalizes the game session.
      * 
      * @param name the player name for leaderboard (cannot be null or blank)
      * @throws NullPointerException     if name is null
      * @throws IllegalArgumentException if name is blank
      */
-    void endGame(String name);
+    void addEntryInLeaderBoard(String name);
+
+    /**
+     * Saves the current game scores to persistent storage.
+     * This method is typically invoked at the end of a game session
+     * or when the leaderboard needs to be updated.
+     *
+     * @return {@code true} if the scores were successfully saved; {@code false}
+     *         otherwise
+     */
+    boolean saveScores();
 }

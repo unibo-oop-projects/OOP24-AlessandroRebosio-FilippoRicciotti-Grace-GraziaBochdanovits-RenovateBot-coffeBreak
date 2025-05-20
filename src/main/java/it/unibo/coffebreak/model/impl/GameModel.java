@@ -39,8 +39,7 @@ public class GameModel implements Model {
     public GameModel() {
         this.entities = new ArrayList<>();
 
-        currentPhase = new MenuPhase();
-        currentPhase.enterPhase();
+        this.setState(new MenuPhase());
 
         this.running = true;
     }
@@ -92,11 +91,10 @@ public class GameModel implements Model {
      * @throws NullPointerException if newPhase is null
      */
     @Override
-    public void setState(final Phases newPhase) {
-        currentPhase.exitPhase();
+    public final void setState(final Phases newPhase) {
+        currentPhase.exitPhase(this);
         currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
-        currentPhase.enterPhase();
-
+        currentPhase.enterPhase(this);
     }
 
     /**
@@ -128,6 +126,7 @@ public class GameModel implements Model {
      */
     @Override
     public void stop() {
+        this.getPlayer().ifPresent(p -> p.getScoreManager().saveScores());
         this.running = false;
     }
 

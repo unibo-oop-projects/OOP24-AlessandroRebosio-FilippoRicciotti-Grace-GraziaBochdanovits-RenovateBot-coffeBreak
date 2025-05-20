@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.mario;
 
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
@@ -58,15 +59,13 @@ public class Mario extends AbstractEntity implements Character, Movable {
      *
      * @param position     the initial position of Mario
      * @param dimension    the dimensions of Mario's hitbox
-     * @param scoreManager the score manager to track points
      * @param physics      the physics component of Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
-    public Mario(final Position2D position, final Dimension2D dimension,
-            final GameScoreManager scoreManager, final Physics physics) {
+    public Mario(final Position2D position, final Dimension2D dimension, final Physics physics) {
         super(position, dimension);
         this.livesManager = new GameLivesManager();
-        this.scoreManager = Objects.requireNonNull(scoreManager);
+        this.scoreManager = new GameScoreManager();
         this.physics = Objects.requireNonNull(physics);
         this.currentState = new NormalState();
         this.isOnGround = true;
@@ -178,7 +177,8 @@ public class Mario extends AbstractEntity implements Character, Movable {
      * @return the ScoreManager instance handling Mario's score
      */
     @Override
-    public ScoreManager getScoreManager() {
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "ScoreManager is intentionally shared and mutable")
+    public final ScoreManager getScoreManager() {
         return this.scoreManager;
     }
 }

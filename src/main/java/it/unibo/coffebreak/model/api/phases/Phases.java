@@ -12,13 +12,17 @@ public interface Phases {
 
     /**
      * method for signaling the entrance in a new Phase.
+     * 
+     * @param model the model changing state
      */
-    void enterPhase();
+    void enterPhase(Model model);
 
     /**
      * method for signaling a Phase leaving.
+     * 
+     * @param model the model changing state
      */
-    void exitPhase();
+    void exitPhase(Model model);
 
     /**
      * method that handle input depending on the Phase the model is currently in.
