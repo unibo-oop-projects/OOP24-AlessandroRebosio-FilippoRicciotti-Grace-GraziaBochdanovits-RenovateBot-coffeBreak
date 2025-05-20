@@ -27,7 +27,7 @@ public class GameModel implements Model {
     private final Character player;
     private Phases currentPhase;
 
-    private boolean running;
+    private volatile boolean running;
 
     /**
      * Constructs a new GameModel with empty entities list,
