@@ -37,8 +37,6 @@ public final class ResourceLoader implements Resource {
 
     /**
      * The path to the "Press Start 2P" TrueType font resource within the classpath.
-     * <p>
-     * This font is typically used for retro-style UI elements.
      */
     public static final String FONT_PATH = "/fonts/PressStart2P-Regular.ttf";
 
@@ -52,25 +50,12 @@ public final class ResourceLoader implements Resource {
     private static final Map<String, Clip> SOUND_CACHE = new HashMap<>();
 
     /**
-     * Instantiates a new Game resources.
-     */
-    public ResourceLoader() {
-        try {
-            this.loadFont(FONT_PATH);
-
-            this.loadClip(JUMP_SOUND);
-        } catch (IOException | FontFormatException | UnsupportedAudioFileException | LineUnavailableException e) {
-            throw new IllegalStateException("Error while loading resources", e);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      * 
      * @throws ResourceException if the image cannot be loaded (wraps IOException)
      */
     @Override
-    public BufferedImage loadImage(final String path) throws IOException {
+    public BufferedImage loadImage(final String path) {
         return IMAGE_CACHE.computeIfAbsent(path, p -> {
             try (InputStream is = getClass().getResourceAsStream(p)) {
                 if (is == null) {
@@ -98,7 +83,7 @@ public final class ResourceLoader implements Resource {
      *                           FontFormatException)
      */
     @Override
-    public Font loadFont(final String path) throws IOException, FontFormatException {
+    public Font loadFont(final String path) {
         return FONT_CACHE.computeIfAbsent(path, k -> {
             try (InputStream is = getClass().getResourceAsStream(path)) {
                 if (is == null) {
@@ -117,10 +102,8 @@ public final class ResourceLoader implements Resource {
      * @throws ResourceException if the resource cannot be found or
      *                           loaded
      */
-
     @Override
-    public Clip loadClip(final String path)
-            throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public Clip loadClip(final String path) {
         return SOUND_CACHE.computeIfAbsent(path, p -> {
             try (InputStream is = getClass().getResourceAsStream(p)) {
                 if (is == null) {
@@ -143,13 +126,11 @@ public final class ResourceLoader implements Resource {
     public static void clearCache() {
         IMAGE_CACHE.values().forEach(BufferedImage::flush);
         IMAGE_CACHE.clear();
+
         FONT_CACHE.clear();
-        SOUND_CACHE.values().forEach(clip -> {
-            if (clip.isRunning()) {
-                clip.stop();
-            }
-            clip.close();
-        });
+
+        SOUND_CACHE.values().stream().filter(Clip::isRunning).forEach(Clip::stop);
+        SOUND_CACHE.values().forEach(Clip::close);
         SOUND_CACHE.clear();
     }
 
