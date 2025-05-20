@@ -31,7 +31,7 @@ public interface Barrel extends Enemy {
      * 
      * @param deltaTime the time elapsed since the last frame (in seconds)
      */
-    void roll(float deltaTime);
+    void roll(float deltaTime); //TODO: remove
 
     /**
      * Determines if this barrel can transform into fire upon destruction or collision.

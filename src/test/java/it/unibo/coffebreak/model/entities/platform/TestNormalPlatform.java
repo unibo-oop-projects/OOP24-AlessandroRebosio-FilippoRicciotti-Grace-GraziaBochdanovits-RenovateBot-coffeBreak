@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.entities.platform.Platform.Slope;
+import it.unibo.coffebreak.model.api.entities.structure.Platform.Slope;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.platform.normal.NormalPlatform;
+import it.unibo.coffebreak.model.impl.entities.structure.platform.normal.NormalPlatform;
 
 /**
  * Test class for {@link NormalPlatform} implementation.

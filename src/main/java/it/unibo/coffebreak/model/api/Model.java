@@ -5,7 +5,7 @@ import java.util.List;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
 
 /**
@@ -37,7 +37,7 @@ public interface Model {
      * 
      * @return the Donkey Kong entity, or null if no DK is set
      */
-    DonkeyKong getDK();
+    Antagonist getDK();
 
     /**
      * Changes the current game phase to the specified one.

@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.physics.Physics;
+import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
@@ -20,46 +20,6 @@ public interface Character extends Entity {
      * @param newState the new state to set for the character
      */
     void changeState(CharacterState newState);
-
-    /**
-     * Resets the character to its initial state.
-     */
-    void resetToInitialState();
-
-    /**
-     * Makes the character perform a jump action.
-     * 
-     * @param deltaTime time since last frame in seconds
-     */
-    void jump(float deltaTime);
-
-    /**
-     * Moves the character left at standard movement speed.
-     *
-     * @param deltaTime time since last frame in seconds
-     */
-    void moveLeft(float deltaTime);
-
-    /**
-     * Moves the character right at standard movement speed.
-     *
-     * @param deltaTime time since last frame in seconds
-     */
-    void moveRight(float deltaTime);
-
-    /**
-     * Makes the character climb upwards when on a ladder.
-     *
-     * @param deltaTime time since last frame in seconds
-     */
-    void climbUp(float deltaTime);
-
-    /**
-     * Makes the character climb downwards when on a ladder.
-     *
-     * @param deltaTime time since last frame in seconds
-     */
-    void climbDown(float deltaTime);
 
     /**
      * Decrements the character's life count.
@@ -81,11 +41,11 @@ public interface Character extends Entity {
     boolean isGameOver();
 
     /**
-     * Gets the lives manager for the character.
+     * Gets the score manager for the character.
      * 
-     * @return the GameLivesManager instance managing the character's lives
+     * @return the GameScoreManager instance managing the character's score
      */
-    LivesManager getLivesManager();
+    ScoreManager getScoreManager();
 
     /**
      * Gets the current number of lives the character has.
@@ -95,24 +55,9 @@ public interface Character extends Entity {
     int getLives();
 
     /**
-     * Gets the score manager for the character.
+     * Gets the current score value of the player.
      * 
-     * @return the GameScoreManager instance managing the character's score
+     * @return the score value
      */
-    ScoreManager getScoreManager();
-
-    /**
-     * Gets the physics controller responsible for movement calculations.
-     *
-     * @return the Physics implementation for this character
-     */
-    Physics getPlayerPhysics();
-
-    /**
-     * Gets the current character State.
-     * 
-     * @return the current character state
-     */
-    CharacterState getCurrentState();
-
+    int getScore();
 }

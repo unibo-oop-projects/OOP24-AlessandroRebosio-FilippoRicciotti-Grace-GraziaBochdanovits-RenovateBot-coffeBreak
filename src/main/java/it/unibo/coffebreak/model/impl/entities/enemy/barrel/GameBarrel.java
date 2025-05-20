@@ -2,16 +2,17 @@ package it.unibo.coffebreak.model.impl.entities.enemy.barrel;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.platform.Platform;
-import it.unibo.coffebreak.model.api.entities.platform.Platform.Slope;
+import it.unibo.coffebreak.model.api.entities.structure.Platform;
+import it.unibo.coffebreak.model.api.entities.structure.Platform.Slope;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
-import it.unibo.coffebreak.model.impl.entities.tank.GameTank;
+import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
 import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 
 /**
@@ -34,7 +35,7 @@ import it.unibo.coffebreak.model.impl.physics.GamePhysics;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameBarrel extends AbstractEnemy implements Barrel {
+public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
 
     /** The constant rolling speed of the barrel. */
     private static final float BARREL_SPEED = 1.5f;
@@ -115,6 +116,14 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
     @Override
     public boolean canTransformToFire() {
         return this.canTransformToFire;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void move(final float deltaTime) {
+        // TODO: Auto-generated method stub
     }
 
 }

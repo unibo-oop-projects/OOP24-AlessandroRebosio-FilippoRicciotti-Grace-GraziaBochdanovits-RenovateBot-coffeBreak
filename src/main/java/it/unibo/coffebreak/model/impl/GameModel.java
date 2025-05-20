@@ -9,7 +9,7 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.api.physics.Collision;
 import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
@@ -28,7 +28,7 @@ public class GameModel implements Model {
 
     private final List<Entity> entities;
     private final Character player;
-    private final DonkeyKong dk;
+    private final Antagonist dk;
     private Phases currentPhase;
 
     private final Collision gameCollision;
@@ -73,7 +73,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public DonkeyKong getDK() {
+    public Antagonist getDK() {
         return this.dk;
     }
 

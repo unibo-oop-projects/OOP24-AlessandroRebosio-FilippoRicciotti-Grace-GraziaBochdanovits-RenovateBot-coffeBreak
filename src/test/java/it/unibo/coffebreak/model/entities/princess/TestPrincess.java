@@ -7,22 +7,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.entities.princess.Princess;
+import it.unibo.coffebreak.model.api.entities.npc.Target;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.princess.GamePrincess;
+import it.unibo.coffebreak.model.impl.entities.npc.princess.Princess;
 
 /**
- * Test class for {@link GamePrincess} implementation.
+ * Test class for {@link Princess} implementation.
  * 
- * <p>This class verifies the behavior of the {@code GamePrincess} class, including:
+ * <p>
+ * This class verifies the behavior of the {@code GamePrincess} class,
+ * including:
  * <ul>
- *   <li>Initial state correctness</li>
- *   <li>Rescue functionality</li>
+ * <li>Initial state correctness</li>
+ * <li>Rescue functionality</li>
  * </ul>
  * 
- * @see GamePrincess
  * @see Princess
+ * @see Target
  * @author Grazia Bochdanovits de Kavna
  */
 class TestPrincess {
@@ -34,14 +36,14 @@ class TestPrincess {
     private static final Dimension2D TEST_DIMENSION = new Dimension2D(5.0f, 10.0f);
 
     /** The princess instance under test. */
-    private GamePrincess princess;
+    private Princess princess;
 
     /**
      * Sets up the test environment before each test method execution.
      */
     @BeforeEach
     void setUp() {
-        princess = new GamePrincess(TEST_POSITION, TEST_DIMENSION);
+        princess = new Princess(TEST_POSITION, TEST_DIMENSION);
     }
 
     /**

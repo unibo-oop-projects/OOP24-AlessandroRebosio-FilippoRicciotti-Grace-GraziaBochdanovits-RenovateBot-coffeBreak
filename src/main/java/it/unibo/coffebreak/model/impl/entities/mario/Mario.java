@@ -4,18 +4,19 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.character.CharacterState;
+import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.platform.Platform;
+import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
-import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
-import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
-import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
+import it.unibo.coffebreak.model.impl.entities.GameLivesManager;
+import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
+import it.unibo.coffebreak.model.impl.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
@@ -23,47 +24,47 @@ import it.unibo.coffebreak.model.impl.score.GameScoreManager;
  * This class implements the Character interface and extends GameEntity,
  * managing Mario's state, physics, and interactions with the game world.
  *
- * <p>Key features:
+ * <p>
+ * Key features:
  * <ul>
- *   <li>State management using {@link CharacterState} pattern</li>
- *   <li>Physics-controlled movement and collisions</li>
- *   <li>Item collection and power-up handling</li>
- *   <li>Life and score management</li>
+ * <li>State management using {@link CharacterState} pattern</li>
+ * <li>Physics-controlled movement and collisions</li>
+ * <li>Item collection and power-up handling</li>
+ * <li>Life and score management</li>
  * </ul>
  *
- * <p>States supported:
+ * <p>
+ * States supported:
  * <ul>
- *   <li>{@link NormalState} - Default ground movement</li>
- *   <li>{@link WithHammerState} - Hammer power-up mode</li>
+ * <li>{@link NormalState} - Default ground movement</li>
+ * <li>{@link WithHammerState} - Hammer power-up mode</li>
  * </ul>
  * 
  * @see AbstractEntity
  * @see Character
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements Character {
+public class Mario extends AbstractEntity implements Character, Movable {
 
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
     private final Physics physics;
     private CharacterState currentState;
-    private final Position2D startPosition;
     private boolean isOnGround;
     private boolean isClimbing;
 
     /**
      * Creates a new Mario instance.
      *
-     * @param position the initial position of Mario
-     * @param dimension the dimensions of Mario's hitbox
+     * @param position     the initial position of Mario
+     * @param dimension    the dimensions of Mario's hitbox
      * @param scoreManager the score manager to track points
-     * @param physics the physics component of Mario
+     * @param physics      the physics component of Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
     public Mario(final Position2D position, final Dimension2D dimension,
-                final GameScoreManager scoreManager, final Physics physics) {
+            final GameScoreManager scoreManager, final Physics physics) {
         super(position, dimension);
-        this.startPosition = new Position2D(position.x(), position.y());
         this.livesManager = new GameLivesManager();
         this.scoreManager = Objects.requireNonNull(scoreManager);
         this.physics = Objects.requireNonNull(physics);
@@ -80,23 +81,9 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void changeState(final CharacterState newState) {
-        Objects.requireNonNull(newState, "New state cannot be null");
         currentState.onExit(this);
-        this.currentState = newState;
+        this.currentState = Objects.requireNonNull(newState, "New state cannot be null");
         currentState.onEnter(this);
-    }
-
-    /**
-     * Resets Mario to his initial state and position.
-     * Used when respawning after losing a life.
-     */
-    @Override
-    public void resetToInitialState() {
-        changeState(new NormalState());
-        setVelocity(new Vector2D(0, 0));
-        setPosition(startPosition);
-        isOnGround = true;
-        setFacingRight(true); 
     }
 
     /**
@@ -124,70 +111,10 @@ public class Mario extends AbstractEntity implements Character {
             isOnGround = true;
             isClimbing = false;
         }
-        if (other instanceof Collectible) {
-            ((Collectible) other).collect(this);
-            scoreManager.earnPoints(((Collectible) other).getPointsValue());
-        }
-        if (other instanceof Hammer) {
-            isClimbing = false;
-            changeState(new WithHammerState());
+        if (other instanceof final Collectible collectible) {
+            collectible.collect(this);
         }
         currentState.handleCollision(this, other);
-    }
-
-    /**
-     * Makes Mario jump if he's on the ground.
-     */
-    @Override
-    public void jump(final float deltaTime) {
-        if (isOnGround) {
-            setVelocity(physics.calculateY(deltaTime, Command.JUMP));
-            isOnGround = false;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void moveLeft(final float deltaTime) {
-        if (!isClimbing) {
-            setFacingRight(false);
-            final Vector2D movement = physics.calculateX(deltaTime, Command.MOVE_LEFT);
-            setVelocity(new Vector2D(movement.x(), getVelocity().y()));
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void moveRight(final float deltaTime) {
-        if (!isClimbing) {
-            setFacingRight(true);
-            final Vector2D movement = physics.calculateX(deltaTime, Command.MOVE_RIGHT);
-            setVelocity(new Vector2D(movement.x(), getVelocity().y()));
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void climbUp(final float deltaTime) {
-        if (currentState.canClimb()) {
-            setVelocity(physics.calculateY(deltaTime, Command.MOVE_UP));
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void climbDown(final float deltaTime) {
-        if (currentState.canClimb()) {
-            setVelocity(physics.calculateY(deltaTime, Command.MOVE_DOWN));
-        }
     }
 
     /**
@@ -195,12 +122,7 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void loseLife() {
-        livesManager.loseLife();
-        if (!isGameOver()) {
-            changeState(new NormalState());
-            resetToInitialState();
-        }
-        //TODO: gameOver
+        this.livesManager.loseLife();
     }
 
     /**
@@ -220,14 +142,6 @@ public class Mario extends AbstractEntity implements Character {
     }
 
     /**
-     * @return the lives manager instance
-     */
-    @Override
-    public GameLivesManager getLivesManager() {
-        return this.livesManager;
-    }
-
-    /**
      * @return the current number of lives remaining
      */
     @Override
@@ -236,26 +150,35 @@ public class Mario extends AbstractEntity implements Character {
     }
 
     /**
-     * @return the score manager instance
+     * Moves Mario according to his current velocity and state.
+     * This method should be called every frame to update Mario's position.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds)
+     * @throws IllegalArgumentException if deltaTime is negative
      */
     @Override
-    public GameScoreManager getScoreManager() {
+    public void move(final float deltaTime) {
+        // TODO: Auto-generated method stub
+    }
+
+    /**
+     * Gets Mario's current score.
+     * 
+     * @return the current score value as integer
+     */
+    @Override
+    public int getScore() {
+        return this.scoreManager.getCurrentScore();
+    }
+
+    /**
+     * Gets the score manager instance associated with Mario.
+     * This allows external systems to modify/query score-related operations.
+     * 
+     * @return the ScoreManager instance handling Mario's score
+     */
+    @Override
+    public ScoreManager getScoreManager() {
         return this.scoreManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Physics getPlayerPhysics() {
-        return this.physics;
-    }
-
-    /**
-     * @return the current Mario state
-     */
-    @Override
-    public CharacterState getCurrentState() {
-        return this.currentState;
     }
 }

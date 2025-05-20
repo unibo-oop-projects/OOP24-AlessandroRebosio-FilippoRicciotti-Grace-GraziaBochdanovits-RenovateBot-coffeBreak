@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.entities.tank.Tank;
+import it.unibo.coffebreak.model.api.entities.structure.Tank;
 import it.unibo.coffebreak.model.impl.common.Dimension2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.tank.GameTank;
+import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
 
 /**
  * Test class for {@link GameTank} implementation.
