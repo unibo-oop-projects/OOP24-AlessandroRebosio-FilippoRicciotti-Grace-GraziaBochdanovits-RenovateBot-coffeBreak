@@ -30,7 +30,7 @@ public class GameModel implements Model {
     private final List<Entity> entities;
     private Phases currentPhase;
 
-    private boolean running;
+    private volatile boolean running;
 
     /**
      * Constructs a new GameModel with empty entities list,
