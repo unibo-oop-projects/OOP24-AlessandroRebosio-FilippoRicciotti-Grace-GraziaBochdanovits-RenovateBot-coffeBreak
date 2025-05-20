@@ -1,14 +1,17 @@
 package it.unibo.coffebreak.model.impl;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.api.physics.Collision;
@@ -27,11 +30,9 @@ import it.unibo.coffebreak.model.impl.physics.GameCollision;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private final Character player;
-    private final Antagonist dk;
-    private Phases currentPhase;
-
     private final Collision gameCollision;
+
+    private Phases currentPhase;
 
     private boolean running;
 
@@ -41,13 +42,10 @@ public class GameModel implements Model {
      */
     public GameModel() {
         this.entities = new ArrayList<>();
-        this.player = null;
-        this.dk = null;
+        this.gameCollision = new GameCollision();
 
         currentPhase = new MenuPhase();
         currentPhase.enterPhase();
-
-        this.gameCollision = new GameCollision();
 
         this.running = true;
     }
@@ -65,16 +63,32 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Character getPlayer() {
-        return this.player;
+    public Optional<Character> getPlayer() {
+        return this.findEntityOfType(Character.class);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Antagonist getDK() {
-        return this.dk;
+    public Optional<Antagonist> getAntagonist() {
+        return this.findEntityOfType(Antagonist.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Target> getTarget() {
+        return this.findEntityOfType(Target.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addBarrel(final Barrel barrel) {
+        return this.entities.add(Objects.requireNonNull(barrel, "Barrel cannot be null"));
     }
 
     /**
@@ -128,5 +142,12 @@ public class GameModel implements Model {
     @Override
     public void stop() {
         this.running = false;
+    }
+
+    private <T> Optional<T> findEntityOfType(final Class<T> type) {
+        return this.entities.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .findFirst();
     }
 }

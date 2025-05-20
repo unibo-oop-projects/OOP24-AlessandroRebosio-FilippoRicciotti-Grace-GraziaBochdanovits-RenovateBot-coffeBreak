@@ -36,9 +36,12 @@ public class InGamePhase extends AbstractPhases {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-        model.getDK().tryThrowBarrel().ifPresent(model.getEntities()::add);
+        // TODO: check player move
 
-        model.getEntities().stream() 
+        // TODO: to fix
+        // model.getDK().tryThrowBarrel().ifPresent(model.getEntities()::add);
+
+        model.getEntities().stream()
                 .filter(Barrel.class::isInstance)
                 .map(Barrel.class::cast)
                 .forEach(e -> e.roll(deltaTime));

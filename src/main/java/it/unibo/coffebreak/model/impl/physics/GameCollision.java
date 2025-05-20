@@ -48,7 +48,7 @@ public class GameCollision implements Collision {
      * @param model the game model containing the player and other entities
      */
     private void checkMarioCollisions(final Model model) {
-        final Character mario = model.getPlayer();
+        final Character mario = model.getPlayer().get();
         model.getEntities().stream()
                 .filter(entity -> !entity.equals(mario) && mario.intersect(entity))
                 .forEach(mario::onCollision);
