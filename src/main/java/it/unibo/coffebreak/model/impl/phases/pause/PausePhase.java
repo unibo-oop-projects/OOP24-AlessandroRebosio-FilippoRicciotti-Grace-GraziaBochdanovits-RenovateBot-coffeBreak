@@ -24,10 +24,10 @@ public class PausePhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                model.setState(new InGamePhase());
+                model.setState(InGamePhase::new);
                 break;
             case ESCAPE:
-                model.setState(new MenuPhase());
+                model.setState(MenuPhase::new);
                 break;
             case QUIT:
                 model.stop();

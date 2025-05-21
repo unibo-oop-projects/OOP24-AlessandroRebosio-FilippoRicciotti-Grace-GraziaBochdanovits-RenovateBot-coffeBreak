@@ -3,6 +3,7 @@ package it.unibo.coffebreak.model.api;
 import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
@@ -66,10 +67,10 @@ public interface Model {
     /**
      * Changes the current game phase to the specified one.
      * 
-     * @param newPhase the phase to switch to
+     * @param newPhase Supplier of the phase to switch to
      * @throws NullPointerException if newPhase is null
      */
-    void setState(Phases newPhase);
+    void setState(Supplier<Phases> newPhase);
 
     /**
      * Processes and executes the given game command.

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
@@ -39,7 +40,7 @@ public class GameModel implements Model {
     public GameModel() {
         this.entities = new ArrayList<>();
 
-        this.setState(new MenuPhase());
+        this.setState(MenuPhase::new);
 
         this.running = true;
     }
@@ -88,12 +89,11 @@ public class GameModel implements Model {
     /**
      * {@inheritDoc}
      * 
-     * @throws NullPointerException if newPhase is null
      */
     @Override
-    public final void setState(final Phases newPhase) {
+    public final void setState(final Supplier<Phases> newPhase) {
         currentPhase.exitPhase(this);
-        currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
+        currentPhase = newPhase.get();
         currentPhase.enterPhase(this);
     }
 

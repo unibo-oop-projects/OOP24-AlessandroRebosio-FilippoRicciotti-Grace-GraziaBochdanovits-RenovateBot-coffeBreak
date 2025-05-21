@@ -22,7 +22,7 @@ public class GameOverPhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                model.setState(new MenuPhase());
+                model.setState(MenuPhase::new);
                 break;
             default:
                 break;

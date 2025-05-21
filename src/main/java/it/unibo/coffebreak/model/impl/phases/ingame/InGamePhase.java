@@ -29,7 +29,7 @@ public class InGamePhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ESCAPE:
-                model.setState(new PausePhase());
+                model.setState(PausePhase::new);
                 break;
             // TODO: case LEFT, RIGHT, MOVE_UP, MOVE_DOWN, JUMP call
             // model.getPlayer().ifPresent(player -> player.setCommand(command));
@@ -79,7 +79,7 @@ public class InGamePhase extends AbstractPhases {
 
         model.getPlayer()
                 .filter(Character::isGameOver)
-                .ifPresent(p -> model.setState(new GameOverPhase()));
+                .ifPresent(p -> model.setState(GameOverPhase::new));
     }
 
     /**
