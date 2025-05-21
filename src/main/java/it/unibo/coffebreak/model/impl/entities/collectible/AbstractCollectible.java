@@ -68,16 +68,6 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @return the number of points this collectible is worth
-     */
-    @Override
-    public int getPointsValue() {
-        return this.value;
-    }
-
-    /**
      * Applies the effect of the collectible to the given player.
      * This method must be implemented by subclasses to define
      * the specific behavior of the collectible.

@@ -37,6 +37,8 @@ import it.unibo.coffebreak.repository.impl.ScoreRepository;
  */
 public class GameScoreManager implements ScoreManager {
 
+    private static final long BONUS_INTERVAL = 2000;
+
     /** Manages the player's core score value. */
     private final Score score;
 
@@ -49,6 +51,8 @@ public class GameScoreManager implements ScoreManager {
     /** Maintains ranked player entries. */
     private final Leaderboard leaderBoard;
 
+    private float bonusElapsed;
+
     /**
      * Creates a new manager with default component implementations.
      * Initializes leaderboard with persisted data if available.
@@ -58,6 +62,7 @@ public class GameScoreManager implements ScoreManager {
         this.bonus = new GameBonus();
         this.repository = new ScoreRepository();
         this.leaderBoard = new GameLeaderboard(this.repository.load());
+        this.bonusElapsed = 0;
     }
 
     /**
@@ -98,8 +103,12 @@ public class GameScoreManager implements ScoreManager {
      * {@inheritDoc}
      */
     @Override
-    public void calculateBonus() {
-        this.bonus.calculate();
+    public void calculateBonus(final float deltaTime) {
+        this.bonusElapsed += deltaTime;
+        if (this.bonusElapsed >= BONUS_INTERVAL) {
+            this.bonus.calculate();
+            this.bonusElapsed = 0;
+        }
     }
 
     /**
@@ -132,14 +141,21 @@ public class GameScoreManager implements ScoreManager {
      * {@inheritDoc}
      */
     @Override
-    public void endGame(final String name) {
-        if (Objects.requireNonNull(name, "Name cannot be null").isBlank()) {
+    public void addEntryInLeaderBoard(final String name) {
+        Objects.requireNonNull(name, "Name cannot be null");
+        if (name.isBlank()) {
             throw new IllegalArgumentException("Player name cannot be blank");
         }
 
-        if (this.leaderBoard.addEntry(new ScoreEntry(name, this.getCurrentScore()))) {
-            this.repository.save(this.getLeaderBoard());
-            this.score.reset();
-        }
+        this.leaderBoard.addEntry(new ScoreEntry(name, this.getCurrentScore()));
+        this.score.reset();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean saveScores() {
+        return this.repository.save(this.getLeaderBoard());
     }
 }

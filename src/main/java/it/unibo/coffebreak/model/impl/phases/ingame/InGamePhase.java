@@ -3,10 +3,15 @@ package it.unibo.coffebreak.model.impl.phases.ingame;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
+import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
+import it.unibo.coffebreak.model.impl.phases.gameover.GameOverPhase;
 import it.unibo.coffebreak.model.impl.phases.pause.PausePhase;
+import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Implementation of {@link Phases} interface;
@@ -27,6 +32,8 @@ public class InGamePhase extends AbstractPhases {
             case ESCAPE:
                 model.setState(new PausePhase());
                 break;
+            // TODO: case LEFT, RIGHT, MOVE_UP, MOVE_DOWN, JUMP call
+            // model.getPlayer().ifPresent(player -> player.setCommand(command));
             default:
                 break;
         }
@@ -46,11 +53,41 @@ public class InGamePhase extends AbstractPhases {
                 .map(Movable.class::cast)
                 .forEach(e -> e.move(deltaTime));
 
-        model.checkCollision();
+        GameCollision.checkCollision(model);
 
-        // TODO: nextLevel
+        // TODO: it doesn't work, due to the fact that getEntities returns an uneditable
+        // list, it must be implemented in the levelManger
+        model.getEntities().removeAll(model.getEntities().stream()
+                .filter(Enemy.class::isInstance)
+                .map(Enemy.class::cast)
+                .filter(Enemy::isDestroyed)
+                .toList());
 
-        // TODO: isGameOver and set State
+        // TODO: same
+        model.getEntities().removeAll(model.getEntities().stream()
+                .filter(Collectible.class::isInstance)
+                .map(Collectible.class::cast)
+                .filter(Collectible::isCollected)
+                .toList());
+
+        // TODO: If model.getPlayer() is present and has lost a life (via
+        // getCurrentState().hasLostLife()),
+        // then reset the current level.
+
+        // TODO: nextLevel if Target isRescued
+
+        model.getPlayer().ifPresent(p -> p.getScoreManager().calculateBonus(deltaTime));
+
+        model.getPlayer()
+                .filter(Character::isGameOver)
+                .ifPresent(p -> model.setState(new GameOverPhase()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void exitPhase(final Model model) {
+        model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(""));
+    }
 }

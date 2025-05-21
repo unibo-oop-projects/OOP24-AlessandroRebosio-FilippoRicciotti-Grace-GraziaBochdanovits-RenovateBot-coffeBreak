@@ -22,8 +22,8 @@ public class MenuPhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                model.setState(new InGamePhase());
                 // TODO: model.start()
+                model.setState(new InGamePhase());
                 break;
             case QUIT:
                 model.stop();

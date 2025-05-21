@@ -14,9 +14,7 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.api.physics.Collision;
 import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
-import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
  * Concrete implementation of the game model.
@@ -30,11 +28,9 @@ import it.unibo.coffebreak.model.impl.physics.GameCollision;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private final Collision gameCollision;
-
     private Phases currentPhase;
 
-    private boolean running;
+    private volatile boolean running;
 
     /**
      * Constructs a new GameModel with empty entities list,
@@ -42,10 +38,8 @@ public class GameModel implements Model {
      */
     public GameModel() {
         this.entities = new ArrayList<>();
-        this.gameCollision = new GameCollision();
 
-        currentPhase = new MenuPhase();
-        currentPhase.enterPhase();
+        this.setState(new MenuPhase());
 
         this.running = true;
     }
@@ -97,11 +91,10 @@ public class GameModel implements Model {
      * @throws NullPointerException if newPhase is null
      */
     @Override
-    public void setState(final Phases newPhase) {
-        currentPhase.exitPhase();
+    public final void setState(final Phases newPhase) {
+        currentPhase.exitPhase(this);
         currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
-        currentPhase.enterPhase();
-
+        currentPhase.enterPhase(this);
     }
 
     /**
@@ -124,14 +117,6 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void checkCollision() {
-        this.gameCollision.checkCollision(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean isRunning() {
         return this.running;
     }
@@ -141,6 +126,7 @@ public class GameModel implements Model {
      */
     @Override
     public void stop() {
+        this.getPlayer().ifPresent(p -> p.getScoreManager().saveScores());
         this.running = false;
     }
 
