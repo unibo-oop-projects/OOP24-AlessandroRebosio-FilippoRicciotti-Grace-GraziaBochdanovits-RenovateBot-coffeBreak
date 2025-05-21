@@ -13,4 +13,14 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  */
 public interface Tank extends Entity {
 
+    /***
+     * Checks the activation state of the oil tank.
+     * <p>
+     * An active tank can interact with barrels, igniting them when they come into contact.
+     * An inactive tank will not affect barrels.
+     * </p>
+     *
+     * @return true if the thank is active, false otherwise
+     */
+    boolean isActive();
 }
