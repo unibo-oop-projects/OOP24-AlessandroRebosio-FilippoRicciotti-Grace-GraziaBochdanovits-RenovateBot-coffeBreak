@@ -14,8 +14,8 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
+import it.unibo.coffebreak.model.api.phases.GameState;
+import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
 
 /**
  * Concrete implementation of the game model.
@@ -29,7 +29,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private Phases currentPhase;
+    private GameState currentPhase;
 
     private volatile boolean running;
 
@@ -40,7 +40,7 @@ public class GameModel implements Model {
     public GameModel() {
         this.entities = new ArrayList<>();
 
-        this.setState(MenuPhase::new);
+        this.setState(MenuState::new);
 
         this.running = true;
     }
@@ -91,7 +91,7 @@ public class GameModel implements Model {
      * 
      */
     @Override
-    public final void setState(final Supplier<Phases> newPhase) {
+    public final void setState(final Supplier<GameState> newPhase) {
         currentPhase.onExit(this);
         currentPhase = newPhase.get();
         currentPhase.onEnter(this);

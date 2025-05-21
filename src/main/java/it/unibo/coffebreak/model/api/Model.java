@@ -10,7 +10,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.api.phases.GameState;
 
 /**
  * Represents the main model interface for the game.
@@ -65,12 +65,12 @@ public interface Model {
     boolean addBarrel(Barrel barrel);
 
     /**
-     * Changes the current game phase to the specified one.
+     * Changes the current game state to the specified one.
      * 
-     * @param newPhase Supplier of the phase to switch to
-     * @throws NullPointerException if newPhase is null
+     * @param newState Supplier of the phase to switch to
+     * @throws NullPointerException if newState is null
      */
-    void setState(Supplier<Phases> newPhase);
+    void setState(Supplier<GameState> newState);
 
     /**
      * Processes and executes the given game command.

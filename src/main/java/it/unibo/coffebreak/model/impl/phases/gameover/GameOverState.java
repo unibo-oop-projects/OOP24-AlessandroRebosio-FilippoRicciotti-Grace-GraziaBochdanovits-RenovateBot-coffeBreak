@@ -2,19 +2,19 @@ package it.unibo.coffebreak.model.impl.phases.gameover;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
-import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
+import it.unibo.coffebreak.model.api.phases.GameState;
+import it.unibo.coffebreak.model.impl.phases.AbstractState;
+import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
 
 /**
- * Implementation of {@link Phases} interface;
+ * Implementation of {@link GameState} interface;
  * <p>
- * Represents the <b>Game Over</b> phase of the game.
+ * Represents the <b>Game Over</b> state of the game.
  * </p>
  * 
  * @author Filippo Ricciotti
  */
-public class GameOverPhase extends AbstractPhases {
+public class GameOverState extends AbstractState {
     /**
      * {@inheritDoc}
      */
@@ -22,7 +22,7 @@ public class GameOverPhase extends AbstractPhases {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                model.setState(MenuPhase::new);
+                model.setState(MenuState::new);
                 break;
             default:
                 break;

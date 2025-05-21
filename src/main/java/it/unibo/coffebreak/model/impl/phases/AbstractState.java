@@ -2,16 +2,16 @@ package it.unibo.coffebreak.model.impl.phases;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.api.phases.GameState;
 
 /**
- * An abstract base class representing a game Phase.
- * Implements basic functionality for game Phases, such as
- * handling Actions, exiting and entering Phases.
+ * An abstract base class representing a game State.
+ * Implements basic functionality for game states, such as
+ * handling Actions, exiting and entering States.
  * 
  * @author Filippo Ricciotti
  */
-public abstract class AbstractPhases implements Phases {
+public abstract class AbstractState implements GameState {
 
     /**
      * {@inheritDoc}
