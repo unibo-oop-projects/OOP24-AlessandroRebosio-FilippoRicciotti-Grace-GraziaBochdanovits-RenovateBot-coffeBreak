@@ -66,8 +66,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
      * @param physics      the physics component of Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
-    public Mario(final Position2D position, final BoundingBox2D dimension,
-            final GameScoreManager scoreManager, final Physics physics) {
+    public Mario(final Position2D position, final BoundingBox2D dimension, final Physics physics) {
         super(position, dimension);
         this.livesManager = new GameLivesManager();
         this.scoreManager = new GameScoreManager();

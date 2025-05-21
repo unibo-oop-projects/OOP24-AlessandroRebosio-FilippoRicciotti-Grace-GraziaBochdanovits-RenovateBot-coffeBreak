@@ -1,10 +1,9 @@
 package it.unibo.coffebreak.model.impl.entities.npc.princess;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.npc.Target;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
+import it.unibo.coffebreak.model.impl.entities.npc.AbstractNpc;
 
 /**
  * Concrete implementation of the {@link Target} interface.
@@ -13,7 +12,7 @@ import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
  * 
  * @author Grazia Bochdanovits de kavna
  */
-public class Princess extends AbstractEntity implements Target {
+public class Princess extends AbstractNpc implements Target {
 
     private boolean rescued;
 
@@ -46,16 +45,5 @@ public class Princess extends AbstractEntity implements Target {
     @Override
     public boolean isRescued() {
         return this.rescued;
-    }
-
-    /**
-     * {@inheritDoc}
-     * Currently this implementation does nothing when a collision occurs.
-     *
-     * @param other the entity that collided with this princess
-     */
-    @Override
-    public void onCollision(final Entity other) {
-        // Intentionally left blank
     }
 }

@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.entities.npc.donkeykong;
 import java.util.Optional;
 
 import it.unibo.coffebreak.controller.api.command.Command;
-import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
@@ -11,6 +10,7 @@ import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrelFactory;
+import it.unibo.coffebreak.model.impl.entities.npc.AbstractNpc;
 
 /**
  * Implementation of the Donkey Kong enemy character.
@@ -24,14 +24,14 @@ import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrelFactory;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class DonkeyKong extends AbstractEntity implements Antagonist {
+public class DonkeyKong extends AbstractNpc implements Antagonist {
 
     /**
      * The interval between barrel throws in milliseconds.
      */
     private static final long BARREL_THROW_INTERVAL = 3000;
 
-    private long lastThrowTime;
+    private float lastThrowTime;
     private final BarrelFactory barrelFactory;
 
     /**
@@ -45,18 +45,6 @@ public class DonkeyKong extends AbstractEntity implements Antagonist {
     public DonkeyKong(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
         this.barrelFactory = new GameBarrelFactory();
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Current implementation does nothing as Donkey Kong doesn't require
-     * periodic updates beyond barrel throwing.
-     * </p>
-     */
-    @Override
-    public void update(final float deltaTime) {
-        // Intentionally empty
     }
 
     /**
@@ -74,32 +62,18 @@ public class DonkeyKong extends AbstractEntity implements Antagonist {
     }
 
     /**
-     * Attempts to throw a barrel if the throw interval has elapsed.
-     * <p>
-     * This method checks if {@link #BARREL_THROW_INTERVAL} has passed since the
-     * last throw.
-     * If so, it updates the throw timestamp and returns a new barrel wrapped in an
-     * Optional.
-     * Otherwise returns an empty Optional.
+     * {@inheritDoc}
      * 
+     * @param deltaTime the time elapsed
      * @return {@link Optional} containing a new {@link Barrel} if thrown, otherwise
      *         empty
      */
     @Override
-    public Optional<Barrel> tryThrowBarrel() {
-        final long currentTime = System.currentTimeMillis();
-        if (currentTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
-            lastThrowTime = currentTime;
+    public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
+        if (deltaTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
+            lastThrowTime = deltaTime;
             return Optional.of(throwBarrel());
         }
         return Optional.empty();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onCollision(final Entity other) {
-        // Intentionally left blank
     }
 }

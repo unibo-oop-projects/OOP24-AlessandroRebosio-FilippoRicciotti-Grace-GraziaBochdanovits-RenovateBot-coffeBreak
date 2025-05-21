@@ -6,7 +6,6 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.phases.Phases;
 import it.unibo.coffebreak.model.impl.phases.AbstractPhases;
 import it.unibo.coffebreak.model.impl.phases.gameover.GameOverPhase;
@@ -46,7 +45,7 @@ public class InGamePhase extends AbstractPhases {
     public void update(final Model model, final float deltaTime) {
 
         // TODO: to fix
-        model.getAntagonist().flatMap(Antagonist::tryThrowBarrel).ifPresent(model::addBarrel);
+        model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addBarrel);
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)

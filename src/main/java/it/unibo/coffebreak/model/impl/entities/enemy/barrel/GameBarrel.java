@@ -5,7 +5,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
-import it.unibo.coffebreak.model.api.entities.structure.Platform.Slope;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
@@ -65,6 +64,22 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public void move(final float deltaTime) {
+        if (isDestroyed()) {
+            return;
+        }
+        Vector2D velocity = physics.calculateX(BARREL_SPEED * deltaTime, currentDirection);
+        if (!isOnPlatform) {
+            velocity = velocity.sum(physics.calculateY(deltaTime, Command.MOVE_DOWN));
+        }
+        setPosition(getPosition().sum(velocity));
+        isOnPlatform = false;
+    }
+
+    /**
+     * {@inheritDoc}
      * <p>
      * Handles collisions with platforms to update the barrel's rolling direction.
      * When colliding with an inclined platform, updates the current slope direction.
@@ -76,36 +91,15 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     public void onCollision(final Entity other) {
         if (other instanceof final Platform platform) {
             isOnPlatform = true;
-            currentDirection = platform.getSlope() == Slope.RIGHT 
-                                ? Command.MOVE_RIGHT : Command.MOVE_LEFT;
+            switch (platform.getSlope()) {
+                case RIGHT -> currentDirection = Command.MOVE_RIGHT;
+                case LEFT -> currentDirection = Command.MOVE_LEFT;
+                case FLAT -> currentDirection = currentDirection.getInverseDirection();
+            }
         }
-
         if (other instanceof GameTank) {
             destroy();
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Updates the barrel's position based on its current slope direction and game physics.
-     * Combines horizontal movement (based on slope) with vertical gravity.
-     * </p>
-     *
-     * @param deltaTime the time elapsed since last frame (in seconds)
-     */
-    @Override
-    public void roll(final float deltaTime) {
-        if (isDestroyed()) {
-            return;
-        }
-
-        final Vector2D movement = physics.calculateX(deltaTime, currentDirection).multiply(BARREL_SPEED);
-        final Vector2D gravity = physics.calculateY(deltaTime, 
-            isOnPlatform ? Command.NONE : Command.MOVE_DOWN);
-
-        setPosition(getPosition().sum(movement.sum(gravity)));
-        isOnPlatform = false;
     }
 
     /**
@@ -117,13 +111,4 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     public boolean canTransformToFire() {
         return this.canTransformToFire;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void move(final float deltaTime) {
-        // TODO: Auto-generated method stub
-    }
-
 }

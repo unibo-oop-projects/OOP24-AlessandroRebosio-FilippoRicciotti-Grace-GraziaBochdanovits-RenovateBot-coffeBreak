@@ -30,11 +30,16 @@ public interface Antagonist extends Entity {
     Barrel throwBarrel();
 
     /**
-     * Attempts to throw a barrel. This method may return an empty Optional if 
-     * Donkey Kong cannot throw a barrel at this time.
-     *
-     * @return an {@link Optional} containing the thrown {@link Barrel} if successful,
-     *         or an empty {@link Optional} if no barrel was thrown
+     * Attempts to throw a barrel if the throw interval has elapsed.
+     * <p>
+     * This method checks if the accumulated time since the last throw ({@code deltaTime}) 
+     * has reached or exceeded {@link #BARREL_THROW_INTERVAL}. If so, it resets the throw 
+     * timer and returns a new barrel wrapped in an {@link Optional}. Otherwise, returns 
+     * an empty {@link Optional}.
+     * 
+     * @param deltaTime the accumulated time since the last update (in seconds)
+     * @return {@link Optional} containing a new {@link Barrel} if the interval has elapsed, 
+     *         otherwise empty
      */
-    Optional<Barrel> tryThrowBarrel();
+    Optional<Barrel> tryThrowBarrel(float deltaTime);
 }

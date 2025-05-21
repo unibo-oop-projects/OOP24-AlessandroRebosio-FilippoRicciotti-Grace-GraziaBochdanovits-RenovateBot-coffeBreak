@@ -23,21 +23,9 @@ import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 public interface Barrel extends Enemy {
 
     /**
-     * Updates the barrel's rolling movement.
-     * <p>
-     * This method should be called every frame to apply the barrel's movement physics.
-     * The barrel will move according to its current direction and platform slope.
-     * </p>
-     * 
-     * @param deltaTime the time elapsed since the last frame (in seconds)
-     */
-    void roll(float deltaTime); //TODO: remove
-
-    /**
      * Determines if this barrel can transform into fire upon destruction or collision.
      * 
      * @return {@code true} if the barrel can transform into fire, {@code false} otherwise
      */
     boolean canTransformToFire();
-
 }
