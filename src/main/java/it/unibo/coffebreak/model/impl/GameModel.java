@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
@@ -13,8 +14,8 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.phases.Phases;
-import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
+import it.unibo.coffebreak.model.api.phases.GameState;
+import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
 
 /**
  * Concrete implementation of the game model.
@@ -28,7 +29,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuPhase;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private Phases currentPhase;
+    private GameState currentPhase;
 
     private volatile boolean running;
 
@@ -39,7 +40,7 @@ public class GameModel implements Model {
     public GameModel() {
         this.entities = new ArrayList<>();
 
-        this.setState(new MenuPhase());
+        this.setState(MenuState::new);
 
         this.running = true;
     }
@@ -88,13 +89,12 @@ public class GameModel implements Model {
     /**
      * {@inheritDoc}
      * 
-     * @throws NullPointerException if newPhase is null
      */
     @Override
-    public final void setState(final Phases newPhase) {
-        currentPhase.exitPhase(this);
-        currentPhase = Objects.requireNonNull(newPhase, "The newPhase can not be null");
-        currentPhase.enterPhase(this);
+    public final void setState(final Supplier<GameState> newPhase) {
+        currentPhase.onExit(this);
+        currentPhase = newPhase.get();
+        currentPhase.onEnter(this);
     }
 
     /**
@@ -135,5 +135,13 @@ public class GameModel implements Model {
                 .filter(type::isInstance)
                 .map(type::cast)
                 .findFirst();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start() {
+        // TODO start first level
     }
 }
