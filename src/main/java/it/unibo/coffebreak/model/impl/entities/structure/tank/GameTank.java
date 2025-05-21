@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.impl.entities.structure.tank;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.structure.Tank;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
@@ -20,6 +21,8 @@ import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
  */
 public class GameTank extends AbstractEntity implements Tank {
 
+    private boolean isActive;
+
     /**
      * Constructs a new oil tank at the specified position with given dimensions.
      *
@@ -29,6 +32,7 @@ public class GameTank extends AbstractEntity implements Tank {
      */
     public GameTank(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
+        this.isActive = false;
     }
 
     /**
@@ -38,6 +42,16 @@ public class GameTank extends AbstractEntity implements Tank {
      */
     @Override
     public void onCollision(final Entity other) {
+        if (other instanceof Barrel && !isActive) {
+            this.isActive = true;
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isActive() {
+        return this.isActive;
+    }
 }

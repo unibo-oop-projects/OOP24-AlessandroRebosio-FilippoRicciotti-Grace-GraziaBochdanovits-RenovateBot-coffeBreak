@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.model.api.entities.structure;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 
 /**
@@ -11,27 +12,9 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 public interface Platform extends Entity {
 
     /**
-     * Defines the slope direction of a platform.
+     * @return the direction of the platform
      */
-    enum Slope {
-        /**
-         * Platform slopes to the left, affecting movement speed/direction.
-         */
-        LEFT,
-        /**
-         * Platform slopes to the right, affecting movement speed/direction.
-         */
-        RIGHT,
-        /**
-         * Flat platform with no slope.
-         */
-        FLAT
-    }
-
-    /**
-     * @return the slope of this platform
-     */
-    Slope getSlope();
+    Command getDirection();
 
     /**
      * Checks if this platform can support the given entity.

@@ -18,16 +18,17 @@ import it.unibo.coffebreak.model.impl.physics.GamePhysics;
  * Concrete implementation of a rolling barrel enemy in the game world.
  * <p>
  * This class represents the barrel that rolls along platforms,
- * changing direction based on platform slopes. The barrel maintains a constant speed
+ * changing direction based on platform slopes. The barrel maintains a constant
+ * speed
  * throughout its movement and can be destroyed or transformed into fire.
  * </p>
  *
  * <h3>Movement Behavior:</h3>
  * <ul>
- *   <li>Rolls at constant speed ({@value #BARREL_SPEED})</li>
- *   <li>Follows platform slope directions (LEFT/RIGHT)</li>
- *   <li>Uses flat platform's opposite previous slope when on FLAT surfaces</li>
- *   <li>Affected by game physics (gravity)</li>
+ * <li>Rolls at constant speed ({@value #BARREL_SPEED})</li>
+ * <li>Follows platform slope directions (LEFT/RIGHT)</li>
+ * <li>Uses flat platform's opposite previous slope when on FLAT surfaces</li>
+ * <li>Affected by game physics (gravity)</li>
  * </ul>
  *
  * @see Barrel
@@ -47,14 +48,16 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     /**
      * Constructs a new game barrel with specified properties.
      *
-     * @param position the initial position of the barrel (cannot be null)
-     * @param dimension the physical dimensions of the barrel (cannot be null)
-     * @param canTransformToFire whether the barrel can turn into fire when destroyed
-     * @param initialDirection the initial direction of the barrel
+     * @param position           the initial position of the barrel (cannot be null)
+     * @param dimension          the physical dimensions of the barrel (cannot be
+     *                           null)
+     * @param canTransformToFire whether the barrel can turn into fire when
+     *                           destroyed
+     * @param initialDirection   the initial direction of the barrel
      * @throws NullPointerException if position, dimension or physics are null
      */
-    public GameBarrel(final Position2D position, final BoundingBox2D dimension, 
-                        final boolean canTransformToFire, final Command initialDirection) {
+    public GameBarrel(final Position2D position, final BoundingBox2D dimension,
+            final boolean canTransformToFire, final Command initialDirection) {
         super(position, dimension);
         this.canTransformToFire = canTransformToFire;
         this.currentDirection = initialDirection;
@@ -82,7 +85,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      * {@inheritDoc}
      * <p>
      * Handles collisions with platforms to update the barrel's rolling direction.
-     * When colliding with an inclined platform, updates the current slope direction.
+     * When colliding with an inclined platform, updates the current slope
+     * direction.
      * </p>
      *
      * @param other the entity this barrel collided with
@@ -91,10 +95,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     public void onCollision(final Entity other) {
         if (other instanceof final Platform platform) {
             isOnPlatform = true;
-            switch (platform.getSlope()) {
-                case RIGHT -> currentDirection = Command.MOVE_RIGHT;
-                case LEFT -> currentDirection = Command.MOVE_LEFT;
-                case FLAT -> currentDirection = currentDirection.getInverseDirection();
+            if (platform.getDirection() != Command.NONE) {
+                this.currentDirection = platform.getDirection();
             }
         }
         if (other instanceof GameTank) {

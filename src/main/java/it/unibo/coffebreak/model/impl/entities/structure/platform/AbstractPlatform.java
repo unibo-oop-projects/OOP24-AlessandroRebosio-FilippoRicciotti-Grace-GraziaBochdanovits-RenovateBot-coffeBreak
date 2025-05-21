@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl.entities.structure.platform;
 
 import java.util.Objects;
 
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
@@ -24,26 +25,26 @@ import it.unibo.coffebreak.model.impl.entities.mario.Mario;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    private final Slope slope;
+    private final Command direction;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
-     * @param position the 2D position of the platform (cannot be null)
+     * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimensions of the platform (cannot be null)
-     * @param slope the slope orientation of the platform (cannot be null)
+     * @param direction the direction of the platform (cannot be null)
      */
-    public AbstractPlatform(final Position2D position, final BoundingBox2D dimension, final Slope slope) {
+    public AbstractPlatform(final Position2D position, final BoundingBox2D dimension, final Command direction) {
         super(position, dimension);
-        this.slope = Objects.requireNonNull(slope);
+        this.direction = Objects.requireNonNull(direction);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Slope getSlope() {
-        return this.slope;
+    public Command getDirection() {
+        return this.direction;
     }
 
     /**

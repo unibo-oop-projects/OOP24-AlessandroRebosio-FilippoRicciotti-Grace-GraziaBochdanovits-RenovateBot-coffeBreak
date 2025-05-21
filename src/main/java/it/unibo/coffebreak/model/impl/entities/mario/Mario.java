@@ -10,7 +10,6 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.structure.Ladder;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
@@ -56,7 +55,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
     private CharacterState currentState;
     private Command command = Command.NONE;
     private boolean isOnGround;
-    private boolean isClimbing;
+    private boolean isJumping;
 
     /**
      * Creates a new Mario instance.
@@ -71,9 +70,9 @@ public class Mario extends AbstractEntity implements Character, Movable {
         this.livesManager = new GameLivesManager();
         this.scoreManager = new GameScoreManager();
         this.physics = Objects.requireNonNull(physics);
-        this.currentState = new NormalState();
+        changeState(() -> new NormalState());
         this.isOnGround = true;
-        this.isClimbing = false;
+        this.isJumping = false;
     }
 
     /**
@@ -88,15 +87,18 @@ public class Mario extends AbstractEntity implements Character, Movable {
         if (deltaTime < 0) {
             throw new IllegalArgumentException("DeltaTime cannot be negative");
         }
-        Vector2D newVelocity = getVelocity();
-        if (!isClimbing) {
-            newVelocity = newVelocity.sum(physics.calculateX(deltaTime, command));
+
+        final Vector2D newVelocity;
+
+        if (currentState.canClimb()) {
+            newVelocity = physics.calculateY(deltaTime, command);
+        } else if (isJumping || !isOnGround) {
+            newVelocity = physics.calculateX(deltaTime, command)
+                    .sum(physics.calculateY(deltaTime, command));
         } else {
-            newVelocity = new Vector2D(0, newVelocity.y());
+            newVelocity = physics.calculateX(deltaTime, command);
         }
-        if (!isOnGround || isClimbing) {
-            newVelocity = newVelocity.sum(physics.calculateY(deltaTime, command));
-        }
+
         setVelocity(newVelocity);
         setPosition(getPosition().sum(newVelocity.multiply(deltaTime)));
     }
@@ -108,24 +110,12 @@ public class Mario extends AbstractEntity implements Character, Movable {
      * @throws NullPointerException if newState is null
      */
     @Override
-    public void changeState(final Supplier<CharacterState> stateSupplier) {
-        Objects.requireNonNull(stateSupplier, "State supplier cannot be null");
+    public final void changeState(final Supplier<CharacterState> stateSupplier) {
         final CharacterState newState = Objects.requireNonNull(
-            stateSupplier.get(), "Supplied state cannot be null");
+            stateSupplier.get(), "NewState cannot be null");
         currentState.onExit(this);
         this.currentState = newState;
         currentState.onEnter(this);
-    }
-
-    /**
-     * Updates Mario's state and physics.
-     *
-     * @param deltaTime time elapsed since last update (in seconds)
-     */
-    @Override
-    public void update(final float deltaTime) {
-        move(deltaTime);
-        currentState.update(this, deltaTime);
     }
 
     /**
@@ -135,20 +125,15 @@ public class Mario extends AbstractEntity implements Character, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof Platform) {
-            isOnGround = true;
-            isClimbing = false;
-        }
-        if (other instanceof Ladder 
-                && (command == Command.MOVE_UP || command == Command.MOVE_DOWN)
-                && currentState.canClimb()) {
-            isOnGround = false;
-            isClimbing = true;
-        }
+        isOnGround = false;
+        currentState.handleCollision(this, other);
         if (other instanceof final Collectible collectible) {
             collectible.collect(this);
         }
-        currentState.handleCollision(this, other);
+        if (other instanceof Platform) {
+            isOnGround = true;
+            isJumping = false;
+        }
     }
 
     /**
