@@ -31,8 +31,8 @@ public class InGameState extends AbstractState {
             case ESCAPE:
                 model.setState(PauseState::new);
                 break;
-            // TODO: case LEFT, RIGHT, MOVE_UP, MOVE_DOWN, JUMP call
-            // model.getPlayer().ifPresent(player -> player.setCommand(command));
+            case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, JUMP:
+                model.getPlayer().ifPresent(player -> player.setCommand(command));
             default:
                 break;
         }
