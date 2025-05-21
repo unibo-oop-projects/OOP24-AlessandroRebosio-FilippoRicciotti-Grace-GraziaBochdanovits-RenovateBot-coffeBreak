@@ -67,7 +67,7 @@ public interface Model {
     /**
      * Changes the current game state to the specified one.
      * 
-     * @param newState Supplier of the phase to switch to
+     * @param newState Supplier of the state to switch to
      * @throws NullPointerException if newState is null
      */
     void setState(Supplier<GameState> newState);

@@ -20,7 +20,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
 /**
  * Concrete implementation of the game model.
  * <p>
- * Maintains the game state including entities, player, and phase management.
+ * Maintains the game state including entities, player, and state management.
  * Provides thread-safe access to model state.
  * </p>
  * 
@@ -29,7 +29,7 @@ import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
 public class GameModel implements Model {
 
     private final List<Entity> entities;
-    private GameState currentPhase;
+    private GameState currentState;
 
     private volatile boolean running;
 
@@ -91,10 +91,13 @@ public class GameModel implements Model {
      * 
      */
     @Override
-    public final void setState(final Supplier<GameState> newPhase) {
-        currentPhase.onExit(this);
-        currentPhase = newPhase.get();
-        currentPhase.onEnter(this);
+    public final void setState(final Supplier<GameState> newState) {
+        if (currentState != null) {
+            currentState.onExit(this);
+        }
+        currentState = newState.get();
+        currentState.onEnter(this);
+
     }
 
     /**
@@ -102,7 +105,7 @@ public class GameModel implements Model {
      */
     @Override
     public void executeCommand(final Command command) {
-        this.currentPhase.handleCommand(this, command);
+        this.currentState.handleCommand(this, command);
     }
 
     /**
@@ -110,7 +113,7 @@ public class GameModel implements Model {
      */
     @Override
     public void update(final float deltaTime) {
-        this.currentPhase.update(this, deltaTime);
+        this.currentState.update(this, deltaTime);
     }
 
     /**
