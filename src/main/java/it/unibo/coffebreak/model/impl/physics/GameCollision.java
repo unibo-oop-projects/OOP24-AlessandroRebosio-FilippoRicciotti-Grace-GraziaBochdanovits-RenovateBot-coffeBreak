@@ -40,12 +40,12 @@ public final class GameCollision implements Collision {
         Objects.requireNonNull(model, "Model cannot be null");
 
         model.getPlayer().ifPresent(player -> model.getEntities()
-                .stream().filter(e -> !e.equals(player) && player.intersect(e))
+                .stream().filter(e -> !e.equals(player) && player.collidesWith(e))
                 .forEach(player::onCollision));
 
         model.getEntities().forEach(a -> model.getEntities().stream()
                 .filter(b -> !a.equals(b))
-                .filter(a::intersect)
+                .filter(a::collidesWith)
                 .forEach(b -> {
                     a.onCollision(b);
                     b.onCollision(a);
