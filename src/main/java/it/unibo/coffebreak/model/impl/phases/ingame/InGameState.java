@@ -82,11 +82,4 @@ public class InGameState extends AbstractState {
                 .ifPresent(p -> model.setState(GameOverState::new));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onExit(final Model model) {
-        model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(""));
-    }
 }
