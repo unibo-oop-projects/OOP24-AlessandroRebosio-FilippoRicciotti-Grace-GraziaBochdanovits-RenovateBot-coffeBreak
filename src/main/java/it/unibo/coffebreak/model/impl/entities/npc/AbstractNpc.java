@@ -35,16 +35,4 @@ public abstract class AbstractNpc extends AbstractEntity {
     public void onCollision(final Entity other) {
         // Default empty implementation
     }
-
-    /**
-     * {@inheritDoc}
-     * Default empty implementation. Subclasses should override this method
-     * to implement NPC-specific update logic.
-     *
-     * @param deltaTime the time elapsed since the last update in seconds
-     */
-    @Override
-    public void update(final float deltaTime) {
-        // Default empty implementation
-    }
 }

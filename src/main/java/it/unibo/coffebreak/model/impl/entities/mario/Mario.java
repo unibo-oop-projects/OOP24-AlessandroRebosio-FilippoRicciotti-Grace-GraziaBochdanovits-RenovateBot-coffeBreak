@@ -118,17 +118,6 @@ public class Mario extends AbstractEntity implements Character, Movable {
     }
 
     /**
-     * Updates Mario's state and physics.
-     *
-     * @param deltaTime time elapsed since last update (in seconds)
-     */
-    @Override
-    public void update(final float deltaTime) {
-        move(deltaTime);
-        currentState.update(this, deltaTime);
-    }
-
-    /**
      * Handles collision with another entity by delegating to current state.
      *
      * @param other the entity colliding with Mario
