@@ -17,6 +17,6 @@ public interface BarrelFactory {
      * @param initialDirection the direction on the barrel
      * @return a new Barrel instance
      */
-    Barrel createBarrel(Position2D position, Command initialDirection);
+    Barrel createBarrel(Position2D position, Command initialDirection); //TODO: after Riccio
 }
 
