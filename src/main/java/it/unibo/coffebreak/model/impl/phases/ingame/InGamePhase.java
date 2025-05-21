@@ -86,7 +86,7 @@ public class InGamePhase extends AbstractPhases {
      * {@inheritDoc}
      */
     @Override
-    public void exitPhase(final Model model) {
+    public void onExit(final Model model) {
         model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(""));
     }
 }

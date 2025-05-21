@@ -17,14 +17,14 @@ public abstract class AbstractPhases implements Phases {
      * {@inheritDoc}
      */
     @Override
-    public void enterPhase(final Model model) {
+    public void onEnter(final Model model) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void exitPhase(final Model model) {
+    public void onExit(final Model model) {
     }
 
     /**

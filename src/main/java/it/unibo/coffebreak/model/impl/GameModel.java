@@ -92,9 +92,9 @@ public class GameModel implements Model {
      */
     @Override
     public final void setState(final Supplier<Phases> newPhase) {
-        currentPhase.exitPhase(this);
+        currentPhase.onExit(this);
         currentPhase = newPhase.get();
-        currentPhase.enterPhase(this);
+        currentPhase.onEnter(this);
     }
 
     /**

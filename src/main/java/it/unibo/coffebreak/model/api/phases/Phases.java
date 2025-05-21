@@ -15,14 +15,14 @@ public interface Phases {
      * 
      * @param model the model changing state
      */
-    void enterPhase(Model model);
+    void onEnter(Model model);
 
     /**
      * method for signaling a Phase leaving.
      * 
      * @param model the model changing state
      */
-    void exitPhase(Model model);
+    void onExit(Model model);
 
     /**
      * method that handle input depending on the Phase the model is currently in.
