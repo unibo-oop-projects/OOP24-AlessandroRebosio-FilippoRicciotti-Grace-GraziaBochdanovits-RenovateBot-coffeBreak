@@ -64,15 +64,6 @@ public class WithHammerState extends AbstractMarioState {
     }
 
     /**
-     * Called when exiting hammer state.
-     *
-     * @param character the Mario instance leaving this state (non-null)
-     */
-    @Override
-    public void onExit(final Character character) {
-    }
-
-    /**
      * Updates hammer state logic.
      * <ul>
      *   <li>Checks for expiration</li>
@@ -85,7 +76,7 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public void update(final Character character, final float deltaTime) {
         if (isExpired()) {
-            character.changeState(new NormalState());
+            character.changeState(NormalState::new);
         }
     }
 

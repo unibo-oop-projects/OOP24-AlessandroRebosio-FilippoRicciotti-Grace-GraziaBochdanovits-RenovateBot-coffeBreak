@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.impl.entities.mario;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
@@ -8,11 +9,13 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.api.entities.structure.Ladder;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
+import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.GameLivesManager;
 import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
@@ -50,6 +53,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
     private final GameScoreManager scoreManager;
     private final Physics physics;
     private CharacterState currentState;
+    private Command command = Command.NONE;
     private boolean isOnGround;
     private boolean isClimbing;
 
@@ -74,15 +78,43 @@ public class Mario extends AbstractEntity implements Character, Movable {
     }
 
     /**
+     * Moves Mario according to his current command, physic and state.
+     * This method should be called every frame to update Mario's position.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds)
+     * @throws IllegalArgumentException if deltaTime is negative
+     */
+    @Override
+    public void move(final float deltaTime) {
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("DeltaTime cannot be negative");
+        }
+        Vector2D newVelocity = getVelocity();
+        if (!isClimbing) {
+            newVelocity = newVelocity.sum(physics.calculateX(deltaTime, command));
+        } else {
+            newVelocity = new Vector2D(0, newVelocity.y());
+        }
+        if (!isOnGround || isClimbing) {
+            newVelocity = newVelocity.sum(physics.calculateY(deltaTime, command));
+        }
+        setVelocity(newVelocity);
+        setPosition(getPosition().sum(newVelocity.multiply(deltaTime)));
+    }
+
+    /**
      * Changes Mario's current state, properly handling transitions.
      *
-     * @param newState the state to transition to (cannot be null)
+     * @param stateSupplier the state to transition to (cannot be null)
      * @throws NullPointerException if newState is null
      */
     @Override
-    public void changeState(final CharacterState newState) {
+    public void changeState(final Supplier<CharacterState> stateSupplier) {
+        Objects.requireNonNull(stateSupplier, "State supplier cannot be null");
+        final CharacterState newState = Objects.requireNonNull(
+            stateSupplier.get(), "Supplied state cannot be null");
         currentState.onExit(this);
-        this.currentState = Objects.requireNonNull(newState, "New state cannot be null");
+        this.currentState = newState;
         currentState.onEnter(this);
     }
 
@@ -93,10 +125,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        if (!isOnGround && !isClimbing) {
-            setVelocity(getVelocity().sum(physics.calculateY(deltaTime, Command.NONE)));
-        }
-        setPosition(getPosition().sum(getVelocity().multiply(deltaTime)));
+        move(deltaTime);
         currentState.update(this, deltaTime);
     }
 
@@ -110,6 +139,12 @@ public class Mario extends AbstractEntity implements Character, Movable {
         if (other instanceof Platform) {
             isOnGround = true;
             isClimbing = false;
+        }
+        if (other instanceof Ladder 
+                && (command == Command.MOVE_UP || command == Command.MOVE_DOWN)
+                && currentState.canClimb()) {
+            isOnGround = false;
+            isClimbing = true;
         }
         if (other instanceof final Collectible collectible) {
             collectible.collect(this);
@@ -150,18 +185,6 @@ public class Mario extends AbstractEntity implements Character, Movable {
     }
 
     /**
-     * Moves Mario according to his current velocity and state.
-     * This method should be called every frame to update Mario's position.
-     * 
-     * @param deltaTime the time elapsed since the last frame (in seconds)
-     * @throws IllegalArgumentException if deltaTime is negative
-     */
-    @Override
-    public void move(final float deltaTime) {
-        // TODO: Auto-generated method stub
-    }
-
-    /**
      * Gets Mario's current score.
      * 
      * @return the current score value as integer
@@ -180,5 +203,13 @@ public class Mario extends AbstractEntity implements Character, Movable {
     @Override
     public ScoreManager getScoreManager() {
         return this.scoreManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCommand(final Command command) {
+        this.command = command;
     }
 }

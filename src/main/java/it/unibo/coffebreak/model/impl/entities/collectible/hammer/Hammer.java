@@ -39,6 +39,6 @@ public class Hammer extends AbstractCollectible {
     @Override
     protected void applyEffect(final Character character) {
         super.applyEffect(character);
-        character.changeState(new WithHammerState());
+        character.changeState(WithHammerState::new);
     }
 }

@@ -27,34 +27,6 @@ public class NormalState extends AbstractMarioState {
     private boolean canClimb;
 
     /**
-     * Called when entering this state.
-     * 
-     * @param character the Mario instance transitioning to this state
-     */
-    @Override
-    public void onEnter(final Character character) {
-    }
-
-    /**
-     * Called when exiting this state. No cleanup needed for this state.
-     * 
-     * @param character the Mario instance leaving this state
-     */
-    @Override
-    public void onExit(final Character character) {
-    }
-
-    /**
-     * Empty update method as no continuous behavior is needed in this state.
-     * 
-     * @param character the Mario instance being updated
-     * @param deltaTime the time elapsed since last frame (in seconds)
-     */
-    @Override
-    public void update(final Character character, final float deltaTime) {
-    }
-
-    /**
      * Handles collisions with other entities.
      * 
      * @param character the Mario instance involved in the collision
@@ -79,5 +51,4 @@ public class NormalState extends AbstractMarioState {
     public boolean canClimb() {
         return this.canClimb;
     }
-
 }

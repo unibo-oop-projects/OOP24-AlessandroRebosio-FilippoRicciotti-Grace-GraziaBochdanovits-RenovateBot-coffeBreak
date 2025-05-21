@@ -1,5 +1,8 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
+import java.util.function.Supplier;
+
+import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
@@ -15,11 +18,10 @@ import it.unibo.coffebreak.model.api.score.ScoreManager;
 public interface Character extends Entity {
 
     /**
-     * Changes the current state of the character to the specified new state.
-     * 
-     * @param newState the new state to set for the character
+     * Changes Mario's current state using a state supplier.
+     * @param stateSupplier supplier providing the new state
      */
-    void changeState(CharacterState newState);
+    void changeState(Supplier<CharacterState> stateSupplier);
 
     /**
      * Decrements the character's life count.
@@ -60,4 +62,12 @@ public interface Character extends Entity {
      * @return the score value
      */
     int getScore();
+
+    /**
+     * Sets the movement command for this character.
+     * The command determines how the character should move in the game world.
+     * 
+     * @param command the movement command to apply to the character
+     */
+    void setCommand(Command command);
 }
