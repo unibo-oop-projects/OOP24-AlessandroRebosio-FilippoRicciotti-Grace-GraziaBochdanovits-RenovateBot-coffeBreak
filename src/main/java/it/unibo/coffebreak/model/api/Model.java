@@ -98,4 +98,9 @@ public interface Model {
      * Stops the game simulation and triggers any necessary cleanup.
      */
     void stop();
+
+    /**
+     * Starts the first level.
+     */
+    void start();
 }

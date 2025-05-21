@@ -136,4 +136,12 @@ public class GameModel implements Model {
                 .map(type::cast)
                 .findFirst();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void start() {
+        // TODO start first level
+    }
 }
