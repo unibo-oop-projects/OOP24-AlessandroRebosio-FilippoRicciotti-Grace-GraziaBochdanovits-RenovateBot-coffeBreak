@@ -44,6 +44,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     private final boolean canTransformToFire;
     private Command currentDirection;
     private Platform currentPlatform;
+    private boolean isDestroyedByTank;
     private boolean isOnPlatform;
 
     /**
@@ -108,6 +109,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
         }
         if (other instanceof GameTank) {
             destroy();
+            this.isDestroyedByTank = true;
         }
     }
 
@@ -118,6 +120,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public boolean canTransformToFire() {
-        return this.canTransformToFire;
+        return this.canTransformToFire && this.isDestroyedByTank;
     }
 }
