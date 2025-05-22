@@ -43,6 +43,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     private final Physics physics;
     private final boolean canTransformToFire;
     private Command currentDirection;
+    private Platform currentPlatform;
+    private boolean isDestroyedByTank;
     private boolean isOnPlatform;
 
     /**
@@ -74,7 +76,10 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
             return;
         }
         Vector2D velocity = physics.calculateX(BARREL_SPEED * deltaTime, currentDirection);
-        if (!isOnPlatform) {
+
+        if (isOnPlatform && currentPlatform != null) {
+            velocity = velocity.sum(new Vector2D(0, currentPlatform.getVelocity().y() * deltaTime));
+        } else {
             velocity = velocity.sum(physics.calculateY(deltaTime, Command.MOVE_DOWN));
         }
         setPosition(getPosition().sum(velocity));
@@ -95,12 +100,16 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     public void onCollision(final Entity other) {
         if (other instanceof final Platform platform) {
             isOnPlatform = true;
-            if (platform.getDirection() != Command.NONE) {
-                this.currentDirection = platform.getDirection();
+            this.currentPlatform = platform;
+            if (platform.getVelocity().x() > 0) {
+                this.currentDirection = Command.MOVE_RIGHT;
+            } else if (platform.getVelocity().x() < 0) {
+                this.currentDirection = Command.MOVE_LEFT;
             }
         }
         if (other instanceof GameTank) {
             destroy();
+            this.isDestroyedByTank = true;
         }
     }
 
@@ -111,6 +120,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public boolean canTransformToFire() {
-        return this.canTransformToFire;
+        return this.canTransformToFire && this.isDestroyedByTank;
     }
 }

@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.api.entities.npc;
 import java.util.Optional;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 
 /**
  * Represents Donkey Kong, the iconic arcade game character who throws barrels.
@@ -14,20 +13,6 @@ import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Antagonist extends Entity {
-
-    /**
-     * Triggers Donkey Kong to throw a new barrel.
-     *
-     * <p>Implementations should:
-     * <ul>
-     *   <li>Create a new {@link Barrel} instance (typically via {@link BarrelFactory})</li>
-     *   <li>Position the barrel at Donkey Kong's current location</li>
-     *   <li>Register the barrel with the game world</li>
-     * </ul>
-     *
-     * @return the newly created and thrown {@link Barrel} instance
-     */
-    Barrel throwBarrel();
 
     /**
      * Attempts to throw a barrel if the throw interval has elapsed.

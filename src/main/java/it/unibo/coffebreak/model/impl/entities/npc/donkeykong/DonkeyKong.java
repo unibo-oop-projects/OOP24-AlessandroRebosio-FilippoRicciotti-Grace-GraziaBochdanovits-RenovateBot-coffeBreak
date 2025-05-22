@@ -2,14 +2,11 @@ package it.unibo.coffebreak.model.impl.entities.npc.donkeykong;
 
 import java.util.Optional;
 
-import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.BarrelFactory;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
-import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrelFactory;
 import it.unibo.coffebreak.model.impl.entities.npc.AbstractNpc;
 
 /**
@@ -32,7 +29,6 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     private static final long BARREL_THROW_INTERVAL = 3000;
 
     private float lastThrowTime;
-    private final BarrelFactory barrelFactory;
 
     /**
      * Constructs a new Donkey Kong entity with specified position and dimensions.
@@ -44,21 +40,6 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      */
     public DonkeyKong(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
-        this.barrelFactory = new GameBarrelFactory();
-    }
-
-    /**
-     * Creates and throws a new barrel from Donkey Kong's position.
-     * <p>
-     * The barrel's starting position is slightly offset from
-     * Donkey Kong's current position.
-     * </p>
-     * 
-     * @return the newly created {@link Barrel} instance
-     */
-    @Override
-    public Barrel throwBarrel() {
-        return barrelFactory.createBarrel(getPosition(), Command.MOVE_RIGHT);
     }
 
     /**
@@ -72,7 +53,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
         if (deltaTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
             lastThrowTime = deltaTime;
-            return Optional.of(throwBarrel());
+            return Optional.of(null); //TODO: add barrelFactory quando sarà sistemata
         }
         return Optional.empty();
     }

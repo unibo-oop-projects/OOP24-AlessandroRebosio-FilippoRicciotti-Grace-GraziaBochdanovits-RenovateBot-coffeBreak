@@ -88,13 +88,11 @@ public class Mario extends AbstractEntity implements Character, Movable {
             throw new IllegalArgumentException("DeltaTime cannot be negative");
         }
 
-        final Vector2D newVelocity;
+        final Vector2D newVelocity; //TODO: movimento solo verticale per scalare
 
-        if (currentState.canClimb()) {
-            newVelocity = physics.calculateY(deltaTime, command);
-        } else if (isJumping || !isOnGround) {
+        if (isJumping || !isOnGround) {
             newVelocity = physics.calculateX(deltaTime, command)
-                    .sum(physics.calculateY(deltaTime, command));
+                        .sum(physics.calculateY(deltaTime, command));
         } else {
             newVelocity = physics.calculateX(deltaTime, command);
         }
@@ -130,7 +128,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
         if (other instanceof final Collectible collectible) {
             collectible.collect(this);
         }
-        if (other instanceof Platform) {
+        if (other instanceof final Platform platform && platform.isSupporting(this)) {
             isOnGround = true;
             isJumping = false;
         }
