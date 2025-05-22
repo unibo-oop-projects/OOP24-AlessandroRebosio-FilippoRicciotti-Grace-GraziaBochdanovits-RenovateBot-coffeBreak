@@ -8,11 +8,16 @@ import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
 /**
  * An abstract base implementation for ladder entities within the game.
- * A ladder allows certain entities (e.g., the player or enemies) to move vertically 
- * between platforms. This class provides the basic positional and dimensional 
- * properties of a ladder, while requiring subclasses to define specific collision behavior.
+ * A ladder allows certain entities (e.g., the player or enemies) to move
+ * vertically
+ * between platforms. This class provides the basic positional and dimensional
+ * properties of a ladder, while requiring subclasses to define specific
+ * collision behavior.
  * 
- * This class extends {@link AbstractEntity} and implements the {@link Ladder} interface.
+ * This class extends {@link AbstractEntity} and implements the {@link Ladder}
+ * interface.
+ * 
+ * @author Alessandro Rebosio
  */
 public abstract class AbstractLadder extends AbstractEntity implements Ladder {
 
@@ -27,12 +32,13 @@ public abstract class AbstractLadder extends AbstractEntity implements Ladder {
     }
 
     /**
-     * Handles the collision behavior when another entity interacts with the ladder.
-     * Implementing classes must define how different entities respond to colliding
-     * with the ladder (e.g., allowing climbing or triggering specific interactions).
-     *
-     * @param other the entity that has collided with the ladder
+     * Handles collision logic when another entity interacts with this ladder.
+     * Currently, this method has no implemented logic.
+     * 
+     * @param other the entity that collided with the ladder
      */
     @Override
-    public abstract void onCollision(Entity other);
+    public void onCollision(final Entity other) {
+        // No behavior defined for now
+    }
 }

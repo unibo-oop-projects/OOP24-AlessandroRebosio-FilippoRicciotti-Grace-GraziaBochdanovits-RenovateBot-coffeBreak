@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.impl.entities.structure.ladder.normal;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.structure.ladder.AbstractLadder;
@@ -12,6 +11,8 @@ import it.unibo.coffebreak.model.impl.entities.structure.ladder.AbstractLadder;
  * and should be implemented based on game logic requirements.
  * 
  * This class extends {@link AbstractLadder}.
+ * 
+ * @author Alessandro Rebosio
  */
 public class NormalLadder extends AbstractLadder {
 
@@ -23,16 +24,5 @@ public class NormalLadder extends AbstractLadder {
      */
     public NormalLadder(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
-    }
-
-    /**
-     * Handles collision logic when another entity interacts with this ladder.
-     * Currently, this method has no implemented logic.
-     * 
-     * @param other the entity that collided with the ladder
-     */
-    @Override
-    public void onCollision(final Entity other) {
-        // No behavior defined for now
     }
 }
