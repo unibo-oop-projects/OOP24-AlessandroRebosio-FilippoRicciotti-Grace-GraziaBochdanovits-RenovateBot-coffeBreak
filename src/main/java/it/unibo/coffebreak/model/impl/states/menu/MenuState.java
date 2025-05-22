@@ -1,22 +1,20 @@
-package it.unibo.coffebreak.model.impl.phases.pause;
+package it.unibo.coffebreak.model.impl.states.menu;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.phases.GameState;
-import it.unibo.coffebreak.model.impl.phases.AbstractState;
-import it.unibo.coffebreak.model.impl.phases.ingame.InGameState;
-import it.unibo.coffebreak.model.impl.phases.menu.MenuState;
+import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.model.impl.states.AbstractState;
+import it.unibo.coffebreak.model.impl.states.ingame.InGameState;
 
 /**
  * Implementation of {@link GameState} interface;
  * <p>
- * Represents the <b>Paused</b> state of the game.
+ * Represents the <b>Main Menu</b> state of the game.
  * </p>
  * 
  * @author Filippo Ricciotti
  */
-public class PauseState extends AbstractState {
-
+public class MenuState extends AbstractState {
     /**
      * {@inheritDoc}
      */
@@ -24,10 +22,8 @@ public class PauseState extends AbstractState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
+                // TODO: model.start()
                 model.setState(InGameState::new);
-                break;
-            case ESCAPE:
-                model.setState(MenuState::new);
                 break;
             case QUIT:
                 model.stop();

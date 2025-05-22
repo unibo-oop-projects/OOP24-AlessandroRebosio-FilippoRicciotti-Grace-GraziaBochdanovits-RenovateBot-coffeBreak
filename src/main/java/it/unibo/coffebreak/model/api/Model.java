@@ -10,7 +10,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.phases.GameState;
+import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
  * Represents the main model interface for the game.

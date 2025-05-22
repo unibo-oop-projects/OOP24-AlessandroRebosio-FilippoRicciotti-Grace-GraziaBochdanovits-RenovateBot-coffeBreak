@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.phases;
+package it.unibo.coffebreak.model.api.states;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;

@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.model.impl.phases;
+package it.unibo.coffebreak.model.impl.states;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.phases.GameState;
+import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
  * An abstract base class representing a game State.

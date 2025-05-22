@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.impl.phases.ingame;
+package it.unibo.coffebreak.model.impl.states.ingame;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
@@ -6,10 +6,10 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.phases.GameState;
-import it.unibo.coffebreak.model.impl.phases.AbstractState;
-import it.unibo.coffebreak.model.impl.phases.gameover.GameOverState;
-import it.unibo.coffebreak.model.impl.phases.pause.PauseState;
+import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.model.impl.states.AbstractState;
+import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
+import it.unibo.coffebreak.model.impl.states.pause.PauseState;
 import it.unibo.coffebreak.model.impl.physics.GameCollision;
 
 /**
