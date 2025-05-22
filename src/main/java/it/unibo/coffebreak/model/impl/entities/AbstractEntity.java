@@ -91,7 +91,7 @@ public abstract class AbstractEntity implements Entity {
      * @param vector the new velocity vector
      */
     @Override
-    public void setVelocity(final Vector2D vector) {
+    public final void setVelocity(final Vector2D vector) {
         this.velocity = new Vector2D(vector.x(), vector.y());
     }
 

@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.api.entities.structure;
 
-import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 
 /**
@@ -10,11 +9,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Alessandro Rebosio
  */
 public interface Platform extends Entity {
-
-    /**
-     * @return the direction of the platform
-     */
-    Command getDirection();
 
     /**
      * Checks if this platform can support the given entity.
