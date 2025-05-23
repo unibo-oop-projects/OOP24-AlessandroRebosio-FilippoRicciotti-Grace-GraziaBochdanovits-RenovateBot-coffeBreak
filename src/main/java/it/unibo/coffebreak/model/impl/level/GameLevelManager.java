@@ -43,7 +43,7 @@ public class GameLevelManager implements LevelManager {
 
     @Override
     public void cleanEntities() {
-        this.cleanup.clean(null);
+        this.cleanup.clean(this.entities);
     }
 
     @Override

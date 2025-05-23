@@ -14,7 +14,9 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.model.impl.level.GameLevelManager;
 import it.unibo.coffebreak.model.impl.states.menu.MenuState;
 
 /**
@@ -28,6 +30,7 @@ import it.unibo.coffebreak.model.impl.states.menu.MenuState;
  */
 public class GameModel implements Model {
 
+    private final LevelManager levelManager;
     private final List<Entity> entities;
     private GameState currentState;
 
@@ -38,6 +41,7 @@ public class GameModel implements Model {
      * no player character, and a new GameScoreManager instance.
      */
     public GameModel() {
+        this.levelManager = new GameLevelManager();
         this.entities = new ArrayList<>();
 
         this.setState(MenuState::new);
@@ -95,7 +99,7 @@ public class GameModel implements Model {
         if (currentState != null) {
             currentState.onExit(this);
         }
-        currentState = newState.get();
+        currentState = Objects.requireNonNull(newState.get(), "The newSate cannot be null");
         currentState.onEnter(this);
 
     }
@@ -128,6 +132,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void start() {
+        // TODO: model.start()
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void stop() {
         this.getPlayer().ifPresent(p -> p.getScoreManager().saveScores());
         this.running = false;
@@ -138,13 +150,5 @@ public class GameModel implements Model {
                 .filter(type::isInstance)
                 .map(type::cast)
                 .findFirst();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-        // TODO start first level
     }
 }
