@@ -4,6 +4,6 @@ import java.util.List;
 
 import javax.swing.text.html.parser.Entity;
 
-public interface Cleanup {
-    void cleanUpEntity(List<Entity> entities);
+public interface Cleaner {
+    void clean(List<Entity> entities);
 }

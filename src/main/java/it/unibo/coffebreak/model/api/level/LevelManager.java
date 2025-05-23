@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.api.level;
 
 public interface LevelManager {
-    void leadEntities();
-    
+    void loadEntities();
+
     void resetEntities();
 
     void nextMap();
