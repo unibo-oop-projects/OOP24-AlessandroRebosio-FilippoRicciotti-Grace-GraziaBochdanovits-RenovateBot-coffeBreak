@@ -51,7 +51,7 @@ public class InGameState extends AbstractState {
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
                 .map(Movable.class::cast)
-                .forEach(e -> e.move(deltaTime));
+                .forEach(e -> e.update(deltaTime));
 
         GameCollision.checkCollision(model);
 
