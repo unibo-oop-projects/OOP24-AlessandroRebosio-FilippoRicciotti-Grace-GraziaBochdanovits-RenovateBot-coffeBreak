@@ -17,16 +17,17 @@ import it.unibo.coffebreak.model.impl.common.Position2D;
  */
 public class Hammer extends AbstractCollectible {
 
+    private static final int VALUE = 500;
+
     /**
      * Constructs a new Hammer with the specified position, dimensions, and point
      * value.
      *
      * @param position  the 2D position of the hammer in the game world
      * @param dimension the 2D dimensions (size) of the hammer
-     * @param value     the point value this hammer is worth when collected
      */
-    public Hammer(final Position2D position, final BoundingBox2D dimension, final int value) {
-        super(position, dimension, value);
+    public Hammer(final Position2D position, final BoundingBox2D dimension) {
+        super(position, dimension, VALUE);
     }
 
     /**
