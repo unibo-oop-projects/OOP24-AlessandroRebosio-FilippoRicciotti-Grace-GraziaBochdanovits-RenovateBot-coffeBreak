@@ -12,8 +12,7 @@ public class EntityCleaner implements Cleaner {
     @Override
     public void clean(List<Entity> entities) {
         Objects.requireNonNull(entities, "The entities cannot be null");
-
-
+        
     }
 
 }
