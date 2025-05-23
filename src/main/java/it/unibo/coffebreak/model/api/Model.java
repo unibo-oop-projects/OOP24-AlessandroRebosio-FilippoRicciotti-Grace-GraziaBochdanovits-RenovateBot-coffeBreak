@@ -10,6 +10,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
@@ -57,12 +58,18 @@ public interface Model {
      * Adds a barrel to the game model.
      * The barrel will be included in the list of active entities if it is not null.
      *
-     * @param barrel the {@link Barrel} to be added; must not be {@code null}
+     * @param entity the {@link Barrel} to be added; must not be {@code null}
      * @return {@code true} if the barrel was added successfully, {@code false}
      *         otherwise
      * @throws NullPointerException if {@code barrel} is {@code null}
      */
-    boolean addBarrel(Barrel barrel);
+    boolean addEntity(Entity entity);
+
+    /**
+     * 
+     * @return a Level Manager
+     */
+    LevelManager getLevelManager();
 
     /**
      * Changes the current game state to the specified one.

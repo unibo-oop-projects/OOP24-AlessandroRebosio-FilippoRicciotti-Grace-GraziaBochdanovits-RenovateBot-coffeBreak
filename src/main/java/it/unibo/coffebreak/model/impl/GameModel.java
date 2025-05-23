@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.states.GameState;
@@ -86,8 +86,17 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public boolean addBarrel(final Barrel barrel) {
-        return this.entities.add(Objects.requireNonNull(barrel, "Barrel cannot be null"));
+    public boolean addEntity(final Entity entity) {
+        return this.levelManager.addEntity(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "LevelManager is intentionally shared and mutable")
+    @Override
+    public LevelManager getLevelManager() {
+        return this.levelManager;
     }
 
     /**

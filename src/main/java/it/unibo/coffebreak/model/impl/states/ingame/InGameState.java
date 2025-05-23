@@ -4,8 +4,7 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
@@ -44,9 +43,7 @@ public class InGameState extends AbstractState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-
-        // TODO: to fix
-        model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addBarrel);
+        model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
@@ -55,20 +52,15 @@ public class InGameState extends AbstractState {
 
         GameCollision.checkCollision(model);
 
-        // TODO: it doesn't work, due to the fact that getEntities returns an uneditable
-        // list, it must be implemented in the levelManger
-        model.getEntities().removeAll(model.getEntities().stream()
-                .filter(Enemy.class::isInstance)
-                .map(Enemy.class::cast)
-                .filter(Enemy::isDestroyed)
+        // TODO: barrel to fire
+        model.addEntity(null);
+        model.getEntities().addAll(model.getEntities().stream()
+                .filter(Barrel.class::isInstance)
+                .map(Barrel.class::cast)
+                .filter(Barrel::canTransformToFire)
                 .toList());
 
-        // TODO: same
-        model.getEntities().removeAll(model.getEntities().stream()
-                .filter(Collectible.class::isInstance)
-                .map(Collectible.class::cast)
-                .filter(Collectible::isCollected)
-                .toList());
+        model.getLevelManager().cleanEntities();
 
         // TODO: If model.getPlayer() is present and has lost a life (via
         // getCurrentState().hasLostLife()),
