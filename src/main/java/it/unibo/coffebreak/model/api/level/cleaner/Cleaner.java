@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.level;
+package it.unibo.coffebreak.model.api.level.cleaner;
 
 import java.util.List;
 

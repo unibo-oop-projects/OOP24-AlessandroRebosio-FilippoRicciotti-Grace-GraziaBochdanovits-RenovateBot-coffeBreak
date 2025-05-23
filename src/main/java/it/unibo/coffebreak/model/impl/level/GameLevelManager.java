@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.level;
 
-import it.unibo.coffebreak.model.api.level.Cleaner;
 import it.unibo.coffebreak.model.api.level.LevelManager;
-import it.unibo.coffebreak.model.impl.level.cleanup.EntityCleaner;
+import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
+import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
 
 public class GameLevelManager implements LevelManager {
 
