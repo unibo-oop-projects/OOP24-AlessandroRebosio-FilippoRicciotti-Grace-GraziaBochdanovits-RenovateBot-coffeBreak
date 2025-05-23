@@ -75,7 +75,7 @@ public class WithHammerState extends AbstractMarioState {
      */
     @Override
     public void update(final Character character, final float deltaTime) {
-        if (isExpired()) {
+        if (this.isExpired()) {
             character.changeState(NormalState::new);
         }
     }

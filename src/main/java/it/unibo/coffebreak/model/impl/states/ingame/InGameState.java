@@ -31,7 +31,6 @@ public class InGameState extends AbstractState {
                 model.setState(PauseState::new);
                 break;
             case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, JUMP:
-                model.getPlayer().ifPresent(player -> player.setCommand(command));
                 break;
             default:
                 break;
@@ -48,7 +47,7 @@ public class InGameState extends AbstractState {
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
                 .map(Movable.class::cast)
-                .forEach(e -> e.move(deltaTime));
+                .forEach(e -> e.update(deltaTime));
 
         GameCollision.checkCollision(model);
 
