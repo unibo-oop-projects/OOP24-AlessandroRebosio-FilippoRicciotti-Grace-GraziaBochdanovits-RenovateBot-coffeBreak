@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.impl.entities.enemy.barrel;
 
-import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
@@ -8,7 +7,6 @@ import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
 import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
@@ -41,9 +39,9 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     private static final float BARREL_SPEED = 1.5f;
 
     private final Physics physics;
+
     private final boolean canTransformToFire;
-    private Command currentDirection;
-    private Platform currentPlatform;
+
     private boolean isDestroyedByTank;
     private boolean isOnPlatform;
 
@@ -55,15 +53,13 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      *                           null)
      * @param canTransformToFire whether the barrel can turn into fire when
      *                           destroyed
-     * @param initialDirection   the initial direction of the barrel
      * @throws NullPointerException if position, dimension or physics are null
      */
-    public GameBarrel(final Position2D position, final BoundingBox2D dimension,
-            final boolean canTransformToFire, final Command initialDirection) {
+    public GameBarrel(final Position2D position, final BoundingBox2D dimension, final boolean canTransformToFire) {
         super(position, dimension);
-        this.canTransformToFire = canTransformToFire;
-        this.currentDirection = initialDirection;
         this.physics = new GamePhysics();
+
+        this.canTransformToFire = canTransformToFire;
         this.isOnPlatform = false;
     }
 
@@ -71,19 +67,14 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      * {@inheritDoc}
      */
     @Override
-    public void move(final float deltaTime) {
+    public void update(final float deltaTime) {
         if (isDestroyed()) {
             return;
         }
-        Vector2D velocity = physics.calculateX(BARREL_SPEED * deltaTime, currentDirection);
 
-        if (isOnPlatform && currentPlatform != null) {
-            velocity = velocity.sum(new Vector2D(0, currentPlatform.getVelocity().y() * deltaTime));
-        } else {
-            velocity = velocity.sum(physics.calculateY(deltaTime, Command.MOVE_DOWN));
-        }
-        setPosition(getPosition().sum(velocity));
-        isOnPlatform = false;
+        super.setVelocity(this.physics.calculateX(deltaTime, null).multiply(BARREL_SPEED));
+
+        // TODO: Barrel update()
     }
 
     /**
@@ -99,17 +90,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     @Override
     public void onCollision(final Entity other) {
         if (other instanceof final Platform platform) {
-            isOnPlatform = true;
-            this.currentPlatform = platform;
-            if (platform.getVelocity().x() > 0) {
-                this.currentDirection = Command.MOVE_RIGHT;
-            } else if (platform.getVelocity().x() < 0) {
-                this.currentDirection = Command.MOVE_LEFT;
-            }
+            this.isOnPlatform = platform.isSupporting(other);
         }
         if (other instanceof GameTank) {
-            destroy();
             this.isDestroyedByTank = true;
+            this.destroy();
         }
     }
 
@@ -120,6 +105,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public boolean canTransformToFire() {
-        return this.canTransformToFire && this.isDestroyedByTank;
+        return this.canTransformToFire && this.isDestroyedByTank && this.isOnPlatform;
     }
 }

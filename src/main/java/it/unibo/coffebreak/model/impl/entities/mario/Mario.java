@@ -4,22 +4,20 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.GameLivesManager;
 import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.withhammer.WithHammerState;
+import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
@@ -52,27 +50,24 @@ public class Mario extends AbstractEntity implements Character, Movable {
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
     private final Physics physics;
+
     private CharacterState currentState;
-    private Command command = Command.NONE;
-    private boolean isOnGround;
-    private boolean isJumping;
 
     /**
      * Creates a new Mario instance.
      *
-     * @param position     the initial position of Mario
-     * @param dimension    the dimensions of Mario's hitbox
-     * @param physics      the physics component of Mario
+     * @param position  the initial position of Mario
+     * @param dimension the dimensions of Mario's hitbox
      * @throws NullPointerException if scoreManager or playerName are null
      */
-    public Mario(final Position2D position, final BoundingBox2D dimension, final Physics physics) {
+    public Mario(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
+
         this.livesManager = new GameLivesManager();
         this.scoreManager = new GameScoreManager();
-        this.physics = Objects.requireNonNull(physics);
-        changeState(() -> new NormalState());
-        this.isOnGround = true;
-        this.isJumping = false;
+        this.physics = new GamePhysics();
+
+        changeState(NormalState::new);
     }
 
     /**
@@ -83,22 +78,15 @@ public class Mario extends AbstractEntity implements Character, Movable {
      * @throws IllegalArgumentException if deltaTime is negative
      */
     @Override
-    public void move(final float deltaTime) {
+    public void update(final float deltaTime) {
         if (deltaTime < 0) {
             throw new IllegalArgumentException("DeltaTime cannot be negative");
         }
+        this.currentState.update(this, deltaTime);
 
-        final Vector2D newVelocity; //TODO: movimento solo verticale per scalare
+        super.setVelocity(this.physics.calculateX(deltaTime, null));
 
-        if (isJumping || !isOnGround) {
-            newVelocity = physics.calculateX(deltaTime, command)
-                        .sum(physics.calculateY(deltaTime, command));
-        } else {
-            newVelocity = physics.calculateX(deltaTime, command);
-        }
-
-        setVelocity(newVelocity);
-        setPosition(getPosition().sum(newVelocity.multiply(deltaTime)));
+        // TODO: Mario update()
     }
 
     /**
@@ -109,10 +97,10 @@ public class Mario extends AbstractEntity implements Character, Movable {
      */
     @Override
     public final void changeState(final Supplier<CharacterState> stateSupplier) {
-        final CharacterState newState = Objects.requireNonNull(
-            stateSupplier.get(), "NewState cannot be null");
-        currentState.onExit(this);
-        this.currentState = newState;
+        if (this.currentState != null) {
+            currentState.onExit(this);
+        }
+        this.currentState = Objects.requireNonNull(stateSupplier.get(), "NewState cannot be null");
         currentState.onEnter(this);
     }
 
@@ -123,15 +111,11 @@ public class Mario extends AbstractEntity implements Character, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        isOnGround = false;
-        currentState.handleCollision(this, other);
         if (other instanceof final Collectible collectible) {
             collectible.collect(this);
         }
-        if (other instanceof final Platform platform && platform.isSupporting(this)) {
-            isOnGround = true;
-            isJumping = false;
-        }
+        // TODO: to be completed
+        this.currentState.handleCollision(this, other);
     }
 
     /**
@@ -140,14 +124,6 @@ public class Mario extends AbstractEntity implements Character, Movable {
     @Override
     public void loseLife() {
         this.livesManager.loseLife();
-    }
-
-    /**
-     * @return true if Mario is standing on solid ground
-     */
-    @Override
-    public boolean isOnGround() {
-        return this.isOnGround;
     }
 
     /**
@@ -186,13 +162,5 @@ public class Mario extends AbstractEntity implements Character, Movable {
     @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "ScoreManager is intentionally shared and mutable")
     public final ScoreManager getScoreManager() {
         return this.scoreManager;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setCommand(final Command command) {
-        this.command = command;
     }
 }

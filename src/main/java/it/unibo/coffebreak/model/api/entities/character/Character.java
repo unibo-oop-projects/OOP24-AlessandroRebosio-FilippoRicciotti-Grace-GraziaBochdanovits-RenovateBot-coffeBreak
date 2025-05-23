@@ -2,7 +2,6 @@ package it.unibo.coffebreak.model.api.entities.character;
 
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
@@ -27,13 +26,6 @@ public interface Character extends Entity {
      * Decrements the character's life count.
      */
     void loseLife();
-
-    /**
-     * Checks if the character is currently on the ground.
-     * 
-     * @return true if the character is on the ground, false otherwise
-     */
-    boolean isOnGround();
 
     /**
      * Checks if the game is over, which typically happens when the number of lives reaches zero.
@@ -62,12 +54,4 @@ public interface Character extends Entity {
      * @return the score value
      */
     int getScore();
-
-    /**
-     * Sets the movement command for this character.
-     * The command determines how the character should move in the game world.
-     * 
-     * @param command the movement command to apply to the character
-     */
-    void setCommand(Command command);
 }
