@@ -17,5 +17,5 @@ public interface Movable {
      * @param deltaTime the time elapsed since the last update (in seconds)
      * @throws IllegalArgumentException if deltaTime is negative
      */
-    void move(float deltaTime);
+    void update(float deltaTime);
 }
