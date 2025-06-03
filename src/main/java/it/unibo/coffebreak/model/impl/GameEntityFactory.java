@@ -29,7 +29,7 @@ import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
  */
 public class GameEntityFactory implements EntityFactory {
     private static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
-    private static final Vector2D DEF_VEL = new Vector2D(0.1f, 0.1f);
+    private static final Vector2D DEF_VEL = new Vector2D(0f, 0f);
 
     /**
      * {@inheritDoc}
