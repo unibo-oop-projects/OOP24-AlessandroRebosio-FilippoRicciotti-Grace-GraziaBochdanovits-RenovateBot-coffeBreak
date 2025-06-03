@@ -22,7 +22,7 @@ import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
  */
 public class GameLevelManager implements LevelManager {
 
-    static final String PATH_MAP1 = "maps/Map1.txt";
+    static final String PATH_MAP1 = "maps/Map1.txt";// TODO: implement a method GetNextMapPath()
     private static final int P_SIZE = 10;
     private static final float SLOPE = 0.3f;
     private final List<Entity> entities;
@@ -40,12 +40,24 @@ public class GameLevelManager implements LevelManager {
     }
 
     /**
-     * Loads the entities for the current level.
-     * This method is intended to populate the entity list from an external source,
-     * such as a file or a level descriptor.
-     * <p>
-     * Currently unimplemented.
+     * Loads entities from the current map file.
+     * The map file should be a text file where each character represents:
+     * P - Platform
+     * L - Ladder
+     * M - Mario (player)
+     * D - Donkey Kong (enemy)
+     * R - Princess (objective)
+     * B - Barrel (obstacle/enemy)
+     * F - Fire (enemy)
+     * C - Coin (collectible)
+     * H - Hammer (power-up)
+     * T - Tank (enemy)
+     * : - Start/end upward slope
+     * ; - Start/end downward slope
+     * 
+     * @throws IllegalStateException if the map file cannot be read or is invalid
      */
+
     @Override
     public void loadEntities() {
         this.cleanEntities();
