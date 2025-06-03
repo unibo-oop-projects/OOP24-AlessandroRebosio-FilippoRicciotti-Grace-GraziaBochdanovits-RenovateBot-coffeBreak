@@ -2,7 +2,9 @@ package it.unibo.coffebreak.model.impl;
 
 import it.unibo.coffebreak.model.api.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
+import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrel;
@@ -17,7 +19,7 @@ import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
 
 /**
  * {@code GameEntityFactory} is the implementation of the
- * <b>{@link EntityFactory} interface</b>
+ * <b>{@link EntityFactory} interface.</b>
  * <p>
  * It provides the logic for instantiating
  * all the different types of game entities
@@ -26,13 +28,15 @@ import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
  * @author Filippo Ricciotti
  */
 public class GameEntityFactory implements EntityFactory {
+    private static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
+    private static final Vector2D DEF_VEL = new Vector2D(0.1f, 0.1f);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Entity createCoin(final Position2D position) {
-        return new Coin(position, null);
+        return new Coin(position, DEF_BOX);
     }
 
     /**
@@ -40,7 +44,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createHammer(final Position2D position) {
-        return new Hammer(position, null);
+        return new Hammer(position, DEF_BOX);
     }
 
     /**
@@ -48,7 +52,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createBarrel(final Position2D position) {
-        return new GameBarrel(position, null, false);
+        return new GameBarrel(position, DEF_BOX, false);
     }
 
     /**
@@ -56,7 +60,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createFire(final Position2D position) {
-        return new GameFire(position, null);
+        return new GameFire(position, DEF_BOX);
     }
 
     /**
@@ -64,7 +68,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createDonkeyKong(final Position2D position) {
-        return new DonkeyKong(position, null);
+        return new DonkeyKong(position, DEF_BOX);
     }
 
     /**
@@ -72,7 +76,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createPrincess(final Position2D position) {
-        return new Princess(position, null);
+        return new Princess(position, DEF_BOX);
     }
 
     /**
@@ -80,7 +84,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createLadder(final Position2D position) {
-        return new NormalLadder(position, null);
+        return new NormalLadder(position, DEF_BOX);
     }
 
     /**
@@ -88,7 +92,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createPlatform(final Position2D position) {
-        return new NormalPlatform(position, null, null);
+        return new NormalPlatform(position, DEF_BOX, DEF_VEL);
     }
 
     /**
@@ -96,7 +100,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createBreakablePlatform(final Position2D position) {
-        return new BreakablePlatform(position, null, null);
+        return new BreakablePlatform(position, DEF_BOX, DEF_VEL);
     }
 
     /**
@@ -104,7 +108,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createTank(final Position2D position) {
-        return new GameTank(position, null);
+        return new GameTank(position, DEF_BOX);
     }
 
     /**
@@ -112,7 +116,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createMario(final Position2D position) {
-        return new Mario(position, null);
+        return new Mario(position, DEF_BOX);
     }
 
 }
