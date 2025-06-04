@@ -59,7 +59,7 @@ public class InGameState extends AbstractState {
                 .filter(Barrel::canTransformToFire)
                 .toList());
 
-        model.getLevelManager().cleanEntities();
+        // model.getLevelManager().cleanEntities();
 
         // TODO: If model.getPlayer() is present and has lost a life (via
         // getCurrentState().hasLostLife()),

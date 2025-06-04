@@ -10,7 +10,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
@@ -67,15 +66,9 @@ public interface Model {
 
     /**
      * 
-     * @return a Level Manager
-     */
-    LevelManager getLevelManager();
-
-    /**
-     * 
      * @return the current game state
      */
-    public GameState getGameState();
+    GameState getGameState();
 
     /**
      * Changes the current game state to the specified one.

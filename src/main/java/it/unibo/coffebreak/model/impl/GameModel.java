@@ -8,15 +8,16 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.level.LevelManager;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.level.GameLevelManager;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.states.menu.MenuState;
 
 /**
@@ -31,6 +32,8 @@ import it.unibo.coffebreak.model.impl.states.menu.MenuState;
 public class GameModel implements Model {
 
     private final LevelManager levelManager;
+    private final ScoreManager scoreManager;
+
     private final List<Entity> entities;
     private GameState currentState;
 
@@ -42,8 +45,9 @@ public class GameModel implements Model {
      */
     public GameModel() {
         this.levelManager = new GameLevelManager();
-        this.entities = new ArrayList<>();
+        this.scoreManager = new GameScoreManager();
 
+        this.entities = new ArrayList<>();
         this.setState(MenuState::new);
 
         this.running = true;
@@ -88,15 +92,6 @@ public class GameModel implements Model {
     @Override
     public boolean addEntity(final Entity entity) {
         return this.levelManager.addEntity(entity);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "LevelManager is intentionally shared and mutable")
-    @Override
-    public LevelManager getLevelManager() {
-        return this.levelManager;
     }
 
     /**
@@ -157,7 +152,7 @@ public class GameModel implements Model {
      */
     @Override
     public void stop() {
-        this.getPlayer().ifPresent(p -> p.getScoreManager().saveScores());
+        this.scoreManager.saveScores();
         this.running = false;
     }
 
