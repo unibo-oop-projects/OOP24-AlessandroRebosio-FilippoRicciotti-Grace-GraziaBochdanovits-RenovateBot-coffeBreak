@@ -1,11 +1,12 @@
 package it.unibo.coffebreak.controller.impl;
 
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.impl.GameModel;
 import it.unibo.coffebreak.controller.api.Controller;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.controller.api.input.Input;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
+import it.unibo.coffebreak.model.api.Model;
+import it.unibo.coffebreak.model.impl.GameModel;
+import java.util.Objects;
 
 /**
  * Concrete implementation of the game {@link Controller}.
@@ -15,6 +16,7 @@ import it.unibo.coffebreak.controller.impl.input.InputManager;
  * <li>Receiving input events from the view</li>
  * <li>Translating them into game commands</li>
  * <li>Applying commands to the model</li>
+ * <li>Managing the game loop updates</li>
  * </ul>
  * 
  * @author Alessandro Rebosio
@@ -62,6 +64,19 @@ public class GameController implements Controller {
     /**
      * {@inheritDoc}
      * <p>
+     * Provides access to the game model while ensuring non-null return value.
+     * 
+     * @return The associated game model instance
+     * @throws IllegalStateException if the model reference has been cleared
+     */
+    @Override
+    public Model getModel() {
+        return Objects.requireNonNull(this.model, "The model cannot be null");
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
      * Processes all pending input commands by:
      * <ol>
      * <li>Retrieving commands from the input queue</li>
@@ -85,6 +100,9 @@ public class GameController implements Controller {
      */
     @Override
     public void updateModel(final float deltaTime) {
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("DeltaTime cannot be negative");
+        }
         this.model.update(deltaTime);
     }
 
