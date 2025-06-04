@@ -54,7 +54,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
         if (deltaTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
             lastThrowTime = deltaTime;
-            return Optional.of(new GameEntityFactory().createBarrel(getPosition()));
+            return Optional.of(new GameEntityFactory().createBarrel(this.getPosition()));
         }
         return Optional.empty();
     }
