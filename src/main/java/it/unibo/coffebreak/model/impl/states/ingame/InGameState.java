@@ -8,7 +8,7 @@ import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
 import it.unibo.coffebreak.model.impl.states.pause.PauseState;
-import it.unibo.coffebreak.model.impl.physics.GameCollision;
+import it.unibo.coffebreak.model.impl.physics.collision.GameCollision;
 
 /**
  * Implementation of {@link GameState} interface;

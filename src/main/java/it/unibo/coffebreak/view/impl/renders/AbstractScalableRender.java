@@ -14,30 +14,34 @@ public abstract class AbstractScalableRender implements ScalableRender {
     private final int originalHeight;
     private int scaledWidth;
     private int scaledHeight;
+    private final float screenWidthRatio;
+    private final float screenHeightRatio;
 
     /**
      * Constructs an AbstractScalableRender with the specified original dimensions.
      *
      * @param originalWidth the original width of the render
      * @param originalHeight the original height of the render
+     * @param screenWidth the total screen width used for ratio calculation
+     * @param screenHeight the total screen height used for ratio calculation
      */
-    public AbstractScalableRender(final int originalWidth, final int originalHeight) {
+    public AbstractScalableRender(final int originalWidth, final int originalHeight, 
+                                final int screenWidth, final int screenHeight) {
         this.originalWidth = originalWidth;
         this.originalHeight = originalHeight;
         this.scaledWidth = originalWidth;
         this.scaledHeight = originalHeight;
+        this.screenWidthRatio = (float) originalWidth / screenWidth;
+        this.screenHeightRatio = (float) originalHeight / screenHeight;
     }
 
     /**
-     * Handles the resize event and updates the current dimensions.
-     *
-     * @param newWidth the new width after resizing
-     * @param newHeight the new height after resizing
+     * {@inheritDoc}
      */
     @Override
     public void onResize(final int newWidth, final int newHeight) {
-        this.scaledWidth = newWidth;
-        this.scaledHeight = newHeight;
+        this.scaledWidth = (int) (newWidth * screenWidthRatio);
+        this.scaledHeight = (int) (newHeight * screenHeightRatio);
     }
 
     /**

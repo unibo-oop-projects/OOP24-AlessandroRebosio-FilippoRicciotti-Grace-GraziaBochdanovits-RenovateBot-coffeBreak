@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.api.physics;
+package it.unibo.coffebreak.model.api.physics.collision;
 
 /**
  * Represents a collision detection mechanism for the Coffee Break game model.
