@@ -31,6 +31,22 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
+     * Retrieves the name of the player.
+     * 
+     * @return the current player name as a String
+     */
+    String getPlayerName();
+
+    /**
+     * Sets or updates the player's name.
+     * 
+     * @param newPlayerName the new name to assign to the player
+     * @throws NullPointerExcteption if the provided name is null, empty,
+     *                               or contains invalid characters
+     */
+    void setPlayerName(String newPlayerName);
+
+    /**
      * Retrieves the player character entity, if present.
      *
      * @return an {@link Optional} containing the player character, or an empty

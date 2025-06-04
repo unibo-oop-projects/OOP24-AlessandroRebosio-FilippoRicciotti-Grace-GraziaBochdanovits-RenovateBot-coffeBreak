@@ -43,7 +43,8 @@ public class EntityCleaner implements Cleaner {
      *
      * @param <T>              the type of entity to remove
      * @param entities         the list of entities to filter
-     * @param typeFilter       predicate to filter by type
+     * @param type             the class object representing the type of entities to
+     *                         remove
      * @param removalCondition predicate to determine if entity should be removed
      * @return true if any entities were removed, false otherwise
      */

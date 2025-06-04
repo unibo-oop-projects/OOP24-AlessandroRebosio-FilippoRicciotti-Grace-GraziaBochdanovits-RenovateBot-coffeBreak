@@ -34,7 +34,7 @@ public class GameOverState extends AbstractState {
      */
     @Override
     public void onExit(final Model model) {
-        model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(""));
+        model.getPlayer().ifPresent(p -> p.getScoreManager().addEntryInLeaderBoard(model.getPlayerName()));
     }
 
 }
