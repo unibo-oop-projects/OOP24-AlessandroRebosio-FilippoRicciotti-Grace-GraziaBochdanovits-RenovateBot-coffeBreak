@@ -27,7 +27,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     /**
      * The interval between barrel throws in milliseconds.
      */
-    private static final long BARREL_THROW_INTERVAL = 3000;
+    private static final long BARREL_THROW_INTERVAL = 2000;
 
     private float lastThrowTime;
 
