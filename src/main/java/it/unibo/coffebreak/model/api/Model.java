@@ -91,7 +91,7 @@ public interface Model {
      * 
      * @return the current game state
      */
-    public GameState getGameState();
+    GameState getGameState();
 
     /**
      * Changes the current game state to the specified one.
