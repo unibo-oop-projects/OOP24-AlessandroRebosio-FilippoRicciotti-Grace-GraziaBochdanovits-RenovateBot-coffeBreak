@@ -1,114 +1,107 @@
 package it.unibo.coffebreak.model.impl.entities.mario;
 
 import java.util.Objects;
+import java.util.function.Supplier;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.character.CharacterState;
+import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.api.physics.Physics;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
-import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
-import it.unibo.coffebreak.model.impl.entities.mario.states.NormalState;
-import it.unibo.coffebreak.model.impl.entities.mario.states.WithHammerState;
-import it.unibo.coffebreak.model.impl.score.manager.GameScoreManager;
+import it.unibo.coffebreak.model.impl.entities.GameLivesManager;
+import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
+import it.unibo.coffebreak.model.impl.entities.mario.states.withhammer.WithHammerState;
+import it.unibo.coffebreak.model.impl.physics.GamePhysics;
+import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
  * Represents the main player character (Mario) in the game.
  * This class implements the Character interface and extends GameEntity,
  * managing Mario's state, physics, and interactions with the game world.
  *
- * <p>Key features:
+ * <p>
+ * Key features:
  * <ul>
- *   <li>State management using {@link CharacterState} pattern</li>
- *   <li>Physics-controlled movement and collisions</li>
- *   <li>Item collection and power-up handling</li>
- *   <li>Life and score management</li>
+ * <li>State management using {@link CharacterState} pattern</li>
+ * <li>Physics-controlled movement and collisions</li>
+ * <li>Item collection and power-up handling</li>
+ * <li>Life and score management</li>
  * </ul>
  *
- * <p>States supported:
+ * <p>
+ * States supported:
  * <ul>
- *   <li>{@link NormalState} - Default ground movement</li>
- *   <li>{@link WithHammerState} - Hammer power-up mode</li>
+ * <li>{@link NormalState} - Default ground movement</li>
+ * <li>{@link WithHammerState} - Hammer power-up mode</li>
  * </ul>
  * 
+ * @see AbstractEntity
+ * @see Character
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements Character {
+public class Mario extends AbstractEntity implements Character, Movable {
 
     private final GameLivesManager livesManager;
     private final GameScoreManager scoreManager;
+    private final Physics physics;
+
     private CharacterState currentState;
-    private final Position2D startPosition;
-    private boolean isOnGround;
-    private final String playerName;
 
     /**
      * Creates a new Mario instance.
      *
-     * @param position the initial position of Mario
+     * @param position  the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
-     * @param scoreManager the score manager to track points
-     * @param playerName the name of the player controlling Mario
      * @throws NullPointerException if scoreManager or playerName are null
      */
-    public Mario(final Position2D position, final Dimension2D dimension,
-                final GameScoreManager scoreManager, final String playerName) {
+    public Mario(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
-        this.startPosition = new Position2D(position.x(), position.y());
+
         this.livesManager = new GameLivesManager();
-        this.scoreManager = Objects.requireNonNull(scoreManager);
-        this.playerName = Objects.requireNonNull(playerName, "Player name cannot be null");
-        this.currentState = new NormalState();
+        this.scoreManager = new GameScoreManager();
+        this.physics = new GamePhysics();
+
+        changeState(NormalState::new);
+    }
+
+    /**
+     * Moves Mario according to his current command, physic and state.
+     * This method should be called every frame to update Mario's position.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds)
+     * @throws IllegalArgumentException if deltaTime is negative
+     */
+    @Override
+    public void update(final float deltaTime) {
+        if (deltaTime < 0) {
+            throw new IllegalArgumentException("DeltaTime cannot be negative");
+        }
+        this.currentState.update(this, deltaTime);
+
+        super.setVelocity(this.physics.calculateX(deltaTime, null));
+
+        // TODO: Mario update()
     }
 
     /**
      * Changes Mario's current state, properly handling transitions.
      *
-     * @param newState the state to transition to (cannot be null)
+     * @param stateSupplier the state to transition to (cannot be null)
      * @throws NullPointerException if newState is null
      */
     @Override
-    public void changeState(final CharacterState newState) {
-        Objects.requireNonNull(newState, "New state cannot be null");
-        currentState.onExit(this);
-        this.currentState = Objects.requireNonNull(newState);
-        currentState.onEnter(this);
-    }
-
-    /**
-     * Resets Mario to his initial state and position.
-     * Used when respawning after losing a life.
-     */
-    @Override
-    public void resetToInitialState() {
-        changeState(new NormalState());
-        setVelocity(new Vector2D(0, 0));
-        setPosition(startPosition);
-        setOnGround(true);
-        setFacingRight(true); 
-    }
-
-    /**
-     * Updates Mario's state and physics.
-     *
-     * @param deltaTime time elapsed since last update (in seconds)
-     */
-    @Override
-    public void update(final float deltaTime) {
-        currentState.update(this, deltaTime);
-    }
-
-    /**
-     * Makes Mario jump if he's on the ground.
-     */
-    @Override
-    public void jump() {
-        if (currentState.canJump() && isOnGround) {
-            setOnGround(false);
+    public final void changeState(final Supplier<CharacterState> stateSupplier) {
+        if (this.currentState != null) {
+            currentState.onExit(this);
         }
+        this.currentState = Objects.requireNonNull(stateSupplier.get(), "NewState cannot be null");
+        currentState.onEnter(this);
     }
 
     /**
@@ -118,14 +111,11 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof Collectible) {
-            ((Collectible) other).collect(this);
-            scoreManager.earnPoints(((Collectible) other).getPointsValue());
+        if (other instanceof final Collectible collectible) {
+            collectible.collect(this);
         }
-        if (other instanceof Hammer) {
-            changeState(new WithHammerState());
-        }
-        currentState.handleCollision(this, other);
+        // TODO: to be completed
+        this.currentState.handleCollision(this, other);
     }
 
     /**
@@ -133,20 +123,7 @@ public class Mario extends AbstractEntity implements Character {
      */
     @Override
     public void loseLife() {
-        livesManager.loseLife();
-        if (!isGameOver()) {
-            changeState(new NormalState());
-            resetToInitialState();
-        }
-        //TODO: gameOver
-    }
-
-    /**
-     * @return true if Mario is standing on solid ground
-     */
-    @Override
-    public boolean isOnGround() {
-        return isOnGround;
+        this.livesManager.loseLife();
     }
 
     /**
@@ -158,14 +135,6 @@ public class Mario extends AbstractEntity implements Character {
     }
 
     /**
-     * @return the lives manager instance
-     */
-    @Override
-    public GameLivesManager getLivesManager() {
-        return livesManager;
-    }
-
-    /**
      * @return the current number of lives remaining
      */
     @Override
@@ -174,29 +143,24 @@ public class Mario extends AbstractEntity implements Character {
     }
 
     /**
-     * @return the score manager instance
+     * Gets Mario's current score.
+     * 
+     * @return the current score value as integer
      */
     @Override
-    public GameScoreManager getScoreManager() {
-        return scoreManager;
+    public int getScore() {
+        return this.scoreManager.getCurrentScore();
     }
 
     /**
-     * @return the player's name
+     * Gets the score manager instance associated with Mario.
+     * This allows external systems to modify/query score-related operations.
+     * 
+     * @return the ScoreManager instance handling Mario's score
      */
     @Override
-    public String getPlayerName() {
-        return playerName;
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "ScoreManager is intentionally shared and mutable")
+    public final ScoreManager getScoreManager() {
+        return this.scoreManager;
     }
-
-    /**
-     * Sets whether Mario is on the ground and handles state transitions.
-     *
-     * @param onGround true if Mario is on solid ground
-     */
-    @Override
-    public void setOnGround(final boolean onGround) {
-        isOnGround = onGround;
-    }
-
 }

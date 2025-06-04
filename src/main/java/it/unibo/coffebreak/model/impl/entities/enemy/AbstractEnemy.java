@@ -1,23 +1,26 @@
 package it.unibo.coffebreak.model.impl.entities.enemy;
 
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 
 /**
- * An abstract implementation of the {@link Enemy} interface that extends {@link AbstractEntity}.
- * This class serves as a base class for all enemy entities in the game, providing common functionality
+ * An abstract implementation of the {@link Enemy} interface that extends
+ * {@link AbstractEntity}.
+ * This class serves as a base class for all enemy entities in the game,
+ * providing common functionality
  * and properties that all enemies share.
  * <p>
- * The class implements basic enemy lifecycle management including destruction state tracking.
+ * The class implements basic enemy lifecycle management including destruction
+ * state tracking.
  * </p>
  * 
  * <h3>Core Functionality:</h3>
  * <ul>
- *   <li>Maintains destruction state for all enemy types</li>
- *   <li>Provides base implementation for enemy lifecycle methods</li>
- *   <li>Serves as foundation for specialized enemy implementations</li>
+ * <li>Maintains destruction state for all enemy types</li>
+ * <li>Provides base implementation for enemy lifecycle methods</li>
+ * <li>Serves as foundation for specialized enemy implementations</li>
  * </ul>
  *
  * @see Enemy
@@ -32,11 +35,12 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
     /**
      * Constructs a new AbstractEnemy with the specified position and dimension.
      * 
-     * @param position the initial position of the enemy in 2D space (cannot be null)
+     * @param position  the initial position of the enemy in 2D space (cannot be
+     *                  null)
      * @param dimension the size/dimensions of the enemy (cannot be null)
      * @throws NullPointerException if position or dimension are null
      */
-    public AbstractEnemy(final Position2D position, final Dimension2D dimension) {
+    public AbstractEnemy(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 

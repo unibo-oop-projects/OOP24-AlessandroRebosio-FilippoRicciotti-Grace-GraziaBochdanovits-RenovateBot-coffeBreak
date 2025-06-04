@@ -1,8 +1,9 @@
 package it.unibo.coffebreak.model.impl.entities.enemy.fire;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
@@ -14,7 +15,7 @@ import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameFire extends AbstractEnemy implements Fire {
+public class GameFire extends AbstractEnemy implements Fire, Movable {
 
     /**
      * Constructs a new GameFire with the specified position and dimensions.
@@ -22,7 +23,7 @@ public class GameFire extends AbstractEnemy implements Fire {
      * @param position  the initial position of the fire in 2D space
      * @param dimension the dimensions (width and height) of the fire
      */
-    public GameFire(final Position2D position, final Dimension2D dimension) {
+    public GameFire(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
 
@@ -34,5 +35,13 @@ public class GameFire extends AbstractEnemy implements Fire {
      */
     @Override
     public void onCollision(final Entity other) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(final float deltaTime) {
+        // TODO: Auto-generated method stub
     }
 }

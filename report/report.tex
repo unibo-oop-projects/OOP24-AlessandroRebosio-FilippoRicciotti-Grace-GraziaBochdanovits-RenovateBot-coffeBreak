@@ -14,7 +14,7 @@
 
 \title{Relazione del progetto\\''coffeBreak''}
 
-\author{Grazia Bochdanovits\\
+\author{Grazia Bochdanovits de Kavna\\
 Alessandro Rebosio\\
 Filippo Riccioti
 }
@@ -29,80 +29,59 @@ Filippo Riccioti
 
 \chapter{Analisi}
 
-In questo capitolo andrà fatta l'analisi dei requisiti e quella del problema, ossia verranno elencate le cose che
-l'applicazione dovrà fare (requisiti) e verrà descritto il dominio applicativo (analisi del problema).
-%
-In fase di analisi, è molto importante tenere a mente che non vi deve essere alcun riferimento al design né tantomeno
-alle tecnologie implementative, ovvero, non si deve indicare come il software sarà internamente realizzato.
-%
-La fase di analisi, infatti, \textit{precede} qualunque azione di design o di implementazione.
-
 \section{Descrizione e requisiti}
-
-Nella sezione di descrizione va descritto cosa il software deve fare.
+Il software da noi sviluppato è una riproduzione del celebre videogioco arcade \textit{Donkey Kong}, pubblicato per la prima volta nel 1981 da Nintendo. 
 %
-Al termine della lettura della sezione,
-il docente deve avere un'idea molto chiara di cosa l'applicazione sia
-e di cosa essa debba fare.
+Il protagonista è Mario, il cui obiettivo è salvare Pauline, rapita dal gigantesco gorilla Donkey Kong. 
 %
-Si consiglia di elencare i requisiti in modo schematico, idealmente separando i requisiti funzionali
-(\emph{cosa} fa il sistema)
-da quelli non funzionali
-(\emph{come} lo fa, ad esempio in termini di prestazioni, sicurezza, portabilità).
+Il giocatore prende il controllo di Mario e lo guida in un platform a livelli fissi, caratterizzato da strutture complesse 
+composte da piattaforme, scale e numerosi ostacoli da superare.
+%
+All’inizio di ogni partita, Mario dispone di tre vite. 
+Ogni volta che entra in contatto con un nemico, come barili rotolanti o fiamme, perde una vita e viene riposizionato 
+all’inizio del livello corrente, mantenendo però il punteggio ottenuto fino a quel momento. 
+%
+La partita continua finché ci sono vite disponibili; una volta esaurite, compare la schermata di \textit{Game Over}, 
+che riporta l’utente al menu principale, da cui è possibile avviare una nuova partita.
+%
+Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti. 
+Mario può spostarsi verso sinistra o destra, saltare per evitare i nemici e utilizzare le scale per muoversi verticalmente tra le piattaforme. 
+L’obiettivo di ogni livello è raggiungere la cima della struttura, dove si trovano Donkey Kong e Pauline. 
+%
+I quattro livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente: 
+con il progredire del gioco, gli ostacoli si muovono più rapidamente, i nemici diventano meno prevedibili e i percorsi sempre più complessi.
+%
+Un aspetto centrale del gioco è il sistema di punteggio, che premia il giocatore per varie azioni compiute durante la partita. 
+I punti vengono assegnati per ogni ostacolo evitato, nemico eliminato o oggetto bonus raccolto, come le monete e il martello, 
+posizionati in punti chiave del livello. 
+%
+Un ruolo particolare è riservato al martello, un potenziamento temporaneo che consente a Mario di distruggere barili e nemici per alcuni secondi, 
+offrendo un vantaggio momentaneo e un’opportunità per accumulare punti extra.
 
-\subsection*{Elementi positivi}
+
+\subsection*{Requisiti funzionali}
 \begin{itemize}
-	\item Si fornisce una descrizione in linguaggio naturale di ciò che il software dovrà fare.
-	\item Gli obiettivi sono spiegati con chiarezza, per punti.
-	\item Se vi sono termini il cui significato non è immediatamente intuibile, essi vengono spiegati.
-	\item Vengono descritti separatamente requisiti funzionali e non funzionali.
+	\item \textbf{Controlli di gioco:}
+	il giocatore deve poter controllare il personaggio principale tramite input direzionali: camminata (destra/sinistra), salto e salita/discesa scale.
+	\item \textbf{Gestione dei livelli e ostacoli:}
+	il sistema deve generare quattro livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
+	\item \textbf{Rilevamento e gestione collisioni:}
+	il sistema deve rilevare le collisione tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
+	\item  \textbf{Sistema di punteggio e condizioni di gioco:}
+	il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonue ed eliminazione di nemici con il martello.
+	Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Paulina, e la \textit{condizione di GameOver} quando esaurisce le vite.
+	\item \textbf{Interfaccia utente:}
+	il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
+	\item \textbf{Menù principale:}
+	il sistema deve offrire un menù iniziale con opzioni per avviare una nuova partita e visualizzare i comandi di gioco.
 \end{itemize}
 
-\subsection*{Elementi negativi}
+\subsection*{Requisiti non funzionali}
 \begin{itemize}
-	\item Si forniscono indicazioni circa le soluzioni che si vogliono adottare.
-	\item Si forniscono dettagli di tipo tecnico o implementativo (parlando di classi, linguaggi di programmazione, librerie, eccetera).
+	\item Il sistema deve garantire una risposta fluida e immediata ai comandi del giocatore.
+	\item Il software deve essere eseguibile su diverse piattaforme desktop, tra cui Windows, macOS e Linux.
+	\item Il sistema deve adattarsi correttamente a diverse risoluzioni video standard, mantenendo proporzioni e leggibilità.
 \end{itemize}
-
-\subsection*{Esempio}
-Il software, commissionato dal centro di ricerca ``Aperture Laboratories Inc.''\footnote{
-	\url{https://www.youtube.com/watch?v=f7ZS97eW2yE}
-}, mira alla costruzione di una intelligenza artificiale di nome GLaDOS (Genetic Lifeform and Disk Operating System).
-%
-Per intelligenza artificiale si intende un software in grado di assumere decisioni complesse in maniera semi autonoma sugli argomenti di sua competenza, a partire dai vincoli e dagli obiettivi datigli dall'utente.
-%
-In questo caso particolare, l'intelligenza artificiale dovrà interagire con un soggetto umano
-e guidarlo attraverso il superamento di una serie di labirinti di difficoltà incrementale.
-%
-I labirinti potrebbero richiedere l'uso di oggetti, la pressione di pulsanti, l'azionamento di leve,
-o la costruzione di portali per il teletrasporto.
-%
-Un portale per il teletrasporto è un'apertura bidimensionale nel tessuto spazio-temporale,
-che consente a chiunque vi entri di uscire dall'altro portale.
-%
-I rompicapi sono di tipo fisico (ad
-esempio, manipolazione di oggetti, pressione di pulsanti, azionamento di leve), e si ritengono
-conclusi una volta che il soggetto riesce a trovare l'uscita dalla camera di test.
-%
-Alla conclusione di tutti i labirinti,
-al soggetto verrà offerta una torta.
-\definecolor{lie}{HTML}{FAFAFA}
-\textcolor{lie}{\ldots Or not. The cake is a \underline{lie!}}
-
-\subsubsection{Requisiti funzionali}
-\begin{itemize}
-	\item Il piano preciso ed il numero delle sfide sarà variabile,
-	      e GLaDOS dovrà essere in grado di adattarsi dinamicamente e di fornire indicazioni di guida.
-	\item La personalità di GLaDOS dovrà essere modificabile.
-	\item GLaDOS dovrà essere in grado di comunicare col reparto cucina di Aperture
-	      per ordinare torte per coloro che completassero tutti i test con successo.
-\end{itemize}
-
-\subsubsection{Requisiti non funzionali}
-\begin{itemize}
-	\item GLaDOS dovrà essere estremamente efficiente nell'uso delle risorse. Le specifiche tecniche parlano della possibilità di funzionare su dispositivi alimentati da una batteria a patata.
-\end{itemize}
-
 
 \section{Modello del Dominio}
 

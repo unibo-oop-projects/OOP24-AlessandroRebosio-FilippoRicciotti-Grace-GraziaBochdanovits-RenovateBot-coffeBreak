@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.api.entities;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 
@@ -10,11 +10,11 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  * Implementations can represent both static and dynamic game elements.
  *
  * @see Position2D
- * @see Dimension2D
+ * @see BoundingBox2D
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface Entity { // TODO: and the end remove unused method and simplify where possible
+public interface Entity {
 
     /**
      * Gets the current position of this entity in game world coordinates.
@@ -35,9 +35,9 @@ public interface Entity { // TODO: and the end remove unused method and simplify
     /**
      * Gets the physical dimensions of this entity.
      *
-     * @return the {@link Dimension2D} of this entity (never {@code null})
+     * @return the {@link BoundingBox2D} of this entity (never {@code null})
      */
-    Dimension2D getDimension();
+    BoundingBox2D getDimension();
 
     /**
      * Gets the current velocity vector of this entity.
@@ -55,23 +55,6 @@ public interface Entity { // TODO: and the end remove unused method and simplify
     void setVelocity(Vector2D vector);
 
     /**
-     * Sets the horizontal facing direction of this entity.
-     * This affects both graphical representation and potentially movement behavior.
-     *
-     * @param facing {@code true} to face right (positive X direction),
-     *               {@code false} to face left (negative X direction)
-     */
-    void setFacingRight(boolean facing);
-
-    /**
-     * Checks if the entity is currently facing to the right.
-     * This is typically used for graphical representation or movement direction.
-     *
-     * @return {@code true} if the entity is facing right, {@code false} otherwise
-     */
-    boolean isFacingRight();
-
-    /**
      * Checks if this entity intersects with another entity.
      * The intersection is typically determined by comparing the position and
      * dimensions
@@ -81,7 +64,7 @@ public interface Entity { // TODO: and the end remove unused method and simplify
      * @return {@code true} if this entity intersects with the given entity,
      *         {@code false} otherwise
      */
-    boolean intersect(Entity other);
+    boolean collidesWith(Entity other);
 
     /**
      * Handles collision detection response with another entity.
@@ -94,13 +77,4 @@ public interface Entity { // TODO: and the end remove unused method and simplify
      * @throws NullPointerException if the other parameter is null
      */
     void onCollision(Entity other);
-
-    /**
-     * Updates the entity's state based on elapsed game time.
-     * This method should be called periodically to update the entity's position,
-     * state, or any other time-dependent properties.
-     *
-     * @param deltaTime the time elapsed since last update in milliseconds
-     */
-    void update(float deltaTime);
 }

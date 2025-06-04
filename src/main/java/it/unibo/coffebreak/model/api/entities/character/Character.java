@@ -1,8 +1,10 @@
 package it.unibo.coffebreak.model.api.entities.character;
 
+import java.util.function.Supplier;
+
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.score.Entry;
-import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
+import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 
 /**
  * Represents a character entity in the game world.
@@ -15,33 +17,15 @@ import it.unibo.coffebreak.model.api.score.manager.ScoreManager;
 public interface Character extends Entity {
 
     /**
-     * Changes the current state of the character to the specified new state.
-     * 
-     * @param newState the new state to set for the character
+     * Changes Mario's current state using a state supplier.
+     * @param stateSupplier supplier providing the new state
      */
-    void changeState(CharacterState newState);
-
-    /**
-     * Resets the character to its initial state.
-     */
-    void resetToInitialState();
-
-    /**
-     * Makes the character perform a jump action.
-     */
-    void jump();
+    void changeState(Supplier<CharacterState> stateSupplier);
 
     /**
      * Decrements the character's life count.
      */
     void loseLife();
-
-    /**
-     * Checks if the character is currently on the ground.
-     * 
-     * @return true if the character is on the ground, false otherwise
-     */
-    boolean isOnGround();
 
     /**
      * Checks if the game is over, which typically happens when the number of lives reaches zero.
@@ -51,11 +35,11 @@ public interface Character extends Entity {
     boolean isGameOver();
 
     /**
-     * Gets the lives manager for the character.
+     * Gets the score manager for the character.
      * 
-     * @return the GameLivesManager instance managing the character's lives
+     * @return the GameScoreManager instance managing the character's score
      */
-    LivesManager getLivesManager();
+    ScoreManager getScoreManager();
 
     /**
      * Gets the current number of lives the character has.
@@ -65,24 +49,9 @@ public interface Character extends Entity {
     int getLives();
 
     /**
-     * Gets the score manager for the character.
+     * Gets the current score value of the player.
      * 
-     * @return the GameScoreManager instance managing the character's score
+     * @return the score value
      */
-    ScoreManager<Entry> getScoreManager();
-
-    /**
-     * Gets the name of the player controlling this character.
-     * 
-     * @return the player's name
-     */
-    String getPlayerName();
-
-    /**
-     * Sets whether the character is on the ground.
-     * 
-     * @param onGround true to set the character as on the ground, false otherwise
-     */
-    void setOnGround(boolean onGround);
-
+    int getScore();
 }

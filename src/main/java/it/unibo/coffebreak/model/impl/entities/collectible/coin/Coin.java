@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.collectible.coin;
 
-import it.unibo.coffebreak.model.impl.common.Dimension2D;
+import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
 
@@ -15,15 +15,16 @@ import it.unibo.coffebreak.model.impl.entities.collectible.AbstractCollectible;
  */
 public class Coin extends AbstractCollectible {
 
+    private static final int VALUE = 100;
+
     /**
      * Constructs a new Coin with the specified position, dimensions, and point
      * value.
      *
      * @param position  the 2D position of the coin in the game world
      * @param dimension the 2D dimensions (size) of the coin
-     * @param value     the point value this coin is worth when collected
      */
-    public Coin(final Position2D position, final Dimension2D dimension, final int value) {
-        super(position, dimension, value);
+    public Coin(final Position2D position, final BoundingBox2D dimension) {
+        super(position, dimension, VALUE);
     }
 }

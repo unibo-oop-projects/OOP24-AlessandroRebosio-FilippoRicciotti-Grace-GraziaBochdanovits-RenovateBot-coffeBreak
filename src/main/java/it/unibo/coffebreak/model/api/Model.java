@@ -1,11 +1,17 @@
 package it.unibo.coffebreak.model.api;
 
+import java.lang.annotation.Target;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.phases.Phases;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.level.LevelManager;
+import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
  * Represents the main model interface for the game.
@@ -25,19 +31,75 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
-     * Gets the player character.
+     * Retrieves the name of the player.
      * 
-     * @return the player character, or null if no player is set
+     * @return the current player name as a String
      */
-    Character getPlayer();
+    String getPlayerName();
 
     /**
-     * Changes the current game phase to the specified one.
+     * Sets or updates the player's name.
      * 
-     * @param newPhase the phase to switch to
-     * @throws NullPointerException if newPhase is null
+     * @param newPlayerName the new name to assign to the player
+     * @throws NullPointerExcteption if the provided name is null, empty,
+     *                               or contains invalid characters
      */
-    void setState(Phases newPhase);
+    void setPlayerName(String newPlayerName);
+
+    /**
+     * Retrieves the player character entity, if present.
+     *
+     * @return an {@link Optional} containing the player character, or an empty
+     *         {@code Optional} if not present
+     */
+    Optional<Character> getPlayer();
+
+    /**
+     * Retrieves the Antagonist entity, if present.
+     *
+     * @return an {@link Optional} containing the Antagonist entity, or an empty
+     *         {@code Optional} if not present
+     */
+    Optional<Antagonist> getAntagonist();
+
+    /**
+     * Retrieves the Target entity, if present.
+     *
+     * @return an {@link Optional} containing the Target entity, or an empty
+     *         {@code Optional} if not present
+     */
+    Optional<Target> getTarget();
+
+    /**
+     * Adds a barrel to the game model.
+     * The barrel will be included in the list of active entities if it is not null.
+     *
+     * @param entity the {@link Barrel} to be added; must not be {@code null}
+     * @return {@code true} if the barrel was added successfully, {@code false}
+     *         otherwise
+     * @throws NullPointerException if {@code barrel} is {@code null}
+     */
+    boolean addEntity(Entity entity);
+
+    /**
+     * 
+     * @return a Level Manager
+     */
+    LevelManager getLevelManager();
+
+    /**
+     * 
+     * @return the current game state
+     */
+    GameState getGameState();
+
+    /**
+     * Changes the current game state to the specified one.
+     * 
+     * @param newState Supplier of the state to switch to
+     * @throws NullPointerException if newState is null
+     */
+    void setState(Supplier<GameState> newState);
 
     /**
      * Processes and executes the given game command.
@@ -65,4 +127,9 @@ public interface Model {
      * Stops the game simulation and triggers any necessary cleanup.
      */
     void stop();
+
+    /**
+     * Starts the first level.
+     */
+    void start();
 }
