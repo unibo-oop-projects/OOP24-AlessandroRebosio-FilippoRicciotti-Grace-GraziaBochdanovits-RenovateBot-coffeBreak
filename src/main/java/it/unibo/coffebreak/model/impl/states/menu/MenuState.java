@@ -22,7 +22,7 @@ public class MenuState extends AbstractState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                // TODO: model.start()
+                model.start();
                 model.setState(InGameState::new);
                 break;
             case QUIT:

@@ -2,7 +2,6 @@ package it.unibo.coffebreak.model.impl.entities.structure.platform.normal;
 
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.AbstractPlatform;
 
 /**
@@ -19,19 +18,10 @@ public class NormalPlatform extends AbstractPlatform {
      * 
      * @param position the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimensions of the platform (cannot be null)
-     * @param velocity the inclination of the platform (cannot be null)
      * @throws NullPointerException if any parameter is null
      */
-    public NormalPlatform(final Position2D position, final BoundingBox2D dimension, final Vector2D velocity) {
-        super(position, dimension, velocity);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canBreak() {
-        return false;
+    public NormalPlatform(final Position2D position, final BoundingBox2D dimension) {
+        super(position, dimension);
     }
 
 }

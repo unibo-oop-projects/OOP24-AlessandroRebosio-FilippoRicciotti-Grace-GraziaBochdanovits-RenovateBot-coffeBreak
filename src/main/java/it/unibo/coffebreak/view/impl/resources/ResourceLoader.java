@@ -45,6 +45,11 @@ public final class ResourceLoader implements Resource {
      */
     public static final String JUMP_SOUND = "/sfx/jump.wav";
 
+    /**
+     * The path to the "Mario" image.
+     */
+    public static final String MARIO_IMAGE = "/img/mario_sheet.png";
+
     private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
     private static final Map<String, Clip> SOUND_CACHE = new HashMap<>();
