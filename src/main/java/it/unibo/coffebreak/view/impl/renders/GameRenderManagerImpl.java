@@ -15,25 +15,18 @@ import it.unibo.coffebreak.view.api.renders.ScalableRender;
 import it.unibo.coffebreak.view.api.renders.StaticRender;
 
 /**
- * Implementation of {@link RenderManager} that manages the rendering process for both
- * static and dynamic game entities. This class coordinates the drawing of all game
- * elements in the proper order and delegates the actual rendering to specialized
- * renderers for each entity type.
+ * Implementation of {@link RenderManager} that manages the rendering process
+ * for both static and dynamic game entities. This class coordinates the drawing of all
+ * game elements in the proper order and delegates the actual rendering to
+ * specialized renderers for each entity type.
  * 
- * <p>The rendering process follows this sequence:
+ * <p>
+ * The rendering process follows this sequence:
  * <ol>
- *   <li>Clear the screen</li>
- *   <li>Render static elements (background, level, etc.)</li>
- *   <li>Render dynamic entities in the order they were added</li>
+ * <li>Clear the screen</li>
+ * <li>Render static elements (background, level, etc.)</li>
+ * <li>Render dynamic entities in the order they were added</li>
  * </ol>
- * </p>
- * 
- * <p>This implementation supports:
- * <ul>
- *   <li>Resize handling for scalable renders</li>
- *   <li>Multiple renderers for different entity types</li>
- *   <li>Thread-safe operations</li>
- * </ul>
  * </p>
  * 
  * @author Grazia Bochdanovits de Kavna
@@ -41,25 +34,28 @@ import it.unibo.coffebreak.view.api.renders.StaticRender;
 public final class GameRenderManagerImpl implements RenderManager {
 
     private final List<StaticRender> staticRenders = new ArrayList<>();
-    private final Map<Class<?>, EntityRender<?>> entityRenderers = new HashMap<>();
+    private final Map<Class<? extends Entity>, EntityRender> entityRenderers = new HashMap<>();
     private final List<Entity> entities = new ArrayList<>();
 
     private int lastWidth = -1;
     private int lastHeight = -1;
 
     /**
-     * <p>Renders all game elements in the following order:
+     * <p>
+     * Renders all game elements in the following order:
      * <ol>
-     *   <li>Clears the screen with a black background</li>
-     *   <li>Renders all registered static elements</li>
-     *   <li>Renders all dynamic entities using their respective renderers</li>
+     * <li>Clears the screen with a black background</li>
+     * <li>Renders all registered static elements</li>
+     * <li>Renders all dynamic entities using their respective renderers</li>
      * </ol>
      * </p>
      * 
-     * <p>This method also handles resize notifications when the dimensions change.</p>
+     * <p>
+     * This method also handles resize notifications when the dimensions change.
+     * </p>
      * 
-     * @param g the {@link Graphics2D} context to render onto
-     * @param width the current width of the rendering area
+     * @param g      the {@link Graphics2D} context to render onto
+     * @param width  the current width of the rendering area
      * @param height the current height of the rendering area
      * @throws NullPointerException if the graphics context is null
      */
@@ -76,16 +72,11 @@ public final class GameRenderManagerImpl implements RenderManager {
 
         staticRenders.forEach(render -> render.render(g));
 
-        g.setColor(Color.RED);
-
         entities.forEach(entity -> {
-            if (entity != null) {
-                entityRenderers.entrySet().stream()
-                    .filter(entry -> entry != null && entry.getKey() != null && entry.getValue() != null)
-                    .filter(entry -> entry.getKey().isInstance(entity))
-                    .findFirst()
-                    .ifPresent(entry -> renderEntity(g, entity, entry.getValue()));
-            }
+            entityRenderers.entrySet().stream()
+                .filter(entry -> entry.getValue().canRender(entity))
+                .findFirst()
+                .ifPresent(entry -> entry.getValue().render(g, entity));
         });
     }
 
@@ -97,33 +88,14 @@ public final class GameRenderManagerImpl implements RenderManager {
      * @param newH the new height
      */
     private void notifyResize(final int newW, final int newH) {
-        staticRenders.forEach(render -> {
-            if (render instanceof ScalableRender) {
-                ((ScalableRender) render).onResize(newW, newH);
-            }
-        });
 
-        entityRenderers.values().forEach(render -> {
-            if (render instanceof ScalableRender) {
-                ((ScalableRender) render).onResize(newW, newH);
-            }
-        });
-    }
+        staticRenders.stream().filter(ScalableRender.class::isInstance)
+                .map(ScalableRender.class::cast)
+                .forEach(render -> render.onResize(newW, newH));
 
-    /**
-     * Renders a single entity using its corresponding renderer.
-     * 
-     * @param <T> the type of the entity
-     * @param g the graphics context to use for rendering
-     * @param entity the entity to render
-     * @param renderer the renderer to use for this entity
-     * @throws ClassCastException if the entity type doesn't match the renderer's expected type
-     */
-    @SuppressWarnings("unchecked")
-    private <T extends Entity> void renderEntity(final Graphics2D g, final Entity entity, final EntityRender<T> renderer) {
-        if (renderer != null && entity != null) {
-            renderer.render(g, (T) entity);
-        }
+        entityRenderers.values().stream().filter(ScalableRender.class::isInstance)
+                .map(ScalableRender.class::cast)
+                .forEach(render -> render.onResize(newW, newH));
     }
 
     /**
@@ -140,15 +112,13 @@ public final class GameRenderManagerImpl implements RenderManager {
     /**
      * {@inheritDoc}
      * 
-     * @param <T> the type of entity the renderer can handle
-     * @param entityClass the class of the entity type
-     * @param renderer the renderer to add
+     * @param type         the type of entity the renderer can handle
+     * @param renderer    the renderer to add
      * @throws NullPointerException if either parameter is null
      */
     @Override
-    public <T extends Entity> void registerRenderer(final Class<T> entityClass, final EntityRender<T> renderer) {
-        entityRenderers.put(Objects.requireNonNull(entityClass, "Entity class cannot be null"),
-                            Objects.requireNonNull(renderer, "Renderer cannot be null"));
+    public void addEntityRenderer(final Class<? extends Entity> type, final EntityRender renderer) {
+        entityRenderers.put(Objects.requireNonNull(type), Objects.requireNonNull(renderer));
     }
 
     /**
