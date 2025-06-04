@@ -117,6 +117,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void addEntryInLeaderBoard() {
+        this.scoreManager.addEntryInLeaderBoard(this.playerName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameState getGameState() {
         return this.currentState;
     }

@@ -80,6 +80,8 @@ public interface Model {
      */
     boolean addEntity(Entity entity);
 
+    void addEntryInLeaderBoard();
+
     /**
      * 
      * @return the current game state
