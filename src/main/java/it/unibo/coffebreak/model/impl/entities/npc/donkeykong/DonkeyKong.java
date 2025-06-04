@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.impl.GameEntityFactory;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
@@ -53,7 +54,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
         if (deltaTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
             lastThrowTime = deltaTime;
-            return Optional.of(null); //TODO: add barrelFactory quando sarà sistemata
+            return Optional.of(new GameEntityFactory().createBarrel(getPosition()));
         }
         return Optional.empty();
     }

@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl;
 
 import it.unibo.coffebreak.model.api.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
@@ -51,7 +52,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createBarrel(final Position2D position) {
+    public Barrel createBarrel(final Position2D position) {
         return new GameBarrel(position, DEF_BOX, false);
     }
 
