@@ -6,6 +6,8 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * Interface for managing levels and maps in the game.
  * It handles loading, adding/removing entities, and transitioning between maps
  * and levels.
+ * 
+ * @author Filippo Ricciotti
  */
 public interface LevelManager {
 

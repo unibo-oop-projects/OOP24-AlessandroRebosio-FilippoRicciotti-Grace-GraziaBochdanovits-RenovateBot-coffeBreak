@@ -8,6 +8,8 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * Strategy interface for cleaning entities from a level.
  * Implementations define rules to remove certain types of entities,
  * such as destroyed enemies or collected collectibles.
+ * 
+ * @author Filippo Ricciotti
  */
 public interface Cleaner {
 
