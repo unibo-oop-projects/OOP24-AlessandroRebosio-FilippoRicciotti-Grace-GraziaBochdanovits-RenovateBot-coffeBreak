@@ -31,7 +31,7 @@ public class LevelRender extends AbstractScalableRender implements StaticRender 
      * @param currentLevelIndex the number of the level
      */
     public LevelRender(final ResourceLoader resources, final int currentLevelIndex) {
-        super(LEVEL_WIDTH, LEVEL_HEIGHT);
+        super(LEVEL_WIDTH, LEVEL_HEIGHT, 0, 0);
         final String backgroundPath = BACKGROUND_PATH_PREFIX + currentLevelIndex + BACKGROUND_PATH_SUFFIX;
         this.background = Objects.requireNonNull(resources).loadImage(backgroundPath);
     }
