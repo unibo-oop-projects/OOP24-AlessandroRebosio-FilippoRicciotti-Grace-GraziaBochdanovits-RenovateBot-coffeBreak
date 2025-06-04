@@ -6,9 +6,9 @@ import it.unibo.coffebreak.core.impl.GameEngine;
  * Entry point of the app, it creates a controller and launches the GUI
  * so that the game can start.
  */
-final class LaunchApp {
+final class CoffeBreak {
 
-    private LaunchApp() {
+    private CoffeBreak() {
     }
 
     /**

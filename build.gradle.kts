@@ -50,7 +50,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass.set("it.unibo.coffebreak.LaunchApp")
+    mainClass.set("it.unibo.coffebreak.CoffeBreak")
 }
 
 tasks.test {
