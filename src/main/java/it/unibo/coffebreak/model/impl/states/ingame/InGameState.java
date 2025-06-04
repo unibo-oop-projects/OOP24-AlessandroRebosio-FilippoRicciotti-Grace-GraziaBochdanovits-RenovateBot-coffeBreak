@@ -4,7 +4,6 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
@@ -52,14 +51,14 @@ public class InGameState extends AbstractState {
         GameCollision.checkCollision(model);
 
         // TODO: barrel to fire
-        model.addEntity(null);
-        model.getEntities().addAll(model.getEntities().stream()
-                .filter(Barrel.class::isInstance)
-                .map(Barrel.class::cast)
-                .filter(Barrel::canTransformToFire)
-                .toList());
+        // model.addEntity(null);
+        // model.getEntities().addAll(model.getEntities().stream()
+        //         .filter(Barrel.class::isInstance)
+        //         .map(Barrel.class::cast)
+        //         .filter(Barrel::canTransformToFire)
+        //         .toList());
 
-        model.getLevelManager().cleanEntities();
+        // model.getLevelManager().cleanEntities();
 
         // TODO: If model.getPlayer() is present and has lost a life (via
         // getCurrentState().hasLostLife()),
