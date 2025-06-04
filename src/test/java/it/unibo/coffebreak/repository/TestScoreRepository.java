@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
  * These tests check correct serialization, deserialization, backup creation,
  * restoration, and proper exception handling.
  * 
- * @author
+ * @author Alessandro Rebosio
  */
 class TestScoreRepository {
 
