@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.sound.sampled.Clip;
@@ -70,7 +71,14 @@ class TestResourceLoader {
      */
     @Test
     void testImageLoading() throws IOException {
-        // TODO: implements image test loading
+        final BufferedImage image = this.loader.loadImage(ResourceLoader.MARIO_IMAGE);
+
+        assertNotNull(image, "Loaded image should not be null");
+        assertTrue(image.getWidth() > 0, "Image should have positive width");
+        assertTrue(image.getHeight() > 0, "Image should have positive height");
+
+        final BufferedImage cachedImgae = this.loader.loadImage(ResourceLoader.MARIO_IMAGE);
+        assertSame(image, cachedImgae);
     }
 
     /**
@@ -90,6 +98,9 @@ class TestResourceLoader {
         assertNotNull(clip, "Clip should not be null after loading");
         assertFalse(clip.isRunning(), "Clip should not be running immediately after loading");
         assertTrue(clip.isOpen(), "Clip should be open after loading");
+
+        final Clip chacedClip = this.loader.loadClip(ResourceLoader.JUMP_SOUND);
+        assertSame(clip, chacedClip);
     }
 
     /**
