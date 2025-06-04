@@ -3,14 +3,13 @@ package it.unibo.coffebreak.model.impl.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.LivesManager;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.physics.Physics;
-import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
@@ -18,7 +17,6 @@ import it.unibo.coffebreak.model.impl.entities.GameLivesManager;
 import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.model.impl.physics.GamePhysics;
-import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -47,8 +45,7 @@ import it.unibo.coffebreak.model.impl.score.GameScoreManager;
  */
 public class Mario extends AbstractEntity implements Character, Movable {
 
-    private final GameLivesManager livesManager;
-    private final GameScoreManager scoreManager;
+    private final LivesManager livesManager;
     private final Physics physics;
 
     private CharacterState currentState;
@@ -64,7 +61,6 @@ public class Mario extends AbstractEntity implements Character, Movable {
         super(position, dimension);
 
         this.livesManager = new GameLivesManager();
-        this.scoreManager = new GameScoreManager();
         this.physics = new GamePhysics();
 
         changeState(NormalState::new);
@@ -140,27 +136,5 @@ public class Mario extends AbstractEntity implements Character, Movable {
     @Override
     public int getLives() {
         return livesManager.getLives();
-    }
-
-    /**
-     * Gets Mario's current score.
-     * 
-     * @return the current score value as integer
-     */
-    @Override
-    public int getScore() {
-        return this.scoreManager.getCurrentScore();
-    }
-
-    /**
-     * Gets the score manager instance associated with Mario.
-     * This allows external systems to modify/query score-related operations.
-     * 
-     * @return the ScoreManager instance handling Mario's score
-     */
-    @Override
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "ScoreManager is intentionally shared and mutable")
-    public final ScoreManager getScoreManager() {
-        return this.scoreManager;
     }
 }
