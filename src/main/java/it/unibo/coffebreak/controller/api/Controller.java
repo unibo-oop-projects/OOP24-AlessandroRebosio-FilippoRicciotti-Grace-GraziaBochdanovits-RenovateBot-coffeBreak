@@ -12,17 +12,24 @@ package it.unibo.coffebreak.controller.api;
 public interface Controller {
     /**
      * Handles a key press event by forwarding it to the input system.
-     *
+     * 
      * @param keyCode the key code of the pressed key
      */
     void handleKeyDown(int keyCode);
 
     /**
      * Handles a key release event by forwarding it to the input system.
-     *
+     * 
      * @param keyCode the key code of the released key
      */
     void handleKeyUp(int keyCode);
+
+    /**
+     * Gets the game model associated with this controller.
+     * 
+     * @return the game model instance
+     */
+    Model getModel();
 
     /**
      * Processes all pending input commands and applies them to the game model.
@@ -34,20 +41,14 @@ public interface Controller {
      * Updates the game model based on the elapsed time.
      *
      * @param deltaTime the time elapsed since the last update (in seconds)
+     * @throws IllegalArgumentException if deltaTime is negative
      */
     void updateModel(float deltaTime);
 
     /**
      * Checks if the game should continue running.
-     * <p>
-     * This method combines the game's logical state (from controller)
-     * with the model's running state to determine if the game loop should continue.
-     * </p>
      * 
-     * @return {@code true} if the game should continue running,
-     *         {@code false} if the game should terminate.
-     * 
-     * @see Model#isRunning()
+     * @return true if the game should continue running, false otherwise
      */
     boolean isGameActive();
 }
