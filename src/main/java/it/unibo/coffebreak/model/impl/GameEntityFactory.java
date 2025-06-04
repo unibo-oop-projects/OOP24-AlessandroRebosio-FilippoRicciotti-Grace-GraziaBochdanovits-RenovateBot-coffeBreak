@@ -5,7 +5,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrel;
@@ -30,7 +29,6 @@ import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
  */
 public class GameEntityFactory implements EntityFactory {
     private static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
-    private static final Vector2D DEF_VEL = new Vector2D(0.1f, 0.1f);
 
     /**
      * {@inheritDoc}
@@ -93,7 +91,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createPlatform(final Position2D position) {
-        return new NormalPlatform(position, DEF_BOX, DEF_VEL);
+        return new NormalPlatform(position, DEF_BOX);
     }
 
     /**
@@ -101,7 +99,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Entity createBreakablePlatform(final Position2D position) {
-        return new BreakablePlatform(position, DEF_BOX, DEF_VEL);
+        return new BreakablePlatform(position, DEF_BOX);
     }
 
     /**
