@@ -23,8 +23,10 @@ import it.unibo.coffebreak.model.impl.states.menu.MenuState;
 /**
  * Concrete implementation of the game model.
  * <p>
- * Maintains the game state including entities, player, and state management.
- * Provides thread-safe access to model state.
+ * Maintains the game state including entities, player information, and state
+ * management.
+ * Provides thread-safe access to model components through proper
+ * synchronization.
  * </p>
  * 
  * @author Alessandro Rebosio
@@ -33,17 +35,15 @@ public class GameModel implements Model {
 
     private final LevelManager levelManager;
     private final ScoreManager scoreManager;
-
     private final List<Entity> entities;
+
     private GameState currentState;
-
     private String playerName;
-
     private volatile boolean running;
 
     /**
-     * Constructs a new GameModel with empty entities list,
-     * no player character, and a new GameScoreManager instance.
+     * Constructs a new GameModel with default initial state.
+     * Initializes empty entities list, menu state, and running status.
      */
     public GameModel() {
         this.levelManager = new GameLevelManager();
@@ -76,17 +76,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void setPlayerName(final String newPlayerName) {
-        Objects.requireNonNull(newPlayerName, "The new player name cannot be null");
-        this.playerName = newPlayerName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Optional<Character> getPlayer() {
-        return this.findEntityOfType(Character.class);
+        return findEntityOfType(Character.class);
     }
 
     /**
@@ -94,7 +85,7 @@ public class GameModel implements Model {
      */
     @Override
     public Optional<Antagonist> getAntagonist() {
-        return this.findEntityOfType(Antagonist.class);
+        return findEntityOfType(Antagonist.class);
     }
 
     /**
@@ -102,7 +93,44 @@ public class GameModel implements Model {
      */
     @Override
     public Optional<Target> getTarget() {
-        return this.findEntityOfType(Target.class);
+        return findEntityOfType(Target.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        return this.currentState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRunning() {
+        return this.running;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPlayerName(final String newPlayerName) {
+        Objects.requireNonNull(newPlayerName, "Player name cannot be null");
+        this.playerName = newPlayerName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setState(final Supplier<GameState> newState) {
+        if (currentState != null) {
+            currentState.onExit(this);
+        }
+        currentState = Objects.requireNonNull(newState.get(), "New state cannot be null");
+        currentState.onEnter(this);
     }
 
     /**
@@ -125,21 +153,25 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public GameState getGameState() {
-        return this.currentState;
+    public void start() {
+        this.getPlayer().ifPresent(p -> p.setScoreManager(scoreManager));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void setState(final Supplier<GameState> newState) {
-        if (currentState != null) {
-            currentState.onExit(this);
-        }
-        currentState = Objects.requireNonNull(newState.get(), "The newSate cannot be null");
-        currentState.onEnter(this);
+    public void stop() {
+        this.scoreManager.saveScores();
+        this.running = false;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void calculateBonus(final float deltaTime) {
+        this.scoreManager.calculateBonus(deltaTime);
     }
 
     /**
@@ -159,30 +191,12 @@ public class GameModel implements Model {
     }
 
     /**
-     * {@inheritDoc}
+     * Finds the first entity of the specified type in the entities list.
+     * 
+     * @param <T>  the type of entity to find
+     * @param type the class object representing the entity type
+     * @return an Optional containing the found entity, or empty if not found
      */
-    @Override
-    public boolean isRunning() {
-        return this.running;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-        // TODO: model.start()
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() {
-        this.scoreManager.saveScores();
-        this.running = false;
-    }
-
     private <T> Optional<T> findEntityOfType(final Class<T> type) {
         return this.entities.stream()
                 .filter(type::isInstance)

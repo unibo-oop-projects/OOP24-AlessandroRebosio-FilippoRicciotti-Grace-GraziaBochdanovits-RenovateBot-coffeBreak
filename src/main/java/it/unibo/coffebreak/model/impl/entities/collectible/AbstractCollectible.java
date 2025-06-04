@@ -75,6 +75,6 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
      * @param character the character who collected the item
      */
     protected void applyEffect(final Character character) {
-        character.getScoreManager().earnPoints(this.value);
+        character.earnPoints(this.value);
     }
 }

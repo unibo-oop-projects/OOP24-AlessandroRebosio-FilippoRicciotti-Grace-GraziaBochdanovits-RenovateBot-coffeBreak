@@ -10,6 +10,7 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.physics.Physics;
+import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
@@ -46,6 +47,7 @@ import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 public class Mario extends AbstractEntity implements Character, Movable {
 
     private final LivesManager livesManager;
+    private ScoreManager scoreManager;
     private final Physics physics;
 
     private CharacterState currentState;
@@ -55,7 +57,6 @@ public class Mario extends AbstractEntity implements Character, Movable {
      *
      * @param position  the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
-     * @throws NullPointerException if scoreManager or playerName are null
      */
     public Mario(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
@@ -112,6 +113,24 @@ public class Mario extends AbstractEntity implements Character, Movable {
         }
         // TODO: to be completed
         this.currentState.handleCollision(this, other);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws NullPointerException if scoreManager is null
+     */
+    @Override
+    public void setScoreManager(final ScoreManager scoreManager) {
+        this.scoreManager = Objects.requireNonNull(scoreManager, "ScoreManager cannot be null");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void earnPoints(final int amount) {
+        this.scoreManager.earnPoints(amount);
     }
 
     /**

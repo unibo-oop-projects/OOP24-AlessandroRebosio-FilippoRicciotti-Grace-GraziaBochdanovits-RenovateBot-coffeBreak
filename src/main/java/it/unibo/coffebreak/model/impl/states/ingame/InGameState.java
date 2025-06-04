@@ -66,7 +66,7 @@ public class InGameState extends AbstractState {
 
         // TODO: nextLevel if Target isRescued
 
-        model.getPlayer().ifPresent(p -> p.getScoreManager().calculateBonus(deltaTime));
+        model.calculateBonus(deltaTime);
 
         model.getPlayer()
                 .filter(Character::isGameOver)

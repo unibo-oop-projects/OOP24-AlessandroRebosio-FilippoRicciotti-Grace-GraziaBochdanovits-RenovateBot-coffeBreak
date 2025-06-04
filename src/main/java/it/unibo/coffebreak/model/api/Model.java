@@ -8,7 +8,6 @@ import java.util.function.Supplier;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.states.GameState;
 
@@ -16,12 +15,14 @@ import it.unibo.coffebreak.model.api.states.GameState;
  * Represents the main model interface for the game.
  * <p>
  * The model acts as the central point for accessing game entities,
- * player character, and game state management.
+ * player information, and game state management. It handles the core
+ * game logic and maintains the game world state.
  * </p>
  * 
  * @author Alessandro Rebosio
  */
 public interface Model {
+
     /**
      * Gets all entities currently present in the game world.
      * 
@@ -32,69 +33,88 @@ public interface Model {
     /**
      * Retrieves the name of the player.
      * 
-     * @return the current player name as a String
+     * @return the current player name
      */
     String getPlayerName();
 
     /**
-     * Sets or updates the player's name.
-     * 
-     * @param newPlayerName the new name to assign to the player
-     * @throws NullPointerExcteption if the provided name is null, empty,
-     *                               or contains invalid characters
-     */
-    void setPlayerName(String newPlayerName);
-
-    /**
      * Retrieves the player character entity, if present.
      *
-     * @return an {@link Optional} containing the player character, or an empty
-     *         {@code Optional} if not present
+     * @return an {@link Optional} containing the player character, or empty if not
+     *         present
      */
     Optional<Character> getPlayer();
 
     /**
      * Retrieves the Antagonist entity, if present.
      *
-     * @return an {@link Optional} containing the Antagonist entity, or an empty
-     *         {@code Optional} if not present
+     * @return an {@link Optional} containing the Antagonist, or empty if not
+     *         present
      */
     Optional<Antagonist> getAntagonist();
 
     /**
      * Retrieves the Target entity, if present.
      *
-     * @return an {@link Optional} containing the Target entity, or an empty
-     *         {@code Optional} if not present
+     * @return an {@link Optional} containing the Target, or empty if not present
      */
     Optional<Target> getTarget();
 
     /**
-     * Adds a barrel to the game model.
-     * The barrel will be included in the list of active entities if it is not null.
-     *
-     * @param entity the {@link Barrel} to be added; must not be {@code null}
-     * @return {@code true} if the barrel was added successfully, {@code false}
-     *         otherwise
-     * @throws NullPointerException if {@code barrel} is {@code null}
-     */
-    boolean addEntity(Entity entity);
-
-    void addEntryInLeaderBoard();
-
-    /**
+     * Gets the current game state.
      * 
      * @return the current game state
      */
     GameState getGameState();
 
     /**
+     * Checks if the game simulation is currently running.
+     * 
+     * @return true if the game is running, false otherwise
+     */
+    boolean isRunning();
+
+    /**
+     * Sets or updates the player's name.
+     * 
+     * @param newPlayerName the new name to assign to the player
+     * @throws NullPointerException     if the name is null
+     * @throws IllegalArgumentException if the name is empty or invalid
+     */
+    void setPlayerName(String newPlayerName);
+
+    /**
      * Changes the current game state to the specified one.
      * 
-     * @param newState Supplier of the state to switch to
+     * @param newState Supplier providing the new game state
      * @throws NullPointerException if newState is null
      */
     void setState(Supplier<GameState> newState);
+
+    /**
+     * Adds an entity to the game model.
+     * The entity will be included in the list of active entities.
+     *
+     * @param entity the {@link Entity} to be added
+     * @return true if the entity was added successfully, false otherwise
+     * @throws NullPointerException if entity is null
+     */
+    boolean addEntity(Entity entity);
+
+    /**
+     * Adds the current player's score to the leaderboard.
+     */
+    void addEntryInLeaderBoard();
+
+    /**
+     * Starts the first level of the game.
+     */
+    void start();
+
+    /**
+     * Stops the game simulation and triggers any necessary cleanup.
+     */
+    void stop();
 
     /**
      * Processes and executes the given game command.
@@ -106,25 +126,16 @@ public interface Model {
 
     /**
      * Updates the game logic based on elapsed time.
+     * This includes entity movements, collisions, and game state checks.
      *
      * @param deltaTime time in seconds since last update
      */
     void update(float deltaTime);
 
     /**
-     * Checks if the game simulation is currently running.
+     * Calculates and applies any time-based bonuses.
      * 
-     * @return true if the game is running, false otherwise
+     * @param deltaTime time in seconds since last calculation
      */
-    boolean isRunning();
-
-    /**
-     * Stops the game simulation and triggers any necessary cleanup.
-     */
-    void stop();
-
-    /**
-     * Starts the first level.
-     */
-    void start();
+    void calculateBonus(float deltaTime);
 }
