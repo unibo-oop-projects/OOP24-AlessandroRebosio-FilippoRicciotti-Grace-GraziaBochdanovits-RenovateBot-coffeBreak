@@ -72,6 +72,12 @@ public interface Model {
     LevelManager getLevelManager();
 
     /**
+     * 
+     * @return the current game state
+     */
+    public GameState getGameState();
+
+    /**
      * Changes the current game state to the specified one.
      * 
      * @param newState Supplier of the state to switch to

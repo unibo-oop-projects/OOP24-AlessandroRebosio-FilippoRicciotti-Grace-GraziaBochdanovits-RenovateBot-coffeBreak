@@ -101,7 +101,14 @@ public class GameModel implements Model {
 
     /**
      * {@inheritDoc}
-     * 
+     */
+    @Override
+    public GameState getGameState() {
+        return this.currentState;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public final void setState(final Supplier<GameState> newState) {
