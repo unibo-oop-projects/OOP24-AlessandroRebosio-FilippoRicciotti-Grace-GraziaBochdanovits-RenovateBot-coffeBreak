@@ -37,6 +37,8 @@ public class GameModel implements Model {
     private final List<Entity> entities;
     private GameState currentState;
 
+    private String playerName;
+
     private volatile boolean running;
 
     /**
@@ -60,6 +62,23 @@ public class GameModel implements Model {
     @Override
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(this.entities);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPlayerName() {
+        return this.playerName;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPlayerName(final String newPlayerName) {
+        Objects.requireNonNull(newPlayerName, "The new player name cannot be null");
+        this.playerName = newPlayerName;
     }
 
     /**

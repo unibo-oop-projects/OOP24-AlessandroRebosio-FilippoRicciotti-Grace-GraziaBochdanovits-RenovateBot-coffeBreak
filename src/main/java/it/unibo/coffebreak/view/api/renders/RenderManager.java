@@ -14,7 +14,8 @@ public interface RenderManager {
 
     /**
      * Main rendering method that draws all game elements.
-     * @param g Graphics2D context to render onto
+     * 
+     * @param g      Graphics2D context to render onto
      * @param width
      * @param height
      */
@@ -22,20 +23,21 @@ public interface RenderManager {
 
     /**
      * Updates the list of active entities to render.
+     * 
      * @param entities List of game entities (can be empty but not null)
      */
     void updateEntities(List<Entity> entities);
 
     /**
-     * Registers a renderer for a specific entity type.
-     * @param <T> Entity type
-     * @param type Class object of the entity type
-     * @param renderer Renderer implementation
+     * Registers a renderer for entities of specific type.
+     * @param type the class of entities this renderer can handle
+     * @param renderer the renderer implementation
      */
-    <T extends Entity> void registerRenderer(Class<T> type, EntityRender<T> renderer);
+    void addEntityRenderer(Class<? extends Entity> type, EntityRender renderer);
 
     /**
      * Adds a static renderer (background, UI, etc.).
+     * 
      * @param render Static render implementation
      */
     void addStaticRenderer(StaticRender render);

@@ -1,13 +1,10 @@
 package it.unibo.coffebreak.model.impl.entities.structure.platform;
 
-import java.util.Objects;
-
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 
@@ -30,11 +27,9 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      * 
      * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimensions of the platform (cannot be null)
-     * @param velocity the inclination of the platform (cannot be null)
      */
-    public AbstractPlatform(final Position2D position, final BoundingBox2D dimension, final Vector2D velocity) {
+    public AbstractPlatform(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
-        setVelocity(Objects.requireNonNull(velocity));
     }
 
     /**
@@ -57,7 +52,11 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         // Intentionally left blank
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public abstract boolean canBreak();
-
+    public boolean canBreak() {
+        return false;
+    }
 }

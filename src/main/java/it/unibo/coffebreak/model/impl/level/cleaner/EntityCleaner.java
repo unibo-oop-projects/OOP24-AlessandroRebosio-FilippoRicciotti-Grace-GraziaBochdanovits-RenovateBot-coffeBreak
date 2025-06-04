@@ -2,6 +2,7 @@ package it.unibo.coffebreak.model.impl.level.cleaner;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
@@ -14,6 +15,8 @@ import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
  * <li>Enemies that have been destroyed</li>
  * <li>Collectibles that have been collected</li>
  * </ul>
+ * 
+ * @author Filippo Ricciotti
  */
 public class EntityCleaner implements Cleaner {
 
@@ -31,37 +34,26 @@ public class EntityCleaner implements Cleaner {
     public void clean(final List<Entity> entities) {
         Objects.requireNonNull(entities, "The entities cannot be null");
 
-        this.removeCollectible(entities);
-        this.removeEnemy(entities);
+        this.removeEntities(entities, Enemy.class, Enemy::isDestroyed);
+        this.removeEntities(entities, Collectible.class, Collectible::isCollected);
     }
 
     /**
-     * Removes all {@link Enemy} instances from the list that are marked as
-     * destroyed.
+     * Removes entities from the list that match the given type and condition.
      *
-     * @param entities the list of entities to filter
-     * @return true if any enemies were removed, false otherwise
+     * @param <T>              the type of entity to remove
+     * @param entities         the list of entities to filter
+     * @param type             the class object representing the type of entities to
+     *                         remove
+     * @param removalCondition predicate to determine if entity should be removed
+     * @return true if any entities were removed, false otherwise
      */
-    private boolean removeEnemy(final List<Entity> entities) {
+    private <T extends Entity> boolean removeEntities(final List<Entity> entities, final Class<T> type,
+            final Predicate<T> removalCondition) {
         return entities.removeAll(entities.stream()
-                .filter(Enemy.class::isInstance)
-                .map(Enemy.class::cast)
-                .filter(Enemy::isDestroyed)
-                .toList());
-    }
-
-    /**
-     * Removes all {@link Collectible} instances from the list that have been
-     * collected.
-     *
-     * @param entities the list of entities to filter
-     * @return true if any collectibles were removed, false otherwise
-     */
-    private boolean removeCollectible(final List<Entity> entities) {
-        return entities.removeAll(entities.stream()
-                .filter(Collectible.class::isInstance)
-                .map(Collectible.class::cast)
-                .filter(Collectible::isCollected)
+                .filter(type::isInstance)
+                .map(type::cast)
+                .filter(removalCondition)
                 .toList());
     }
 }

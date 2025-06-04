@@ -4,12 +4,11 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
 import it.unibo.coffebreak.model.impl.states.pause.PauseState;
-import it.unibo.coffebreak.model.impl.physics.GameCollision;
+import it.unibo.coffebreak.model.impl.physics.collision.GameCollision;
 
 /**
  * Implementation of {@link GameState} interface;
@@ -52,12 +51,12 @@ public class InGameState extends AbstractState {
         GameCollision.checkCollision(model);
 
         // TODO: barrel to fire
-        model.addEntity(null);
-        model.getEntities().addAll(model.getEntities().stream()
-                .filter(Barrel.class::isInstance)
-                .map(Barrel.class::cast)
-                .filter(Barrel::canTransformToFire)
-                .toList());
+        // model.addEntity(null);
+        // model.getEntities().addAll(model.getEntities().stream()
+        //         .filter(Barrel.class::isInstance)
+        //         .map(Barrel.class::cast)
+        //         .filter(Barrel::canTransformToFire)
+        //         .toList());
 
         // model.getLevelManager().cleanEntities();
 

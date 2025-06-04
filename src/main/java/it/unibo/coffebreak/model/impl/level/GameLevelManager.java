@@ -19,6 +19,8 @@ import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
  * Manages entities for the current game level and handles entity cleanup,
  * reset,
  * and transitions between maps and levels.
+ * 
+ * @author Filippo Ricciotti
  */
 public class GameLevelManager implements LevelManager {
 

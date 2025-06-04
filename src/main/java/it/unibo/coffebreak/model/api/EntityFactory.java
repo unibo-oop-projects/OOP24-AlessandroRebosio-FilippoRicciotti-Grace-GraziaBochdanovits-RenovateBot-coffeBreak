@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.api;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.model.api.entities.structure.Ladder;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
@@ -47,7 +48,7 @@ public interface EntityFactory {
      * @param position
      * @return Barrel Entity
      */
-    Entity createBarrel(Position2D position);
+    Barrel createBarrel(Position2D position);
 
     /**
      * Factory Method to create a new {@link Fire}.
