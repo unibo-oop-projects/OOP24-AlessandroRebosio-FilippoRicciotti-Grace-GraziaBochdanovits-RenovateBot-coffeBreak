@@ -1,6 +1,5 @@
-package it.unibo.coffebreak.model.api;
+package it.unibo.coffebreak.model.api.entities;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.model.api.entities.structure.Ladder;

@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
-import it.unibo.coffebreak.model.impl.GameEntityFactory;
 import it.unibo.coffebreak.model.impl.common.Position2D;
+import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
 
 /**
@@ -193,4 +195,5 @@ public class GameLevelManager implements LevelManager {
     public void nextLevel() {
         // TODO: implement level progression logic
     }
+
 }

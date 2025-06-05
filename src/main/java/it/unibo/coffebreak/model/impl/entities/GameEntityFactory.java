@@ -1,7 +1,7 @@
-package it.unibo.coffebreak.model.impl;
+package it.unibo.coffebreak.model.impl.entities;
 
-import it.unibo.coffebreak.model.api.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
