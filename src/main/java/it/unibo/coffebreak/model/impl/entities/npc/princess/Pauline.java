@@ -1,18 +1,18 @@
 package it.unibo.coffebreak.model.impl.entities.npc.princess;
 
-import it.unibo.coffebreak.model.api.entities.npc.Target;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.npc.AbstractNpc;
 
 /**
- * Concrete implementation of the {@link Target} interface.
+ * Concrete implementation of the {@link Princess} interface.
  * Represents a princess entity in the game that can be rescued by the player.
  * Extends {@link GameEntity} to inherit common game entity functionality.
  * 
  * @author Grazia Bochdanovits de kavna
  */
-public class Princess extends AbstractNpc implements Target {
+public class Pauline extends AbstractNpc implements Princess {
 
     private boolean rescued;
 
@@ -25,7 +25,7 @@ public class Princess extends AbstractNpc implements Target {
      * @param dimension the dimensions of the princess entity (cannot be null)
      * @throws NullPointerException if either position or dimension are null
      */
-    public Princess(final Position2D position, final BoundingBox2D dimension) {
+    public Pauline(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
         this.rescued = false;
     }

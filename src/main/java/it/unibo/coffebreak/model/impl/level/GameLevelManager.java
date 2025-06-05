@@ -142,8 +142,8 @@ public class GameLevelManager implements LevelManager {
             final Position2D pos = applySlope(x, y, slopeState, slopeStep);
 
             switch (ch) {
-                case 'P' -> entities.add(factory.createPlatform(pos));
-                case 'L' -> entities.add(factory.createLadder(pos));
+                case 'P' -> entities.add(factory.createNormalPlatform(pos));
+                case 'L' -> entities.add(factory.createNormalLadder(pos));
                 case 'M' -> entities.add(factory.createMario(pos));
                 case 'D' -> entities.add(factory.createDonkeyKong(pos));
                 case 'R' -> entities.add(factory.createPrincess(pos));
@@ -153,11 +153,11 @@ public class GameLevelManager implements LevelManager {
                 case 'H' -> entities.add(factory.createHammer(pos));
                 case 'T' -> entities.add(factory.createTank(pos));
                 case ':' -> {
-                    entities.add(factory.createPlatform(pos));
+                    entities.add(factory.createNormalPlatform(pos));
                     return (slopeState == SlopeState.SLOPE_UP) ? SlopeState.NO_SLOPE : SlopeState.SLOPE_UP;
                 }
                 case ';' -> {
-                    entities.add(factory.createPlatform(pos));
+                    entities.add(factory.createNormalPlatform(pos));
                     return (slopeState == SlopeState.SLOPE_DOWN) ? SlopeState.NO_SLOPE : SlopeState.SLOPE_DOWN;
                 }
                 default -> {
