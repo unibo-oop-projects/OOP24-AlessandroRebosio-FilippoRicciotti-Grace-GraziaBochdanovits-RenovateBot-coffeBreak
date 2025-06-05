@@ -74,19 +74,7 @@ public class GameLevelManager implements LevelManager {
 
     /**
      * Loads entities from the current map file.
-     * The map file should be a text file where each character represents:
-     * P - Platform
-     * L - Ladder
-     * M - Mario (player)
-     * D - Donkey Kong (enemy)
-     * R - Princess (objective)
-     * B - Barrel (obstacle/enemy)
-     * F - Fire (enemy)
-     * C - Coin (collectible)
-     * H - Hammer (power-up)
-     * T - Tank (enemy)
-     * : - Start/end upward slope
-     * ; - Start/end downward slope
+     * The map file should be a text file where each character rapresent an entity.
      * 
      * @throws IllegalStateException if the map file cannot be read or is invalid
      */
@@ -95,55 +83,89 @@ public class GameLevelManager implements LevelManager {
     public void loadEntities() {
         this.cleanEntities();
         SlopeState slopeState = SlopeState.NO_SLOPE;
-        Position2D pos;
+
         try {
             final List<String> lines = Files.readAllLines(Path.of(getCurrentMapPath()));
             for (int row = 0; row < lines.size(); row++) {
-                final String line = lines.get(row);
-                for (int col = 0; col < line.length(); col++) {
-                    final char ch = line.charAt(col);
-                    final float x = col * P_SIZE;
-                    final float y = row * P_SIZE;
+                slopeState = parseLine(lines.get(row), row, P_SIZE, SLOPE, slopeState);
+            }
+        } catch (final IOException e) {
+            throw new IllegalStateException("Unable to load map: " + getCurrentMapPath(), e);
+        }
+    }
 
-                    pos = applySlope(x, y, slopeState);
+    /**
+     * Parses a single line of a map file, creating entities based on characters,
+     * and applying slope transformations to their vertical position if needed.
+     *
+     * <p>
+     * Each character in the line represents a different type of entity or slope
+     * modifier. Supported characters include:
+     * </p>
+     * <ul>
+     * <li><b>'P'</b> - Platform</li>
+     * <li><b>'L'</b> - Ladder</li>
+     * <li><b>'M'</b> - Mario (player)</li>
+     * <li><b>'D'</b> - Donkey Kong (enemy)</li>
+     * <li><b>'R'</b> - Princess (goal)</li>
+     * <li><b>'B'</b> - Barrel</li>
+     * <li><b>'F'</b> - Fire</li>
+     * <li><b>'C'</b> - Coin</li>
+     * <li><b>'H'</b> - Hammer</li>
+     * <li><b>'T'</b> - Tank</li>
+     * <li><b>':'</b> - Toggles upward slope on/off and creates a platform</li>
+     * <li><b>';'</b> - Toggles downward slope on/off and creates a platform</li>
+     * </ul>
+     *
+     * <p>
+     * The slope state (up, down, or none) is updated if ':' or ';' are encountered,
+     * affecting the y-coordinate of entities until toggled again.
+     * </p>
+     *
+     * @param line       the line from the map file to parse
+     * @param row        the row index of the line in the map
+     * @param pSize      the base size (in pixels) of each map tile
+     * @param slopeStep  the amount of vertical offset to apply per column during
+     *                   slope
+     * @param slopeState the current slope state before parsing the line
+     * @return the updated slope state after parsing the line
+     * @throws NullPointerException if any of the required parameters are null
+     */
 
-                    switch (ch) {
-                        case 'P' -> entities.add(factory.createPlatform(pos));
-                        case 'L' -> entities.add(factory.createLadder(pos));
-                        case 'M' -> entities.add(factory.createMario(pos));
-                        case 'D' -> entities.add(factory.createDonkeyKong(pos));
-                        case 'R' -> entities.add(factory.createPrincess(pos));
-                        case 'B' -> entities.add(factory.createBarrel(pos));
-                        case 'F' -> entities.add(factory.createFire(pos));
-                        case 'C' -> entities.add(factory.createCoin(pos));
-                        case 'H' -> entities.add(factory.createHammer(pos));
-                        case 'T' -> entities.add(factory.createTank(pos));
-                        case ':' -> {
-                            if (slopeState == SlopeState.SLOPE_UP) {
-                                slopeState = SlopeState.NO_SLOPE;
-                            } else {
-                                slopeState = SlopeState.SLOPE_UP;
-                            }
-                            entities.add(factory.createPlatform(pos));
-                        }
-                        case ';' -> {
-                            if (slopeState == SlopeState.SLOPE_DOWN) {
-                                slopeState = SlopeState.NO_SLOPE;
-                            } else {
-                                slopeState = SlopeState.SLOPE_DOWN;
-                            }
-                            entities.add(factory.createPlatform(pos));
-                        }
-                        default -> {
-                            /* ignorato */ }
-                    }
+    private SlopeState parseLine(final String line, final int row, final int pSize, final float slopeStep,
+            final SlopeState slopeState) {
+        for (int col = 0; col < line.length(); col++) {
+            final char ch = line.charAt(col);
+            final float x = col * pSize;
+            final float y = row * pSize;
+
+            final Position2D pos = applySlope(x, y, slopeState, slopeStep);
+
+            switch (ch) {
+                case 'P' -> entities.add(factory.createPlatform(pos));
+                case 'L' -> entities.add(factory.createLadder(pos));
+                case 'M' -> entities.add(factory.createMario(pos));
+                case 'D' -> entities.add(factory.createDonkeyKong(pos));
+                case 'R' -> entities.add(factory.createPrincess(pos));
+                case 'B' -> entities.add(factory.createBarrel(pos));
+                case 'F' -> entities.add(factory.createFire(pos));
+                case 'C' -> entities.add(factory.createCoin(pos));
+                case 'H' -> entities.add(factory.createHammer(pos));
+                case 'T' -> entities.add(factory.createTank(pos));
+                case ':' -> {
+                    entities.add(factory.createPlatform(pos));
+                    return (slopeState == SlopeState.SLOPE_UP) ? SlopeState.NO_SLOPE : SlopeState.SLOPE_UP;
+                }
+                case ';' -> {
+                    entities.add(factory.createPlatform(pos));
+                    return (slopeState == SlopeState.SLOPE_DOWN) ? SlopeState.NO_SLOPE : SlopeState.SLOPE_DOWN;
+                }
+                default -> {
+                    // Ignored
                 }
             }
-
-        } catch (final IOException e) {
-            throw new IllegalStateException("Unable find Map", e);
         }
-
+        return slopeState;
     }
 
     /**
@@ -173,12 +195,13 @@ public class GameLevelManager implements LevelManager {
      * @param x          the x-coordinate of the position.
      * @param y          the y-coordinate of the position.
      * @param slopeState enum of the slope the method has to consider
+     * @param slope      float number to which increase or decrease the y-coordinate
      * @return Changed or unchanged Position of the Platform.
      */
-    private Position2D applySlope(final float x, final float y, final SlopeState slopeState) {
+    private Position2D applySlope(final float x, final float y, final SlopeState slopeState, final float slope) {
         return switch (slopeState) {
-            case SLOPE_UP -> new Position2D(x, y + SLOPE);
-            case SLOPE_DOWN -> new Position2D(x, y - SLOPE);
+            case SLOPE_UP -> new Position2D(x, y + slope);
+            case SLOPE_DOWN -> new Position2D(x, y - slope);
             case NO_SLOPE -> new Position2D(x, y);
         };
     }
