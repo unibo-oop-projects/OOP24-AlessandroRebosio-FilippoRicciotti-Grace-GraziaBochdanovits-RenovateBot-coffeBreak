@@ -57,6 +57,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Barrel createBarrel(final Position2D position) {
+        // TODO: The first barrel must be able to transform, the others must be randomly (RICCIOTTI)
         return new GameBarrel(position, DEF_BOX, false);
     }
 

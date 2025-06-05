@@ -1,8 +1,6 @@
 package it.unibo.coffebreak.model.impl;
 
 import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,7 +33,6 @@ public class GameModel implements Model {
 
     private final LevelManager levelManager;
     private final ScoreManager scoreManager;
-    private final List<Entity> entities;
 
     private GameState currentState;
     private String playerName;
@@ -49,7 +46,6 @@ public class GameModel implements Model {
         this.levelManager = new GameLevelManager();
         this.scoreManager = new GameScoreManager();
 
-        this.entities = new ArrayList<>();
         this.setState(MenuState::new);
 
         this.running = true;
@@ -61,7 +57,7 @@ public class GameModel implements Model {
      */
     @Override
     public List<Entity> getEntities() {
-        return Collections.unmodifiableList(this.entities);
+        return this.levelManager.getEntities();
     }
 
     /**
@@ -153,17 +149,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void start() {
-        this.getPlayer().ifPresent(p -> p.setScoreManager(scoreManager));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() {
-        this.scoreManager.saveScores();
-        this.running = false;
+    public void cleanEntities() {
+        this.levelManager.cleanEntities();
     }
 
     /**
@@ -186,6 +173,23 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void start() {
+        this.getPlayer().ifPresent(p -> p.setScoreManager(scoreManager));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() {
+        this.scoreManager.saveScores();
+        this.running = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
     }
@@ -198,7 +202,7 @@ public class GameModel implements Model {
      * @return an Optional containing the found entity, or empty if not found
      */
     private <T> Optional<T> findEntityOfType(final Class<T> type) {
-        return this.entities.stream()
+        return this.getEntities().stream()
                 .filter(type::isInstance)
                 .map(type::cast)
                 .findFirst();

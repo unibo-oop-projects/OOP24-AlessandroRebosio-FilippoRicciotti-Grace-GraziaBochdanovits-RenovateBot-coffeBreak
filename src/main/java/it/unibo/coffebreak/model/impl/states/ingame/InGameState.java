@@ -50,21 +50,15 @@ public class InGameState extends AbstractState {
 
         GameCollision.checkCollision(model);
 
-        // TODO: barrel to fire
-        // model.addEntity(null);
-        // model.getEntities().addAll(model.getEntities().stream()
-        //         .filter(Barrel.class::isInstance)
-        //         .map(Barrel.class::cast)
-        //         .filter(Barrel::canTransformToFire)
-        //         .toList());
+        // TODO: Add flames to the list, if the barrel can turn into flame (RICCIOTTTI)
 
-        // model.getLevelManager().cleanEntities();
+        model.cleanEntities();
 
         // TODO: If model.getPlayer() is present and has lost a life (via
         // getCurrentState().hasLostLife()),
-        // then reset the current level.
+        // then reset the current level. (RICCIOTTI)
 
-        // TODO: nextLevel if Target isRescued
+        // TODO: nextLevel if Target isRescued (RICCIOTTI)
 
         model.calculateBonus(deltaTime);
 

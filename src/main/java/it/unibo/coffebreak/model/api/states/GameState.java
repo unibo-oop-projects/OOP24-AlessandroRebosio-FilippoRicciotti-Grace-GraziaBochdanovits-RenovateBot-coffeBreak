@@ -10,6 +10,8 @@ import it.unibo.coffebreak.model.api.Model;
  */
 public interface GameState {
 
+    // TODO: add enum State with value MENU, INGAME, PAUSE, GAMEOVER and add a method to get current state (RICCIOTTI)
+
     /**
      * method for signaling the entrance in a new Phase.
      * 

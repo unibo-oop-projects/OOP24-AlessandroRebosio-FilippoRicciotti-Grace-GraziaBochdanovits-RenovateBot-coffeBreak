@@ -9,6 +9,7 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
 import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
@@ -105,6 +106,12 @@ public interface Model {
      * Adds the current player's score to the leaderboard.
      */
     void addEntryInLeaderBoard();
+
+    /**
+     * Cleans the current list of entities by removing destroyed enemies
+     * and collected collectibles using the configured {@link Cleaner}.
+     */
+    void cleanEntities();
 
     /**
      * Starts the first level of the game.

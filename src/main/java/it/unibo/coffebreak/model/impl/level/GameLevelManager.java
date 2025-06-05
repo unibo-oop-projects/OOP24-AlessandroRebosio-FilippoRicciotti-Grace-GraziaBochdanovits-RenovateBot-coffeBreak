@@ -185,7 +185,6 @@ public class GameLevelManager implements LevelManager {
     public void removeAll(final Predicate<Entity> filter) {
         Objects.requireNonNull(filter, "Predicate must not be null");
         this.entities.removeIf(filter);
-
     }
 
     /**
