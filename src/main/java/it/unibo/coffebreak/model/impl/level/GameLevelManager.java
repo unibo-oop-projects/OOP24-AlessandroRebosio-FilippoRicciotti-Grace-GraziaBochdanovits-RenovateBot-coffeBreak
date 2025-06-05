@@ -111,6 +111,26 @@ public class GameLevelManager implements LevelManager {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entity> getEntities() {
+        return Collections.unmodifiableList(this.entities);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws NullPointerException filter must not be null
+     */
+    @Override
+    public void removeAll(Predicate<Entity> filter) {
+        Objects.requireNonNull(filter, "Predicate must not be null");
+        this.entities.removeIf(filter);
+
+    }
+
+    /**
      * method that applies (if neaded) the increase, decrease of the y-coordinate of
      * a platform depending on the boolean values of slopeUp and slopeDown.
      * 
