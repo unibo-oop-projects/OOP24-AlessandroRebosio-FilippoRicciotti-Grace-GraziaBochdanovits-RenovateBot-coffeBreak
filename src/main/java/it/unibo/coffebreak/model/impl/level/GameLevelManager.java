@@ -24,7 +24,7 @@ import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
  */
 public class GameLevelManager implements LevelManager {
 
-    static final String PATH_MAP1 = "maps/Map1.txt";// TODO: implement a method GetNextMapPath()
+    static final String PATH_MAP1 = "maps/Map1.txt"; // TODO: implement a method GetNextMapPath()
     private static final int P_SIZE = 10;
     private static final float SLOPE = 0.3f;
     private final List<Entity> entities;
@@ -78,8 +78,8 @@ public class GameLevelManager implements LevelManager {
                     pos = switchSlope(x, y, slopeUp, slopeDown);
 
                     switch (ch) {
-                        case 'P' -> entities.add(factory.createPlatform(pos));
-                        case 'L' -> entities.add(factory.createLadder(pos));
+                        case 'P' -> entities.add(factory.createNormalPlatform(pos));
+                        case 'L' -> entities.add(factory.createNormalLadder(pos));
                         case 'M' -> entities.add(factory.createMario(pos));
                         case 'D' -> entities.add(factory.createDonkeyKong(pos));
                         case 'R' -> entities.add(factory.createPrincess(pos));
@@ -90,11 +90,11 @@ public class GameLevelManager implements LevelManager {
                         case 'T' -> entities.add(factory.createTank(pos));
                         case ':' -> {
                             slopeUp = !slopeUp;
-                            entities.add(factory.createPlatform(pos));
+                            entities.add(factory.createNormalLadder(pos));
                         }
                         case ';' -> {
                             slopeDown = !slopeDown;
-                            entities.add(factory.createPlatform(pos));
+                            entities.add(factory.createNormalLadder(pos));
                         }
                         default -> {
                             /* ignorato */ }

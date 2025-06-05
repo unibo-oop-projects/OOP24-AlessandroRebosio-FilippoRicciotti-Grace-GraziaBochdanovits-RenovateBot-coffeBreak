@@ -9,7 +9,7 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * 
  * @author Grazia Bochdanvits de Kavna
  */
-public interface Target extends Entity {
+public interface Princess extends Entity {
 
     /**
      * Attempts to rescue the princess.
