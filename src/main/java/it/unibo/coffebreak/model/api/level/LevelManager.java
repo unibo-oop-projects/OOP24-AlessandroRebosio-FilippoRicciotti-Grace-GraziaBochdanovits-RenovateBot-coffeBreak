@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.model.api.level;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 
@@ -27,9 +28,11 @@ public interface LevelManager {
     List<Entity> getEntities();
 
     /**
-     * Removes all entities from the current level.
+     * Removes all entities that match the filter from the current level .
+     * 
+     * @param filter filter the predicate used to select which entities to remove
      */
-    void removeAll();
+    void removeAll(Predicate<Entity> filter);
 
     /**
      * Adds an entity to the current level.
