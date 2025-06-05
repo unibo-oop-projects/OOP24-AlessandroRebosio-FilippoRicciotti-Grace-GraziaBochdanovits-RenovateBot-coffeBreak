@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.api.level;
 
+import java.util.List;
+
 import it.unibo.coffebreak.model.api.entities.Entity;
 
 /**
@@ -16,6 +18,18 @@ public interface LevelManager {
      * This should be called when initializing or transitioning to a new level/map.
      */
     void loadEntities();
+
+    /**
+     * Returns an unmodifiable view of the current list of entities.
+     *
+     * @return unmodifiable list of entities
+     */
+    List<Entity> getEntities();
+
+    /**
+     * Removes all entities from the current level.
+     */
+    void removeAll();
 
     /**
      * Adds an entity to the current level.
