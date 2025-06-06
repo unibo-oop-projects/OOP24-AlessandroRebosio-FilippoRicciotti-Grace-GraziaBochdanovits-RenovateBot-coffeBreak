@@ -7,10 +7,12 @@ import java.util.Objects;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
+import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 import it.unibo.coffebreak.view.api.panels.GameStatePanel;
 import it.unibo.coffebreak.view.api.renders.RenderManager;
 import it.unibo.coffebreak.view.impl.renders.GameRenderManagerImpl;
 import it.unibo.coffebreak.view.impl.renders.PlatformRender;
+import it.unibo.coffebreak.view.impl.renders.PlayerRender;
 import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
 /**
@@ -59,6 +61,9 @@ public class InGamePanel implements GameStatePanel {
     private void registerEntityRenderer(final Class<? extends Entity> entityClass) {
         if (Platform.class.isAssignableFrom(entityClass)) {
             renderManager.addEntityRenderer(Platform.class, new PlatformRender(resources, screenWidth, screenHeight));
+        }
+        if (Mario.class.isAssignableFrom(entityClass)) {
+            renderManager.addEntityRenderer(Mario.class, new PlayerRender(screenWidth, screenHeight));
         }
         //TODO: Add more entity types
     }

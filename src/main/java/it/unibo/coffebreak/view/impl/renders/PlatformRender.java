@@ -24,7 +24,6 @@ public class PlatformRender extends AbstractScalableRender implements EntityRend
     private static final String PLATFORM_PATH = "/img/platform_sheet.png";
     private static final int PLATFORM_WIDTH = 100;
     private static final int PLATFORM_HEIGHT = 30;
-    private static final int Z_INDEX = 0;
     private final transient BufferedImage platformImage;
 
     /**
@@ -60,13 +59,5 @@ public class PlatformRender extends AbstractScalableRender implements EntityRend
     @Override
     public boolean canRender(final Entity entity) {
         return entity instanceof Platform;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getZIndex() {
-        return Z_INDEX;
     }
 }

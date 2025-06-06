@@ -32,12 +32,4 @@ public interface EntityRender {
      * @throws NullPointerException if the entity parameter is null
      */
     boolean canRender(Entity entity);
-
-    /**
-     * Gets the z-index of this render, which determines its drawing order.
-     * Higher values are drawn on top of lower values.
-     * 
-     * @return the z-index of this render
-     */
-    int getZIndex();
 }
