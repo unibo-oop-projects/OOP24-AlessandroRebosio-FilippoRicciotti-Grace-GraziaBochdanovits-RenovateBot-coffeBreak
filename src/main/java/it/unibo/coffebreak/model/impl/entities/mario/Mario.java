@@ -9,6 +9,7 @@ import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
@@ -110,6 +111,9 @@ public class Mario extends AbstractEntity implements Character, Movable {
     public void onCollision(final Entity other) {
         if (other instanceof final Collectible collectible) {
             collectible.collect(this);
+        }
+        if (other instanceof final Platform platform) {
+            platform.destroy();
         }
         // TODO: to be completed
         this.currentState.handleCollision(this, other);

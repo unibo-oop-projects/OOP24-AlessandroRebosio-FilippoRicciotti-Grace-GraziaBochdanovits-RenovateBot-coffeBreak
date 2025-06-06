@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.entities.enemy.barrel;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
@@ -36,7 +35,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     private final boolean canTransformToFire;
 
     private boolean isDestroyedByTank;
-    private boolean isOnPlatform;
 
     /**
      * Constructs a new game barrel with specified properties.
@@ -52,7 +50,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
         super(position, dimension);
 
         this.canTransformToFire = canTransformToFire;
-        this.isOnPlatform = false;
     }
 
     /**
@@ -79,9 +76,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof final Platform platform) {
-            this.isOnPlatform = platform.isSupporting(other);
-        }
         if (other instanceof GameTank) {
             this.isDestroyedByTank = true;
             this.destroy();
@@ -95,6 +89,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public boolean canTransformToFire() {
-        return this.canTransformToFire && this.isDestroyedByTank && this.isOnPlatform;
+        return this.canTransformToFire && this.isDestroyedByTank;
     }
 }

@@ -1,12 +1,10 @@
 package it.unibo.coffebreak.model.impl.entities.structure.platform;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
-import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 
 /**
  * Concrete implementation of a {@link Platform} entity in the game world.
@@ -21,7 +19,6 @@ import it.unibo.coffebreak.model.impl.entities.mario.Mario;
  * @author Grazia Bochdanovits de Kavna
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
-
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
@@ -30,14 +27,6 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      */
     public AbstractPlatform(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isSupporting(final Entity entity) {
-        return entity instanceof Mario || entity instanceof Enemy;
     }
 
     /**
@@ -56,7 +45,15 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      * {@inheritDoc}
      */
     @Override
-    public boolean canBreak() {
+    public void destroy() {
+        // Default empty implementation
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBroken() {
         return false;
     }
 }

@@ -12,7 +12,6 @@ import it.unibo.coffebreak.model.impl.entities.structure.platform.AbstractPlatfo
  * @author Grazia Bochdanovits de Kavna
  */
 public class NormalPlatform extends AbstractPlatform {
-
     /**
      * Constructs a new NormalPlatform with specified position, dimensions and slope.
      * 
