@@ -9,19 +9,16 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Alessandro Rebosio
  */
 public interface Platform extends Entity {
+    /**
+     * Destroys or breaks the platform, changing its state.
+     */
+    void destroy();
 
     /**
-     * Checks if this platform can support the given entity.
+     * Checks if the platform is in a broken/destroyed state.
      * 
-     * @param entity the entity to check
-     * @return true if the entity can stand on this platform, false otherwise
+     * @return true if the platform has been destroyed,
+     *         false if it's still intact and functional
      */
-    boolean isSupporting(Entity entity);
-
-    /**
-     * Checks if this platform is breakable.
-     * 
-     * @return true if the platform can break, false otherwise
-     */
-    boolean canBreak();
+    boolean isBroken();
 }
