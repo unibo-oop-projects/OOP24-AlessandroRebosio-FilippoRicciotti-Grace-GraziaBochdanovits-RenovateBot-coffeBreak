@@ -15,12 +15,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 public interface LevelManager {
 
     /**
-     * Loads all the entities associated with the current level and map.
-     * This should be called when initializing or transitioning to a new level/map.
-     */
-    void loadEntities();
-
-    /**
      * Returns an unmodifiable view of the current list of entities.
      *
      * @return unmodifiable list of entities
@@ -28,11 +22,10 @@ public interface LevelManager {
     List<Entity> getEntities();
 
     /**
-     * Removes all entities that match the filter from the current level .
-     * 
-     * @param filter filter the predicate used to select which entities to remove
+     * Loads all the entities associated with the current level and map.
+     * This should be called when initializing or transitioning to a new level/map.
      */
-    void removeAll(Predicate<Entity> filter);
+    void loadEntities();
 
     /**
      * Adds an entity to the current level.
@@ -51,8 +44,15 @@ public interface LevelManager {
     boolean removeEntity(Entity entity);
 
     /**
-     * Removes all entities from the current level.
-     * Useful when resetting or unloading a level.
+     * Removes all entities that match the filter from the current level .
+     * 
+     * @param filter filter the predicate used to select which entities to remove
+     */
+    void removeAll(Predicate<Entity> filter);
+
+    /**
+     * Cleans the current list of entities by removing destroyed enemies
+     * and collected collectibles.
      */
     void cleanEntities();
 
@@ -61,16 +61,4 @@ public interface LevelManager {
      * This may include repositioning, restoring health, or other properties.
      */
     void resetEntities();
-
-    /**
-     * Advances to the next map in the current level.
-     * Typically used when the player completes the current map.
-     */
-    void nextMap();
-
-    /**
-     * Advances to the next level.
-     * Typically used when all maps in the current level are completed.
-     */
-    void nextLevel();
 }

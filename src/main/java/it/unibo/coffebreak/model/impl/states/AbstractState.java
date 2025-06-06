@@ -39,5 +39,4 @@ public abstract class AbstractState implements GameState {
      */
     @Override
     public abstract void handleCommand(Model model, Command command);
-
 }

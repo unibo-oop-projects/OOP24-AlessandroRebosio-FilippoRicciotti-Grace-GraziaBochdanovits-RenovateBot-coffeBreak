@@ -44,5 +44,4 @@ public class GameOverState extends AbstractState {
     public GameStateType getStateType() {
         return GameStateType.GAME_OVER;
     }
-
 }

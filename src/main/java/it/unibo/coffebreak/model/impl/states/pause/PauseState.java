@@ -44,5 +44,4 @@ public class PauseState extends AbstractState {
     public GameStateType getStateType() {
         return GameStateType.PAUSE;
     }
-
 }

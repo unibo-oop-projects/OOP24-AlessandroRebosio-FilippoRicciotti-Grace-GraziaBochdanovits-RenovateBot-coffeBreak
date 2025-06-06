@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.api;
 
-import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -9,7 +8,7 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.states.GameState;
 
 /**
@@ -59,7 +58,7 @@ public interface Model {
      *
      * @return an {@link Optional} containing the Target, or empty if not present
      */
-    Optional<Target> getTarget();
+    Optional<Princess> getTarget();
 
     /**
      * Gets the current game state.
@@ -67,13 +66,6 @@ public interface Model {
      * @return the current game state
      */
     GameState getGameState();
-
-    /**
-     * Checks if the game simulation is currently running.
-     * 
-     * @return true if the game is running, false otherwise
-     */
-    boolean isRunning();
 
     /**
      * Sets or updates the player's name.
@@ -109,9 +101,15 @@ public interface Model {
 
     /**
      * Cleans the current list of entities by removing destroyed enemies
-     * and collected collectibles using the configured {@link Cleaner}.
+     * and collected collectibles.
      */
     void cleanEntities();
+
+    /**
+     * Resets all entities in the current level to their initial state.
+     * This may include repositioning, restoring health, or other properties.
+     */
+    void resetEntities();
 
     /**
      * Starts the first level of the game.
@@ -142,6 +140,11 @@ public interface Model {
     /**
      * Calculates and applies any time-based bonuses.
      * 
+     * @return true if the game is running, false otherwise
+     */
+    boolean isRunning();
+
+    /**
      * @param deltaTime time in seconds since last calculation
      */
     void calculateBonus(float deltaTime);

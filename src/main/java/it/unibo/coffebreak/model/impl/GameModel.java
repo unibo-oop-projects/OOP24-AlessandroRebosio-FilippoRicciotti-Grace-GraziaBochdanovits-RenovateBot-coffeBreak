@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.impl;
 
-import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,6 +10,7 @@ import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.states.GameState;
@@ -88,8 +88,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Target> getTarget() {
-        return findEntityOfType(Target.class);
+    public Optional<Princess> getTarget() {
+        return findEntityOfType(Princess.class);
     }
 
     /**
@@ -151,6 +151,14 @@ public class GameModel implements Model {
     @Override
     public void cleanEntities() {
         this.levelManager.cleanEntities();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetEntities() {
+        this.levelManager.resetEntities();
     }
 
     /**
