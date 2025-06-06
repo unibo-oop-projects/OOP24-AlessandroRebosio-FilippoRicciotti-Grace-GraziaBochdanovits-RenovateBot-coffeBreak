@@ -5,9 +5,9 @@ import java.util.List;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.level.entity.EntityManager;
-import it.unibo.coffebreak.model.api.level.maps.Maps;
+import it.unibo.coffebreak.model.api.level.maps.MapsManager;
 import it.unibo.coffebreak.model.impl.level.entity.GameEntityManager;
-import it.unibo.coffebreak.model.impl.level.maps.GameMaps;
+import it.unibo.coffebreak.model.impl.level.maps.GameMapsManager;
 
 /**
  * Implementation of the {@link LevelManager} interface.
@@ -20,14 +20,14 @@ import it.unibo.coffebreak.model.impl.level.maps.GameMaps;
 public class GameLevelManager implements LevelManager {
 
     private final EntityManager entityManager;
-    private final Maps maps;
+    private final MapsManager maps;
 
     /**
      * Constructs a new {@code GameLevelManager}.
      */
     public GameLevelManager() {
         this.entityManager = new GameEntityManager();
-        this.maps = new GameMaps();
+        this.maps = new GameMapsManager();
     }
 
     /**
@@ -51,7 +51,7 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void loadNextEnitites() {
-        // TODO: complete loadEntities
+        this.entityManager.loadEntitiesFromMap(this.maps.loadNextMap());
     }
 
     /**
@@ -83,6 +83,6 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void resetEntities() {
-        this.entityManager.resetEntities(null);
+        this.entityManager.resetEntities(this.maps.resetCurrentMap());
     }
 }

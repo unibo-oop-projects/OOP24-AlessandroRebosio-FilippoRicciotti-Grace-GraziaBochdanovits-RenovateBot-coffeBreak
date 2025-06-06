@@ -7,7 +7,7 @@ import java.util.List;
  * 
  * @author Filippo Ricciotti
  */
-public interface Maps {
+public interface MapsManager {
     /**
      * Loads the next map in sequence.
      * 
