@@ -57,4 +57,9 @@ public interface LevelManager {
      * Resets all entities in the current level to their initial states.
      */
     void resetEntities();
+
+    /**
+     * Advances to the next level if conditions are met.
+     */
+    void advanceLevel();
 }

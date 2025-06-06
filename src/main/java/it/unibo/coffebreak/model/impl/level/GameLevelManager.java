@@ -3,9 +3,11 @@ package it.unibo.coffebreak.model.impl.level;
 import java.util.List;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.level.entity.EntityManager;
 import it.unibo.coffebreak.model.api.level.maps.MapsManager;
+import it.unibo.coffebreak.model.impl.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.model.impl.level.entity.GameEntityManager;
 import it.unibo.coffebreak.model.impl.level.maps.GameMapsManager;
 
@@ -84,5 +86,30 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void resetEntities() {
         this.entityManager.resetEntities(this.maps.resetCurrentMap());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void advanceLevel() {
+        if (this.shouldAdvanceLevel()) {
+            this.maps.updateMaps(0);
+            this.loadNextEnitites();
+        }
+    }
+
+    /**
+     * Checks if the level should be advanced based on game conditions.
+     * 
+     * @return true if the level should be advanced, false otherwise
+     */
+    private boolean shouldAdvanceLevel() {
+        return this.getEntities().stream()
+                .filter(e -> e instanceof Princess)
+                .map(e -> (Princess) e)
+                .anyMatch(Princess::isRescued)
+                || !this.getEntities().stream()
+                        .anyMatch(e -> e instanceof BreakablePlatform);
     }
 }
