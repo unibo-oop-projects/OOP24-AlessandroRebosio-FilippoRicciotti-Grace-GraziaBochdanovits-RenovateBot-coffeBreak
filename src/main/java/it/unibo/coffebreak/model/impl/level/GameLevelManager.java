@@ -22,10 +22,8 @@ public class GameLevelManager implements LevelManager {
     private final EntityManager entityManager;
     private final Maps maps;
 
-    int currentLevel;
-
     /**
-     * Constructs a new {@code GameLevelManager} with an empty entity list.
+     * Constructs a new {@code GameLevelManager}.
      */
     public GameLevelManager() {
         this.entityManager = new GameEntityManager();

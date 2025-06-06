@@ -14,48 +14,97 @@ import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.level.entity.EntityManager;
 import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 
+/**
+ * Concrete implementation of {@link EntityManager} that manages game entities.
+ * Handles creation, storage, and lifecycle of all entities in the game level,
+ * including enemies, collectibles, and environmental objects.
+ * 
+ * @author Filippo Ricciotti
+ */
 public class GameEntityManager implements EntityManager {
 
     private final EntityFactory factory = new GameEntityFactory();
     private final List<Entity> entities = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @return an unmodifiable view of the current entity list
+     */
     @Override
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
     }
 
+    /**
+     * {@inheritDoc}
+     * Clears current entities and loads new ones from the specified map
+     * representation.
+     * 
+     * @param mapLines the textual representation of the game map
+     */
     @Override
     public void loadEntitiesFromMap(final List<String> mapLines) {
-        entities.clear();
-        // TODO: loadEntities
+        this.entities.clear();
+        // TODO: implement entity loading from map lines
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @param entity the entity to add (cannot be null)
+     * @return true if the entity was successfully added
+     * @throws NullPointerException if the entity parameter is null
+     */
     @Override
     public boolean addEntity(final Entity entity) {
-        return entities.add(Objects.requireNonNull(entity));
+        return this.entities.add(Objects.requireNonNull(entity,  "The Entity cannot be null."));
     }
 
+    /**
+     * {@inheritDoc}
+     * Removes all collected collectibles and destroyed enemies from the entity
+     * list.
+     */
     @Override
     public void cleanEntities() {
         this.removeEntities(Collectible.class, Collectible::isCollected);
         this.removeEntities(Enemy.class, Enemy::isDestroyed);
     }
 
+    /**
+     * {@inheritDoc}
+     * Resets the entity list by reloading entities from the specified map.
+     * 
+     * @param mapLines the textual representation of the game map
+     */
     @Override
     public void resetEntities(final List<String> mapLines) {
-        loadEntitiesFromMap(mapLines);
+        this.loadEntitiesFromMap(mapLines);
     }
 
+    /**
+     * {@inheritDoc}
+     * Transforms all barrels that can be transformed into fire entities.
+     * Creates new fire entities at the barrels' positions.
+     */
     @Override
     public void transformBarrels() {
-        entities.stream()
+        this.entities.stream()
                 .filter(Barrel.class::isInstance)
                 .map(Barrel.class::cast)
                 .filter(Barrel::canTransformToFire)
                 .forEach(b -> addEntity(factory.createFire(b.getPosition())));
     }
 
+    /**
+     * Removes entities of a specific type that match a given condition.
+     * 
+     * @param <T>       the entity type to filter for
+     * @param type      the class object representing the entity type
+     * @param condition the predicate that determines which entities to remove
+     */
     private <T extends Entity> void removeEntities(final Class<T> type, final Predicate<T> condition) {
-        entities.removeIf(e -> type.isInstance(e) && condition.test(type.cast(e)));
+        this.entities.removeIf(e -> type.isInstance(e) && condition.test(type.cast(e)));
     }
 }

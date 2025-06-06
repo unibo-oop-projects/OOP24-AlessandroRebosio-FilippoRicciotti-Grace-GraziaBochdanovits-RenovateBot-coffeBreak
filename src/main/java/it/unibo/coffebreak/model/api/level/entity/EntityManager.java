@@ -4,16 +4,49 @@ import java.util.List;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 
+/**
+ * Manages the entities in the game level, providing methods to load, add,
+ * remove, and transform entities.
+ * 
+ * @author Filippo Ricciotti
+ */
 public interface EntityManager {
-    public List<Entity> getEntities();
+    /**
+     * Gets the list of all currently managed entities.
+     * 
+     * @return a list of entities
+     */
+    List<Entity> getEntities();
 
-    public void loadEntitiesFromMap(final List<String> mapLines);
+    /**
+     * Loads entities from a map represented by text lines.
+     * 
+     * @param mapLines the lines representing the map layout
+     */
+    void loadEntitiesFromMap(List<String> mapLines);
 
-    public boolean addEntity(final Entity entity);
+    /**
+     * Adds a new entity to the manager.
+     * 
+     * @param entity the entity to add
+     * @return true if the entity was added successfully, false otherwise
+     */
+    boolean addEntity(Entity entity);
 
-    public void cleanEntities();
+    /**
+     * Removes all entities from the manager.
+     */
+    void cleanEntities();
 
-    public void resetEntities(final List<String> mapLines);
+    /**
+     * Resets the entities to their initial state based on the provided map.
+     * 
+     * @param mapLines the lines representing the map layout
+     */
+    void resetEntities(List<String> mapLines);
 
-    public void transformBarrels();
+    /**
+     * Transforms specific entities (e.g., barrels) in the game.
+     */
+    void transformBarrels();
 }

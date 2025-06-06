@@ -1,56 +1,60 @@
 package it.unibo.coffebreak.model.api.level;
 
 import java.util.List;
-
 import it.unibo.coffebreak.model.api.entities.Entity;
 
 /**
- * Interface for managing levels and maps in the game.
- * It handles loading, adding/removing entities, and transitioning between maps
- * and levels.
+ * Manages game levels and maps, handling entity operations and transitions
+ * between game states.
+ * Provides functionality to control entities within the current level,
+ * including loading,
+ * transforming, and resetting them, as well as managing level progression.
  * 
- * @author Filippo Ricciotti
+ * @author Filippo RIcciotti
  */
 public interface LevelManager {
     /**
-     * Returns an unmodifiable view of the current list of entities.
-     *
-     * @return unmodifiable list of entities
+     * Gets an unmodifiable view of all entities currently active in the level.
+     * 
+     * @return an unmodifiable list containing all active entities
      */
     List<Entity> getEntities();
 
+    /**
+     * Gets the bonus score associated with completing the current map.
+     * 
+     * @return the bonus points awarded for completing this map
+     */
     int getCurrentMapBonus();
 
     /**
-     * Loads all the entities associated with the current level and map.
-     * This should be called when initializing or transitioning to a new level/map.
+     * Loads all entities for the next level or map in the sequence.
+     * This method should be called when transitioning to a new game area
+     * to initialize all required entities.
      */
     void loadNextEnitites();
 
     /**
-     * Adds an entity to the current level.
-     *
-     * @param entity the entity to add
-     * @return true if the entity was successfully added, false otherwise
+     * Adds a new entity to the current game level.
+     * 
+     * @param entity the entity to be added to the level
+     * @return true if the entity was successfully added, false if the addition
+     *         failed
      */
     boolean addEntity(Entity entity);
 
     /**
-     * Transforms certain entities into other entities according to game logic.
-     * This could include power-ups changing state, enemies evolving, or
-     * environmental objects transitioning forms.
+     * Transforms specific entities according to game rules and state changes.
      */
     void transformEntities();
 
     /**
-     * Cleans the current list of entities by removing destroyed enemies
-     * and collected collectibles.
+     * Cleans up the entity list.
      */
     void cleanEntities();
 
     /**
-     * Resets all entities in the current level to their initial state.
-     * This may include repositioning, restoring health, or other properties.
+     * Resets all entities in the current level to their initial states.
      */
     void resetEntities();
 }
