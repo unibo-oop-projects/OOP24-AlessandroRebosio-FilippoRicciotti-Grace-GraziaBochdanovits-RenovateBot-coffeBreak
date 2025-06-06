@@ -41,7 +41,6 @@ public class GameLevelManager implements LevelManager {
     /**
      * {@inheritDoc}
      */
-
     @Override
     public void loadEntities() {
         this.entities.clear();
@@ -107,5 +106,4 @@ public class GameLevelManager implements LevelManager {
                 .filter(removalCondition)
                 .toList());
     }
-
 }
