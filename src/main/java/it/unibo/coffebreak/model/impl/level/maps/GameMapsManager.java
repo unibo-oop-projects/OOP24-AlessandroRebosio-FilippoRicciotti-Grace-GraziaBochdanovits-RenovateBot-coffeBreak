@@ -1,16 +1,23 @@
 package it.unibo.coffebreak.model.impl.level.maps;
 
 import java.util.List;
-import it.unibo.coffebreak.model.api.level.maps.Maps;
+import it.unibo.coffebreak.model.api.level.maps.MapsManager;
 
 /**
- * Concrete implementation of {@link Maps} that manages game maps and their
+ * Concrete implementation of {@link MapsManager} that manages game maps and
+ * their
  * properties.
  * Handles loading, resetting, and updating maps based on game progression.
  * 
  * @author Filippo Ricciotti
  */
-public class GameMaps implements Maps {
+public class GameMapsManager implements MapsManager {
+
+    private int bonusMap;
+
+    public GameMapsManager() {
+        this.bonusMap = 0;
+    }
 
     /**
      * {@inheritDoc}
@@ -44,8 +51,7 @@ public class GameMaps implements Maps {
      */
     @Override
     public int getMapBonus() {
-        // TODO: Implement bonus calculation logic
-        throw new UnsupportedOperationException("Unimplemented method 'getMapBonus'");
+        return this.bonusMap;
     }
 
     /**
