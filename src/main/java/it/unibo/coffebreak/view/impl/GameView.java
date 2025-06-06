@@ -2,13 +2,8 @@ package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JFrame;
 import it.unibo.coffebreak.controller.api.Controller;
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.impl.GameModel;
 import it.unibo.coffebreak.view.api.View;
-import it.unibo.coffebreak.view.api.panels.GameStatePanel;
 import it.unibo.coffebreak.view.impl.panels.GamePanel;
-import it.unibo.coffebreak.view.impl.panels.InGamePanel;
-import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -40,9 +35,7 @@ public class GameView extends JFrame implements View {
 
     /** Reference to the game controller. */
     private final transient Controller controller;
-    private final GamePanel gamePanel;
-    private final transient GameStatePanel currentGameState; //TODO: cambia screen in base allo stato di gioco
-    private final transient Model model = new GameModel(); //TODO: non penso vada qui ma serviva 
+
     /**
      * Constructs a GameView with the given controller.
      *
@@ -50,16 +43,12 @@ public class GameView extends JFrame implements View {
      */
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
-        this.gamePanel = new GamePanel();
 
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-        final ResourceLoader resources = new ResourceLoader();
-        this.currentGameState = new InGamePanel(resources, this.model, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        gamePanel.setCurrentState(currentGameState);
-
+        final GamePanel gamePanel = new GamePanel();
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -79,9 +68,7 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void updateView() {
-        currentGameState.update();
         this.repaint();
-        this.gamePanel.repaint();
     }
 
     /**

@@ -50,7 +50,6 @@ public class InGamePanel implements GameStatePanel {
      * Initialized the renders for the entity in the game Model.
      */
     private void initializeRenders() {
-        // renderManager.addStaticRenderer(new LevelRender(Objects.requireNonNull(resources), 1));
         model.getEntities().stream()
             .map(Entity::getClass)
             .distinct()
