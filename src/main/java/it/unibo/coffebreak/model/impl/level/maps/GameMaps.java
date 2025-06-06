@@ -41,6 +41,11 @@ public class GameMaps implements Maps {
     }
 
     @Override
+    public List<String> resetCurrentMap() {
+        return this.loadedMaps.get(this.availableMaps.get(this.index));
+    }
+
+    @Override
     public void updateMaps(final int levelID) {
         this.availableMaps.clear();
         this.index = 0;
