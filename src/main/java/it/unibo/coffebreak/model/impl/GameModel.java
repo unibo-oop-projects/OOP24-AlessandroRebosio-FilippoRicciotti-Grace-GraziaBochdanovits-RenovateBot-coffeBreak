@@ -164,7 +164,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void getNextMap() {
+    public void nextMap() {
         this.levelManager.loadNextEnitites();
     }
 

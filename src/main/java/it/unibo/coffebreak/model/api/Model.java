@@ -117,7 +117,10 @@ public interface Model {
      */
     void transformEntities();
 
-    void getNextMap();
+    /**
+     * Advances to the next map in the game sequence.
+     */
+    void nextMap();
 
     /**
      * Starts the first level of the game.
