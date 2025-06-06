@@ -26,6 +26,8 @@ import it.unibo.coffebreak.model.impl.level.maps.GameMaps;
  */
 public class GameLevelManager implements LevelManager {
 
+    public static final int MAX_LEVELID = 0;
+
     private final EntityFactory factory;
     private final Maps maps;
 
@@ -40,7 +42,7 @@ public class GameLevelManager implements LevelManager {
         this.maps = new GameMaps();
 
         this.entities = new ArrayList<>();
-        this.getNextLevel();
+        this.getNextMap();
     }
 
     /**
@@ -63,7 +65,7 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public void loadEntities() {
+    public void loadNextEnitites() {
         this.entities.clear();
         // TODO: complete loadEntities
     }
@@ -102,18 +104,15 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void resetEntities() {
-        this.loadEntities();
+        this.loadNextEnitites();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void getNextLevel() {
-        if (this.currentLevel < 3) {
-            this.maps.updateMaps(currentLevel);
-            this.currentLevel++;
-        }
+    public void getNextMap() {
+
     }
 
     /**

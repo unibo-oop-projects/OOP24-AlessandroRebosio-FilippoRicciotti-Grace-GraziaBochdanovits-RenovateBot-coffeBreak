@@ -25,7 +25,7 @@ public interface LevelManager {
      * Loads all the entities associated with the current level and map.
      * This should be called when initializing or transitioning to a new level/map.
      */
-    void loadEntities();
+    void loadNextEnitites();
 
     /**
      * Adds an entity to the current level.
@@ -54,5 +54,5 @@ public interface LevelManager {
      */
     void resetEntities();
 
-    void getNextLevel();
+    void getNextMap();
 }

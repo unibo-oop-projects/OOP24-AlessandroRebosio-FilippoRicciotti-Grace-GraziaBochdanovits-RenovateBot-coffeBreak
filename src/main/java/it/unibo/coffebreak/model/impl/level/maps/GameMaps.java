@@ -10,46 +10,44 @@ import java.util.List;
 import java.util.Map;
 
 import it.unibo.coffebreak.model.api.level.maps.Maps;
+import it.unibo.coffebreak.model.impl.level.GameLevelManager;
 
 public class GameMaps implements Maps {
 
     private final List<String> availableMaps;
     private final Map<String, List<String>> loadedMaps;
 
-    private int index;
+    private boolean hasNextLevel;
+    private int mapIndex;
+    private int levelID;
     private int bonusMap;
 
     public GameMaps() {
         this.availableMaps = new ArrayList<>();
         this.loadedMaps = new HashMap<>();
 
-        this.index = 0;
+        this.hasNextLevel = true;
+        this.mapIndex = 0;
+        this.levelID = 0;
         this.bonusMap = 0;
+
+        updateMaps(this.levelID);
     }
 
     @Override
     public List<String> loadNextMap() {
-        final String mapName = this.getNext();
-        return loadedMaps.computeIfAbsent(mapName, k -> {
-            try {
-                final Path path = Paths.get(mapName + ".txt");
-                if (!Files.exists(path)) {
-                    throw new IOException("Map file not found: " + path);
-                }
-
-                final List<String> lines = Files.readAllLines(path);
-                if (lines.isEmpty()) {
-                    throw new IOException("Map file is empty: " + path);
-                }
-
-                this.bonusMap = Integer.parseInt(lines.removeFirst());
-                return lines;
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to load map: " + mapName, e);
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("Invalid bonus format in map: " + mapName, e);
+        if (this.mapIndex >= this.availableMaps.size()) {
+            if (this.hasNextLevel) {
+                this.updateMaps(++this.levelID);
             }
-        });
+        }
+
+        return loadedMaps.computeIfAbsent(availableMaps.get(mapIndex++), this::loadMapFromFile);
+    }
+
+    @Override
+    public List<String> resetCurrentMap() {
+        return loadedMaps.get(availableMaps.get(Math.max(0, mapIndex - 1)));
     }
 
     @Override
@@ -58,27 +56,43 @@ public class GameMaps implements Maps {
     }
 
     @Override
-    public List<String> resetCurrentMap() {
-        return this.loadedMaps.get(this.availableMaps.get(this.index));
-    }
-
-    @Override
-    public void updateMaps(final int levelID) {
+    public void updateMaps(final int newLevelID) {
         this.availableMaps.clear();
-        this.index = 0;
+        this.mapIndex = 0;
 
-        switch (levelID) {
+        switch (newLevelID) {
             case 0 -> {
                 this.availableMaps.add("maps/Map1");
                 this.availableMaps.add("maps/Map4");
             }
+            default -> {
+                this.hasNextLevel = false;
+                this.levelID = GameLevelManager.MAX_LEVELID;
+                this.updateMaps(levelID);
+            }
         }
     }
 
-    private String getNext() {
-        if (this.availableMaps.isEmpty()) {
-            throw new IllegalStateException("No maps available");
+    private List<String> loadMapFromFile(final String mapName) {
+        try {
+            final Path path = Paths.get(mapName + ".txt");
+
+            if (!Files.exists(path)) {
+                throw new IOException("Map file not found: " + path);
+            }
+
+            final List<String> lines = new ArrayList<>(Files.readAllLines(path));
+            if (lines.isEmpty()) {
+                throw new IOException("Map file is empty: " + path);
+            }
+
+            this.bonusMap = Integer.parseInt(lines.removeFirst());
+            return lines;
+
+        } catch (final IOException e) {
+            throw new RuntimeException("Failed to load map: " + mapName, e);
+        } catch (final NumberFormatException e) {
+            throw new RuntimeException("Invalid bonus format in map: " + mapName, e);
         }
-        return this.availableMaps.get(index++ % this.availableMaps.size());
     }
 }
