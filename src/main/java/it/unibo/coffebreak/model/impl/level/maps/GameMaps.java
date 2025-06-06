@@ -17,27 +17,44 @@ public class GameMaps implements Maps {
     private final Map<String, List<String>> loadedMaps;
 
     private int index;
+    private int bonusMap;
 
     public GameMaps() {
         this.availableMaps = new ArrayList<>();
         this.loadedMaps = new HashMap<>();
 
         this.index = 0;
+        this.bonusMap = 0;
     }
 
     @Override
     public List<String> loadNextMap() {
-        return loadedMaps.computeIfAbsent(this.getNext(), k -> {
+        final String mapName = this.getNext();
+        return loadedMaps.computeIfAbsent(mapName, k -> {
             try {
-                final Path path = Paths.get(this.getNext() + ".txt");
+                final Path path = Paths.get(mapName + ".txt");
                 if (!Files.exists(path)) {
                     throw new IOException("Map file not found: " + path);
                 }
-                return Files.readAllLines(path);
-            } catch (final IOException e) {
-                throw new RuntimeException("Failed to load map: " + this.getNext(), e);
+
+                final List<String> lines = Files.readAllLines(path);
+                if (lines.isEmpty()) {
+                    throw new IOException("Map file is empty: " + path);
+                }
+
+                this.bonusMap = Integer.parseInt(lines.removeFirst());
+                return lines;
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to load map: " + mapName, e);
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("Invalid bonus format in map: " + mapName, e);
             }
         });
+    }
+
+    @Override
+    public int getMapBonus() {
+        return this.bonusMap;
     }
 
     @Override

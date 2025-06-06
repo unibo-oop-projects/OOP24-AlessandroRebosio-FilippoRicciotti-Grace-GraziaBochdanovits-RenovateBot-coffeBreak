@@ -19,6 +19,8 @@ public interface LevelManager {
      */
     List<Entity> getEntities();
 
+    int getCurrentMapBonus();
+
     /**
      * Loads all the entities associated with the current level and map.
      * This should be called when initializing or transitioning to a new level/map.

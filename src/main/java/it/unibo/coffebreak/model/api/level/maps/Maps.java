@@ -6,6 +6,8 @@ public interface Maps {
 
     List<String> loadNextMap();
 
+    int getMapBonus();
+
     List<String> resetCurrentMap();
 
     void updateMaps(final int levelID);

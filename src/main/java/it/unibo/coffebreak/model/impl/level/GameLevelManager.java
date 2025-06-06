@@ -55,6 +55,14 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
+    public int getCurrentMapBonus() {
+        return this.maps.getMapBonus();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void loadEntities() {
         this.entities.clear();
         // TODO: complete loadEntities
