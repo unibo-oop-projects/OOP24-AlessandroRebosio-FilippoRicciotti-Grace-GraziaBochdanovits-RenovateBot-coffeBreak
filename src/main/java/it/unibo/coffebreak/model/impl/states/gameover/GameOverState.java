@@ -37,12 +37,4 @@ public class GameOverState extends AbstractState {
     public void onExit(final Model model) {
         model.addEntryInLeaderBoard();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameStateType getStateType() {
-        return GameStateType.GAME_OVER;
-    }
 }

@@ -10,36 +10,6 @@ import it.unibo.coffebreak.model.api.Model;
  */
 public interface GameState {
     /**
-     * Represents the possible high-level states of the game.
-     * Each constant defines a distinct phase in the game's lifecycle,
-     * used to control behavior transitions and rendering logic.
-     * 
-     * @author Filippo Ricciotti
-     */
-    enum GameStateType {
-
-        /**
-         * The game is in the main menu or sub-menus.
-         */
-        MENU,
-
-        /**
-         * The game is actively being played.
-         */
-        IN_GAME,
-
-        /**
-         * The game is temporarily paused.
-         */
-        PAUSE,
-
-        /**
-         * The game has ended (player won or lost).
-         */
-        GAME_OVER;
-    }
-
-    /**
      * method for signaling the entrance in a new Phase.
      * 
      * @param model the model changing state
@@ -68,11 +38,4 @@ public interface GameState {
      * @param deltaTime time in milliseconds since the last update call.
      */
     void update(Model model, float deltaTime);
-
-    /**
-     * Returns the current game state type associated with this state.
-     * 
-     * @return the enumerated game state type, guaranteed non-null
-     */
-    GameStateType getStateType();
 }

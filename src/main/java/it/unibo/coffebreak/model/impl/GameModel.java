@@ -181,6 +181,7 @@ public class GameModel implements Model {
      */
     @Override
     public void start() {
+        this.levelManager.loadNextEnitites();
         this.getPlayer().ifPresent(p -> p.setScoreManager(scoreManager));
     }
 

@@ -67,12 +67,4 @@ public class InGameState extends AbstractState {
             model.setState(GameOverState::new);
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameStateType getStateType() {
-        return GameStateType.IN_GAME;
-    }
 }
