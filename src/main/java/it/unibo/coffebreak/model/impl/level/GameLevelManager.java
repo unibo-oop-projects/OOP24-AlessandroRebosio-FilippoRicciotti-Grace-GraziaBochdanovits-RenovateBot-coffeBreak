@@ -12,7 +12,9 @@ import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.level.LevelManager;
+import it.unibo.coffebreak.model.api.level.maps.Maps;
 import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
+import it.unibo.coffebreak.model.impl.level.maps.GameMaps;
 
 /**
  * Implementation of the {@link LevelManager} interface.
@@ -25,14 +27,20 @@ import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 public class GameLevelManager implements LevelManager {
 
     private final EntityFactory factory;
+    private final Maps maps;
+
     private final List<Entity> entities;
+    int currentLevel;
 
     /**
      * Constructs a new {@code GameLevelManager} with an empty entity list.
      */
     public GameLevelManager() {
         this.factory = new GameEntityFactory();
+        this.maps = new GameMaps();
+
         this.entities = new ArrayList<>();
+        this.maps.updateMaps(this.currentLevel = 0);
     }
 
     /**

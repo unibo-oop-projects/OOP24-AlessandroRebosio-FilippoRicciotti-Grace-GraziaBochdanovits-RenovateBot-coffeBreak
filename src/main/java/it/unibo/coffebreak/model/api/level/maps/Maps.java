@@ -4,8 +4,7 @@ import java.util.List;
 
 public interface Maps {
 
-    List<String> getAvaiableMaps();
+    List<String> loadNextMap();
 
     void updateMaps(final int levelID);
-
 }
