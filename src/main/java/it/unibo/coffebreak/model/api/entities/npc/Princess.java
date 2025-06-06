@@ -10,7 +10,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Grazia Bochdanvits de Kavna
  */
 public interface Princess extends Entity {
-
     /**
      * Attempts to rescue the princess.
      * This method should change the state of the princess to "rescued".

@@ -10,7 +10,6 @@ package it.unibo.coffebreak.repository.api;
  * @author Alessandro Rebosio
  */
 public interface Repository<T> {
-
     /**
      * Saves the provided list of elements, replacing existing data.
      *

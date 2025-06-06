@@ -21,7 +21,6 @@ import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Barrel extends Enemy {
-
     /**
      * Determines if this barrel can transform into fire upon destruction or collision.
      * 

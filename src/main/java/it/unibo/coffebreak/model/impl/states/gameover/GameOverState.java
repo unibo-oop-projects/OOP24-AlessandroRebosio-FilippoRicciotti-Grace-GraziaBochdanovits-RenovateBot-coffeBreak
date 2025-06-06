@@ -15,6 +15,7 @@ import it.unibo.coffebreak.model.impl.states.menu.MenuState;
  * @author Filippo Ricciotti
  */
 public class GameOverState extends AbstractState {
+
     /**
      * {@inheritDoc}
      */

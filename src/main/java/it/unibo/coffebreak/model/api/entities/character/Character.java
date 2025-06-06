@@ -16,7 +16,6 @@ import it.unibo.coffebreak.model.api.score.ScoreManager;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Character extends Entity {
-
     /**
      * Changes Mario's current state using a state supplier.
      * 

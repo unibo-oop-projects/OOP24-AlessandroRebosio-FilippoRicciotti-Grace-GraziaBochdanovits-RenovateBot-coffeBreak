@@ -10,7 +10,6 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface CharacterState {
-
     /**
      * Called when entering this state.
      * @param character the character changing state

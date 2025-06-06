@@ -15,7 +15,6 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Entity {
-
     /**
      * Gets the current position of this entity in game world coordinates.
      *

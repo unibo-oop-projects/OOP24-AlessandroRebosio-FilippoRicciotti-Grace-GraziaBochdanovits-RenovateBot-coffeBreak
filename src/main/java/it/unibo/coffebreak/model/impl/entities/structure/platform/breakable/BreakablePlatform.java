@@ -38,5 +38,4 @@ public class BreakablePlatform extends AbstractPlatform {
     public boolean canBreak() {
         return true;
     }
-
 }

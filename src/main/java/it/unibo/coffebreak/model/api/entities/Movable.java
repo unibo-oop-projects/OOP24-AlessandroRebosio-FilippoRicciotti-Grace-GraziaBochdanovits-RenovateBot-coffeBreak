@@ -7,7 +7,6 @@ package it.unibo.coffebreak.model.api.entities;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Movable {
-
     /**
      * Updates the entity's position based on its movement logic.
      * Implementations should calculate the new position according to:

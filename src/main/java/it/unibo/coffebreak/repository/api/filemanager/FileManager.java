@@ -9,7 +9,6 @@ import java.nio.file.Path;
  * @author Alessandro Rebosio
  */
 public interface FileManager {
-
     /**
      * Retrieves the main data file path.
      *

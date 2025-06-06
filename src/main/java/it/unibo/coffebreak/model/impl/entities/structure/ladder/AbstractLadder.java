@@ -39,6 +39,6 @@ public abstract class AbstractLadder extends AbstractEntity implements Ladder {
      */
     @Override
     public void onCollision(final Entity other) {
-        // No behavior defined for now
+        // Default empty implementation
     }
 }

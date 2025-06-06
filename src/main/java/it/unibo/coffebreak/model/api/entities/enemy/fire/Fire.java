@@ -13,5 +13,4 @@ import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Fire extends Enemy {
-
 }

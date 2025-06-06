@@ -28,7 +28,6 @@ import it.unibo.coffebreak.model.api.entities.npc.Princess;
  * @author Filippo Ricciotti
  */
 public interface EntityFactory {
-
     /**
      * Factory Method to create a new Coin {@link Entity}.
      * 

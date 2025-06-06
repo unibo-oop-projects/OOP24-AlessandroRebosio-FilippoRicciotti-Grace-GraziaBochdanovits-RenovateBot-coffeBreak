@@ -11,7 +11,6 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
  * @author Alessandro Rebosio
  */
 public interface Collectible extends Entity {
-
     /**
      * Collects this item, triggering its effect (e.g., adding points).
      * 

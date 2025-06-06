@@ -9,7 +9,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Alessandro Rebosio
  */
 public interface Platform extends Entity {
-
     /**
      * Checks if this platform can support the given entity.
      * 

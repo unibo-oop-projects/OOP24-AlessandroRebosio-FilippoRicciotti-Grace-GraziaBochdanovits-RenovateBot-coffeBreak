@@ -13,7 +13,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Filippo Ricciotti
  */
 public interface LevelManager {
-
     /**
      * Returns an unmodifiable view of the current list of entities.
      *

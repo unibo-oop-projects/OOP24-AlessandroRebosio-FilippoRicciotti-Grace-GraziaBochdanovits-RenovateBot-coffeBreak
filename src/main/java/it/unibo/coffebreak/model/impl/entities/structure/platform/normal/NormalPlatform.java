@@ -23,5 +23,4 @@ public class NormalPlatform extends AbstractPlatform {
     public NormalPlatform(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
     }
-
 }

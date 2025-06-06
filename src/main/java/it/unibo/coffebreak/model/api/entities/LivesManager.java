@@ -8,7 +8,6 @@ package it.unibo.coffebreak.model.api.entities;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface LivesManager {
-
     /**
      * Returns the current number of lives of the character.
      *

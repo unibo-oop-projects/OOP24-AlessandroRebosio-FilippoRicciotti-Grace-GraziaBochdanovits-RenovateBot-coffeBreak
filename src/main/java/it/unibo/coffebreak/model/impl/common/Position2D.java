@@ -7,9 +7,10 @@ import java.util.Objects;
  *
  * @param x the x-coordinate of the position.
  * @param y the y-coordinate of the position.
+ * 
+ * @author Grazia Bochdanovits de Kavna
  */
 public record Position2D(float x, float y) {
-
     /**
      * Sums this position with another position, creating a new Position2D instance
      * with coordinates equal to the sum of the corresponding coordinates.

@@ -41,7 +41,7 @@ public class InputManager implements Input {
      * Initializes with the following default bindings:
      * <ul>
      * <li>ENTER → {@link Command#ENTER}
-     * <li>ESCAPE → {@link Command#ESC}
+     * <li>ESCAPE → {@link Command#ESCAPE}
      * <li>QUIT → {@link Command#QUIT}
      * <li>Arrow keys → corresponding movement commands
      * <li>JUMP → {@link Command#JUMP}

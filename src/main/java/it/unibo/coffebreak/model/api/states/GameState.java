@@ -9,7 +9,6 @@ import it.unibo.coffebreak.model.api.Model;
  * @author Filippo Ricciotti
  */
 public interface GameState {
-
     /**
      * Represents the possible high-level states of the game.
      * Each constant defines a distinct phase in the game's lifecycle,

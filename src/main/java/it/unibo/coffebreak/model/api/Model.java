@@ -22,7 +22,6 @@ import it.unibo.coffebreak.model.api.states.GameState;
  * @author Alessandro Rebosio
  */
 public interface Model {
-
     /**
      * Gets all entities currently present in the game world.
      * 

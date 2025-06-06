@@ -2,8 +2,6 @@ package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JFrame;
 import it.unibo.coffebreak.controller.api.Controller;
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.impl.GameModel;
 import it.unibo.coffebreak.view.api.View;
 import it.unibo.coffebreak.view.api.panels.GameStatePanel;
 import it.unibo.coffebreak.view.impl.panels.GamePanel;
@@ -42,7 +40,6 @@ public class GameView extends JFrame implements View {
     private final transient Controller controller;
     private final GamePanel gamePanel;
     private final transient GameStatePanel currentGameState; //TODO: cambia screen in base allo stato di gioco
-    private final transient Model model = new GameModel(); //TODO: non penso vada qui ma serviva 
     /**
      * Constructs a GameView with the given controller.
      *
@@ -57,7 +54,7 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         final ResourceLoader resources = new ResourceLoader();
-        this.currentGameState = new InGamePanel(resources, this.model, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.currentGameState = new InGamePanel(resources, this.controller.getModel(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
         gamePanel.setCurrentState(currentGameState);
 
         super.setContentPane(gamePanel);
@@ -109,5 +106,4 @@ public class GameView extends JFrame implements View {
     public void keyReleased(final KeyEvent e) {
         this.controller.handleKeyUp(e.getKeyCode());
     }
-
 }

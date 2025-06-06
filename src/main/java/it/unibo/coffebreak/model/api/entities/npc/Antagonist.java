@@ -13,7 +13,6 @@ import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Antagonist extends Entity {
-
     /**
      * Attempts to throw a barrel if the throw interval has elapsed.
      * <p>

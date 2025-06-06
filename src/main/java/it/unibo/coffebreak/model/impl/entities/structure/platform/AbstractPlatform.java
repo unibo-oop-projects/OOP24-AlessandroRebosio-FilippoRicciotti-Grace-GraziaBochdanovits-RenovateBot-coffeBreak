@@ -49,7 +49,7 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      */
     @Override
     public void onCollision(final Entity other) {
-        // Intentionally left blank
+        // Default empty implementation
     }
 
     /**
