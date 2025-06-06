@@ -14,7 +14,6 @@ import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.level.LevelManager;
 import it.unibo.coffebreak.model.api.score.ScoreManager;
 import it.unibo.coffebreak.model.api.states.GameState;
-import it.unibo.coffebreak.model.api.states.GameState.GameStateType;
 import it.unibo.coffebreak.model.impl.level.GameLevelManager;
 import it.unibo.coffebreak.model.impl.score.GameScoreManager;
 import it.unibo.coffebreak.model.impl.states.menu.MenuState;
@@ -89,7 +88,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Princess> getTarget() {
+    public Optional<Princess> getPrincess() {
         return findEntityOfType(Princess.class);
     }
 
@@ -97,8 +96,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public GameStateType getGameState() {
-        return this.currentState.getStateType();
+    public GameState getGameState() {
+        return this.currentState;
     }
 
     /**
