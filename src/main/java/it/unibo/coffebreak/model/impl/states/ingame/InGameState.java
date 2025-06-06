@@ -3,6 +3,7 @@ package it.unibo.coffebreak.model.impl.states.ingame;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
@@ -59,7 +60,7 @@ public class InGameState extends AbstractState {
         model.transformEntities();
         model.cleanEntities();
 
-        // TODO: nextLevel if Target isRescued (RICCIOTTI)
+        model.getPrincess().filter(Princess::isRescued).ifPresent(p -> model.getNextMap());
 
         model.calculateBonus(deltaTime);
 

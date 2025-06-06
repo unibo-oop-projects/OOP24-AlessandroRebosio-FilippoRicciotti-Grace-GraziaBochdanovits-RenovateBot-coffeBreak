@@ -164,6 +164,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void getNextMap() {
+        this.levelManager.loadNextEnitites();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void calculateBonus(final float deltaTime) {
         this.scoreManager.calculateBonus(deltaTime);
     }
