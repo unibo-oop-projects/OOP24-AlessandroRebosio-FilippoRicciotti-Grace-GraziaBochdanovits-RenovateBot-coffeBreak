@@ -59,20 +59,12 @@ public class InGameState extends AbstractState {
         model.transformEntities();
         model.cleanEntities();
 
-        // TODO: nextLevel if Target isRescued (RICCIOTTI)
+        // TODO: level completed Princess Rescued or no BreakablePlatform
 
         model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {
             model.setState(GameOverState::new);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameStateType getStateType() {
-        return GameStateType.IN_GAME;
     }
 }

@@ -10,7 +10,6 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.states.GameState;
-import it.unibo.coffebreak.model.api.states.GameState.GameStateType;
 
 /**
  * Represents the main model interface for the game.
@@ -58,14 +57,14 @@ public interface Model {
      *
      * @return an {@link Optional} containing the Target, or empty if not present
      */
-    Optional<Princess> getTarget();
+    Optional<Princess> getPrincess();
 
     /**
      * Gets the current game state.
      * 
      * @return the current game state
      */
-    GameStateType getGameState();
+    GameState getGameState();
 
     /**
      * Sets or updates the player's name.
@@ -117,6 +116,8 @@ public interface Model {
      * environmental objects transitioning forms.
      */
     void transformEntities();
+
+    void getNextMap();
 
     /**
      * Starts the first level of the game.

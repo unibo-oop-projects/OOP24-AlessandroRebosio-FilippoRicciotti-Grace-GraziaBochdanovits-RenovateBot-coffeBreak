@@ -33,12 +33,4 @@ public class MenuState extends AbstractState {
                 break;
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameStateType getStateType() {
-        return GameStateType.MENU;
-    }
 }
