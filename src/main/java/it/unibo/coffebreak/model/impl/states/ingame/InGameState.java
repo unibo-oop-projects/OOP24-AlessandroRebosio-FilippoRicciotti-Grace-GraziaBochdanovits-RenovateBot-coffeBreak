@@ -41,6 +41,9 @@ public class InGameState extends AbstractState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
+        final var player = model.getPlayer().orElseThrow();
+        final int currentLives = player.getLives();
+
         model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
 
         model.getEntities().stream()
@@ -50,13 +53,13 @@ public class InGameState extends AbstractState {
 
         GameCollision.checkCollision(model);
 
+        if (currentLives != player.getLives()) {
+            model.resetEntities();
+        }
+
         // TODO: Add flames to the list, if the barrel can turn into flame (RICCIOTTTI)
 
         model.cleanEntities();
-
-        // TODO: If model.getPlayer() is present and has lost a life (via
-        // getCurrentState().hasLostLife()),
-        // then reset the current level. (RICCIOTTI)
 
         // TODO: nextLevel if Target isRescued (RICCIOTTI)
 
@@ -67,4 +70,11 @@ public class InGameState extends AbstractState {
                 .ifPresent(p -> model.setState(GameOverState::new));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStateType getStateType() {
+        return GameStateType.IN_GAME;
+    }
 }
