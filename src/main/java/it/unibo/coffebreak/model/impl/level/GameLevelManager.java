@@ -40,7 +40,7 @@ public class GameLevelManager implements LevelManager {
         this.maps = new GameMaps();
 
         this.entities = new ArrayList<>();
-        this.maps.updateMaps(this.currentLevel = 0);
+        this.getNextLevel();
     }
 
     /**
@@ -95,6 +95,17 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void resetEntities() {
         this.loadEntities();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void getNextLevel() {
+        if (this.currentLevel < 3) {
+            this.maps.updateMaps(currentLevel);
+            this.currentLevel++;
+        }
     }
 
     /**

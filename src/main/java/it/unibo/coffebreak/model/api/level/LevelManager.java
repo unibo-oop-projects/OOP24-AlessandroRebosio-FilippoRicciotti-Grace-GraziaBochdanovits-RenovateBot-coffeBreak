@@ -51,4 +51,6 @@ public interface LevelManager {
      * This may include repositioning, restoring health, or other properties.
      */
     void resetEntities();
+
+    void getNextLevel();
 }
