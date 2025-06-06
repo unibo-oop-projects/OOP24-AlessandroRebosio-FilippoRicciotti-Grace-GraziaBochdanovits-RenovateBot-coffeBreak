@@ -13,7 +13,7 @@ import it.unibo.coffebreak.model.api.level.maps.MapsManager;
  */
 public class GameMapsManager implements MapsManager {
 
-    private int bonusMap;
+    private final int bonusMap;
 
     public GameMapsManager() {
         this.bonusMap = 0;
