@@ -35,6 +35,7 @@ public class GameFire extends AbstractEnemy implements Fire, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
+        // Default empty implementation
     }
 
     /**

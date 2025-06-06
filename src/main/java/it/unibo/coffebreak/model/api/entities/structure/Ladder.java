@@ -8,5 +8,4 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Alessandro Rebosio
  */
 public interface Ladder extends Entity {
-
 }

@@ -7,7 +7,6 @@ package it.unibo.coffebreak.model.api.score.bonus;
  * @author Alessandro Rebosio
  */
 public interface Bonus {
-
     /**
      * Gets the current bonus value.
      * 

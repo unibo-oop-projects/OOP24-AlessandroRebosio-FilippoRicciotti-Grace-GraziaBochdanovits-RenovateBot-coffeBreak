@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.states.ingame;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
-import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
@@ -41,6 +40,9 @@ public class InGameState extends AbstractState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
+        final var player = model.getPlayer().orElseThrow();
+        final int currentLives = player.getLives();
+
         model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
 
         model.getEntities().stream()
@@ -50,27 +52,27 @@ public class InGameState extends AbstractState {
 
         GameCollision.checkCollision(model);
 
-        // TODO: barrel to fire
-        // model.addEntity(null);
-        // model.getEntities().addAll(model.getEntities().stream()
-        //         .filter(Barrel.class::isInstance)
-        //         .map(Barrel.class::cast)
-        //         .filter(Barrel::canTransformToFire)
-        //         .toList());
+        if (currentLives != player.getLives()) {
+            model.resetEntities();
+        }
 
-        // model.getLevelManager().cleanEntities();
+        model.transformEntities();
+        model.cleanEntities();
 
-        // TODO: If model.getPlayer() is present and has lost a life (via
-        // getCurrentState().hasLostLife()),
-        // then reset the current level.
-
-        // TODO: nextLevel if Target isRescued
+        // TODO: nextLevel if Target isRescued (RICCIOTTI)
 
         model.calculateBonus(deltaTime);
 
-        model.getPlayer()
-                .filter(Character::isGameOver)
-                .ifPresent(p -> model.setState(GameOverState::new));
+        if (player.isGameOver()) {
+            model.setState(GameOverState::new);
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStateType getStateType() {
+        return GameStateType.IN_GAME;
+    }
 }

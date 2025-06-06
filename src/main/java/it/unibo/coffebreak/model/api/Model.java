@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.api;
 
-import java.lang.annotation.Target;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -9,7 +8,9 @@ import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.model.api.states.GameState.GameStateType;
 
 /**
  * Represents the main model interface for the game.
@@ -22,7 +23,6 @@ import it.unibo.coffebreak.model.api.states.GameState;
  * @author Alessandro Rebosio
  */
 public interface Model {
-
     /**
      * Gets all entities currently present in the game world.
      * 
@@ -58,21 +58,14 @@ public interface Model {
      *
      * @return an {@link Optional} containing the Target, or empty if not present
      */
-    Optional<Target> getTarget();
+    Optional<Princess> getTarget();
 
     /**
      * Gets the current game state.
      * 
      * @return the current game state
      */
-    GameState getGameState();
-
-    /**
-     * Checks if the game simulation is currently running.
-     * 
-     * @return true if the game is running, false otherwise
-     */
-    boolean isRunning();
+    GameStateType getGameState();
 
     /**
      * Sets or updates the player's name.
@@ -107,6 +100,25 @@ public interface Model {
     void addEntryInLeaderBoard();
 
     /**
+     * Cleans the current list of entities by removing destroyed enemies
+     * and collected collectibles.
+     */
+    void cleanEntities();
+
+    /**
+     * Resets all entities in the current level to their initial state.
+     * This may include repositioning, restoring health, or other properties.
+     */
+    void resetEntities();
+
+    /**
+     * Transforms certain entities into other entities according to game logic.
+     * This could include power-ups changing state, enemies evolving, or
+     * environmental objects transitioning forms.
+     */
+    void transformEntities();
+
+    /**
      * Starts the first level of the game.
      */
     void start();
@@ -135,6 +147,11 @@ public interface Model {
     /**
      * Calculates and applies any time-based bonuses.
      * 
+     * @return true if the game is running, false otherwise
+     */
+    boolean isRunning();
+
+    /**
      * @param deltaTime time in seconds since last calculation
      */
     void calculateBonus(float deltaTime);

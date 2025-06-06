@@ -15,6 +15,7 @@ import it.unibo.coffebreak.model.impl.states.menu.MenuState;
  * @author Filippo Ricciotti
  */
 public class GameOverState extends AbstractState {
+
     /**
      * {@inheritDoc}
      */
@@ -37,4 +38,11 @@ public class GameOverState extends AbstractState {
         model.addEntryInLeaderBoard();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStateType getStateType() {
+        return GameStateType.GAME_OVER;
+    }
 }

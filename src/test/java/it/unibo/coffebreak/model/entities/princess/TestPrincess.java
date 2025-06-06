@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.entities.npc.Target;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.npc.princess.Princess;
+import it.unibo.coffebreak.model.impl.entities.npc.princess.Pauline;
 
 /**
- * Test class for {@link Princess} implementation.
+ * Test class for {@link Pauline} implementation.
  * 
  * <p>
  * This class verifies the behavior of the {@code GamePrincess} class,
@@ -23,8 +23,8 @@ import it.unibo.coffebreak.model.impl.entities.npc.princess.Princess;
  * <li>Rescue functionality</li>
  * </ul>
  * 
+ * @see Pauline
  * @see Princess
- * @see Target
  * @author Grazia Bochdanovits de Kavna
  */
 class TestPrincess {
@@ -36,14 +36,14 @@ class TestPrincess {
     private static final BoundingBox2D TEST_DIMENSION = new BoundingBox2D(5.0f, 10.0f);
 
     /** The princess instance under test. */
-    private Princess princess;
+    private Pauline princess;
 
     /**
      * Sets up the test environment before each test method execution.
      */
     @BeforeEach
     void setUp() {
-        princess = new Princess(TEST_POSITION, TEST_DIMENSION);
+        princess = new Pauline(TEST_POSITION, TEST_DIMENSION);
     }
 
     /**

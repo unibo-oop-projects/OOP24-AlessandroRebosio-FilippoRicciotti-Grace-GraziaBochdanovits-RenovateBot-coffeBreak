@@ -37,4 +37,11 @@ public class PauseState extends AbstractState {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStateType getStateType() {
+        return GameStateType.PAUSE;
+    }
 }

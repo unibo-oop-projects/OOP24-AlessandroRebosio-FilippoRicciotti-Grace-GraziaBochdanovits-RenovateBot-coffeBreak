@@ -4,13 +4,11 @@ import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.Movable;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.entities.structure.Platform;
-import it.unibo.coffebreak.model.api.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;
 import it.unibo.coffebreak.model.impl.entities.enemy.AbstractEnemy;
 import it.unibo.coffebreak.model.impl.entities.structure.tank.GameTank;
-import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 
 /**
  * Concrete implementation of a rolling barrel enemy in the game world.
@@ -35,11 +33,6 @@ import it.unibo.coffebreak.model.impl.physics.GamePhysics;
  */
 public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
 
-    /** The constant rolling speed of the barrel. */
-    private static final float BARREL_SPEED = 1.5f;
-
-    private final Physics physics;
-
     private final boolean canTransformToFire;
 
     private boolean isDestroyedByTank;
@@ -57,7 +50,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     public GameBarrel(final Position2D position, final BoundingBox2D dimension, final boolean canTransformToFire) {
         super(position, dimension);
-        this.physics = new GamePhysics();
 
         this.canTransformToFire = canTransformToFire;
         this.isOnPlatform = false;
@@ -68,11 +60,9 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        if (isDestroyed()) {
-            return;
-        }
-
-        super.setVelocity(this.physics.calculateX(deltaTime, null).multiply(BARREL_SPEED));
+        // if (isDestroyed()) {
+        //     return;
+        // }
 
         // TODO: Barrel update()
     }

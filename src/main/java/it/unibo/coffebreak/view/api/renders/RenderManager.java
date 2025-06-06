@@ -11,7 +11,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface RenderManager {
-
     /**
      * Main rendering method that draws all game elements.
      * 

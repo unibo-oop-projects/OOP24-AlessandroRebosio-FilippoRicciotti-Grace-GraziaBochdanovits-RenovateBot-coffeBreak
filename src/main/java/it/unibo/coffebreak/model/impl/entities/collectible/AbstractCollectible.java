@@ -40,6 +40,7 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
      */
     @Override
     public void onCollision(final Entity other) {
+        // Default empty implementation
     }
 
     /**

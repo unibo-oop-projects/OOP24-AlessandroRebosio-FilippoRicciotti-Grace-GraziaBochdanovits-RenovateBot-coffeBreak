@@ -11,7 +11,6 @@ import it.unibo.coffebreak.model.impl.common.Vector2D;
  * @author Alessandro Rebosio
  */
 public interface Physics {
-
     /**
      * Calculates the horizontal movement vector based on the given command and time
      * delta.

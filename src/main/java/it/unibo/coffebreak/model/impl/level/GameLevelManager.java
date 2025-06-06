@@ -1,18 +1,18 @@
 package it.unibo.coffebreak.model.impl.level;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.EntityFactory;
+import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.level.LevelManager;
-import it.unibo.coffebreak.model.api.level.cleaner.Cleaner;
-import it.unibo.coffebreak.model.impl.GameEntityFactory;
-import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
+import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 
 /**
  * Implementation of the {@link LevelManager} interface.
@@ -24,138 +24,65 @@ import it.unibo.coffebreak.model.impl.level.cleaner.EntityCleaner;
  */
 public class GameLevelManager implements LevelManager {
 
-    static final String PATH_MAP1 = "maps/Map1.txt";
-    private static final int P_SIZE = 10;
-    private static final float SLOPE = 0.3f;
+    private final EntityFactory factory;
     private final List<Entity> entities;
-    private final Cleaner cleanup;
-    private final GameEntityFactory factory;
 
     /**
-     * Constructs a new {@code GameLevelManager} with an empty entity list
-     * and a default {@link EntityCleaner} to manage entity cleanup.
+     * Constructs a new {@code GameLevelManager} with an empty entity list.
      */
     public GameLevelManager() {
-        this.cleanup = new EntityCleaner();
-        this.entities = new ArrayList<>();
         this.factory = new GameEntityFactory();
+        this.entities = new ArrayList<>();
     }
 
     /**
-     * Loads the entities for the current level.
-     * This method is intended to populate the entity list from an external source,
-     * such as a file or a level descriptor.
-     * <p>
-     * Currently unimplemented.
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entity> getEntities() {
+        return Collections.unmodifiableList(this.entities);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void loadEntities() {
-        this.cleanEntities();
-        boolean slopeDown = false;
-        boolean slopeUp = false;
-        Position2D pos;
-        try {
-            final List<String> lines = Files.readAllLines(Path.of(PATH_MAP1));
-            for (int row = 0; row < lines.size(); row++) {
-                final String line = lines.get(row);
-                for (int col = 0; col < line.length(); col++) {
-                    final char ch = line.charAt(col);
-                    final float x = col * P_SIZE;
-                    final float y = row * P_SIZE;
-
-                    pos = switchSlope(x, y, slopeUp, slopeDown);
-
-                    switch (ch) {
-                        case 'P' -> entities.add(factory.createPlatform(pos));
-                        case 'L' -> entities.add(factory.createLadder(pos));
-                        case 'M' -> entities.add(factory.createMario(pos));
-                        case 'D' -> entities.add(factory.createDonkeyKong(pos));
-                        case 'R' -> entities.add(factory.createPrincess(pos));
-                        case 'B' -> entities.add(factory.createBarrel(pos));
-                        case 'F' -> entities.add(factory.createFire(pos));
-                        case 'C' -> entities.add(factory.createCoin(pos));
-                        case 'H' -> entities.add(factory.createHammer(pos));
-                        case 'T' -> entities.add(factory.createTank(pos));
-                        case ':' -> {
-                            slopeUp = !slopeUp;
-                            entities.add(factory.createPlatform(pos));
-                        }
-                        case ';' -> {
-                            slopeDown = !slopeDown;
-                            entities.add(factory.createPlatform(pos));
-                        }
-                        default -> {
-                            /* ignorato */ }
-                    }
-                }
-            }
-
-        } catch (final IOException e) {
-            throw new IllegalStateException("Unable find Map", e);
-        }
-
+        this.entities.clear();
+        // TODO: complete loadEntities
     }
 
     /**
-     * method that applies (if neaded) the increase, decrease of the y-coordinate of
-     * a platform depending on the boolean values of slopeUp and slopeDown.
-     * 
-     * @param x         the x-coordinate of the position.
-     * @param y         the y-coordinate of the position.
-     * @param slopeUp   boolean value that indicates that the y-coordinate has to
-     *                  increase.
-     * @param slopeDown boolean value that indicates that the y-coordinate has to
-     *                  decrease.
-     * @return Changed or unchanged Position of the Platform.
-     */
-    private Position2D switchSlope(final float x, final float y, final boolean slopeUp, final boolean slopeDown) {
-        if (slopeDown) {
-            return new Position2D(x, y - SLOPE);
-        } else if (slopeUp) {
-            return new Position2D(x, y + SLOPE);
-        } else {
-            return new Position2D(x, y);
-        }
-    }
-
-    /**
-     * Adds an entity to the current level.
-     *
-     * @param entity the entity to add (must not be null)
-     * @return true if the entity was added successfully, false otherwise
-     * @throws NullPointerException if the entity is null
+     * {@inheritDoc}
      */
     @Override
     public boolean addEntity(final Entity entity) {
-        Objects.requireNonNull(entity, "The entity cannot be null");
-        return this.entities.add(entity);
+        return this.entities.add(Objects.requireNonNull(entity, "The entity cannot be null"));
     }
 
     /**
-     * Removes an entity from the current level.
-     *
-     * @param entity the entity to remove (must not be null)
-     * @return true if the entity was removed successfully, false otherwise
-     * @throws NullPointerException if the entity is null
+     * {@inheritDoc}
      */
     @Override
-    public boolean removeEntity(final Entity entity) {
-        Objects.requireNonNull(entity, "The entity cannot be null");
-        return this.entities.remove(entity);
+    public void transformEntities() {
+        this.entities.stream()
+                .filter(Barrel.class::isInstance)
+                .map(Barrel.class::cast)
+                .filter(Barrel::canTransformToFire)
+                .forEach(e -> addEntity(this.factory.createFire(e.getPosition())));
     }
 
     /**
-     * Cleans the current list of entities by removing destroyed enemies
-     * and collected collectibles using the configured {@link Cleaner}.
+     * {@inheritDoc}
      */
     @Override
     public void cleanEntities() {
-        this.cleanup.clean(this.entities);
+        this.removeEntities(entities, Collectible.class, Collectible::isCollected);
+        this.removeEntities(entities, Enemy.class, Enemy::isDestroyed);
     }
 
     /**
-     * Resets all entities in the current level by reloading them.
-     * This calls {@link #loadEntities()} to reload the entity list.
+     * {@inheritDoc}
      */
     @Override
     public void resetEntities() {
@@ -163,22 +90,21 @@ public class GameLevelManager implements LevelManager {
     }
 
     /**
-     * Advances to the next map within the current level.
-     * <p>
-     * Currently unimplemented.
+     * Removes entities from the list that match the given type and condition.
+     *
+     * @param <T>              the type of entity to remove
+     * @param entities         the list of entities to filter
+     * @param type             the class object representing the type of entities to
+     *                         remove
+     * @param removalCondition predicate to determine if entity should be removed
+     * @return true if any entities were removed, false otherwise
      */
-    @Override
-    public void nextMap() {
-        // TODO: implement map switching logic
-    }
-
-    /**
-     * Advances to the next level.
-     * <p>
-     * Currently unimplemented.
-     */
-    @Override
-    public void nextLevel() {
-        // TODO: implement level progression logic
+    private <T extends Entity> boolean removeEntities(final List<Entity> entities, final Class<T> type,
+            final Predicate<T> removalCondition) {
+        return entities.removeAll(entities.stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .filter(removalCondition)
+                .toList());
     }
 }

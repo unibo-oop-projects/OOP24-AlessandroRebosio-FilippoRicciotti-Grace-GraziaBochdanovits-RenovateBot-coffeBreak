@@ -1,8 +1,14 @@
-package it.unibo.coffebreak.model.impl;
+package it.unibo.coffebreak.model.impl.entities;
 
-import it.unibo.coffebreak.model.api.EntityFactory;
-import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.character.Character;
+import it.unibo.coffebreak.model.api.entities.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
+import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.model.api.entities.npc.Princess;
+import it.unibo.coffebreak.model.api.entities.structure.Ladder;
+import it.unibo.coffebreak.model.api.entities.structure.Platform;
+import it.unibo.coffebreak.model.api.entities.structure.Tank;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.coin.Coin;
@@ -11,7 +17,7 @@ import it.unibo.coffebreak.model.impl.entities.enemy.barrel.GameBarrel;
 import it.unibo.coffebreak.model.impl.entities.enemy.fire.GameFire;
 import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 import it.unibo.coffebreak.model.impl.entities.npc.donkeykong.DonkeyKong;
-import it.unibo.coffebreak.model.impl.entities.npc.princess.Princess;
+import it.unibo.coffebreak.model.impl.entities.npc.princess.Pauline;
 import it.unibo.coffebreak.model.impl.entities.structure.ladder.normal.NormalLadder;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.normal.NormalPlatform;
@@ -34,7 +40,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createCoin(final Position2D position) {
+    public Coin createCoin(final Position2D position) {
         return new Coin(position, DEF_BOX);
     }
 
@@ -42,7 +48,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createHammer(final Position2D position) {
+    public Hammer createHammer(final Position2D position) {
         return new Hammer(position, DEF_BOX);
     }
 
@@ -51,6 +57,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Barrel createBarrel(final Position2D position) {
+        // TODO: The first barrel must be able to transform, the others must be randomly (RICCIOTTI)
         return new GameBarrel(position, DEF_BOX, false);
     }
 
@@ -58,7 +65,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createFire(final Position2D position) {
+    public Fire createFire(final Position2D position) {
         return new GameFire(position, DEF_BOX);
     }
 
@@ -66,7 +73,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createDonkeyKong(final Position2D position) {
+    public Antagonist createDonkeyKong(final Position2D position) {
         return new DonkeyKong(position, DEF_BOX);
     }
 
@@ -74,15 +81,15 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createPrincess(final Position2D position) {
-        return new Princess(position, DEF_BOX);
+    public Princess createPrincess(final Position2D position) {
+        return new Pauline(position, DEF_BOX);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Entity createLadder(final Position2D position) {
+    public Ladder createNormalLadder(final Position2D position) {
         return new NormalLadder(position, DEF_BOX);
     }
 
@@ -90,7 +97,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createPlatform(final Position2D position) {
+    public Platform createNormalPlatform(final Position2D position) {
         return new NormalPlatform(position, DEF_BOX);
     }
 
@@ -98,7 +105,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createBreakablePlatform(final Position2D position) {
+    public Platform createBreakablePlatform(final Position2D position) {
         return new BreakablePlatform(position, DEF_BOX);
     }
 
@@ -106,7 +113,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createTank(final Position2D position) {
+    public Tank createTank(final Position2D position) {
         return new GameTank(position, DEF_BOX);
     }
 
@@ -114,7 +121,7 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Entity createMario(final Position2D position) {
+    public Character createMario(final Position2D position) {
         return new Mario(position, DEF_BOX);
     }
 

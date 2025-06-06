@@ -17,7 +17,6 @@ import it.unibo.coffebreak.model.api.score.entry.Entry;
  * @author Alessandro Rebosio
  */
 public interface ScoreManager {
-
     /**
      * Gets the player's current accumulated score.
      * 

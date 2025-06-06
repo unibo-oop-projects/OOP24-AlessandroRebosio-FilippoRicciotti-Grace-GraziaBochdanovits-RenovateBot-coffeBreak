@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.api.level;
 
+import java.util.List;
+
 import it.unibo.coffebreak.model.api.entities.Entity;
 
 /**
@@ -10,6 +12,12 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Filippo Ricciotti
  */
 public interface LevelManager {
+    /**
+     * Returns an unmodifiable view of the current list of entities.
+     *
+     * @return unmodifiable list of entities
+     */
+    List<Entity> getEntities();
 
     /**
      * Loads all the entities associated with the current level and map.
@@ -26,16 +34,15 @@ public interface LevelManager {
     boolean addEntity(Entity entity);
 
     /**
-     * Removes an entity from the current level.
-     *
-     * @param entity the entity to remove
-     * @return true if the entity was successfully removed, false otherwise
+     * Transforms certain entities into other entities according to game logic.
+     * This could include power-ups changing state, enemies evolving, or
+     * environmental objects transitioning forms.
      */
-    boolean removeEntity(Entity entity);
+    void transformEntities();
 
     /**
-     * Removes all entities from the current level.
-     * Useful when resetting or unloading a level.
+     * Cleans the current list of entities by removing destroyed enemies
+     * and collected collectibles.
      */
     void cleanEntities();
 
@@ -44,16 +51,4 @@ public interface LevelManager {
      * This may include repositioning, restoring health, or other properties.
      */
     void resetEntities();
-
-    /**
-     * Advances to the next map in the current level.
-     * Typically used when the player completes the current map.
-     */
-    void nextMap();
-
-    /**
-     * Advances to the next level.
-     * Typically used when all maps in the current level are completed.
-     */
-    void nextLevel();
 }

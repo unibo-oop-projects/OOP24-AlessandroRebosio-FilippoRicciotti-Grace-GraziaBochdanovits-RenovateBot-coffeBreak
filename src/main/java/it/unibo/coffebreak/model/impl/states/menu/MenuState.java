@@ -15,6 +15,7 @@ import it.unibo.coffebreak.model.impl.states.ingame.InGameState;
  * @author Filippo Ricciotti
  */
 public class MenuState extends AbstractState {
+
     /**
      * {@inheritDoc}
      */
@@ -33,4 +34,11 @@ public class MenuState extends AbstractState {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameStateType getStateType() {
+        return GameStateType.MENU;
+    }
 }

@@ -12,7 +12,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface Tank extends Entity {
-
     /***
      * Checks the activation state of the oil tank.
      * <p>

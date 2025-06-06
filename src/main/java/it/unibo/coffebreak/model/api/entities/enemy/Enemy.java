@@ -9,7 +9,6 @@ import it.unibo.coffebreak.model.api.entities.Entity;
  * @author Alessandro Rebosio
  */
 public interface Enemy extends Entity {
-
     /**
      * Destroys this enemy (e.g., when hit by a hammer or when it falls off-screen).
      */

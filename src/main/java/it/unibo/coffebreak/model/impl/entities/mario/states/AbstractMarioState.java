@@ -40,6 +40,7 @@ public abstract class AbstractMarioState implements CharacterState {
      */
     @Override
     public void onEnter(final Character character) {
+        // Default empty implementation
     }
 
     /**
@@ -50,6 +51,7 @@ public abstract class AbstractMarioState implements CharacterState {
      */
     @Override
     public void onExit(final Character character) {
+        // Default empty implementation
     }
 
     /**
@@ -61,5 +63,6 @@ public abstract class AbstractMarioState implements CharacterState {
      */
     @Override
     public void update(final Character character, final float deltaTime) {
+        // Default empty implementation
     }
 }
