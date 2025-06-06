@@ -111,6 +111,13 @@ public interface Model {
     void resetEntities();
 
     /**
+     * Transforms certain entities into other entities according to game logic.
+     * This could include power-ups changing state, enemies evolving, or
+     * environmental objects transitioning forms.
+     */
+    void transformEntities();
+
+    /**
      * Starts the first level of the game.
      */
     void start();

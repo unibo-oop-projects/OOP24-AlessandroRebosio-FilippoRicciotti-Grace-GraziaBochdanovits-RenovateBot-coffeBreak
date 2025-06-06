@@ -7,9 +7,12 @@ import java.util.Objects;
 import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.model.api.entities.EntityFactory;
 import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
+import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.level.LevelManager;
+import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 
 /**
  * Implementation of the {@link LevelManager} interface.
@@ -21,12 +24,14 @@ import it.unibo.coffebreak.model.api.level.LevelManager;
  */
 public class GameLevelManager implements LevelManager {
 
+    private final EntityFactory factory;
     private final List<Entity> entities;
 
     /**
      * Constructs a new {@code GameLevelManager} with an empty entity list.
      */
     public GameLevelManager() {
+        this.factory = new GameEntityFactory();
         this.entities = new ArrayList<>();
     }
 
@@ -59,16 +64,12 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean removeEntity(final Entity entity) {
-        return this.entities.remove(Objects.requireNonNull(entity, "The entity cannot be null"));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void removeAll(final Predicate<Entity> filter) {
-        // TODO: impl
+    public void transformEntities() {
+        this.entities.stream()
+                .filter(Barrel.class::isInstance)
+                .map(Barrel.class::cast)
+                .filter(Barrel::canTransformToFire)
+                .forEach(e -> addEntity(this.factory.createFire(e.getPosition())));
     }
 
     /**

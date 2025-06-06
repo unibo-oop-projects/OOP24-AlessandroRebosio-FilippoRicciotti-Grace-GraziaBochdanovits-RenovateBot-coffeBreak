@@ -104,17 +104,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public boolean isRunning() {
-        return this.running;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void setPlayerName(final String newPlayerName) {
-        Objects.requireNonNull(newPlayerName, "Player name cannot be null");
-        this.playerName = newPlayerName;
+        this.playerName = Objects.requireNonNull(newPlayerName, "Player name cannot be null");
     }
 
     /**
@@ -133,16 +124,16 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public boolean addEntity(final Entity entity) {
-        return this.levelManager.addEntity(entity);
+    public void addEntryInLeaderBoard() {
+        this.scoreManager.addEntryInLeaderBoard(this.playerName);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addEntryInLeaderBoard() {
-        this.scoreManager.addEntryInLeaderBoard(this.playerName);
+    public boolean addEntity(final Entity entity) {
+        return this.levelManager.addEntity(entity);
     }
 
     /**
@@ -159,6 +150,14 @@ public class GameModel implements Model {
     @Override
     public void resetEntities() {
         this.levelManager.resetEntities();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void transformEntities() {
+        this.levelManager.transformEntities();
     }
 
     /**
@@ -192,6 +191,14 @@ public class GameModel implements Model {
     public void stop() {
         this.scoreManager.saveScores();
         this.running = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRunning() {
+        return this.running;
     }
 
     /**

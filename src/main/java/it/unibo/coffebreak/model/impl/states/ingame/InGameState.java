@@ -3,7 +3,6 @@ package it.unibo.coffebreak.model.impl.states.ingame;
 import it.unibo.coffebreak.controller.api.command.Command;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.api.entities.Movable;
-import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.gameover.GameOverState;
@@ -57,17 +56,16 @@ public class InGameState extends AbstractState {
             model.resetEntities();
         }
 
-        // TODO: Add flames to the list, if the barrel can turn into flame (RICCIOTTTI)
-
+        model.transformEntities();
         model.cleanEntities();
 
         // TODO: nextLevel if Target isRescued (RICCIOTTI)
 
         model.calculateBonus(deltaTime);
 
-        model.getPlayer()
-                .filter(Character::isGameOver)
-                .ifPresent(p -> model.setState(GameOverState::new));
+        if (player.isGameOver()) {
+            model.setState(GameOverState::new);
+        }
     }
 
     /**

@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.model.api.level;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import it.unibo.coffebreak.model.api.entities.Entity;
 
@@ -35,19 +34,11 @@ public interface LevelManager {
     boolean addEntity(Entity entity);
 
     /**
-     * Removes an entity from the current level.
-     *
-     * @param entity the entity to remove
-     * @return true if the entity was successfully removed, false otherwise
+     * Transforms certain entities into other entities according to game logic.
+     * This could include power-ups changing state, enemies evolving, or
+     * environmental objects transitioning forms.
      */
-    boolean removeEntity(Entity entity);
-
-    /**
-     * Removes all entities that match the filter from the current level .
-     * 
-     * @param filter filter the predicate used to select which entities to remove
-     */
-    void removeAll(Predicate<Entity> filter);
+    void transformEntities();
 
     /**
      * Cleans the current list of entities by removing destroyed enemies
