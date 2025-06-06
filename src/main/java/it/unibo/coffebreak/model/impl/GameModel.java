@@ -165,7 +165,7 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
-        this.levelManager.loadNextEnitites();
+        this.levelManager.advanceLevel();
     }
 
     /**

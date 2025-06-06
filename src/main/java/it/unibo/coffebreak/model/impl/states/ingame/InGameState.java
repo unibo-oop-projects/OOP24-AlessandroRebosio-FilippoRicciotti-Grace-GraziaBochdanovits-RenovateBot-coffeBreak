@@ -59,7 +59,7 @@ public class InGameState extends AbstractState {
         model.transformEntities();
         model.cleanEntities();
 
-        // TODO: level completed Princess Rescued or no BreakablePlatform
+        model.nextMap();
 
         model.calculateBonus(deltaTime);
 
