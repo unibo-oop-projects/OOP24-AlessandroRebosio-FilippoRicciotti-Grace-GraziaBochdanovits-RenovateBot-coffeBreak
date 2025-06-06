@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serial;
 
-
 import javax.swing.JPanel;
 
 import it.unibo.coffebreak.view.api.panels.GameStatePanel;
@@ -17,11 +16,11 @@ import it.unibo.coffebreak.view.api.renders.RenderManager;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public final class GamePanel extends JPanel {
+public class GamePanel extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private transient GameStatePanel currentstateScreen;
+    private transient GameStatePanel currentstateScreen; //TODO: state pattern per logica cambio panels
 
     /**
      * Paints the component by first clearing the background and then delegating
@@ -38,7 +37,6 @@ public final class GamePanel extends JPanel {
         }
     }
 
-    //TODO: fai una interfaccia
     /**
      * Sets the current game screen.
      * @param state the new state screen of the game
