@@ -10,6 +10,7 @@ import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.api.entities.npc.Princess;
 import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.model.api.states.GameState.GameStateType;
 
 /**
  * Represents the main model interface for the game.
@@ -64,7 +65,7 @@ public interface Model {
      * 
      * @return the current game state
      */
-    GameState getGameState();
+    GameStateType getGameState();
 
     /**
      * Sets or updates the player's name.
