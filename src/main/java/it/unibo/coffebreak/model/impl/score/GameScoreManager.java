@@ -9,10 +9,10 @@ import it.unibo.coffebreak.api.model.score.ScoreManager;
 import it.unibo.coffebreak.api.model.score.bonus.Bonus;
 import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.score.leaderboard.Leaderboard;
+import it.unibo.coffebreak.api.repository.Repository;
 import it.unibo.coffebreak.model.impl.score.bonus.GameBonus;
 import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
-import it.unibo.coffebreak.repository.api.Repository;
 import it.unibo.coffebreak.repository.impl.ScoreRepository;
 
 /**

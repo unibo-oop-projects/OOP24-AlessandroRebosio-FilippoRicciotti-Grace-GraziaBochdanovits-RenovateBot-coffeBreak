@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-import it.unibo.coffebreak.repository.api.filemanager.FileManager;
+import it.unibo.coffebreak.api.repository.filemanager.FileManager;
 
 /**
  * Basic file manager implementation handling data file and backup operations.

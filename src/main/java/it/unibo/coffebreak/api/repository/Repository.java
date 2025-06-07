@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.repository.api;
+package it.unibo.coffebreak.api.repository;
 
 /**
  * Defines a repository interface for storing and retrieving elements of a given
