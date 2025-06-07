@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.view.api.renders.EntityRender;
+import it.unibo.coffebreak.api.view.renders.EntityRender;
 import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
 /**

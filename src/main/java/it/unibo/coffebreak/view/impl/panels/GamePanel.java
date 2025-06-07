@@ -7,8 +7,8 @@ import java.io.Serial;
 
 import javax.swing.JPanel;
 
-import it.unibo.coffebreak.view.api.panels.GameStatePanel;
-import it.unibo.coffebreak.view.api.renders.RenderManager;
+import it.unibo.coffebreak.api.view.panels.GameStatePanel;
+import it.unibo.coffebreak.api.view.renders.RenderManager;
 
 /**
  * A resizable panel for game rendering that uses double buffering to prevent flickering.

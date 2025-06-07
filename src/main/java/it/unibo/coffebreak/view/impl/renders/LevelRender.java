@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import it.unibo.coffebreak.view.api.renders.StaticRender;
+import it.unibo.coffebreak.api.view.renders.StaticRender;
 import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 
 /**

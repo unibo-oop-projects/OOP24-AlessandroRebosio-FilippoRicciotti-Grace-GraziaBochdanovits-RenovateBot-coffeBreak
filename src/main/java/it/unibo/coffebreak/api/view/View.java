@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view.api;
+package it.unibo.coffebreak.api.view;
 
 import java.awt.event.KeyListener;
 

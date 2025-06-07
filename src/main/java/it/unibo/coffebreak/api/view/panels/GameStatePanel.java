@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view.api.panels;
+package it.unibo.coffebreak.api.view.panels;
 
 import java.awt.Graphics2D;
 

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view.api.renders;
+package it.unibo.coffebreak.api.view.renders;
 
 import java.awt.Graphics2D;
 

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view.api.resources;
+package it.unibo.coffebreak.api.view.resources;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;

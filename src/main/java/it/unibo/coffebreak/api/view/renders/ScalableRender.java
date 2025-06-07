@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.view.api.renders;
+package it.unibo.coffebreak.api.view.renders;
 
 /**
  * Marks a render as scalable and provides methods to handle resizing.

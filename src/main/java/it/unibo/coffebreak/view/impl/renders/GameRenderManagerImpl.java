@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.view.api.renders.EntityRender;
-import it.unibo.coffebreak.view.api.renders.RenderManager;
-import it.unibo.coffebreak.view.api.renders.ScalableRender;
-import it.unibo.coffebreak.view.api.renders.StaticRender;
+import it.unibo.coffebreak.api.view.renders.EntityRender;
+import it.unibo.coffebreak.api.view.renders.RenderManager;
+import it.unibo.coffebreak.api.view.renders.ScalableRender;
+import it.unibo.coffebreak.api.view.renders.StaticRender;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process

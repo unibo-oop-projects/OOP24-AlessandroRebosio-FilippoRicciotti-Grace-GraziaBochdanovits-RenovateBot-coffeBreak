@@ -15,7 +15,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import it.unibo.coffebreak.view.api.resources.Resource;
+import it.unibo.coffebreak.api.view.resources.Resource;
 
 /**
  * Concrete implementation of {@link Resource} that caches loaded resources in

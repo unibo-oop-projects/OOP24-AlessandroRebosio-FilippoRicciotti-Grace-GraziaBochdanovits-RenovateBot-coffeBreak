@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.view.impl.renders;
 
-import it.unibo.coffebreak.view.api.renders.ScalableRender;
+import it.unibo.coffebreak.api.view.renders.ScalableRender;
 
 /**
  * An abstract implementation of {@link ScalableRender} that provides basic functionality
