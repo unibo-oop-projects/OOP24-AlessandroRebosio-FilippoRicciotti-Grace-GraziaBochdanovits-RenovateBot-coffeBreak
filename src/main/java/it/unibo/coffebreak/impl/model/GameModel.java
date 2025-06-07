@@ -165,8 +165,11 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
+        final int currentScore = this.scoreManager.getCurrentScore();
+
         if (this.levelManager.advanceLevel()) {
             this.scoreManager.earnPoints(this.levelManager.getCurrentLevelBonus());
+            this.scoreManager.earnPoints(currentScore);
         }
     }
 
@@ -191,7 +194,7 @@ public class GameModel implements Model {
      */
     @Override
     public int getScoreValue() {
-        return this.getPlayer().get().getScoreValue();
+        return this.scoreManager.getCurrentScore();
     }
 
     /**
