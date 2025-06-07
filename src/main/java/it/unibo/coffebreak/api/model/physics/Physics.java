@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.api.model.physics;
 
 import it.unibo.coffebreak.api.common.Command;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.common.Vector2D;
 
 /**
  * Represents the physics system for game entities in a 2D space.

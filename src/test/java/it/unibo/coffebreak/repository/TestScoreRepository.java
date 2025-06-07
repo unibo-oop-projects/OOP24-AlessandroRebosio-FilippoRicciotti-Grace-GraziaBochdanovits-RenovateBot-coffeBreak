@@ -1,9 +1,9 @@
 package it.unibo.coffebreak.repository;
 
-import it.unibo.coffebreak.repository.impl.ScoreRepository;
 import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.repository.Repository;
-import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
+import it.unibo.coffebreak.impl.model.score.entry.ScoreEntry;
+import it.unibo.coffebreak.impl.repository.ScoreRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

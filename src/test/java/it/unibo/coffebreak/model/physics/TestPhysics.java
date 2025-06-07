@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
-import it.unibo.coffebreak.model.impl.physics.GamePhysics;
+import it.unibo.coffebreak.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
  * Test class for {@link GamePhysics} implementation of the {@link Physics}

@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.api.model.entities;
 
-import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.common.BoundingBox2D;
+import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Vector2D;
 
 /**
  * Represents a fundamental game entity with spatial properties and update

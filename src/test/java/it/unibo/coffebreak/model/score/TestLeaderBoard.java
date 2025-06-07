@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.score.leaderboard.Leaderboard;
-import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
-import it.unibo.coffebreak.model.impl.score.leaderboard.GameLeaderboard;
+import it.unibo.coffebreak.impl.model.score.entry.ScoreEntry;
+import it.unibo.coffebreak.impl.model.score.leaderboard.GameLeaderboard;
 
 /**
  * Comprehensive test suite for {@link Leaderboard} interface and

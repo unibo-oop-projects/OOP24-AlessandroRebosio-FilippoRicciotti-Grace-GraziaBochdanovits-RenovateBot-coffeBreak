@@ -1,6 +1,6 @@
 package it.unibo.coffebreak;
 
-import it.unibo.coffebreak.core.impl.GameEngine;
+import it.unibo.coffebreak.impl.core.GameEngine;
 
 /**
  * Entry point of the app, it creates a controller and launches the GUI

@@ -9,12 +9,12 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.model.impl.common.Position2D;
-import it.unibo.coffebreak.model.impl.entities.collectible.hammer.Hammer;
-import it.unibo.coffebreak.model.impl.entities.mario.Mario;
-import it.unibo.coffebreak.model.impl.entities.npc.donkeykong.DonkeyKong;
-import it.unibo.coffebreak.model.impl.entities.npc.princess.Pauline;
-import it.unibo.coffebreak.model.impl.entities.structure.platform.breakable.BreakablePlatform;
+import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.impl.model.entities.npc.princess.Pauline;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 
 /**
  * The {@code EntityFactory} interface provides a set of factory methods

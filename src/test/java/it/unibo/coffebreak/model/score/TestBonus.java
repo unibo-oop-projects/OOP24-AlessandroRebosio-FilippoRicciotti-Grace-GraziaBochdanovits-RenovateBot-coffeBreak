@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.model.score.bonus.Bonus;
-import it.unibo.coffebreak.model.impl.score.bonus.GameBonus;
+import it.unibo.coffebreak.impl.model.score.bonus.GameBonus;
 
 /**
  * Test class for {@link GameBonus} implementation. Verifies bonus

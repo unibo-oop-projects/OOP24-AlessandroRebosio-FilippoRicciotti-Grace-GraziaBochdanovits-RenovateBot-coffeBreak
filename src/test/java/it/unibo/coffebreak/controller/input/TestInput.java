@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.common.Command;
-import it.unibo.coffebreak.controller.impl.input.InputManager;
+import it.unibo.coffebreak.impl.controller.input.InputManager;
 
 /**
  * Test class for {@link InputManager}.
