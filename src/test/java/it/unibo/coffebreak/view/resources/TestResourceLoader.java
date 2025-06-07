@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.view.resources;
 
-import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -21,6 +19,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * Test class for {@link ResourceLoader} functionality.
