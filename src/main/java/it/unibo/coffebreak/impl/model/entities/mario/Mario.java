@@ -7,7 +7,7 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.LivesManager;
 import it.unibo.coffebreak.api.model.entities.Movable;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
@@ -20,7 +20,6 @@ import it.unibo.coffebreak.impl.model.entities.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
-import it.unibo.coffebreak.impl.model.score.GameScore;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -44,10 +43,10 @@ import it.unibo.coffebreak.impl.model.score.GameScore;
  * </ul>
  * 
  * @see AbstractEntity
- * @see Character
+ * @see MainCharacter
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements Character, Movable {
+public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private final LivesManager livesManager;
     private final Score score;
@@ -60,12 +59,13 @@ public class Mario extends AbstractEntity implements Character, Movable {
      *
      * @param position  the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
+     * @param score the score of Mario
      */
-    public Mario(final Position2D position, final BoundingBox2D dimension) {
+    public Mario(final Position2D position, final BoundingBox2D dimension, final Score score) {
         super(position, dimension);
 
         this.livesManager = new GameLivesManager();
-        this.score = new GameScore();
+        this.score = score;
         this.physics = new GamePhysics();
 
         changeState(NormalState::new);
@@ -126,7 +126,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
      * {@inheritDoc}
      */
     @Override
-    public void increaseScore(final int amount) {
+    public void earnPoints(final int amount) {
         this.score.increase(amount);
     }
 

@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.level;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
@@ -38,6 +39,14 @@ public class GameLevelManager implements LevelManager {
     @Override
     public List<Entity> getEntities() {
         return this.entityManager.getEntities();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MainCharacter getPlayar() {
+        return this.entityManager.getPlayer();
     }
 
     /**

@@ -76,7 +76,7 @@ public class GameController implements Controller {
     public void processInput() {
         Command cmd = this.input.getCommand();
         while (cmd != null) {
-            this.model.executeCommand(cmd);
+            this.model.handleCommand(cmd);
             cmd = this.input.getCommand();
         }
     }

@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.api.model.entities;
 
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
@@ -114,5 +114,5 @@ public interface EntityFactory {
      * @param position
      * @return Mario Entity
      */
-    Character createMario(Position2D position);
+    MainCharacter createMario(Position2D position);
 }

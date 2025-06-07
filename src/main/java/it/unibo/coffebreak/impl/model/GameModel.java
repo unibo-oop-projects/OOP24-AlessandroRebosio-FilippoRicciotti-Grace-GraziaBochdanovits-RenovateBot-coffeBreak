@@ -2,15 +2,12 @@ package it.unibo.coffebreak.impl.model;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
-import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.model.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.score.ScoreManager;
 import it.unibo.coffebreak.api.model.states.GameState;
@@ -31,11 +28,10 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  */
 public class GameModel implements Model {
 
-    private final LevelManager levelManager;
-    private final ScoreManager scoreManager;
+    private final LevelManager levelManager = new GameLevelManager();
+    private final ScoreManager scoreManager = new GameScoreManager();
 
     private GameState currentState;
-    private String playerName;
     private volatile boolean running;
 
     /**
@@ -43,9 +39,6 @@ public class GameModel implements Model {
      * Initializes empty entities list, menu state, and running status.
      */
     public GameModel() {
-        this.levelManager = new GameLevelManager();
-        this.scoreManager = new GameScoreManager();
-
         this.setState(MenuState::new);
 
         this.running = true;
@@ -64,32 +57,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public String getPlayerName() {
-        return this.playerName;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Character> getPlayer() {
-        return findEntityOfType(Character.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Antagonist> getAntagonist() {
-        return findEntityOfType(Antagonist.class);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<Princess> getPrincess() {
-        return findEntityOfType(Princess.class);
+    public MainCharacter getPlMainCharacter() {
+        return this.levelManager.getPlayar();
     }
 
     /**
@@ -98,14 +67,6 @@ public class GameModel implements Model {
     @Override
     public GameState getGameState() {
         return this.currentState;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setPlayerName(final String newPlayerName) {
-        this.playerName = Objects.requireNonNull(newPlayerName, "Player name cannot be null");
     }
 
     /**
@@ -125,7 +86,7 @@ public class GameModel implements Model {
      */
     @Override
     public void addEntryInLeaderBoard() {
-        this.scoreManager.addEntryInLeaderBoard(this.playerName);
+        this.scoreManager.addEntryInLeaderBoard("TODO");
     }
 
     /**
@@ -165,11 +126,8 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
-        final int currentScore = this.scoreManager.getCurrentScore();
-
         if (this.levelManager.advanceLevel()) {
-            this.scoreManager.earnPoints(this.levelManager.getCurrentLevelBonus());
-            this.scoreManager.earnPoints(currentScore);
+            this.getPlMainCharacter().earnPoints(this.scoreManager.getCurrentBonus());
         }
     }
 
@@ -177,31 +135,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void calculateBonus(final float deltaTime) {
-        this.scoreManager.calculateBonus(deltaTime);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getBonusValue() {
-        return this.scoreManager.getCurrentBonus();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScoreValue() {
-        return this.scoreManager.getCurrentScore();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void executeCommand(final Command command) {
+    public void handleCommand(final Command command) {
         this.currentState.handleCommand(this, command);
     }
 
@@ -218,7 +152,6 @@ public class GameModel implements Model {
      */
     @Override
     public void stop() {
-        this.scoreManager.saveScores();
         this.running = false;
     }
 
@@ -236,19 +169,5 @@ public class GameModel implements Model {
     @Override
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
-    }
-
-    /**
-     * Finds the first entity of the specified type in the entities list.
-     * 
-     * @param <T>  the type of entity to find
-     * @param type the class object representing the entity type
-     * @return an Optional containing the found entity, or empty if not found
-     */
-    private <T> Optional<T> findEntityOfType(final Class<T> type) {
-        return this.getEntities().stream()
-                .filter(type::isInstance)
-                .map(type::cast)
-                .findFirst();
     }
 }

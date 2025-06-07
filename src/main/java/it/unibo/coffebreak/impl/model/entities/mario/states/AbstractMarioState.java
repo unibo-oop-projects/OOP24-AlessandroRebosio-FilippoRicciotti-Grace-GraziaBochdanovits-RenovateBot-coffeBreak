@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.mario.states;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 
 /**
@@ -15,6 +15,7 @@ public abstract class AbstractMarioState implements CharacterState {
 
     /**
      * {@inheritDoc}
+     * 
      * @return false by default as Mario cannot climb in basic states
      */
     @Override
@@ -24,45 +25,49 @@ public abstract class AbstractMarioState implements CharacterState {
 
     /**
      * Handles collision with another entity.
-     * Must be implemented by concrete state classes to define state-specific behavior.
+     * Must be implemented by concrete state classes to define state-specific
+     * behavior.
      * 
      * @param character the character involved in the collision (typically Mario)
-     * @param other the other entity involved in the collision
+     * @param other     the other entity involved in the collision
      */
     @Override
-    public abstract void handleCollision(Character character, Entity other);
+    public abstract void handleCollision(MainCharacter character, Entity other);
 
     /**
      * {@inheritDoc}
-     * Default empty implementation. Can be overridden by subclasses for state-specific behavior.
+     * Default empty implementation. Can be overridden by subclasses for
+     * state-specific behavior.
      * 
      * @param character the character entering this state
      */
     @Override
-    public void onEnter(final Character character) {
+    public void onEnter(final MainCharacter character) {
         // Default empty implementation
     }
 
     /**
      * {@inheritDoc}
-     * Default empty implementation. Can be overridden by subclasses for state-specific behavior.
+     * Default empty implementation. Can be overridden by subclasses for
+     * state-specific behavior.
      * 
      * @param character the character exiting this state
      */
     @Override
-    public void onExit(final Character character) {
+    public void onExit(final MainCharacter character) {
         // Default empty implementation
     }
 
     /**
      * {@inheritDoc}
-     * Default empty implementation. Can be overridden by subclasses for state-specific updates.
+     * Default empty implementation. Can be overridden by subclasses for
+     * state-specific updates.
      * 
      * @param character the character to update
      * @param deltaTime the time elapsed since last update
      */
     @Override
-    public void update(final Character character, final float deltaTime) {
+    public void update(final MainCharacter character, final float deltaTime) {
         // Default empty implementation
     }
 }

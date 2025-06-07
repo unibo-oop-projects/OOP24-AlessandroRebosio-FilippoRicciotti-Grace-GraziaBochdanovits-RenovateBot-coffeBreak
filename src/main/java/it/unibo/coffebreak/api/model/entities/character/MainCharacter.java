@@ -14,7 +14,7 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface Character extends Entity {
+public interface MainCharacter extends Entity {
     /**
      * Changes Mario's current state using a state supplier.
      * 
@@ -27,10 +27,10 @@ public interface Character extends Entity {
      * 
      * @param amount the number of points to add to the character's score
      */
-    void increaseScore(int amount);
+    void earnPoints(int amount);
 
     /**
-     * Gets the current score value.
+     * Method for get score value.
      * 
      * @return the score value
      */

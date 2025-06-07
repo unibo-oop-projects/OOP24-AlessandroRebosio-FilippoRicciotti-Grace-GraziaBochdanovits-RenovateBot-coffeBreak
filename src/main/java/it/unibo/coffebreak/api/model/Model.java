@@ -1,14 +1,11 @@
 package it.unibo.coffebreak.api.model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
-import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.model.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -30,34 +27,11 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
-     * Retrieves the name of the player.
+     * Gets the player.
      * 
-     * @return the current player name
+     * @return the player
      */
-    String getPlayerName();
-
-    /**
-     * Retrieves the player character entity, if present.
-     *
-     * @return an {@link Optional} containing the player character, or empty if not
-     *         present
-     */
-    Optional<Character> getPlayer();
-
-    /**
-     * Retrieves the Antagonist entity, if present.
-     *
-     * @return an {@link Optional} containing the Antagonist, or empty if not
-     *         present
-     */
-    Optional<Antagonist> getAntagonist();
-
-    /**
-     * Retrieves the Target entity, if present.
-     *
-     * @return an {@link Optional} containing the Target, or empty if not present
-     */
-    Optional<Princess> getPrincess();
+    MainCharacter getPlMainCharacter();
 
     /**
      * Gets the current game state.
@@ -65,15 +39,6 @@ public interface Model {
      * @return the current game state
      */
     GameState getGameState();
-
-    /**
-     * Sets or updates the player's name.
-     * 
-     * @param newPlayerName the new name to assign to the player
-     * @throws NullPointerException     if the name is null
-     * @throws IllegalArgumentException if the name is empty or invalid
-     */
-    void setPlayerName(String newPlayerName);
 
     /**
      * Changes the current game state to the specified one.
@@ -97,25 +62,6 @@ public interface Model {
      * Adds the current player's score to the leaderboard.
      */
     void addEntryInLeaderBoard();
-
-    /**
-     * @param deltaTime time in seconds since last calculation
-     */
-    void calculateBonus(float deltaTime);
-
-    /**
-     * Gets the current score value.
-     * 
-     * @return the score value
-     */
-    int getBonusValue();
-
-    /**
-     * Gets the current bonus value.
-     * 
-     * @return the bonus value
-     */
-    int getScoreValue();
 
     /**
      * Cleans the current list of entities by removing destroyed enemies
@@ -157,7 +103,7 @@ public interface Model {
      * @param command the command to be executed
      * @throws NullPointerException if command is null
      */
-    void executeCommand(Command command);
+    void handleCommand(Command command);
 
     /**
      * Updates the game logic based on elapsed time.

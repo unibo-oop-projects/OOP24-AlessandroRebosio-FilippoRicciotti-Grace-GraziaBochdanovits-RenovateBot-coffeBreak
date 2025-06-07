@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities;
 
 import it.unibo.coffebreak.api.model.entities.EntityFactory;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
@@ -9,6 +9,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
+import it.unibo.coffebreak.api.model.score.Score;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
@@ -22,6 +23,7 @@ import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLad
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
+import it.unibo.coffebreak.impl.model.score.GameScore;
 
 /**
  * {@code GameEntityFactory} is the implementation of the
@@ -35,6 +37,7 @@ import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
  */
 public class GameEntityFactory implements EntityFactory {
     private static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
+    private final Score score = new GameScore();
 
     /**
      * {@inheritDoc}
@@ -57,7 +60,8 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Barrel createBarrel(final Position2D position) {
-        // TODO: The first barrel must be able to transform, the others must be randomly (RICCIOTTI)
+        // TODO: The first barrel must be able to transform, the others must be randomly
+        // (RICCIOTTI)
         return new GameBarrel(position, DEF_BOX, false);
     }
 
@@ -121,8 +125,8 @@ public class GameEntityFactory implements EntityFactory {
      * {@inheritDoc}
      */
     @Override
-    public Character createMario(final Position2D position) {
-        return new Mario(position, DEF_BOX);
+    public MainCharacter createMario(final Position2D position) {
+        return new Mario(position, DEF_BOX, score);
     }
 
 }

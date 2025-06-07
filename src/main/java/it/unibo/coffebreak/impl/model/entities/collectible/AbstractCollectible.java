@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.collectible;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
@@ -51,7 +51,7 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
      * @param player the character who collected the item
      */
     @Override
-    public void collect(final Character player) {
+    public void collect(final MainCharacter player) {
         if (!this.collected) {
             this.collected = true;
             this.applyEffect(player);
@@ -75,7 +75,7 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
      *
      * @param character the character who collected the item
      */
-    protected void applyEffect(final Character character) {
-        character.increaseScore(this.value);
+    protected void applyEffect(final MainCharacter character) {
+        character.earnPoints(this.value);
     }
 }

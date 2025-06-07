@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.api.model.entities.character.states;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
  * Represents a state of a character in the game.
@@ -12,29 +12,33 @@ import it.unibo.coffebreak.api.model.entities.character.Character;
 public interface CharacterState {
     /**
      * Called when entering this state.
+     * 
      * @param character the character changing state
      */
-    void onEnter(Character character);
+    void onEnter(MainCharacter character);
 
     /**
      * Called when exiting this state.
+     * 
      * @param character the character changing state
      */
-    void onExit(Character character);
+    void onExit(MainCharacter character);
 
     /**
      * Updates the character in this state.
+     * 
      * @param character the character to update
      * @param deltaTime time since last update in seconds
      */
-    void update(Character character, float deltaTime);
+    void update(MainCharacter character, float deltaTime);
 
     /**
      * Handles collision with another entity while in this state.
+     * 
      * @param character the character in this state
-     * @param other the entity collided with
+     * @param other     the entity collided with
      */
-    void handleCollision(Character character, Entity other);
+    void handleCollision(MainCharacter character, Entity other);
 
     /**
      * @return true if the character can climb in this state

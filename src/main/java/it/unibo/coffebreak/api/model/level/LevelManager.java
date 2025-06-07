@@ -3,6 +3,7 @@ package it.unibo.coffebreak.api.model.level;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
  * Manages game levels and maps, handling entity operations and transitions
@@ -20,6 +21,13 @@ public interface LevelManager {
      * @return an unmodifiable list containing all active entities
      */
     List<Entity> getEntities();
+
+    /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
+    MainCharacter getPlayar();
 
     /**
      * Gets the bonus score associated with completing the current map.
