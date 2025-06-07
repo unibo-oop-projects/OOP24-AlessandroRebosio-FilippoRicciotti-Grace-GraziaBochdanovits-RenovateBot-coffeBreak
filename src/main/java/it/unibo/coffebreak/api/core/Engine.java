@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.core.api;
+package it.unibo.coffebreak.api.core;
 
 /**
  * Core game engine interface that drives the game loop and coordinates

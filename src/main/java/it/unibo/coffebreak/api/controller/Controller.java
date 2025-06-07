@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.controller.api;
+package it.unibo.coffebreak.api.controller;
 
 import it.unibo.coffebreak.model.api.Model;
 

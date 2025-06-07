@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.controller.api.command;
+package it.unibo.coffebreak.api.common;
 
 /**
  * Enumeration of all possible game commands.

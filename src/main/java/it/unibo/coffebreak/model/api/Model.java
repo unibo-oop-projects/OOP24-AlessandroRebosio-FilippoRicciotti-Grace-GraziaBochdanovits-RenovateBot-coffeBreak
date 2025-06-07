@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.controller.api.command.Command;
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.model.api.entities.Entity;
 import it.unibo.coffebreak.model.api.entities.character.Character;
 import it.unibo.coffebreak.model.api.entities.npc.Antagonist;

@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.core.impl;
 
-import it.unibo.coffebreak.controller.api.Controller;
+import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.core.Engine;
 import it.unibo.coffebreak.controller.impl.GameController;
-import it.unibo.coffebreak.core.api.Engine;
 import it.unibo.coffebreak.view.impl.GameView;
 
 /**

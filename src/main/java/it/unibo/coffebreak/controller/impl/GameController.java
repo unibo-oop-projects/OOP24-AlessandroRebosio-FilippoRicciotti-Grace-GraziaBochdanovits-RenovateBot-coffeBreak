@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.controller.impl;
 
-import it.unibo.coffebreak.controller.api.Controller;
-import it.unibo.coffebreak.controller.api.command.Command;
-import it.unibo.coffebreak.controller.api.input.Input;
+import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
 import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.impl.GameModel;

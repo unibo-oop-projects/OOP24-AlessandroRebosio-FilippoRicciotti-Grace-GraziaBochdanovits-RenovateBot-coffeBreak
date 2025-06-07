@@ -1,6 +1,6 @@
-package it.unibo.coffebreak.controller.api.input;
+package it.unibo.coffebreak.api.controller.input;
 
-import it.unibo.coffebreak.controller.api.command.Command;
+import it.unibo.coffebreak.api.common.Command;
 
 /**
  * Interface for converting physical input events into logical game commands.

@@ -1,7 +1,8 @@
 package it.unibo.coffebreak.view.impl;
 
 import javax.swing.JFrame;
-import it.unibo.coffebreak.controller.api.Controller;
+
+import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.view.api.View;
 import it.unibo.coffebreak.view.api.panels.GameStatePanel;
 import it.unibo.coffebreak.view.impl.panels.GamePanel;

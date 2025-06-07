@@ -9,8 +9,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import it.unibo.coffebreak.controller.api.command.Command;
-import it.unibo.coffebreak.controller.api.input.Input;
+import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.controller.input.Input;
 
 /**
  * A thread-safe implementation of {@link Input} that manages keyboard input

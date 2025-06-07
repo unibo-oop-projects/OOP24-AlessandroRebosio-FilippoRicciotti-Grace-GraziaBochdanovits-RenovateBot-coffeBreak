@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.controller.api.command.Command;
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
 
 /**
