@@ -61,6 +61,8 @@ public interface LevelManager {
 
     /**
      * Advances to the next level if conditions are met.
+     * 
+     * @return true if advaceLevel, otherwise false
      */
-    void advanceLevel();
+    boolean advanceLevel();
 }

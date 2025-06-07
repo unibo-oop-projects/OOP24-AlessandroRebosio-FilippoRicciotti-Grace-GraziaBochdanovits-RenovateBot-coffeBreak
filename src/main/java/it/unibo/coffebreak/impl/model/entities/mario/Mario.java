@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.api.model.score.ScoreManager;
+import it.unibo.coffebreak.api.model.score.Score;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
@@ -20,6 +20,7 @@ import it.unibo.coffebreak.impl.model.entities.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
+import it.unibo.coffebreak.impl.model.score.GameScore;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -49,7 +50,7 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 public class Mario extends AbstractEntity implements Character, Movable {
 
     private final LivesManager livesManager;
-    private ScoreManager scoreManager;
+    private final Score score;
     private final Physics physics;
 
     private CharacterState currentState;
@@ -64,6 +65,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
         super(position, dimension);
 
         this.livesManager = new GameLivesManager();
+        this.score = new GameScore();
         this.physics = new GamePhysics();
 
         changeState(NormalState::new);
@@ -122,20 +124,18 @@ public class Mario extends AbstractEntity implements Character, Movable {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws NullPointerException if scoreManager is null
      */
     @Override
-    public void setScoreManager(final ScoreManager scoreManager) {
-        this.scoreManager = Objects.requireNonNull(scoreManager, "ScoreManager cannot be null");
+    public void increaseScore(final int amount) {
+        this.score.increase(amount);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void earnPoints(final int amount) {
-        this.scoreManager.earnPoints(amount);
+    public int getScoreValue() {
+        return this.score.getScore();
     }
 
     /**

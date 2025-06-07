@@ -92,10 +92,12 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public void advanceLevel() {
+    public boolean advanceLevel() {
         if (this.shouldAdvanceLevel()) {
             this.loadNextEnitites();
+            return true;
         }
+        return false;
     }
 
     /**

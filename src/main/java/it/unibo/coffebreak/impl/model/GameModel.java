@@ -165,7 +165,9 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
-        this.levelManager.advanceLevel();
+        if (this.levelManager.advanceLevel()) {
+            this.scoreManager.earnPoints(this.levelManager.getCurrentLevelBonus());
+        }
     }
 
     /**
@@ -174,6 +176,22 @@ public class GameModel implements Model {
     @Override
     public void calculateBonus(final float deltaTime) {
         this.scoreManager.calculateBonus(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusValue() {
+        return this.scoreManager.getCurrentBonus();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScoreValue() {
+        return this.getPlayer().get().getScoreValue();
     }
 
     /**
@@ -190,7 +208,6 @@ public class GameModel implements Model {
     @Override
     public void start() {
         this.levelManager.loadNextEnitites();
-        this.getPlayer().ifPresent(p -> p.setScoreManager(scoreManager));
     }
 
     /**

@@ -99,6 +99,25 @@ public interface Model {
     void addEntryInLeaderBoard();
 
     /**
+     * @param deltaTime time in seconds since last calculation
+     */
+    void calculateBonus(float deltaTime);
+
+    /**
+     * Gets the current score value.
+     * 
+     * @return the score value
+     */
+    int getBonusValue();
+
+    /**
+     * Gets the current bonus value.
+     * 
+     * @return the bonus value
+     */
+    int getScoreValue();
+
+    /**
      * Cleans the current list of entities by removing destroyed enemies
      * and collected collectibles.
      */
@@ -154,9 +173,4 @@ public interface Model {
      * @return true if the game is running, false otherwise
      */
     boolean isRunning();
-
-    /**
-     * @param deltaTime time in seconds since last calculation
-     */
-    void calculateBonus(float deltaTime);
 }
