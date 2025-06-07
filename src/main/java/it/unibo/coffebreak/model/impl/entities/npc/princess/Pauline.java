@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.npc.princess;
 
-import it.unibo.coffebreak.model.api.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.npc.AbstractNpc;

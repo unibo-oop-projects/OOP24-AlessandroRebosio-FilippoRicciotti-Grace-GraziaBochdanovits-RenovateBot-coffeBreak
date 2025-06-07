@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.states.gameover;
 
 import it.unibo.coffebreak.api.common.Command;
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.states.GameState;
+import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.model.impl.states.AbstractState;
 import it.unibo.coffebreak.model.impl.states.menu.MenuState;
 

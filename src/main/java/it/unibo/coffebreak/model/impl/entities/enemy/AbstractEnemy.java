@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities.enemy;
 
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
+import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;

@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entities.mario.states;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 
 /**
  * Abstract base class for Mario's state implementations.

@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entities.collectible;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;

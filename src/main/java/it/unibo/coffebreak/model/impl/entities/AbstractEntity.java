@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.entities;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.common.Vector2D;

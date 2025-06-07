@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entities.enemy.fire;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.Movable;
-import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.Movable;
+import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;

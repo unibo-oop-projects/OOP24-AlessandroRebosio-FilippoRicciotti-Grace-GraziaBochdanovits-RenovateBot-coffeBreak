@@ -2,8 +2,8 @@ package it.unibo.coffebreak.model.impl.entities.npc.donkeykong;
 
 import java.util.Optional;
 
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
+import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.AbstractEntity;

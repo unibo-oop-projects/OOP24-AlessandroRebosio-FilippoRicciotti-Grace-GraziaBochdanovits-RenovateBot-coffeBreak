@@ -1,10 +1,10 @@
 package it.unibo.coffebreak.model.impl.entities.mario.states.normal;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.character.states.CharacterState;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.entities.structure.Ladder;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
+import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
+import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.model.impl.entities.mario.Mario;
 import it.unibo.coffebreak.model.impl.entities.mario.states.AbstractMarioState;
 

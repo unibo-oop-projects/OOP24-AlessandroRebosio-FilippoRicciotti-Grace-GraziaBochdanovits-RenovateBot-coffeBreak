@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import it.unibo.coffebreak.model.api.level.maps.MapsManager;
+import it.unibo.coffebreak.api.model.level.maps.MapsManager;
 
 /**
  * Concrete implementation of {@link MapsManager} that manages game maps and

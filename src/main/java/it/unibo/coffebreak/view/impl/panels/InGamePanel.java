@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.view.api.panels.GameStatePanel;
 import it.unibo.coffebreak.view.api.renders.RenderManager;
 import it.unibo.coffebreak.view.impl.renders.GameRenderManagerImpl;

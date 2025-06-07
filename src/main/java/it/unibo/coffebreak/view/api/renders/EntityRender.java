@@ -2,7 +2,7 @@ package it.unibo.coffebreak.view.api.renders;
 
 import java.awt.Graphics2D;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.Entity;
 
 /**
  * An interface that defines a renderer for a specific type of game entity.

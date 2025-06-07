@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.view.api.renders.EntityRender;
 import it.unibo.coffebreak.view.api.renders.RenderManager;
 import it.unibo.coffebreak.view.api.renders.ScalableRender;

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.model.api.score.entry.Entry;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.model.impl.score.entry.ScoreEntry;
 
 /**

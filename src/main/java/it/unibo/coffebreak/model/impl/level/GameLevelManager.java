@@ -2,11 +2,11 @@ package it.unibo.coffebreak.model.impl.level;
 
 import java.util.List;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.npc.Princess;
-import it.unibo.coffebreak.model.api.level.LevelManager;
-import it.unibo.coffebreak.model.api.level.entity.EntityManager;
-import it.unibo.coffebreak.model.api.level.maps.MapsManager;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.level.LevelManager;
+import it.unibo.coffebreak.api.model.level.entity.EntityManager;
+import it.unibo.coffebreak.api.model.level.maps.MapsManager;
 import it.unibo.coffebreak.model.impl.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.model.impl.level.entity.GameEntityManager;
 import it.unibo.coffebreak.model.impl.level.maps.GameMapsManager;

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.common.Command;
-import it.unibo.coffebreak.model.api.physics.Physics;
+import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.model.impl.common.Vector2D;
 import it.unibo.coffebreak.model.impl.physics.GamePhysics;
 

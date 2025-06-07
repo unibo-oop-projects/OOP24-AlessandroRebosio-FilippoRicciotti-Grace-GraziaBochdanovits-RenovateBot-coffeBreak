@@ -2,9 +2,9 @@ package it.unibo.coffebreak.model.impl.physics.collision;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.physics.collision.Collision;
+import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.physics.collision.Collision;
 
 /**
  * Implementation of the {@link Collision} interface that handles detection and

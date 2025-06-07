@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.view.api.renders.EntityRender;
 import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
 

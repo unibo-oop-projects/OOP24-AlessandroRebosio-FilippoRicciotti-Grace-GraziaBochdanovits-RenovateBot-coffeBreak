@@ -1,8 +1,8 @@
 package it.unibo.coffebreak.model.impl.entities.mario.states.withhammer;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.impl.entities.mario.states.AbstractMarioState;
 import it.unibo.coffebreak.model.impl.entities.mario.states.normal.NormalState;
 

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.EntityFactory;
-import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
-import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.level.entity.EntityManager;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.EntityFactory;
+import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
+import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
+import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 

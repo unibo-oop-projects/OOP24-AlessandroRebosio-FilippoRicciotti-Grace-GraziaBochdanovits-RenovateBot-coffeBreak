@@ -2,7 +2,7 @@ package it.unibo.coffebreak.model.impl.score.entry;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.entry.Entry;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
 
 /**
  * Immutable implementation of {@link Entry} representing a player's score

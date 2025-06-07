@@ -2,7 +2,8 @@ package it.unibo.coffebreak.view.api.renders;
 
 import java.awt.Graphics2D;
 import java.util.List;
-import it.unibo.coffebreak.model.api.entities.Entity;
+
+import it.unibo.coffebreak.api.model.entities.Entity;
 
 /**
  * Simplified and more focused render manager interface.

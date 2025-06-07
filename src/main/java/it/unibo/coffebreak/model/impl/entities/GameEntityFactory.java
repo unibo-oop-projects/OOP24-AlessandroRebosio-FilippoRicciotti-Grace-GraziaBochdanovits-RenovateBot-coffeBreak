@@ -1,14 +1,14 @@
 package it.unibo.coffebreak.model.impl.entities;
 
-import it.unibo.coffebreak.model.api.entities.character.Character;
-import it.unibo.coffebreak.model.api.entities.EntityFactory;
-import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.model.api.entities.enemy.fire.Fire;
-import it.unibo.coffebreak.model.api.entities.npc.Antagonist;
-import it.unibo.coffebreak.model.api.entities.npc.Princess;
-import it.unibo.coffebreak.model.api.entities.structure.Ladder;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
-import it.unibo.coffebreak.model.api.entities.structure.Tank;
+import it.unibo.coffebreak.api.model.entities.EntityFactory;
+import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
+import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.entities.structure.Ladder;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.model.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.collectible.coin.Coin;

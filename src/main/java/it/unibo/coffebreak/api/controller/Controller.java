@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.api.controller;
 
-import it.unibo.coffebreak.model.api.Model;
+import it.unibo.coffebreak.api.model.Model;
 
 /**
  * The game controller in the MVC (Model-View-Controller) pattern.

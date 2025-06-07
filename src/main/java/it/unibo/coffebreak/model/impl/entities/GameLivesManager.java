@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.impl.entities;
 
-import it.unibo.coffebreak.model.api.entities.LivesManager;
+import it.unibo.coffebreak.api.model.entities.LivesManager;
 
 /**
  * A concrete implementation of {@link LivesManager} that manages the lives

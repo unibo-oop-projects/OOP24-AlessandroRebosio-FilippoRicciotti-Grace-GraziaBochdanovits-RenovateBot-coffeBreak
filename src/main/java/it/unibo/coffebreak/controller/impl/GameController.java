@@ -3,8 +3,8 @@ package it.unibo.coffebreak.controller.impl;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
+import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.controller.impl.input.InputManager;
-import it.unibo.coffebreak.model.api.Model;
 import it.unibo.coffebreak.model.impl.GameModel;
 import java.util.Objects;
 

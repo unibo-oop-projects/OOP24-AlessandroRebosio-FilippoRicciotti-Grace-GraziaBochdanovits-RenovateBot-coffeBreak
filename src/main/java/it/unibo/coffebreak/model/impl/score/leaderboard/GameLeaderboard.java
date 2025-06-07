@@ -5,8 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.score.entry.Entry;
-import it.unibo.coffebreak.model.api.score.leaderboard.Leaderboard;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.score.leaderboard.Leaderboard;
 
 /**
  * Basic implementation of {@link Leaderboard} maintaining top
