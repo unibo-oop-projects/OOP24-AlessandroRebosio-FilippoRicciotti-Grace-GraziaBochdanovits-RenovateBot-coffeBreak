@@ -12,6 +12,7 @@ import it.unibo.coffebreak.model.api.entities.collectible.Collectible;
 import it.unibo.coffebreak.model.api.entities.enemy.Enemy;
 import it.unibo.coffebreak.model.api.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.model.api.level.entity.EntityManager;
+import it.unibo.coffebreak.model.impl.common.Position2D;
 import it.unibo.coffebreak.model.impl.entities.GameEntityFactory;
 
 /**
@@ -46,7 +47,27 @@ public class GameEntityManager implements EntityManager {
     @Override
     public void loadEntitiesFromMap(final List<String> mapLines) {
         this.entities.clear();
-        // TODO: implement entity loading from map lines
+        for (int y = 0; y < mapLines.size(); y++) {
+            final String line = mapLines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                final Position2D position = new Position2D(x, y);
+                final char c = line.charAt(x);
+
+                switch (Character.toUpperCase(c)) {
+                    case 'P' -> this.addEntity(factory.createNormalPlatform(position));
+                    case 'B' -> this.addEntity(factory.createBreakablePlatform(position));
+                    case 'L' -> this.addEntity(factory.createNormalLadder(position));
+                    case 'T' -> this.addEntity(factory.createTank(position));
+                    case 'H' -> this.addEntity(factory.createHammer(position));
+                    case 'C' -> this.addEntity(factory.createCoin(position));
+                    case 'M' -> this.addEntity(factory.createMario(position));
+                    case 'D' -> this.addEntity(factory.createDonkeyKong(position));
+                    case 'R' -> this.addEntity(factory.createPrincess(position));
+                    default -> {
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -58,7 +79,7 @@ public class GameEntityManager implements EntityManager {
      */
     @Override
     public boolean addEntity(final Entity entity) {
-        return this.entities.add(Objects.requireNonNull(entity,  "The Entity cannot be null."));
+        return this.entities.add(Objects.requireNonNull(entity, "The Entity cannot be null."));
     }
 
     /**
