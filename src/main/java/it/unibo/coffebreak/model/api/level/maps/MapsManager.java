@@ -28,11 +28,4 @@ public interface MapsManager {
      * @return the map bonus score
      */
     int getMapBonus();
-
-    /**
-     * Updates the available maps based on the current level ID.
-     * 
-     * @param levelID the current level identifier
-     */
-    void updateMaps(int levelID);
 }

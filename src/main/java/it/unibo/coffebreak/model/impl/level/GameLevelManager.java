@@ -94,7 +94,6 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void advanceLevel() {
         if (this.shouldAdvanceLevel()) {
-            this.maps.updateMaps(0);
             this.loadNextEnitites();
         }
     }
@@ -105,11 +104,8 @@ public class GameLevelManager implements LevelManager {
      * @return true if the level should be advanced, false otherwise
      */
     private boolean shouldAdvanceLevel() {
-        return this.getEntities().stream()
-                .filter(e -> e instanceof Princess)
-                .map(e -> (Princess) e)
-                .anyMatch(Princess::isRescued)
-                || !this.getEntities().stream()
-                        .anyMatch(e -> e instanceof BreakablePlatform);
+        return getEntities().stream()
+                .anyMatch(e -> e instanceof final Princess princess && princess.isRescued()
+                        || !(e instanceof BreakablePlatform));
     }
 }
