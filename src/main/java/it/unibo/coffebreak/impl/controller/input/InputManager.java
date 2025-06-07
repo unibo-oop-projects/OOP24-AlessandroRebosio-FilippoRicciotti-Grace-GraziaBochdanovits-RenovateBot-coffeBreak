@@ -1,10 +1,10 @@
 package it.unibo.coffebreak.impl.controller.input;
 
 import java.awt.event.KeyEvent;
-import java.util.Map;
-import java.util.Objects;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -32,9 +32,9 @@ import it.unibo.coffebreak.api.controller.input.Input;
  */
 public class InputManager implements Input {
 
-    private final Map<Integer, Command> keyBindings;
-    private final Set<Command> pressedKeys;
-    private final Queue<Command> commandQueue;
+    private final Set<Command> pressedKeys = EnumSet.noneOf(Command.class);
+    private final Queue<Command> commandQueue = new ConcurrentLinkedQueue<>();
+    private final Map<Integer, Command> keyBindings = new HashMap<>();
 
     /**
      * Constructs a new InputManager with default key bindings.
@@ -48,9 +48,6 @@ public class InputManager implements Input {
      * </ul>
      */
     public InputManager() {
-        this.keyBindings = new HashMap<>();
-        this.pressedKeys = EnumSet.noneOf(Command.class);
-        this.commandQueue = new ConcurrentLinkedQueue<>();
         this.initializeDefaultBindings();
     }
 
@@ -77,10 +74,10 @@ public class InputManager implements Input {
      * </ol>
      */
     @Override
-    public void registerKeyPress(final int keyCode) {
+    public void keyPressed(final int keyCode) {
         final Command command = this.keyBindings.get(keyCode);
-        if (command != null && !this.pressedKeys.contains(command.getInverseDirection())) {
-            this.pressedKeys.add(command);
+        if (command != null && !this.pressedKeys.contains(command.getInverseDirection())
+                && this.pressedKeys.add(command)) {
             this.commandQueue.add(command);
         }
     }
@@ -92,7 +89,7 @@ public class InputManager implements Input {
      * from the active commands set.
      */
     @Override
-    public void registerKeyRelease(final int keyCode) {
+    public void keyReleased(final int keyCode) {
         this.pressedKeys.remove(keyBindings.get(keyCode));
     }
 

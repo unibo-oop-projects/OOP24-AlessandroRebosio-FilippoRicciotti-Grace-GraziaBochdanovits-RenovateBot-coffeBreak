@@ -62,10 +62,10 @@ class TestInput {
      */
     @Test
     void testRegisterKeyPress() {
-        inputManager.registerKeyPress(KeyEvent.VK_UP);
+        inputManager.keyPressed(KeyEvent.VK_UP);
         assertEquals(Command.MOVE_UP, inputManager.getCommand());
 
-        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
         assertEquals(Command.JUMP, inputManager.getCommand());
     }
 
@@ -74,7 +74,7 @@ class TestInput {
      */
     @Test
     void testUnboundKeyPress() {
-        inputManager.registerKeyPress(KeyEvent.VK_F1);
+        inputManager.keyPressed(KeyEvent.VK_F1);
         assertNull(inputManager.getCommand());
     }
 
@@ -83,8 +83,8 @@ class TestInput {
      */
     @Test
     void testRegisterKeyRelease() {
-        inputManager.registerKeyPress(KeyEvent.VK_UP);
-        inputManager.registerKeyRelease(KeyEvent.VK_UP);
+        inputManager.keyPressed(KeyEvent.VK_UP);
+        inputManager.keyReleased(KeyEvent.VK_UP);
 
         assertEquals(Command.MOVE_UP, inputManager.getCommand());
         assertNull(inputManager.getCommand());
@@ -95,8 +95,8 @@ class TestInput {
      */
     @Test
     void testOppositeDirections() {
-        inputManager.registerKeyPress(KeyEvent.VK_UP);
-        inputManager.registerKeyPress(KeyEvent.VK_DOWN);
+        inputManager.keyPressed(KeyEvent.VK_UP);
+        inputManager.keyPressed(KeyEvent.VK_DOWN);
 
         assertEquals(Command.MOVE_UP, inputManager.getCommand());
         assertNull(inputManager.getCommand());
@@ -107,9 +107,9 @@ class TestInput {
      */
     @Test
     void testCommandQueueOrder() {
-        inputManager.registerKeyPress(KeyEvent.VK_LEFT);
-        inputManager.registerKeyPress(KeyEvent.VK_RIGHT);
-        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
+        inputManager.keyPressed(KeyEvent.VK_LEFT);
+        inputManager.keyPressed(KeyEvent.VK_RIGHT);
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
 
         assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
         assertEquals(Command.JUMP, inputManager.getCommand());
@@ -121,8 +121,8 @@ class TestInput {
      */
     @Test
     void testClearQueue() {
-        inputManager.registerKeyPress(KeyEvent.VK_ENTER);
-        inputManager.registerKeyPress(KeyEvent.VK_ESCAPE);
+        inputManager.keyPressed(KeyEvent.VK_ENTER);
+        inputManager.keyPressed(KeyEvent.VK_ESCAPE);
         inputManager.clearQueue();
 
         assertNull(inputManager.getCommand());
@@ -135,7 +135,7 @@ class TestInput {
     void testCustomKeyBinding() {
         inputManager.bindKey(KeyEvent.VK_A, Command.MOVE_LEFT);
 
-        inputManager.registerKeyPress(KeyEvent.VK_A);
+        inputManager.keyPressed(KeyEvent.VK_A);
         assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
     }
 
@@ -144,10 +144,10 @@ class TestInput {
      */
     @Test
     void testRemoveKeyBinding() {
-        inputManager.bindKey(KeyEvent.VK_SPACE, Command.NONE);
+        inputManager.bindKey(KeyEvent.VK_SPACE, Command.MOVE_LEFT);
 
-        inputManager.registerKeyPress(KeyEvent.VK_SPACE);
-        assertEquals(Command.NONE, inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
+        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
     }
 
     /**
@@ -156,9 +156,9 @@ class TestInput {
      */
     @Test
     void testKeyPressReleaseCycle() {
-        inputManager.registerKeyPress(KeyEvent.VK_UP);
-        inputManager.registerKeyRelease(KeyEvent.VK_UP);
-        inputManager.registerKeyPress(KeyEvent.VK_DOWN);
+        inputManager.keyPressed(KeyEvent.VK_UP);
+        inputManager.keyReleased(KeyEvent.VK_UP);
+        inputManager.keyPressed(KeyEvent.VK_DOWN);
 
         assertEquals(Command.MOVE_UP, inputManager.getCommand());
         assertEquals(Command.MOVE_DOWN, inputManager.getCommand());

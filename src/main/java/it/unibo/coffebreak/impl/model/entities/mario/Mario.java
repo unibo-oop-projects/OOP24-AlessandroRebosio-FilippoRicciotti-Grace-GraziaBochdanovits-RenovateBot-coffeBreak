@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.LivesManager;
 import it.unibo.coffebreak.api.model.entities.Movable;
@@ -82,7 +83,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
         }
         this.currentState.update(this, deltaTime);
 
-        super.setVelocity(this.physics.calculateX(deltaTime, null));
+        super.setVelocity(this.physics.calculateX(deltaTime, Command.MOVE_LEFT));
 
         // TODO: Mario update()
     }

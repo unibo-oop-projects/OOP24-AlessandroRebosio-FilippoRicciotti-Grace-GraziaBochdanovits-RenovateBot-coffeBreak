@@ -1,13 +1,13 @@
 package it.unibo.coffebreak.impl.controller;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
-
-import java.util.Objects;
 
 /**
  * Concrete implementation of the game {@link Controller}.
@@ -24,21 +24,8 @@ import java.util.Objects;
  */
 public class GameController implements Controller {
 
-    private final Input inputManager;
-    private final Model model;
-
-    /**
-     * Constructs a new GameController with default dependencies.
-     * Initializes:
-     * <ul>
-     * <li>{@link InputManager} for input handling</li>
-     * <li>{@link GameModel} as the game logic implementation</li>
-     * </ul>
-     */
-    public GameController() {
-        this.inputManager = new InputManager();
-        this.model = new GameModel();
-    }
+    private final Input input = new InputManager();
+    private final Model model = new GameModel();
 
     /**
      * {@inheritDoc}
@@ -47,8 +34,8 @@ public class GameController implements Controller {
      * The actual command generation depends on current key bindings.
      */
     @Override
-    public void handleKeyDown(final int keyCode) {
-        this.inputManager.registerKeyPress(keyCode);
+    public void keyPressed(final int keyCode) {
+        this.input.keyPressed(keyCode);
     }
 
     /**
@@ -58,8 +45,8 @@ public class GameController implements Controller {
      * which may affect continuous commands like movement.
      */
     @Override
-    public void handleKeyUp(final int keyCode) {
-        this.inputManager.registerKeyRelease(keyCode);
+    public void keyReleased(final int keyCode) {
+        this.input.keyReleased(keyCode);
     }
 
     /**
@@ -87,10 +74,10 @@ public class GameController implements Controller {
      */
     @Override
     public void processInput() {
-        Command command = inputManager.getCommand();
-        while (command != null) {
-            this.model.executeCommand(command);
-            command = inputManager.getCommand();
+        Command cmd = this.input.getCommand();
+        while (cmd != null) {
+            this.model.executeCommand(cmd);
+            cmd = this.input.getCommand();
         }
     }
 
@@ -102,7 +89,7 @@ public class GameController implements Controller {
     @Override
     public void updateModel(final float deltaTime) {
         if (deltaTime < 0) {
-            throw new IllegalArgumentException("DeltaTime cannot be negative");
+            throw new IllegalArgumentException("Delta time must be non-negative");
         }
         this.model.update(deltaTime);
     }

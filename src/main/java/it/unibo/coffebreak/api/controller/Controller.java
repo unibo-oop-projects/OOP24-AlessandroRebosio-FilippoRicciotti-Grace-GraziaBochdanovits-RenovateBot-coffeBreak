@@ -17,14 +17,14 @@ public interface Controller {
      * 
      * @param keyCode the key code of the pressed key
      */
-    void handleKeyDown(int keyCode);
+    void keyPressed(int keyCode);
 
     /**
      * Handles a key release event by forwarding it to the input system.
      * 
      * @param keyCode the key code of the released key
      */
-    void handleKeyUp(int keyCode);
+    void keyReleased(int keyCode);
 
     /**
      * Gets the game model associated with this controller.
