@@ -111,11 +111,12 @@ public class GameEntityManager implements EntityManager {
      */
     @Override
     public void transformBarrels() {
-        this.entities.stream()
+        entities.stream()
                 .filter(Barrel.class::isInstance)
                 .map(Barrel.class::cast)
                 .filter(Barrel::canTransformToFire)
-                .forEach(b -> addEntity(factory.createFire(b.getPosition())));
+                .map(b -> factory.createFire(b.getPosition()))
+                .forEach(this::addEntity);
     }
 
     /**

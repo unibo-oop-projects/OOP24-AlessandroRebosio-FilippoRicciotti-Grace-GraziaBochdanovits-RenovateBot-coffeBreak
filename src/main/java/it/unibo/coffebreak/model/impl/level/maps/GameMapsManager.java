@@ -1,6 +1,13 @@
 package it.unibo.coffebreak.model.impl.level.maps;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
 import it.unibo.coffebreak.model.api.level.maps.MapsManager;
 
 /**
@@ -13,59 +20,88 @@ import it.unibo.coffebreak.model.api.level.maps.MapsManager;
  */
 public class GameMapsManager implements MapsManager {
 
-    private final int bonusMap;
+    private static final List<Integer> MAP_BONUSES = List.of(5000, 6000, 7000, 8000);
+    private static final List<List<String>> LEVEL_MAPS = List.of(
+            List.of("maps/Map1.txt", "maps/Map4.txt"));
+
+    private final Map<String, List<String>> mapCache = new HashMap<>();
+
+    private int levelIndex;
+    private int mapIndex;
+
+    private final Function<String, List<String>> loadMapFromFile = path -> {
+        try {
+            return Files.readAllLines(Paths.get(path));
+        } catch (final IOException e) {
+            throw new MapLoadingException("Failed to load map: " + path, e);
+        }
+    };
 
     /**
-     * Constructs a new GameMapsManager with initial state.
+     * Constructs a new {@code GameMapsManager}.
      */
     public GameMapsManager() {
-        this.bonusMap = 0;
+        this.levelIndex = 0;
+        this.mapIndex = 0;
     }
 
     /**
      * {@inheritDoc}
-     * Loads the next map in the game sequence.
-     * 
-     * @return a list of strings representing the next map's layout
      */
     @Override
     public List<String> loadNextMap() {
-        // TODO: Implement map loading logic
-        throw new UnsupportedOperationException("Unimplemented method 'loadNextMap'");
+        final List<String> current = resetCurrentMap();
+
+        this.mapIndex++;
+        if (this.mapIndex >= LEVEL_MAPS.get(this.levelIndex).size()) {
+            this.levelIndex = Math.min(this.levelIndex + 1, LEVEL_MAPS.size() - 1);
+            this.mapIndex = 0;
+        }
+        return current;
     }
 
     /**
      * {@inheritDoc}
-     * Resets the current map to its initial state.
-     * 
-     * @return a list of strings representing the reset map's layout
      */
     @Override
     public List<String> resetCurrentMap() {
-        // TODO: Implement map reset logic
-        throw new UnsupportedOperationException("Unimplemented method 'resetCurrentMap'");
+        return this.mapCache.computeIfAbsent(LEVEL_MAPS.get(this.levelIndex).get(this.mapIndex),
+                loadMapFromFile);
     }
 
     /**
      * {@inheritDoc}
-     * Gets the bonus score associated with completing the current map.
-     * 
-     * @return the bonus points awarded for completing this map
      */
     @Override
     public int getLevelBonus() {
-        return this.bonusMap;
+        return MAP_BONUSES.get(Math.min(this.levelIndex, MAP_BONUSES.size() - 1));
     }
 
     /**
-     * {@inheritDoc}
-     * Updates the available maps based on the current level progression.
-     * 
-     * @param levelID the current level identifier
+     * Indicates map-specific errors during persistence operations.
+     * Wraps lower-level IO and serialization exceptions.
      */
-    @Override
-    public void updateMaps(final int levelID) {
-        // TODO: Implement map update logic
-        throw new UnsupportedOperationException("Unimplemented method 'updateMaps'");
+    public static class MapLoadingException extends RuntimeException {
+
+        private static final long serialVersionUID = 1L;
+
+        /**
+         * Creates an exception with detailed context.
+         * 
+         * @param message the operational context
+         */
+        public MapLoadingException(final String message) {
+            super(message);
+        }
+
+        /**
+         * Creates an exception with detailed context and cause.
+         * 
+         * @param message the operational context
+         * @param cause   the root failure cause
+         */
+        public MapLoadingException(final String message, final Throwable cause) {
+            super(message, cause);
+        }
     }
 }
