@@ -53,7 +53,7 @@ public class GameMapsManager implements MapsManager {
      * @return the bonus points awarded for completing this map
      */
     @Override
-    public int getMapBonus() {
+    public int getLevelBonus() {
         return this.bonusMap;
     }
 

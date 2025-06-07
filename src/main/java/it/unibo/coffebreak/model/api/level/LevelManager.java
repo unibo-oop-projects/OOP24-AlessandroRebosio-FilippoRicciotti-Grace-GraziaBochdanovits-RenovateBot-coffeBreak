@@ -25,7 +25,7 @@ public interface LevelManager {
      * 
      * @return the bonus points awarded for completing this map
      */
-    int getCurrentMapBonus();
+    int getCurrentLevelBonus();
 
     /**
      * Loads all entities for the next level or map in the sequence.
