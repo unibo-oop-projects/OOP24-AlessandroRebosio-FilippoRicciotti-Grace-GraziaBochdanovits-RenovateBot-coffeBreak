@@ -12,12 +12,12 @@ import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.api.view.renders.RenderManager;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
-import it.unibo.coffebreak.impl.view.renders.BarrelRender;
 import it.unibo.coffebreak.impl.view.renders.GameRenderManagerImpl;
-import it.unibo.coffebreak.impl.view.renders.LadderRender;
-import it.unibo.coffebreak.impl.view.renders.PlatformRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.barrel.BarrelRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.mario.PlayerRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.platform.PlatformRender;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
-import it.unibo.coffebreak.impl.view.renders.PlayerRender;
 
 /**
  * Implementation of {@link GameStatePanel} that represents the in-game screen.

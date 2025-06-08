@@ -14,26 +14,18 @@ public interface ScalableRender {
     void onResize(int newWidth, int newHeight);
 
     /**
-     * Gets the current scaled width.
-     * @return the width scaled
+     * Calculates and returns the scaled width based on the original dimension.
+     *
+     * @param originalWidth the original width to be scaled
+     * @return the scaled width in pixels
      */
-    int getScaledWidth();
+    int getScaledWidth(int originalWidth);
 
     /**
-     * Gets the origina width.
-     * @return the original width
+     * Calculates and returns the scaled height based on the original dimension.
+     *
+     * @param originalHeight the original height to be scaled
+     * @return the scaled height in pixels
      */
-    int getOriginalWidth();
-
-    /**
-     * Gets the current scaled height.
-     * @return the height scaled
-     */
-    int getScaledHeight();
-
-    /**
-     * Gets the original height.
-     * @return the original height
-     */
-    int getOriginalHeight();
+    int getScaledHeight(int originalHeight);
 }
