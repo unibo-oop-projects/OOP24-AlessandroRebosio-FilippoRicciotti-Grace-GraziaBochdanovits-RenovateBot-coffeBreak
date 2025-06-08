@@ -39,15 +39,15 @@ public abstract class AbstractScalableRender implements ScalableRender {
      * {@inheritDoc}
      */
     @Override
-    public int getScaledWidth(final int originalWidth) {
-        return (int) (originalWidth * screenRatioX);
+    public float getScaledWidth(final float originalWidth) {
+        return originalWidth * screenRatioX;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getScaledHeight(final int originalHeight) {
-        return (int) (originalHeight * screenRatioY);
+    public float getScaledHeight(final float originalHeight) {
+        return originalHeight * screenRatioY;
     }
 }

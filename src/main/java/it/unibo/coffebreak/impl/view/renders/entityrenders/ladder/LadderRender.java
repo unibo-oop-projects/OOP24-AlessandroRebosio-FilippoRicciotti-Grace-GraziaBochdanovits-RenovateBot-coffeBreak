@@ -36,7 +36,7 @@ public class LadderRender extends AbstractEntityRender {
         super.render(g, entity);
         g.setColor(Color.RED);
         g.drawRect((int) entity.getPosition().x(), (int) entity.getPosition().y(), 
-                    getScaledEntityWidth(entity), getScaledEntityHeight(entity));
+                    (int) getScaledEntityWidth(entity), (int) getScaledEntityHeight(entity));
     }
 
     /**

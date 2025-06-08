@@ -44,7 +44,7 @@ public class PlatformRender extends AbstractEntityRender {
     public void render(final Graphics2D g, final Entity entity) {
         super.render(g, entity);
         g.drawImage(platformImage, (int) entity.getPosition().x(), (int) entity.getPosition().y(),
-                    getScaledEntityWidth(entity), getScaledEntityHeight(entity), null);
+                    (int) getScaledEntityWidth(entity), (int) getScaledEntityHeight(entity), null);
     }
 
     /**

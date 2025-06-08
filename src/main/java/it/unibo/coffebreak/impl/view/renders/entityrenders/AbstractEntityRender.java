@@ -52,8 +52,8 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * @param entity the entity to get the scaled width from
      * @return the scaled width of the entity
      */
-    protected final int getScaledEntityWidth(final Entity entity) {
-        return getScaledWidth((int) entity.getDimension().width());
+    protected final float getScaledEntityWidth(final Entity entity) {
+        return getScaledWidth(entity.getDimension().width());
     }
 
     /**
@@ -62,7 +62,7 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * @param entity the entity to get the scaled height from
      * @return the scaled height of the entity
      */
-    protected final int getScaledEntityHeight(final Entity entity) {
-        return getScaledHeight((int) entity.getDimension().height());
+    protected final float getScaledEntityHeight(final Entity entity) {
+        return getScaledHeight(entity.getDimension().height());
     }
 }

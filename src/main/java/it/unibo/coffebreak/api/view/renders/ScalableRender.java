@@ -19,7 +19,7 @@ public interface ScalableRender {
      * @param originalWidth the original width to be scaled
      * @return the scaled width in pixels
      */
-    int getScaledWidth(int originalWidth);
+    float getScaledWidth(float originalWidth);
 
     /**
      * Calculates and returns the scaled height based on the original dimension.
@@ -27,5 +27,5 @@ public interface ScalableRender {
      * @param originalHeight the original height to be scaled
      * @return the scaled height in pixels
      */
-    int getScaledHeight(int originalHeight);
+    float getScaledHeight(float originalHeight);
 }
