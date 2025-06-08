@@ -3,20 +3,31 @@ package it.unibo.coffebreak.impl.view.renders;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.structure.Ladder;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.renders.EntityRender;
 import it.unibo.coffebreak.api.view.renders.RenderManager;
 import it.unibo.coffebreak.api.view.renders.ScalableRender;
 import it.unibo.coffebreak.api.view.renders.StaticRender;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.barrel.BarrelRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.mario.PlayerRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process
- * for both static and dynamic game entities. This class coordinates the drawing of all
+ * for both static and dynamic game entities. This class coordinates the drawing
+ * of all
  * game elements in the proper order and delegates the actual rendering to
  * specialized renderers for each entity type.
  * 
@@ -33,12 +44,37 @@ import it.unibo.coffebreak.api.view.renders.StaticRender;
  */
 public final class GameRenderManagerImpl implements RenderManager {
 
-    private final List<StaticRender> staticRenders = new ArrayList<>();
+    private final List<StaticRender> staticRenders = new ArrayList<>(); // TODO: capire se hanno senso gli static renders
     private final Map<Class<? extends Entity>, EntityRender> entityRenderers = new HashMap<>();
-    private final List<Entity> entities = new ArrayList<>();
+    private List<Entity> entities = Collections.emptyList();
 
     private int lastWidth = -1;
     private int lastHeight = -1;
+
+    /**
+     * Constructs a new GameRenderManagerImpl with the specified initial dimensions.
+     * 
+     * @param screenWidth the initial width of the rendering area
+     * @param screenHeight the initial height of the rendering area
+     */
+    public GameRenderManagerImpl(final int screenWidth, final int screenHeight) {
+        final ResourceLoader resources = new ResourceLoader();
+        registerAllEntityRenders(resources, screenWidth, screenHeight);
+    }
+
+    /**
+     * Registers all default entity renders with their corresponding entity types.
+     * 
+     * @param resources the resource loader to use for render initialization
+     * @param width the initial width for the renders
+     * @param height the initial height for the renders
+     */
+    private void registerAllEntityRenders(final ResourceLoader resources, final int width, final int height) {
+        entityRenderers.put(Platform.class, new PlatformRender(resources, width, height));
+        entityRenderers.put(Mario.class, new PlayerRender(width, height));
+        entityRenderers.put(Barrel.class, new BarrelRender(width, height));
+        entityRenderers.put(Ladder.class, new LadderRender(width, height));
+    }
 
     /**
      * <p>
@@ -74,9 +110,9 @@ public final class GameRenderManagerImpl implements RenderManager {
 
         entities.forEach(entity -> {
             entityRenderers.entrySet().stream()
-                .filter(entry -> entry.getValue().canRender(entity))
-                .findFirst()
-                .ifPresent(entry -> entry.getValue().render(g, entity));
+                    .filter(entry -> entry.getValue().canRender(entity))
+                    .findFirst()
+                    .ifPresent(entry -> entry.getValue().render(g, entity));
         });
     }
 
@@ -112,12 +148,12 @@ public final class GameRenderManagerImpl implements RenderManager {
     /**
      * {@inheritDoc}
      * 
-     * @param type         the type of entity the renderer can handle
-     * @param renderer    the renderer to add
+     * @param type     the type of entity the renderer can handle
+     * @param renderer the renderer to add
      * @throws NullPointerException if either parameter is null
      */
     @Override
-    public void addEntityRenderer(final Class<? extends Entity> type, final EntityRender renderer) {
+    public void registerEntityRenderer(final Class<? extends Entity> type, final EntityRender renderer) {
         entityRenderers.put(Objects.requireNonNull(type), Objects.requireNonNull(renderer));
     }
 
@@ -129,7 +165,6 @@ public final class GameRenderManagerImpl implements RenderManager {
      */
     @Override
     public void updateEntities(final List<Entity> entities) {
-        this.entities.clear();
-        this.entities.addAll(Objects.requireNonNull(entities, "Entities list cannot be null"));
+        this.entities = List.copyOf(Objects.requireNonNull(entities, "Entities list cannot be null"));
     }
 }

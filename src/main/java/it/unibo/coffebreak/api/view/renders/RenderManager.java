@@ -30,10 +30,11 @@ public interface RenderManager {
 
     /**
      * Registers a renderer for entities of specific type.
-     * @param type the class of entities this renderer can handle
+     * 
+     * @param type     the class of entities this renderer can handle
      * @param renderer the renderer implementation
      */
-    void addEntityRenderer(Class<? extends Entity> type, EntityRender renderer);
+    void registerEntityRenderer(Class<? extends Entity> type, EntityRender renderer);
 
     /**
      * Adds a static renderer (background, UI, etc.).
