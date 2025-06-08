@@ -40,7 +40,7 @@ public class InGameState extends AbstractState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-        final var player = model.getPlMainCharacter();
+        final var player = model.getMainCharacter();
         final int currentLives = player.getLives();
 
         // model.getAntagonist().flatMap(a ->
@@ -59,10 +59,8 @@ public class InGameState extends AbstractState {
 
         model.transformEntities();
         model.cleanEntities();
-
         model.nextMap();
-
-        // model.calculateBonus(deltaTime);
+        model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {
             model.setState(GameOverState::new);

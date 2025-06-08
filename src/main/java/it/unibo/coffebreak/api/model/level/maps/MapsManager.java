@@ -22,10 +22,7 @@ public interface MapsManager {
      */
     List<String> resetCurrentMap();
 
-    /**
-     * Gets the bonus score associated with the current map.
-     * 
-     * @return the map bonus score
-     */
-    int getLevelBonus();
+    void calculateBonus(float deltaTime);
+
+    int getBonusValue();
 }

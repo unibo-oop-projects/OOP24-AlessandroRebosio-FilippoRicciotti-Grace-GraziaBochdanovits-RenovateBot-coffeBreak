@@ -57,7 +57,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getPlMainCharacter() {
+    public MainCharacter getMainCharacter() {
         return this.levelManager.getPlayar();
     }
 
@@ -125,9 +125,17 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void calculateBonus(final float deltaTime) {
+        this.levelManager.calculateBonus(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void nextMap() {
         if (this.levelManager.advanceLevel()) {
-            this.getPlMainCharacter().earnPoints(this.scoreManager.getCurrentBonus());
+            this.getMainCharacter().earnPoints(this.scoreManager.getCurrentBonus());
         }
     }
 

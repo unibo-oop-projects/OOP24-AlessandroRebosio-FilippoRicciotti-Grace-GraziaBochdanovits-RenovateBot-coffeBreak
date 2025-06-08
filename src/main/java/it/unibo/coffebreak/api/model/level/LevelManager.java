@@ -36,6 +36,8 @@ public interface LevelManager {
      */
     int getCurrentLevelBonus();
 
+    void calculateBonus(final float deltaTime);
+
     /**
      * Loads all entities for the next level or map in the sequence.
      * This method should be called when transitioning to a new game area

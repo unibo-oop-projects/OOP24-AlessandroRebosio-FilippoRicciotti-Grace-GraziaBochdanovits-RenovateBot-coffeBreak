@@ -54,7 +54,15 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public int getCurrentLevelBonus() {
-        return this.maps.getLevelBonus();
+        return this.maps.getBonusValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void calculateBonus(final float deltaTime) {
+        this.maps.calculateBonus(deltaTime);
     }
 
     /**

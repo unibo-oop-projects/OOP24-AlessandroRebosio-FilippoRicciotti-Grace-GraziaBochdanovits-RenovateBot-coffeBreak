@@ -31,7 +31,7 @@ public interface Model {
      * 
      * @return the player
      */
-    MainCharacter getPlMainCharacter();
+    MainCharacter getMainCharacter();
 
     /**
      * Gets the current game state.
@@ -81,6 +81,8 @@ public interface Model {
      * environmental objects transitioning forms.
      */
     void transformEntities();
+
+    void calculateBonus(final float deltaTime);
 
     /**
      * Advances to the next map in the game sequence.
