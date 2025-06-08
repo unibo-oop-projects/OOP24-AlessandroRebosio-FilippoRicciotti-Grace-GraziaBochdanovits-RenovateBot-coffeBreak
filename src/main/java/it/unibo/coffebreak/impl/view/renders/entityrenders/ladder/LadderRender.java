@@ -1,10 +1,12 @@
-package it.unibo.coffebreak.impl.view.renders;
+package it.unibo.coffebreak.impl.view.renders.entityrenders.ladder;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
+import it.unibo.coffebreak.impl.view.renders.AbstractScalableRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.AbstractEntityRender;
 
 /**
  * A renderer for ladder entities that draws them as red rectangles on the screen.

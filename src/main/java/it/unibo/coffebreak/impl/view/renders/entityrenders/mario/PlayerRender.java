@@ -1,10 +1,11 @@
-package it.unibo.coffebreak.impl.view.renders;
+package it.unibo.coffebreak.impl.view.renders.entityrenders.mario;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.AbstractEntityRender;
 
 /**
  * Render implementation for {@link Mario} player entity.

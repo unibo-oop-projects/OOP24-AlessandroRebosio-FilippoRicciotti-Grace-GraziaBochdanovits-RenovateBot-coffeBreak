@@ -1,10 +1,11 @@
-package it.unibo.coffebreak.impl.view.renders;
+package it.unibo.coffebreak.impl.view.renders.entityrenders;
 
 import java.awt.Graphics2D;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.view.renders.EntityRender;
+import it.unibo.coffebreak.impl.view.renders.AbstractScalableRender;
 
 /**
  * An abstract implementation of {@link EntityRender} that provides basic functionality

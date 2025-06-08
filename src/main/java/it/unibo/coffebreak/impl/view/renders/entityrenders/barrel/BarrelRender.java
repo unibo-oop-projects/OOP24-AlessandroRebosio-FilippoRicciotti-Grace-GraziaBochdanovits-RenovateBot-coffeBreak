@@ -1,10 +1,12 @@
-package it.unibo.coffebreak.impl.view.renders;
+package it.unibo.coffebreak.impl.view.renders.entityrenders.barrel;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.impl.view.renders.AbstractScalableRender;
+import it.unibo.coffebreak.impl.view.renders.entityrenders.AbstractEntityRender;
 
 /**
  * A renderer for Barrel entities that draws them as blue circle on the screen.
