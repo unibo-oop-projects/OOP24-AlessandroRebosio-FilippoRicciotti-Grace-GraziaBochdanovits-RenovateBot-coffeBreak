@@ -20,37 +20,29 @@ public class GameEngine implements Engine {
      */
     private static final long PERIOD = 16;
 
-    private final Controller controller;
-    private final GameView view;
-
-    /**
-     * Constructs a new {@code GameEngine} instance with its own internal
-     * {@link Controller}.
-     */
-    public GameEngine() {
-        this.controller = new GameController();
-        this.view = new GameView(this.controller);
-    }
+    private final Controller controller = new GameController();
+    private final GameView view = new GameView(this.controller);
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void run() {
-        long previusCycle = System.currentTimeMillis();
-        while (this.controller.isGameActive()) {
-            final long currentCycle = System.currentTimeMillis();
-            final long deltaTime = currentCycle - previusCycle;
+        long previousTime = System.currentTimeMillis();
 
-            this.controller.processInput();
-            this.controller.updateModel(deltaTime);
-            this.view.updateView();
+        while (controller.isGameActive()) {
+            final long currentTime = System.currentTimeMillis();
+            final float deltaTime = (currentTime - previousTime) / 1000.0f;
 
-            this.waitForNextFrame(currentCycle);
+            controller.processInput();
+            controller.updateModel(deltaTime);
+            view.updateView();
 
-            previusCycle = currentCycle;
+            sleepUntilNextFrame(currentTime);
+            previousTime = currentTime;
         }
-        this.view.close();
+
+        view.close();
     }
 
     /**
@@ -64,7 +56,7 @@ public class GameEngine implements Engine {
      *           exceptions,
      *           which should typically be handled more gracefully.
      */
-    protected void waitForNextFrame(final long cycleTime) {
+    protected void sleepUntilNextFrame(final long cycleTime) {
         final long dt = System.currentTimeMillis() - cycleTime;
         if (dt < PERIOD) {
             try {

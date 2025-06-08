@@ -1,14 +1,11 @@
 package it.unibo.coffebreak.api.model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.Character;
-import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.model.entities.npc.Princess;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -30,34 +27,11 @@ public interface Model {
     List<Entity> getEntities();
 
     /**
-     * Retrieves the name of the player.
+     * Gets the player.
      * 
-     * @return the current player name
+     * @return the player
      */
-    String getPlayerName();
-
-    /**
-     * Retrieves the player character entity, if present.
-     *
-     * @return an {@link Optional} containing the player character, or empty if not
-     *         present
-     */
-    Optional<Character> getPlayer();
-
-    /**
-     * Retrieves the Antagonist entity, if present.
-     *
-     * @return an {@link Optional} containing the Antagonist, or empty if not
-     *         present
-     */
-    Optional<Antagonist> getAntagonist();
-
-    /**
-     * Retrieves the Target entity, if present.
-     *
-     * @return an {@link Optional} containing the Target, or empty if not present
-     */
-    Optional<Princess> getPrincess();
+    MainCharacter getMainCharacter();
 
     /**
      * Gets the current game state.
@@ -67,13 +41,11 @@ public interface Model {
     GameState getGameState();
 
     /**
-     * Sets or updates the player's name.
+     * Method for get bonus value.
      * 
-     * @param newPlayerName the new name to assign to the player
-     * @throws NullPointerException     if the name is null
-     * @throws IllegalArgumentException if the name is empty or invalid
+     * @return the bonus value
      */
-    void setPlayerName(String newPlayerName);
+    int getBonusValue();
 
     /**
      * Changes the current game state to the specified one.
@@ -118,6 +90,14 @@ public interface Model {
     void transformEntities();
 
     /**
+     * Calculates and applies a time-based bonus duration is decremented by
+     * {@code deltaTime}.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds).
+     */
+    void calculateBonus(float deltaTime);
+
+    /**
      * Advances to the next map in the game sequence.
      */
     void nextMap();
@@ -138,7 +118,7 @@ public interface Model {
      * @param command the command to be executed
      * @throws NullPointerException if command is null
      */
-    void executeCommand(Command command);
+    void handleCommand(Command command);
 
     /**
      * Updates the game logic based on elapsed time.
@@ -154,9 +134,4 @@ public interface Model {
      * @return true if the game is running, false otherwise
      */
     boolean isRunning();
-
-    /**
-     * @param deltaTime time in seconds since last calculation
-     */
-    void calculateBonus(float deltaTime);
 }

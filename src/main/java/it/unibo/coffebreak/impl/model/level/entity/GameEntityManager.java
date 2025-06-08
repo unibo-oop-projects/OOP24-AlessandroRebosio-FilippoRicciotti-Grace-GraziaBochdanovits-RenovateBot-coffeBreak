@@ -14,6 +14,7 @@ import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
  * Concrete implementation of {@link EntityManager} that manages game entities.
@@ -27,6 +28,8 @@ public class GameEntityManager implements EntityManager {
     private final EntityFactory factory = new GameEntityFactory();
     private final List<Entity> entities = new ArrayList<>();
 
+    private MainCharacter player;
+
     /**
      * {@inheritDoc}
      * 
@@ -35,6 +38,14 @@ public class GameEntityManager implements EntityManager {
     @Override
     public List<Entity> getEntities() {
         return Collections.unmodifiableList(entities);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MainCharacter getPlayer() {
+        return Objects.requireNonNull(this.player, "The player cannot be null");
     }
 
     /**
@@ -60,7 +71,10 @@ public class GameEntityManager implements EntityManager {
                     case 'T' -> this.addEntity(factory.createTank(position));
                     case 'H' -> this.addEntity(factory.createHammer(position));
                     case 'C' -> this.addEntity(factory.createCoin(position));
-                    case 'M' -> this.addEntity(factory.createMario(position));
+                    case 'M' -> {
+                        this.player = factory.createMario(position);
+                        this.addEntity(player);
+                    }
                     case 'D' -> this.addEntity(factory.createDonkeyKong(position));
                     case 'R' -> this.addEntity(factory.createPrincess(position));
                     default -> {

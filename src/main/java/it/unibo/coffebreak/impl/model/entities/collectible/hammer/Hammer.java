@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.collectible.hammer;
 
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.collectible.AbstractCollectible;
@@ -38,7 +38,7 @@ public class Hammer extends AbstractCollectible {
      * @param character the character that collected this hammer
      */
     @Override
-    protected void applyEffect(final Character character) {
+    protected void applyEffect(final MainCharacter character) {
         super.applyEffect(character);
         character.changeState(WithHammerState::new);
     }

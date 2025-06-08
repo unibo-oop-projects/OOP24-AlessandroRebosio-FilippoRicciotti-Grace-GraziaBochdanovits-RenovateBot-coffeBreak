@@ -3,6 +3,7 @@ package it.unibo.coffebreak.api.model.level.entity;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
  * Manages the entities in the game level, providing methods to load, add,
@@ -17,6 +18,13 @@ public interface EntityManager {
      * @return a list of entities
      */
     List<Entity> getEntities();
+
+    /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
+    MainCharacter getPlayer();
 
     /**
      * Loads entities from a map represented by text lines.

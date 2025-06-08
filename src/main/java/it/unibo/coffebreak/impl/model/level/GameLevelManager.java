@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.level;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
@@ -44,8 +45,24 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
+    public MainCharacter getPlayar() {
+        return this.entityManager.getPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getCurrentLevelBonus() {
-        return this.maps.getLevelBonus();
+        return this.maps.getBonusValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void calculateBonus(final float deltaTime) {
+        this.maps.calculateBonus(deltaTime);
     }
 
     /**
@@ -92,10 +109,12 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public void advanceLevel() {
+    public boolean advanceLevel() {
         if (this.shouldAdvanceLevel()) {
             this.loadNextEnitites();
+            return true;
         }
+        return false;
     }
 
     /**

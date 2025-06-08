@@ -3,15 +3,16 @@ package it.unibo.coffebreak.impl.model.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.LivesManager;
 import it.unibo.coffebreak.api.model.entities.Movable;
-import it.unibo.coffebreak.api.model.entities.character.Character;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.api.model.score.ScoreManager;
+import it.unibo.coffebreak.api.model.score.Score;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
@@ -42,13 +43,13 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
  * </ul>
  * 
  * @see AbstractEntity
- * @see Character
+ * @see MainCharacter
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements Character, Movable {
+public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private final LivesManager livesManager;
-    private ScoreManager scoreManager;
+    private final Score score;
     private final Physics physics;
 
     private CharacterState currentState;
@@ -58,11 +59,13 @@ public class Mario extends AbstractEntity implements Character, Movable {
      *
      * @param position  the initial position of Mario
      * @param dimension the dimensions of Mario's hitbox
+     * @param score the score of Mario
      */
-    public Mario(final Position2D position, final BoundingBox2D dimension) {
+    public Mario(final Position2D position, final BoundingBox2D dimension, final Score score) {
         super(position, dimension);
 
         this.livesManager = new GameLivesManager();
+        this.score = score;
         this.physics = new GamePhysics();
 
         changeState(NormalState::new);
@@ -82,7 +85,7 @@ public class Mario extends AbstractEntity implements Character, Movable {
         }
         this.currentState.update(this, deltaTime);
 
-        super.setVelocity(this.physics.calculateX(deltaTime, null));
+        super.setVelocity(this.physics.calculateX(deltaTime, Command.MOVE_LEFT));
 
         // TODO: Mario update()
     }
@@ -121,20 +124,18 @@ public class Mario extends AbstractEntity implements Character, Movable {
 
     /**
      * {@inheritDoc}
-     * 
-     * @throws NullPointerException if scoreManager is null
      */
     @Override
-    public void setScoreManager(final ScoreManager scoreManager) {
-        this.scoreManager = Objects.requireNonNull(scoreManager, "ScoreManager cannot be null");
+    public void earnPoints(final int amount) {
+        this.score.increase(amount);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void earnPoints(final int amount) {
-        this.scoreManager.earnPoints(amount);
+    public int getScoreValue() {
+        return this.score.getScore();
     }
 
     /**

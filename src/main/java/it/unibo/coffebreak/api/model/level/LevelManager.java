@@ -3,6 +3,7 @@ package it.unibo.coffebreak.api.model.level;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
  * Manages game levels and maps, handling entity operations and transitions
@@ -22,11 +23,26 @@ public interface LevelManager {
     List<Entity> getEntities();
 
     /**
+     * Gets the player.
+     * 
+     * @return the player
+     */
+    MainCharacter getPlayar();
+
+    /**
      * Gets the bonus score associated with completing the current map.
      * 
      * @return the bonus points awarded for completing this map
      */
     int getCurrentLevelBonus();
+
+    /**
+     * Calculates and applies a time-based bonus duration is decremented by
+     * {@code deltaTime}.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds).
+     */
+    void calculateBonus(float deltaTime);
 
     /**
      * Loads all entities for the next level or map in the sequence.
@@ -61,6 +77,8 @@ public interface LevelManager {
 
     /**
      * Advances to the next level if conditions are met.
+     * 
+     * @return true if advaceLevel, otherwise false
      */
-    void advanceLevel();
+    boolean advanceLevel();
 }

@@ -38,6 +38,7 @@ public class GameView extends JFrame implements View {
 
     /** Reference to the game controller. */
     private final transient Controller controller;
+
     /**
      * Constructs a GameView with the given controller.
      *
@@ -90,7 +91,7 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void keyPressed(final KeyEvent e) {
-        this.controller.handleKeyDown(e.getKeyCode());
+        this.controller.keyPressed(e.getKeyCode());
     }
 
     /**
@@ -98,6 +99,6 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void keyReleased(final KeyEvent e) {
-        this.controller.handleKeyUp(e.getKeyCode());
+        this.controller.keyReleased(e.getKeyCode());
     }
 }

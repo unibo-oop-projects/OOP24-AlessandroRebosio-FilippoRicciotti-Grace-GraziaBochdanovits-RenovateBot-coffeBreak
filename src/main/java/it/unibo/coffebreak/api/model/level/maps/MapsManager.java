@@ -23,9 +23,17 @@ public interface MapsManager {
     List<String> resetCurrentMap();
 
     /**
-     * Gets the bonus score associated with the current map.
+     * Calculates and applies a time-based bonus duration is decremented by
+     * {@code deltaTime}.
      * 
-     * @return the map bonus score
+     * @param deltaTime the time elapsed since the last frame (in seconds).
      */
-    int getLevelBonus();
+    void calculateBonus(float deltaTime);
+
+    /**
+     * Method for get bonus value.
+     * 
+     * @return the bonus value
+     */
+    int getBonusValue();
 }

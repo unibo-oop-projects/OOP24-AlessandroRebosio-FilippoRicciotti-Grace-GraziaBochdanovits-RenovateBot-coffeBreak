@@ -40,10 +40,11 @@ public class InGameState extends AbstractState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-        final var player = model.getPlayer().orElseThrow();
+        final var player = model.getMainCharacter();
         final int currentLives = player.getLives();
 
-        model.getAntagonist().flatMap(a -> a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
+        // model.getAntagonist().flatMap(a ->
+        // a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
@@ -58,9 +59,7 @@ public class InGameState extends AbstractState {
 
         model.transformEntities();
         model.cleanEntities();
-
         model.nextMap();
-
         model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {

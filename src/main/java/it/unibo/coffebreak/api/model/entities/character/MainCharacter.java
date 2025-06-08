@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
-import it.unibo.coffebreak.api.model.score.ScoreManager;
 
 /**
  * Represents a character entity in the game world.
@@ -15,7 +14,7 @@ import it.unibo.coffebreak.api.model.score.ScoreManager;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface Character extends Entity {
+public interface MainCharacter extends Entity {
     /**
      * Changes Mario's current state using a state supplier.
      * 
@@ -24,19 +23,18 @@ public interface Character extends Entity {
     void changeState(Supplier<CharacterState> stateSupplier);
 
     /**
-     * Sets the score manager for this character.
-     * The score manager will handle all score-related operations.
-     * 
-     * @param scoreManager the score manager to be associated with this character
-     */
-    void setScoreManager(ScoreManager scoreManager);
-
-    /**
      * Increases the character's score by the specified amount.
      * 
      * @param amount the number of points to add to the character's score
      */
     void earnPoints(int amount);
+
+    /**
+     * Method for get score value.
+     * 
+     * @return the score value
+     */
+    int getScoreValue();
 
     /**
      * Decrements the character's life count.

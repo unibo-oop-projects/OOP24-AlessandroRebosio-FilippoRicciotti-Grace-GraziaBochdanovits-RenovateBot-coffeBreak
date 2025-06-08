@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.function.Function;
 
 import it.unibo.coffebreak.api.model.level.maps.MapsManager;
+import it.unibo.coffebreak.api.model.score.bonus.Bonus;
+import it.unibo.coffebreak.impl.model.score.bonus.GameBonus;
 
 /**
  * Concrete implementation of {@link MapsManager} that manages game maps and
@@ -20,12 +22,16 @@ import it.unibo.coffebreak.api.model.level.maps.MapsManager;
  */
 public class GameMapsManager implements MapsManager {
 
+    private static final long BONUS_INTERVAL = 2000;
     private static final List<Integer> MAP_BONUSES = List.of(5000, 6000, 7000, 8000);
     private static final List<List<String>> LEVEL_MAPS = List.of(
             List.of("maps/Map1.txt", "maps/Map4.txt"));
 
     private final Map<String, List<String>> mapCache = new HashMap<>();
 
+    private final Bonus bonus = new GameBonus();
+
+    private float bonusElapsed;
     private int levelIndex;
     private int mapIndex;
 
@@ -41,6 +47,7 @@ public class GameMapsManager implements MapsManager {
      * Constructs a new {@code GameMapsManager}.
      */
     public GameMapsManager() {
+        this.bonusElapsed = 0;
         this.levelIndex = 0;
         this.mapIndex = 0;
     }
@@ -55,6 +62,7 @@ public class GameMapsManager implements MapsManager {
         this.mapIndex++;
         if (this.mapIndex >= LEVEL_MAPS.get(this.levelIndex).size()) {
             this.levelIndex = Math.min(this.levelIndex + 1, LEVEL_MAPS.size() - 1);
+            this.bonus.setBonus(this.getLevelBonus());
             this.mapIndex = 0;
         }
         return current;
@@ -73,7 +81,23 @@ public class GameMapsManager implements MapsManager {
      * {@inheritDoc}
      */
     @Override
-    public int getLevelBonus() {
+    public void calculateBonus(final float deltaTime) {
+        this.bonusElapsed += deltaTime;
+        if (this.bonusElapsed >= BONUS_INTERVAL) {
+            this.bonus.calculate();
+            this.bonusElapsed = 0;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusValue() {
+        return this.bonus.getBonus();
+    }
+
+    private int getLevelBonus() {
         return MAP_BONUSES.get(Math.min(this.levelIndex, MAP_BONUSES.size() - 1));
     }
 

@@ -25,14 +25,14 @@ public interface Input {
      *
      * @param keyCode the physical key code that was pressed
      */
-    void registerKeyPress(int keyCode);
+    void keyPressed(int keyCode);
 
     /**
      * Registers a key release event.
      *
      * @param keyCode the physical key code that was released
      */
-    void registerKeyRelease(int keyCode);
+    void keyReleased(int keyCode);
 
     /**
      * Binds a physical key to a logical game command.
