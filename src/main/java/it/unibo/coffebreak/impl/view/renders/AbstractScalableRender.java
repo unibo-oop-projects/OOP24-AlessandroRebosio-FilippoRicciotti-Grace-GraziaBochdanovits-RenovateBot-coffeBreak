@@ -10,29 +10,20 @@ import it.unibo.coffebreak.api.view.renders.ScalableRender;
  */
 public abstract class AbstractScalableRender implements ScalableRender {
 
-    private final int originalWidth;
-    private final int originalHeight;
-    private int scaledWidth;
-    private int scaledHeight;
-    private final float screenWidthRatio;
-    private final float screenHeightRatio;
+    private final int screenWidth;
+    private final int screenHeight;
+    private float screenRatioX = 1.0f;
+    private float screenRatioY = 1.0f;
 
     /**
      * Constructs an AbstractScalableRender with the specified original dimensions.
      *
-     * @param originalWidth the original width of the render
-     * @param originalHeight the original height of the render
      * @param screenWidth the total screen width used for ratio calculation
      * @param screenHeight the total screen height used for ratio calculation
      */
-    public AbstractScalableRender(final int originalWidth, final int originalHeight, 
-                                final int screenWidth, final int screenHeight) {
-        this.originalWidth = originalWidth;
-        this.originalHeight = originalHeight;
-        this.scaledWidth = originalWidth;
-        this.scaledHeight = originalHeight;
-        this.screenWidthRatio = (float) originalWidth / screenWidth;
-        this.screenHeightRatio = (float) originalHeight / screenHeight;
+    public AbstractScalableRender(final int screenWidth, final int screenHeight) {
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
     }
 
     /**
@@ -40,39 +31,23 @@ public abstract class AbstractScalableRender implements ScalableRender {
      */
     @Override
     public void onResize(final int newWidth, final int newHeight) {
-        this.scaledWidth = (int) (newWidth * screenWidthRatio);
-        this.scaledHeight = (int) (newHeight * screenHeightRatio);
+        this.screenRatioX = (float) newWidth / screenWidth;
+        this.screenRatioY = (float) newHeight / screenHeight;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getScaledWidth() {
-        return this.scaledWidth;
+    public int getScaledWidth(final int originalWidth) {
+        return (int) (originalWidth * screenRatioX);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getScaledHeight() {
-        return this.scaledHeight;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getOriginalWidth() {
-        return this.originalWidth;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getOriginalHeight() {
-        return this.originalHeight;
+    public int getScaledHeight(final int originalHeight) {
+        return (int) (originalHeight * screenRatioY);
     }
 }
