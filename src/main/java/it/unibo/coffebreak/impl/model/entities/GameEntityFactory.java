@@ -36,7 +36,12 @@ import it.unibo.coffebreak.impl.model.score.GameScore;
  * @author Filippo Ricciotti
  */
 public class GameEntityFactory implements EntityFactory {
-    private static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
+
+    /**
+     * Deafult entity bounding box dimension.
+     */
+    public static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
+
     private final Score score = new GameScore();
 
     /**
