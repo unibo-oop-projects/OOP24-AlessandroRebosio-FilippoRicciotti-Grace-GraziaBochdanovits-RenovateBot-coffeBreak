@@ -4,27 +4,20 @@ import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.Objects;
 
-<<<<<<< HEAD:src/main/java/it/unibo/coffebreak/view/impl/panels/InGamePanel.java
-import it.unibo.coffebreak.model.api.Model;
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.api.entities.structure.Platform;
-import it.unibo.coffebreak.model.impl.entities.mario.Mario;
-import it.unibo.coffebreak.view.api.panels.GameStatePanel;
-import it.unibo.coffebreak.view.api.renders.RenderManager;
-import it.unibo.coffebreak.view.impl.renders.GameRenderManagerImpl;
-import it.unibo.coffebreak.view.impl.renders.PlatformRender;
-import it.unibo.coffebreak.view.impl.renders.PlayerRender;
-import it.unibo.coffebreak.view.impl.resources.ResourceLoader;
-=======
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.api.view.renders.RenderManager;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.view.renders.BarrelRender;
 import it.unibo.coffebreak.impl.view.renders.GameRenderManagerImpl;
+import it.unibo.coffebreak.impl.view.renders.LadderRender;
 import it.unibo.coffebreak.impl.view.renders.PlatformRender;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
->>>>>>> master:src/main/java/it/unibo/coffebreak/impl/view/panels/InGamePanel.java
+import it.unibo.coffebreak.impl.view.renders.PlayerRender;
 
 /**
  * Implementation of {@link GameStatePanel} that represents the in-game screen.
@@ -55,6 +48,7 @@ public class InGamePanel implements GameStatePanel {
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.renderManager.updateEntities(model.getEntities()); 
         this.resources = Objects.requireNonNull(resources);
         initializeRenders();
     }
@@ -76,7 +70,13 @@ public class InGamePanel implements GameStatePanel {
         if (Mario.class.isAssignableFrom(entityClass)) {
             renderManager.addEntityRenderer(Mario.class, new PlayerRender(screenWidth, screenHeight));
         }
-        //TODO: Add more entity types
+        if (Barrel.class.isAssignableFrom(entityClass)) {
+            renderManager.addEntityRenderer(Barrel.class, new BarrelRender(screenWidth, screenHeight));
+        }
+        if (Ladder.class.isAssignableFrom(entityClass)) {
+            renderManager.addEntityRenderer(Ladder.class, new LadderRender(screenWidth, screenHeight));
+        }
+        //TODO: Add more entity types, maybe a factory
     }
 
     /**

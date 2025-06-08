@@ -1,12 +1,12 @@
-package it.unibo.coffebreak.view.impl.renders;
+package it.unibo.coffebreak.impl.view.renders;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
-import it.unibo.coffebreak.model.api.entities.Entity;
-import it.unibo.coffebreak.model.impl.entities.mario.Mario;
-import it.unibo.coffebreak.view.api.renders.EntityRender;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.view.renders.EntityRender;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 
 /**
  * Render implementation for {@link Mario} player entity.
@@ -16,8 +16,8 @@ import it.unibo.coffebreak.view.api.renders.EntityRender;
 public class PlayerRender extends AbstractScalableRender implements EntityRender {
 
     //private static final String PLAYER_PATH = "/img/mario_sheet.png";
-    private static final int PLAYER_WIDTH = 30;
-    private static final int PLAYER_HEIGHT = 30;
+    private static final int PLAYER_WIDTH = 60;
+    private static final int PLAYER_HEIGHT = 60;
     //private final transient BufferedImage playerImage;
 
     /**
@@ -46,10 +46,8 @@ public class PlayerRender extends AbstractScalableRender implements EntityRender
         if (!canRender(entity)) {
             throw new IllegalArgumentException("Entity must be a Mario instance");
         }
-        final int width = getScaledWidth();
-        final int height = getScaledHeight();
-        g.setColor(Color.RED);
-        g.fillRect((int) entity.getPosition().x(), (int) entity.getPosition().y(), width, height);
+        g.setColor(Color.GREEN);
+        g.fillRect((int) entity.getPosition().x(), (int) entity.getPosition().y(), getScaledWidth(), getScaledHeight());
     }
 
     /**
