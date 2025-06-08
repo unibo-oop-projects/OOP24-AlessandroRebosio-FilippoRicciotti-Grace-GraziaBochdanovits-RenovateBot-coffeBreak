@@ -41,6 +41,13 @@ public interface Model {
     GameState getGameState();
 
     /**
+     * Method for get bonus value.
+     * 
+     * @return the bonus value
+     */
+    int getBonusValue();
+
+    /**
      * Changes the current game state to the specified one.
      * 
      * @param newState Supplier providing the new game state
@@ -82,7 +89,13 @@ public interface Model {
      */
     void transformEntities();
 
-    void calculateBonus(final float deltaTime);
+    /**
+     * Calculates and applies a time-based bonus duration is decremented by
+     * {@code deltaTime}.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds).
+     */
+    void calculateBonus(float deltaTime);
 
     /**
      * Advances to the next map in the game sequence.

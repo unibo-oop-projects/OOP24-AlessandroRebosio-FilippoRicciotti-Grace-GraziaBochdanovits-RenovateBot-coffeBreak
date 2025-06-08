@@ -65,6 +65,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public int getBonusValue() {
+        return this.levelManager.getCurrentLevelBonus();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public GameState getGameState() {
         return this.currentState;
     }

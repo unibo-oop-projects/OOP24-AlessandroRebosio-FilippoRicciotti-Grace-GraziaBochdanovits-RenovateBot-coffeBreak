@@ -22,7 +22,18 @@ public interface MapsManager {
      */
     List<String> resetCurrentMap();
 
+    /**
+     * Calculates and applies a time-based bonus duration is decremented by
+     * {@code deltaTime}.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds).
+     */
     void calculateBonus(float deltaTime);
 
+    /**
+     * Method for get bonus value.
+     * 
+     * @return the bonus value
+     */
     int getBonusValue();
 }
