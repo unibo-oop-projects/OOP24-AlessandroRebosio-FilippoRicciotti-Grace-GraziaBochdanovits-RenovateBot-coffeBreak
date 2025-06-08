@@ -1,8 +1,9 @@
 package it.unibo.coffebreak.impl.model.level.maps;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class GameMapsManager implements MapsManager {
     private static final long BONUS_INTERVAL = 2000;
     private static final List<Integer> MAP_BONUSES = List.of(5000, 6000, 7000, 8000);
     private static final List<List<String>> LEVEL_MAPS = List.of(
-            List.of("maps/Map1.txt", "maps/Map4.txt"));
+            List.of("/maps/Map1.txt", "/maps/Map4.txt"));
 
     private final Map<String, List<String>> mapCache = new HashMap<>();
 
@@ -36,10 +37,14 @@ public class GameMapsManager implements MapsManager {
     private int mapIndex;
 
     private final Function<String, List<String>> loadMapFromFile = path -> {
-        try {
-            return Files.readAllLines(Paths.get(path));
+        try (var is = GameMapsManager.class.getResourceAsStream(path);
+                var reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            if (is == null) {
+                throw new MapLoadingException("Map file not found: " + path);
+            }
+            return reader.lines().toList();
         } catch (final IOException e) {
-            throw new MapLoadingException("Failed to load map: " + path, e);
+            throw new MapLoadingException("Error loading map: " + path, e);
         }
     };
 
@@ -58,11 +63,11 @@ public class GameMapsManager implements MapsManager {
     @Override
     public List<String> loadNextMap() {
         final List<String> current = resetCurrentMap();
+        this.bonus.setBonus(this.getLevelBonus());
 
         this.mapIndex++;
         if (this.mapIndex >= LEVEL_MAPS.get(this.levelIndex).size()) {
             this.levelIndex = Math.min(this.levelIndex + 1, LEVEL_MAPS.size() - 1);
-            this.bonus.setBonus(this.getLevelBonus());
             this.mapIndex = 0;
         }
         return current;
