@@ -41,7 +41,8 @@ public class GameView extends JFrame implements View {
     /**
      * Constructs a GameView with the given controller.
      *
-     * @param controller the controller to notify of key events
+     * @param controller the controller to notify of key events; must not be null
+     * @throws NullPointerException if {@code controller} is null
      */
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
@@ -71,7 +72,8 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void updateView() {
-        this.gamePanel.updateViewState(this.controller.getGameState());
+        this.gamePanel.updateViewState(this.controller);
+        this.repaint();
     }
 
     /**

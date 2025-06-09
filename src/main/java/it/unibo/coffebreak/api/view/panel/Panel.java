@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.api.view.panel;
 
-import it.unibo.coffebreak.api.model.states.ModelState;
+import it.unibo.coffebreak.api.controller.Controller;
 
 /**
  * Represents a generic view panel responsible for displaying the current
@@ -10,14 +10,9 @@ import it.unibo.coffebreak.api.model.states.ModelState;
  */
 public interface Panel {
     /**
-     * Updates the view to reflect the current model state of the game.
-     * <p>
-     * Implementations should use the provided {@code ModelState} to determine
-     * which screen or view should be displayed, such as menus, gameplay,
-     * pause screens, or game over screens.
-     * </p>
+     * Updates the current game screen by switching to the appropriate view state.
      *
-     * @param modelState the new model state to be visualized
+     * @param controller the game controller providing the current game state
      */
-    void updateViewState(ModelState modelState);
+    void updateViewState(Controller controller);
 }

@@ -1,7 +1,9 @@
 package it.unibo.coffebreak.impl.view.states;
 
 import java.awt.Graphics2D;
+import java.util.Objects;
 
+import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.resources.Resource;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
@@ -18,6 +20,18 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 public abstract class AbstractViewState implements ViewState {
 
     private final Resource resourceLoader = new ResourceLoader();
+    private final Controller controller;
+
+    /**
+     * Constructs an AbstractViewState with the specified controller.
+     *
+     * @param controller the controller associated with this view state; must not be
+     *                   null
+     * @throws NullPointerException if {@code controller} is null
+     */
+    public AbstractViewState(final Controller controller) {
+        this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
+    }
 
     /**
      * {@inheritDoc}
@@ -58,5 +72,14 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final Resource getResource() {
         return this.resourceLoader;
+    }
+
+    /**
+     * Returns the controller associated with this view state.
+     *
+     * @return the controller instance
+     */
+    protected final Controller getController() {
+        return this.controller;
     }
 }

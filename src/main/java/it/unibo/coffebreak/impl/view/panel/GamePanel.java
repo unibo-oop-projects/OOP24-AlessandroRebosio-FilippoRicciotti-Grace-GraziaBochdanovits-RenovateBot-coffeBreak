@@ -6,7 +6,7 @@ import java.io.Serial;
 
 import javax.swing.JPanel;
 
-import it.unibo.coffebreak.api.model.states.ModelState;
+import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
 import it.unibo.coffebreak.api.view.renders.RenderManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
@@ -45,20 +45,18 @@ public class GamePanel extends JPanel implements Panel {
     }
 
     /**
-     * Update the current game screen.
+     * {@inheritDoc}
      */
     @Override
-    public void updateViewState(final ModelState modelState) {
-        final ViewState nextState = switch (modelState) {
-            case MenuState menu -> new MenuView();
+    public void updateViewState(final Controller controller) {
+        final ViewState nextState = switch (controller.getGameState()) {
+            case MenuState menu -> new MenuView(controller);
             default -> null;
         };
 
         if (nextState != null) {
             this.setViewState(nextState);
         }
-
-        super.repaint();
     }
 
     /**

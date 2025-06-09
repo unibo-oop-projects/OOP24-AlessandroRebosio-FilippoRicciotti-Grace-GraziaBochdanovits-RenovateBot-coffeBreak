@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
+import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 import java.awt.Color;
@@ -29,8 +30,12 @@ public class MenuView extends AbstractViewState {
 
     /**
      * Constructs the main menu view and loads required fonts.
+     *
+     * @param controller the controller to interact with the game logic
      */
-    public MenuView() {
+    public MenuView(final Controller controller) {
+        super(controller);
+
         titleFont = super.getResource().loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(TITLE_SIZE);
         optionFont = super.getResource().loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(OPTION_SIZE);
     }
