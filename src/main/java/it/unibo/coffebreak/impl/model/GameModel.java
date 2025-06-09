@@ -209,4 +209,5 @@ public class GameModel implements Model {
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
     }
+
 }

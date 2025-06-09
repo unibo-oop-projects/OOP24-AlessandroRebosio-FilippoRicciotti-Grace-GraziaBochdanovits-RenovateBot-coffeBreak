@@ -147,4 +147,13 @@ public class GameController implements Controller {
     public boolean isGameActive() {
         return this.model.isRunning();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Model getModel() {
+        return this.model;
+    }
+
 }

@@ -39,4 +39,13 @@ public abstract class AbstractState implements GameState {
      */
     @Override
     public abstract void handleCommand(Model model, Command command);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSelectedOption() {
+        return 0;
+    }
+
 }

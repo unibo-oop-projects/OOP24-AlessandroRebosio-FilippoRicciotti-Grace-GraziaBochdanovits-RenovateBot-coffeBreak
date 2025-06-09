@@ -16,6 +16,14 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
  */
 public class MenuState extends AbstractState {
 
+    private static final int NUM_OPTIONS = 2;
+    private int selectedOption; // 0 for Start Game, 1 for Exit
+
+    private enum MenuOption {
+        START_GAME,
+        EXIT
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -23,14 +31,42 @@ public class MenuState extends AbstractState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                model.start();
-                model.setState(InGameState::new);
+                if (selectedOption == MenuOption.START_GAME.ordinal()) {
+                    model.start();
+                    model.setState(InGameState::new);
+                } else if (selectedOption == MenuOption.EXIT.ordinal()) {
+                    model.stop();
+                }
                 break;
             case QUIT:
                 model.stop();
                 break;
+            case MOVE_UP:
+                selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS;
+                break;
+            case MOVE_DOWN:
+                selectedOption = (selectedOption + 1) % NUM_OPTIONS;
+                break;
             default:
                 break;
         }
+
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSelectedOption() {
+        return this.selectedOption;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() { // TODO: Consider to switch back to enum TypeState
+        return "MENU";
+    }
+
 }

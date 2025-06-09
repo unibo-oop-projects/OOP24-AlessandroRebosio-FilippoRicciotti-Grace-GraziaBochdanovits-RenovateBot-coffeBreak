@@ -2,6 +2,7 @@ package it.unibo.coffebreak.api.controller;
 
 import java.util.List;
 
+import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
@@ -115,4 +116,12 @@ public interface Controller {
      * @return the current game state, never null
      */
     GameState getGameState();
+
+    /**
+     * Gets the model the game is running on. //TODO: added because of merging
+     * problems might replace with a setState().
+     * 
+     * @return the model
+     */
+    Model getModel();
 }

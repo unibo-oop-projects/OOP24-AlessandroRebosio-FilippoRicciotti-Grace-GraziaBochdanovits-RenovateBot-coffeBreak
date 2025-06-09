@@ -40,4 +40,12 @@ public class GameOverState extends AbstractState {
     public void onExit(final Model model) {
         model.addEntry(this.name);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() { // TODO: Consider to switch back to enum TypeState
+        return "GAME OVER";
+    }
 }

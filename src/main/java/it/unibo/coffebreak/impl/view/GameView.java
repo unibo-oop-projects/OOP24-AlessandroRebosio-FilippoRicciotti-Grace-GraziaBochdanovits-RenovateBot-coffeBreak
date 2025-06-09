@@ -4,8 +4,13 @@ import javax.swing.JFrame;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
+import it.unibo.coffebreak.impl.model.states.pause.PauseState;
+import it.unibo.coffebreak.impl.view.panels.GameOverPanel;
 import it.unibo.coffebreak.impl.view.panels.GamePanel;
 import it.unibo.coffebreak.impl.view.panels.InGamePanel;
+import it.unibo.coffebreak.impl.view.panels.MenuPanel;
+import it.unibo.coffebreak.impl.view.panels.PausePanel;
+import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -37,6 +42,7 @@ public class GameView extends JFrame implements View {
 
     /** Reference to the game controller. */
     private final transient Controller controller;
+    private final GamePanel gamePanel;
 
     /**
      * Constructs a GameView with the given controller.
@@ -50,8 +56,10 @@ public class GameView extends JFrame implements View {
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-        final GamePanel gamePanel = new GamePanel();
-        gamePanel.setCurrentState(new InGamePanel(controller, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        this.gamePanel = new GamePanel();
+        controller.getModel().setState(PauseState::new);
+        gamePanel.setCurrentState(
+                new PausePanel(new ResourceLoader(), controller));
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -64,6 +72,27 @@ public class GameView extends JFrame implements View {
     @Override
     public void close() {
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
+    /**
+     * Sets current panel to the one the model switched to.
+     * 
+     * @param panel Panel to switch to
+     */
+    public void setStatePanel(final String panel) { // TODO: consider enum StateType
+        switch (panel) {
+            case "MENU" -> gamePanel.setCurrentState(
+                    new MenuPanel(new ResourceLoader(), controller));
+            case "PAUSE" -> gamePanel.setCurrentState(
+                    new PausePanel(new ResourceLoader(), controller));
+            case "GAME OVER" -> gamePanel.setCurrentState(
+                    new GameOverPanel(new ResourceLoader(), controller));
+            case "IN GAME" -> gamePanel.setCurrentState(
+                    new InGamePanel(controller, DEFAULT_WIDTH, DEFAULT_HEIGHT));
+            default -> {
+            }
+        }
+
     }
 
     /**
