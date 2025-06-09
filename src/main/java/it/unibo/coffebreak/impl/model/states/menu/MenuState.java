@@ -52,21 +52,4 @@ public class MenuState extends AbstractModelState {
         }
 
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getSelectedOption() {
-        return this.selectedOption;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() { // TODO: Consider to switch back to enum TypeState
-        return "MENU";
-    }
-
 }

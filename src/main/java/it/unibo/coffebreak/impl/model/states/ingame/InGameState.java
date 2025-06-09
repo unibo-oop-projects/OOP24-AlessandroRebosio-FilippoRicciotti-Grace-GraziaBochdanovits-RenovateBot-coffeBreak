@@ -66,12 +66,4 @@ public class InGameState extends AbstractModelState {
             model.setState(GameOverState::new);
         }
     }
-
-    /***
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() { // TODO: Consider to switch back to enum TypeState
-        return "IN GAME";
-    }
 }

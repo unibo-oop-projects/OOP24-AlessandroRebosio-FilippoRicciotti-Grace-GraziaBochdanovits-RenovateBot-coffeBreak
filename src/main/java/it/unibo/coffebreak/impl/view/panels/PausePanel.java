@@ -3,10 +3,8 @@ package it.unibo.coffebreak.impl.view.panels;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
@@ -21,7 +19,7 @@ public class PausePanel implements GameStatePanel {
     private static final float OPTION_SIZE = 33.0f;
 
     private static final Font PAUSE_FONT = new Font("Arial", Font.BOLD, PAUSE_SIZE);
-    private static final Color SELECTED_COLOR = Color.YELLOW;
+    // private static final Color SELECTED_COLOR = Color.YELLOW;
 
     private static final Color DEFAULT_COLOR = Color.WHITE;
     private static final int TITLE_Y = 150;
@@ -30,14 +28,14 @@ public class PausePanel implements GameStatePanel {
     private static final int MENU_Y = 400;
 
     private static final int EXIT_Y = 500;
-    private static final int START_OPTION = 0;
-    private static final int MENU_OPTION = 1;
+    // private static final int START_OPTION = 0;
+    // private static final int MENU_OPTION = 1;
 
-    private static final int QUIT_OPTION = 2;
+    // private static final int QUIT_OPTION = 2;
 
     private final Font titleFont;
     private final Font optionFont;
-    private final ModelState pauseState;
+    // private final ModelState pauseState;
 
     /**
      * Constructor for the Pause Panel.
@@ -48,7 +46,7 @@ public class PausePanel implements GameStatePanel {
      */
     public PausePanel(final ResourceLoader resources, final Controller controller) {
 
-        this.pauseState = Objects.requireNonNull(controller, "controller must not be null").getGameState();
+        // this.pauseState = Objects.requireNonNull(controller, "controller must not be null").getGameState();
         titleFont = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(TITLE_SIZE);
         optionFont = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(OPTION_SIZE);
 
@@ -81,11 +79,11 @@ public class PausePanel implements GameStatePanel {
                 TITLE_Y);
 
         g.setFont(optionFont);
-        g.setColor(pauseState.getSelectedOption() == START_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
+        // g.setColor(pauseState.getSelectedOption() == START_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
         g.drawString("Start Game", (width - g.getFontMetrics().stringWidth("Start Game")) / 2, START_GAME_Y);
-        g.setColor(pauseState.getSelectedOption() == MENU_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
+        // g.setColor(pauseState.getSelectedOption() == MENU_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
         g.drawString("Menu", (width - g.getFontMetrics().stringWidth("Menu")) / 2, MENU_Y);
-        g.setColor(pauseState.getSelectedOption() == QUIT_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
+        // g.setColor(pauseState.getSelectedOption() == QUIT_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
         g.drawString("Exit", (width - g.getFontMetrics().stringWidth("Exit")) / 2, EXIT_Y);
 
     }
