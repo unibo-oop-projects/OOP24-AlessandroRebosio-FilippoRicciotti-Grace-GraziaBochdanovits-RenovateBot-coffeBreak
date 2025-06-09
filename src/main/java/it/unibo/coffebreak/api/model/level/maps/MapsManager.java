@@ -8,6 +8,9 @@ import java.util.List;
  * @author Filippo Ricciotti
  */
 public interface MapsManager {
+    
+    int getLevelIndex();
+
     /**
      * Loads the next map in sequence.
      * 

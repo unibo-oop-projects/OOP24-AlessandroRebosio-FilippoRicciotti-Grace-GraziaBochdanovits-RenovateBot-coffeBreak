@@ -27,7 +27,7 @@ public interface LevelManager {
      * 
      * @return the player
      */
-    MainCharacter getPlayar();
+    MainCharacter getPlayer();
 
     /**
      * Gets the bonus score associated with completing the current map.
@@ -35,6 +35,8 @@ public interface LevelManager {
      * @return the bonus points awarded for completing this map
      */
     int getCurrentLevelBonus();
+
+    int getLevelIndex();
 
     /**
      * Calculates and applies a time-based bonus duration is decremented by

@@ -1,11 +1,14 @@
 package it.unibo.coffebreak.impl.controller;
 
-import java.util.Objects;
+import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
 
@@ -49,17 +52,39 @@ public class GameController implements Controller {
         this.input.keyReleased(keyCode);
     }
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Provides access to the game model while ensuring non-null return value.
-     * 
-     * @return The associated game model instance
-     * @throws IllegalStateException if the model reference has been cleared
-     */
     @Override
-    public Model getModel() {
-        return Objects.requireNonNull(this.model, "The model cannot be null");
+    public List<Entity> getEntities() {
+        return this.model.getEntities();
+    }
+
+    @Override
+    public int getScoreValue() {
+        return this.model.getScoreValue();
+    }
+
+    @Override
+    public int getBonusValue() {
+        return this.model.getBonusValue();
+    }
+
+    @Override
+    public List<Entry> getLeaderBoard() {
+        return this.getLeaderBoard();
+    }
+
+    @Override
+    public int getHighestScore() {
+        return this.getLeaderBoard().getFirst().getScore();
+    }
+
+    @Override
+    public int getLevelIndex() {
+        return this.model.getLevelIndex();
+    }
+
+    @Override
+    public GameState getGameState() {
+        return this.model.getGameState();
     }
 
     /**

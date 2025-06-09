@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.Objects;
 
+import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
@@ -24,7 +25,7 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 public class InGamePanel implements GameStatePanel {
 
     private final RenderManager renderManager;
-    private final Model model;
+    private final Controller controller;
     private final ResourceLoader resources;
     private final int screenWidth, screenHeight;
 
@@ -37,11 +38,11 @@ public class InGamePanel implements GameStatePanel {
      * @param screenWidth the width of the panel
      * @param screenHeight the height of the panel
      */
-    public InGamePanel(final ResourceLoader resources, final Model model, final int screenWidth, final int screenHeight) {
+    public InGamePanel(final ResourceLoader resources, final Controller controller, final int screenWidth, final int screenHeight) {
         this.renderManager = new GameRenderManagerImpl();
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-        this.model = Objects.requireNonNull(model, "Model cannot be null");
+        this.controller = Objects.requireNonNull(controller, "Model cannot be null");
         this.resources = Objects.requireNonNull(resources);
         initializeRenders();
     }
@@ -51,7 +52,7 @@ public class InGamePanel implements GameStatePanel {
      */
     private void initializeRenders() {
         // renderManager.addStaticRenderer(new LevelRender(Objects.requireNonNull(resources), 1));
-        model.getEntities().stream()
+        controller.getEntities().stream()
             .map(Entity::getClass)
             .distinct()
             .forEach(this::registerEntityRenderer);
@@ -69,7 +70,7 @@ public class InGamePanel implements GameStatePanel {
      */
     @Override
     public void update() {
-        this.renderManager.updateEntities(Collections.unmodifiableList(model.getEntities()));
+        this.renderManager.updateEntities(Collections.unmodifiableList(controller.getEntities()));
     }
 
     /**

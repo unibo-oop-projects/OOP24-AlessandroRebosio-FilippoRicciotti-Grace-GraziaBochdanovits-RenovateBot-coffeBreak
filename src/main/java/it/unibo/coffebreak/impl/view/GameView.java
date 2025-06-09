@@ -56,7 +56,7 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         final ResourceLoader resources = new ResourceLoader();
-        this.currentGameState = new InGamePanel(resources, this.controller.getModel(), DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.currentGameState = new InGamePanel(resources, this.controller, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         gamePanel.setCurrentState(currentGameState);
 
         super.setContentPane(gamePanel);

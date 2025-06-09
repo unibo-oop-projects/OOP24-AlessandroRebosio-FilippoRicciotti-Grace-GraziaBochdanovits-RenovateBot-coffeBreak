@@ -45,7 +45,7 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getPlayar() {
+    public MainCharacter getPlayer() {
         return this.entityManager.getPlayer();
     }
 
@@ -55,6 +55,14 @@ public class GameLevelManager implements LevelManager {
     @Override
     public int getCurrentLevelBonus() {
         return this.maps.getBonusValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelIndex() {
+        return this.maps.getLevelIndex();
     }
 
     /**

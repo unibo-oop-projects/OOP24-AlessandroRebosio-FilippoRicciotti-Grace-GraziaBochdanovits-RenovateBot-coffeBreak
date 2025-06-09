@@ -56,6 +56,14 @@ public class GameMapsManager implements MapsManager {
      * {@inheritDoc}
      */
     @Override
+    public int getLevelIndex() {
+        return this.levelIndex;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<String> loadNextMap() {
         final List<String> current = resetCurrentMap();
 

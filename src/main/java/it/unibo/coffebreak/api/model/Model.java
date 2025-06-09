@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -41,11 +42,22 @@ public interface Model {
     GameState getGameState();
 
     /**
+     * Method for get score value.
+     * 
+     * @return the score value
+     */
+    int getScoreValue();
+
+    /**
      * Method for get bonus value.
      * 
      * @return the bonus value
      */
     int getBonusValue();
+
+    List<Entry> getLeaderBoard();
+
+    int getLevelIndex();
 
     /**
      * Changes the current game state to the specified one.

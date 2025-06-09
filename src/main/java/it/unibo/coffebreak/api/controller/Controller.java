@@ -1,6 +1,10 @@
 package it.unibo.coffebreak.api.controller;
 
-import it.unibo.coffebreak.api.model.Model;
+import java.util.List;
+
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
  * The game controller in the MVC (Model-View-Controller) pattern.
@@ -26,12 +30,19 @@ public interface Controller {
      */
     void keyReleased(int keyCode);
 
-    /**
-     * Gets the game model associated with this controller.
-     * 
-     * @return the game model instance
-     */
-    Model getModel();
+    List<Entity> getEntities();
+
+    int getScoreValue();
+
+    int getBonusValue();
+
+    List<Entry> getLeaderBoard();
+
+    int getHighestScore();
+
+    int getLevelIndex();
+
+    GameState getGameState();
 
     /**
      * Processes all pending input commands and applies them to the game model.
