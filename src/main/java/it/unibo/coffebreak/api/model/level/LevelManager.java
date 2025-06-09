@@ -36,6 +36,11 @@ public interface LevelManager {
      */
     int getCurrentLevelBonus();
 
+    /**
+     * Gets the current level index.
+     * 
+     * @return the index of the current level
+     */
     int getLevelIndex();
 
     /**

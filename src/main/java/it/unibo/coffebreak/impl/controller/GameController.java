@@ -33,63 +33,6 @@ public class GameController implements Controller {
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the key press event to the input manager for processing.
-     * The actual command generation depends on current key bindings.
-     */
-    @Override
-    public void keyPressed(final int keyCode) {
-        this.input.keyPressed(keyCode);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Notifies the input manager that a key has been released,
-     * which may affect continuous commands like movement.
-     */
-    @Override
-    public void keyReleased(final int keyCode) {
-        this.input.keyReleased(keyCode);
-    }
-
-    @Override
-    public List<Entity> getEntities() {
-        return this.model.getEntities();
-    }
-
-    @Override
-    public int getScoreValue() {
-        return this.model.getScoreValue();
-    }
-
-    @Override
-    public int getBonusValue() {
-        return this.model.getBonusValue();
-    }
-
-    @Override
-    public List<Entry> getLeaderBoard() {
-        return this.getLeaderBoard();
-    }
-
-    @Override
-    public int getHighestScore() {
-        return this.getLeaderBoard().getFirst().getScore();
-    }
-
-    @Override
-    public int getLevelIndex() {
-        return this.model.getLevelIndex();
-    }
-
-    @Override
-    public GameState getGameState() {
-        return this.model.getGameState();
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
      * Processes all pending input commands by:
      * <ol>
      * <li>Retrieving commands from the input queue</li>
@@ -117,6 +60,84 @@ public class GameController implements Controller {
             throw new IllegalArgumentException("Delta time must be non-negative");
         }
         this.model.update(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Forwards the key press event to the input manager for processing.
+     * The actual command generation depends on current key bindings.
+     */
+    @Override
+    public void keyPressed(final int keyCode) {
+        this.input.keyPressed(keyCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Notifies the input manager that a key has been released,
+     * which may affect continuous commands like movement.
+     */
+    @Override
+    public void keyReleased(final int keyCode) {
+        this.input.keyReleased(keyCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entity> getEntities() {
+        return this.model.getEntities();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScoreValue() {
+        return this.model.getScoreValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusValue() {
+        return this.model.getBonusValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entry> getLeaderBoard() {
+        return this.model.getLeaderBoard();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getHighestScore() {
+        return this.getLeaderBoard().get(0).getScore();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getLevelIndex() {
+        return this.model.getLevelIndex();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        return this.model.getGameState();
     }
 
     /**

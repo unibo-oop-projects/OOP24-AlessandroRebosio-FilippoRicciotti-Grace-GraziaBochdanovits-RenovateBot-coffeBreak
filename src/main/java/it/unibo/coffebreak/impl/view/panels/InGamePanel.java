@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
@@ -33,12 +32,13 @@ public class InGamePanel implements GameStatePanel {
      * Constructs a new InGameScreen with the specified render manager and resource
      * loader.
      * 
-     * @param resources the {@link ResourceLoader} used to load game resouces
-     * @param model     the {@link Model} used to get the entities to render
-     * @param screenWidth the width of the panel
+     * @param resources    the {@link ResourceLoader} used to load game resouces
+     * @param controller   the {@link Controller} used to get the data to render
+     * @param screenWidth  the width of the panel
      * @param screenHeight the height of the panel
      */
-    public InGamePanel(final ResourceLoader resources, final Controller controller, final int screenWidth, final int screenHeight) {
+    public InGamePanel(final ResourceLoader resources, final Controller controller, final int screenWidth,
+            final int screenHeight) {
         this.renderManager = new GameRenderManagerImpl();
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -51,18 +51,19 @@ public class InGamePanel implements GameStatePanel {
      * Initialized the renders for the entity in the game Model.
      */
     private void initializeRenders() {
-        // renderManager.addStaticRenderer(new LevelRender(Objects.requireNonNull(resources), 1));
+        // renderManager.addStaticRenderer(new
+        // LevelRender(Objects.requireNonNull(resources), 1));
         controller.getEntities().stream()
-            .map(Entity::getClass)
-            .distinct()
-            .forEach(this::registerEntityRenderer);
+                .map(Entity::getClass)
+                .distinct()
+                .forEach(this::registerEntityRenderer);
     }
 
     private void registerEntityRenderer(final Class<? extends Entity> entityClass) {
         if (Platform.class.isAssignableFrom(entityClass)) {
             renderManager.addEntityRenderer(Platform.class, new PlatformRender(resources, screenWidth, screenHeight));
         }
-        //TODO: Add more entity types
+        // TODO: Add more entity types
     }
 
     /**

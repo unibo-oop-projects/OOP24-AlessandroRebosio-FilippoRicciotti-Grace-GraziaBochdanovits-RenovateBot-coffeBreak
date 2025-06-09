@@ -64,6 +64,14 @@ public class GameMapsManager implements MapsManager {
      * {@inheritDoc}
      */
     @Override
+    public int getBonusValue() {
+        return this.bonus.getBonus();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<String> loadNextMap() {
         final List<String> current = resetCurrentMap();
 
@@ -95,14 +103,6 @@ public class GameMapsManager implements MapsManager {
             this.bonus.calculate();
             this.bonusElapsed = 0;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getBonusValue() {
-        return this.bonus.getBonus();
     }
 
     private int getLevelBonus() {

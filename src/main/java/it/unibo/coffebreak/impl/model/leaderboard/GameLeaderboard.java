@@ -55,6 +55,9 @@ public class GameLeaderboard implements Leaderboard {
         return isAdded;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean save() {
         return this.repository.save(this.entries);

@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
  * The leaderboard maintains entries in descending order of their score/ranking.
  * Implementations may impose additional constraints like maximum capacity or
  * minimum score requirements.
- *
+ * 
  * @author Alessandro Rebosio
  */
 public interface Leaderboard {
@@ -26,18 +26,26 @@ public interface Leaderboard {
 
     /**
      * Attempts to add a new entry to the leaderboard if it meets ranking criteria.
-     * Specific conditions for eligibility are implementation-dependent (e.g.,
-     * minimum score
-     * or available capacity). Duplicate entries may or may not be allowed depending
-     * on
-     * implementation.
+     * <p>
+     * Specific conditions for eligibility are implementation-dependent
+     * (e.g., minimum score or available capacity).
+     * Duplicate entries may or may not be allowed depending on the implementation.
+     * </p>
      *
      * @param entry the entry to add, must not be null
+     * @return true if the entry was successfully added, false otherwise
      * @throws NullPointerException if entry is null
-     * 
-     * @return a boolean, if it is true the element was added, otherwise false
      */
     boolean addEntry(Entry entry);
 
+    /**
+     * Persists the leaderboard data to a stable storage medium.
+     * <p>
+     * Implementations may choose to store data to disk, cloud storage, or any
+     * other backend.
+     * </p>
+     * 
+     * @return true if the save operation was successful, false otherwise
+     */
     boolean save();
 }
