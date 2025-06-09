@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.impl.view.panel.GamePanel;
-import it.unibo.coffebreak.impl.view.states.menu.MenuView;
 
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
@@ -52,7 +51,6 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         this.gamePanel = new GamePanel();
-        this.gamePanel.setCurrentState(new MenuView());
 
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
@@ -73,8 +71,7 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void updateView() {
-        this.repaint();
-        getContentPane().repaint();
+        this.gamePanel.updateViewState(this.controller.getGameState());
     }
 
     /**
