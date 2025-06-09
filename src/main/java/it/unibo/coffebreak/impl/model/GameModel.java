@@ -58,7 +58,7 @@ public class GameModel implements Model {
      */
     @Override
     public MainCharacter getMainCharacter() {
-        return this.levelManager.getPlayar();
+        return this.levelManager.getPlayer();
     }
 
     /**
@@ -142,9 +142,7 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
-        if (this.levelManager.advanceLevel()) {
-            this.getMainCharacter().earnPoints(this.scoreManager.getCurrentBonus());
-        }
+        this.levelManager.advanceLevel();
     }
 
     /**

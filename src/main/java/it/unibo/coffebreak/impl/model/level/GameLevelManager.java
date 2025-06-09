@@ -45,7 +45,7 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getPlayar() {
+    public MainCharacter getPlayer() {
         return this.entityManager.getPlayer();
     }
 
@@ -109,12 +109,11 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean advanceLevel() {
+    public void advanceLevel() {
         if (this.shouldAdvanceLevel()) {
+            this.getPlayer().earnPoints(this.getCurrentLevelBonus());
             this.loadNextEnitites();
-            return true;
         }
-        return false;
     }
 
     /**

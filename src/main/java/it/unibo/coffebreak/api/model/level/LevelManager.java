@@ -27,7 +27,7 @@ public interface LevelManager {
      * 
      * @return the player
      */
-    MainCharacter getPlayar();
+    MainCharacter getPlayer();
 
     /**
      * Gets the bonus score associated with completing the current map.
@@ -77,8 +77,6 @@ public interface LevelManager {
 
     /**
      * Advances to the next level if conditions are met.
-     * 
-     * @return true if advaceLevel, otherwise false
      */
-    boolean advanceLevel();
+    void advanceLevel();
 }
