@@ -3,7 +3,7 @@ package it.unibo.coffebreak.impl.model.states.gameover;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.model.states.AbstractState;
+import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 
 /**
@@ -14,7 +14,7 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  * 
  * @author Filippo Ricciotti
  */
-public class GameOverState extends AbstractState {
+public class GameOverState extends AbstractModelState {
 
     private String name;
 

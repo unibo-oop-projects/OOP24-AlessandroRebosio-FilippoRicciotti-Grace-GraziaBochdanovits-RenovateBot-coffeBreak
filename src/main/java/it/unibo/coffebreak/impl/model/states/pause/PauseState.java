@@ -3,7 +3,7 @@ package it.unibo.coffebreak.impl.model.states.pause;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.model.states.AbstractState;
+import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 
@@ -15,7 +15,7 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  * 
  * @author Filippo Ricciotti
  */
-public class PauseState extends AbstractState {
+public class PauseState extends AbstractModelState {
 
     private static final int NUM_OPTIONS = 3;
     private int selectedOption; // 0 for Start Game,1 for Menu, 2 for Exit

@@ -3,7 +3,7 @@ package it.unibo.coffebreak.impl.model.states.menu;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.model.states.AbstractState;
+import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
 
 /**
@@ -14,7 +14,7 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
  * 
  * @author Filippo Ricciotti
  */
-public class MenuState extends AbstractState {
+public class MenuState extends AbstractModelState {
 
     private static final int NUM_OPTIONS = 2;
     private int selectedOption; // 0 for Start Game, 1 for Exit

@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.states.ModelState;
  * 
  * @author Filippo Ricciotti
  */
-public abstract class AbstractState implements ModelState {
+public abstract class AbstractModelState implements ModelState {
 
     /**
      * {@inheritDoc}
