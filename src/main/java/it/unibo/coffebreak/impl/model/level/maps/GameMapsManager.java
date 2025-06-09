@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import it.unibo.coffebreak.api.model.level.bonus.Bonus;
 import it.unibo.coffebreak.api.model.level.maps.MapsManager;
-import it.unibo.coffebreak.api.model.score.bonus.Bonus;
-import it.unibo.coffebreak.impl.model.score.bonus.GameBonus;
+import it.unibo.coffebreak.impl.model.level.bonus.GameBonus;
 
 /**
  * Concrete implementation of {@link MapsManager} that manages game maps and
@@ -61,6 +61,22 @@ public class GameMapsManager implements MapsManager {
      * {@inheritDoc}
      */
     @Override
+    public int getLevelIndex() {
+        return this.levelIndex;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusValue() {
+        return this.bonus.getBonus();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<String> loadNextMap() {
         final List<String> current = resetCurrentMap();
         this.bonus.setBonus(this.getLevelBonus());
@@ -92,14 +108,6 @@ public class GameMapsManager implements MapsManager {
             this.bonus.calculate();
             this.bonusElapsed = 0;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getBonusValue() {
-        return this.bonus.getBonus();
     }
 
     private int getLevelBonus() {

@@ -8,15 +8,17 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.level.LevelManager;
-import it.unibo.coffebreak.api.model.score.ScoreManager;
 import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
+import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
-import it.unibo.coffebreak.impl.model.score.GameScoreManager;
 import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 
 /**
- * Concrete implementation of the game model.
+ * Concrete implementation of the game {@link Model}.
  * <p>
  * Maintains the game state including entities, player information, and state
  * management.
@@ -29,52 +31,18 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 public class GameModel implements Model {
 
     private final LevelManager levelManager = new GameLevelManager();
-    private final ScoreManager scoreManager = new GameScoreManager();
+    private final Leaderboard leaderBoard = new GameLeaderboard();
 
     private GameState currentState;
     private volatile boolean running;
 
     /**
      * Constructs a new GameModel with default initial state.
-     * Initializes empty entities list, menu state, and running status.
+     * Initializes menu state and sets the game as running.
      */
     public GameModel() {
         this.setState(MenuState::new);
-
         this.running = true;
-    }
-
-    /**
-     * {@inheritDoc}
-     * The returned list is unmodifiable to maintain encapsulation.
-     */
-    @Override
-    public List<Entity> getEntities() {
-        return this.levelManager.getEntities();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public MainCharacter getMainCharacter() {
-        return this.levelManager.getPlayer();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getBonusValue() {
-        return this.levelManager.getCurrentLevelBonus();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public GameState getGameState() {
-        return this.currentState;
     }
 
     /**
@@ -93,8 +61,41 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void addEntryInLeaderBoard() {
-        this.scoreManager.addEntryInLeaderBoard("TODO");
+    public void start() {
+        this.levelManager.loadNextEnitites();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stop() {
+        this.leaderBoard.save();
+        this.running = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRunning() {
+        return this.running;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public GameState getGameState() {
+        return this.currentState;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entity> getEntities() {
+        return this.levelManager.getEntities();
     }
 
     /**
@@ -133,8 +134,24 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void calculateBonus(final float deltaTime) {
-        this.levelManager.calculateBonus(deltaTime);
+    public MainCharacter getMainCharacter() {
+        return this.levelManager.getPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getScoreValue() {
+        return this.getMainCharacter().getScoreValue();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getBonusValue() {
+        return this.levelManager.getCurrentLevelBonus();
     }
 
     /**
@@ -149,32 +166,40 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public int getLevelIndex() {
+        return this.levelManager.getLevelIndex();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void calculateBonus(final float deltaTime) {
+        this.levelManager.calculateBonus(deltaTime);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Entry> getLeaderBoard() {
+        return this.leaderBoard.getTopScores();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addEntry(final String name) {
+        this.leaderBoard.addEntry(new ScoreEntry(name, this.getScoreValue()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void handleCommand(final Command command) {
         this.currentState.handleCommand(this, command);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
-        this.levelManager.loadNextEnitites();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop() {
-        this.running = false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isRunning() {
-        return this.running;
     }
 
     /**

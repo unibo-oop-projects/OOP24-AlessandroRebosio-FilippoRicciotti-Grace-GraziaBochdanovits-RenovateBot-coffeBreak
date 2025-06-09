@@ -37,6 +37,13 @@ public interface LevelManager {
     int getCurrentLevelBonus();
 
     /**
+     * Gets the current level index.
+     * 
+     * @return the index of the current level
+     */
+    int getLevelIndex();
+
+    /**
      * Calculates and applies a time-based bonus duration is decremented by
      * {@code deltaTime}.
      * 

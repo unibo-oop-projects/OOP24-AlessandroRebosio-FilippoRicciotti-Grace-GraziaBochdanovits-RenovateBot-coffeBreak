@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score;
+package it.unibo.coffebreak.model.level.bonus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.api.model.score.bonus.Bonus;
-import it.unibo.coffebreak.impl.model.score.bonus.GameBonus;
+import it.unibo.coffebreak.api.model.level.bonus.Bonus;
+import it.unibo.coffebreak.impl.model.level.bonus.GameBonus;
 
 /**
  * Test class for {@link GameBonus} implementation. Verifies bonus

@@ -51,7 +51,7 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         final GamePanel gamePanel = new GamePanel();
-        gamePanel.setCurrentState(new InGamePanel(controller.getModel(), DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        gamePanel.setCurrentState(new InGamePanel(controller, DEFAULT_WIDTH, DEFAULT_HEIGHT));
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -72,7 +72,7 @@ public class GameView extends JFrame implements View {
     @Override
     public void updateView() {
         this.repaint();
-        getContentPane().repaint(); 
+        getContentPane().repaint();
     }
 
     /**

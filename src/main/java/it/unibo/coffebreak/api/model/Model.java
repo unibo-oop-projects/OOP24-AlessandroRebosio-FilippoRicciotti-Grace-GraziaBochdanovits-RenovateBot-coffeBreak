@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -20,87 +21,12 @@ import it.unibo.coffebreak.api.model.states.GameState;
  */
 public interface Model {
     /**
-     * Gets all entities currently present in the game world.
-     * 
-     * @return an unmodifiable list of all game entities
-     */
-    List<Entity> getEntities();
-
-    /**
-     * Gets the player.
-     * 
-     * @return the player
-     */
-    MainCharacter getMainCharacter();
-
-    /**
-     * Gets the current game state.
-     * 
-     * @return the current game state
-     */
-    GameState getGameState();
-
-    /**
-     * Method for get bonus value.
-     * 
-     * @return the bonus value
-     */
-    int getBonusValue();
-
-    /**
      * Changes the current game state to the specified one.
      * 
      * @param newState Supplier providing the new game state
      * @throws NullPointerException if newState is null
      */
     void setState(Supplier<GameState> newState);
-
-    /**
-     * Adds an entity to the game model.
-     * The entity will be included in the list of active entities.
-     *
-     * @param entity the {@link Entity} to be added
-     * @return true if the entity was added successfully, false otherwise
-     * @throws NullPointerException if entity is null
-     */
-    boolean addEntity(Entity entity);
-
-    /**
-     * Adds the current player's score to the leaderboard.
-     */
-    void addEntryInLeaderBoard();
-
-    /**
-     * Cleans the current list of entities by removing destroyed enemies
-     * and collected collectibles.
-     */
-    void cleanEntities();
-
-    /**
-     * Resets all entities in the current level to their initial state.
-     * This may include repositioning, restoring health, or other properties.
-     */
-    void resetEntities();
-
-    /**
-     * Transforms certain entities into other entities according to game logic.
-     * This could include power-ups changing state, enemies evolving, or
-     * environmental objects transitioning forms.
-     */
-    void transformEntities();
-
-    /**
-     * Calculates and applies a time-based bonus duration is decremented by
-     * {@code deltaTime}.
-     * 
-     * @param deltaTime the time elapsed since the last frame (in seconds).
-     */
-    void calculateBonus(float deltaTime);
-
-    /**
-     * Advances to the next map in the game sequence.
-     */
-    void nextMap();
 
     /**
      * Starts the first level of the game.
@@ -113,6 +39,107 @@ public interface Model {
     void stop();
 
     /**
+     * Checks if the game simulation is currently running.
+     * 
+     * @return true if the game is running, false otherwise
+     */
+    boolean isRunning();
+
+    /**
+     * Gets the current game state.
+     * 
+     * @return the current game state, never null
+     */
+    GameState getGameState();
+
+    /**
+     * Gets all entities currently present in the game world.
+     * 
+     * @return an unmodifiable list of all game entities, never null
+     */
+    List<Entity> getEntities();
+
+    /**
+     * Adds an entity to the game model.
+     * 
+     * @param entity the {@link Entity} to be added
+     * @return true if the entity was added successfully, false otherwise
+     * @throws NullPointerException if entity is null
+     */
+    boolean addEntity(Entity entity);
+
+    /**
+     * Cleans the current list of entities by removing destroyed enemies
+     * and collected collectibles.
+     */
+    void cleanEntities();
+
+    /**
+     * Resets all entities in the current level to their initial state.
+     */
+    void resetEntities();
+
+    /**
+     * Transforms certain entities according to game logic.
+     */
+    void transformEntities();
+
+    /**
+     * Gets the player character.
+     * 
+     * @return the main character instance, never null
+     */
+    MainCharacter getMainCharacter();
+
+    /**
+     * Gets the current player score.
+     * 
+     * @return the current score value
+     */
+    int getScoreValue();
+
+    /**
+     * Gets the current bonus value.
+     * 
+     * @return the current bonus value
+     */
+    int getBonusValue();
+
+    /**
+     * Advances to the next map in the game sequence.
+     */
+    void nextMap();
+
+    /**
+     * Gets the current level index.
+     * 
+     * @return the current level identifier
+     */
+    int getLevelIndex();
+
+    /**
+     * Calculates and applies time-based bonus effects.
+     * 
+     * @param deltaTime the time elapsed since the last frame (in seconds)
+     */
+    void calculateBonus(float deltaTime);
+
+    /**
+     * Gets the current leaderboard data.
+     * 
+     * @return an unmodifiable list of leaderboard entries, sorted by score (highest first)
+     */
+    List<Entry> getLeaderBoard();
+
+    /**
+     * Adds the current player's score to the leaderboard.
+     * 
+     * @param name the player name to associate with the score
+     * @throws NullPointerException if name is null
+     */
+    void addEntry(String name);
+
+    /**
      * Processes and executes the given game command.
      * 
      * @param command the command to be executed
@@ -122,16 +149,9 @@ public interface Model {
 
     /**
      * Updates the game logic based on elapsed time.
-     * This includes entity movements, collisions, and game state checks.
-     *
+     * 
      * @param deltaTime time in seconds since last update
+     * @throws IllegalArgumentException if deltaTime is negative
      */
     void update(float deltaTime);
-
-    /**
-     * Calculates and applies any time-based bonuses.
-     * 
-     * @return true if the game is running, false otherwise
-     */
-    boolean isRunning();
 }
