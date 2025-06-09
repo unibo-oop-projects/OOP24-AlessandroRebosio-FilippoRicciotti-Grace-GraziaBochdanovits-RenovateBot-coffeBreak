@@ -25,10 +25,4 @@ public interface View extends KeyListener {
      * Typically called once per frame.
      */
     void updateView();
-
-    /**
-     * Sets the current state panel.
-     * @param panel
-     */
-    void setStatePanel(String panel);
 }

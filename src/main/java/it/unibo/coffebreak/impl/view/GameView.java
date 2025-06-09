@@ -56,7 +56,6 @@ public class GameView extends JFrame implements View {
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
-        this.setStatePanel(controller.getGameState().toString());
     }
 
     /**

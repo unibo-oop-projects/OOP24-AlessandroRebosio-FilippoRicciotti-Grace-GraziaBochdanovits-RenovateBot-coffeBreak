@@ -20,7 +20,14 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
 public class MenuState extends AbstractModelState {
 
     private static final List<Option> OPTIONS = List.of(Option.START, Option.EXIT);
-    private int selectedOption = 0;
+    private int selectedOption;
+
+    /**
+     * Constructs a new MenuState with the default selected option (START).
+     */
+    public MenuState() {
+        this.selectedOption = 0;
+    }
 
     /**
      * {@inheritDoc}

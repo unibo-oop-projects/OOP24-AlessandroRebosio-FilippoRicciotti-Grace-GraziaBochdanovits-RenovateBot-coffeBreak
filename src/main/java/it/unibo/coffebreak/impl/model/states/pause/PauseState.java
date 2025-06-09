@@ -21,8 +21,18 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 public class PauseState extends AbstractModelState {
 
     private static final List<Option> OPTIONS = List.of(Option.RESUME, Option.EXIT);
-    private int selectedOption = 0;
+    private int selectedOption;
 
+    /**
+     * Constructs a new PauseState with the default selected option (START).
+     */
+    public PauseState() {
+        this.selectedOption = 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
