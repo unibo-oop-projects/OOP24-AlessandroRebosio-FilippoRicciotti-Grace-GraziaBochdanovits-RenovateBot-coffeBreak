@@ -61,8 +61,8 @@ public class GameEntityManager implements EntityManager {
         for (int y = 0; y < mapLines.size(); y++) {
             final String line = mapLines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                final Position2D position = new Position2D(x * GameEntityFactory.DEF_BOX.width(),
-                        y * GameEntityFactory.DEF_BOX.height());
+                final Position2D position = new Position2D(x * GameEntityFactory.DEFAULT.width(),
+                        y * GameEntityFactory.DEFAULT.height());
                 final char c = line.charAt(x);
 
                 switch (Character.toUpperCase(c)) {

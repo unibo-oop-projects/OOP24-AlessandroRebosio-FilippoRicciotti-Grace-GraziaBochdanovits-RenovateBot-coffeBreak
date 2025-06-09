@@ -40,7 +40,7 @@ public class GameEntityFactory implements EntityFactory {
     /**
      * Deafult entity bounding box dimension.
      */
-    public static final BoundingBox2D DEF_BOX = new BoundingBox2D(32, 32);
+    public static final BoundingBox2D DEFAULT = new BoundingBox2D(25, 25);
 
     private final Score score = new GameScore();
 
@@ -49,7 +49,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Coin createCoin(final Position2D position) {
-        return new Coin(position, DEF_BOX);
+        return new Coin(position, DEFAULT);
     }
 
     /**
@@ -57,7 +57,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Hammer createHammer(final Position2D position) {
-        return new Hammer(position, DEF_BOX);
+        return new Hammer(position, DEFAULT);
     }
 
     /**
@@ -67,7 +67,7 @@ public class GameEntityFactory implements EntityFactory {
     public Barrel createBarrel(final Position2D position) {
         // TODO: The first barrel must be able to transform, the others must be randomly
         // (RICCIOTTI)
-        return new GameBarrel(position, DEF_BOX, false);
+        return new GameBarrel(position, DEFAULT, false);
     }
 
     /**
@@ -75,7 +75,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Fire createFire(final Position2D position) {
-        return new GameFire(position, DEF_BOX);
+        return new GameFire(position, DEFAULT);
     }
 
     /**
@@ -83,7 +83,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Antagonist createDonkeyKong(final Position2D position) {
-        return new DonkeyKong(position, DEF_BOX);
+        return new DonkeyKong(position, DEFAULT.mul(4));
     }
 
     /**
@@ -91,7 +91,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Princess createPrincess(final Position2D position) {
-        return new Pauline(position, DEF_BOX);
+        return new Pauline(position, DEFAULT.mulY(2));
     }
 
     /**
@@ -99,7 +99,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Ladder createNormalLadder(final Position2D position) {
-        return new NormalLadder(position, DEF_BOX);
+        return new NormalLadder(position, DEFAULT);
     }
 
     /**
@@ -107,7 +107,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Platform createNormalPlatform(final Position2D position) {
-        return new NormalPlatform(position, DEF_BOX);
+        return new NormalPlatform(position, DEFAULT);
     }
 
     /**
@@ -115,7 +115,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Platform createBreakablePlatform(final Position2D position) {
-        return new BreakablePlatform(position, DEF_BOX);
+        return new BreakablePlatform(position, DEFAULT);
     }
 
     /**
@@ -123,7 +123,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Tank createTank(final Position2D position) {
-        return new GameTank(position, DEF_BOX);
+        return new GameTank(position, DEFAULT.mulY(2));
     }
 
     /**
@@ -131,7 +131,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public MainCharacter createMario(final Position2D position) {
-        return new Mario(position, DEF_BOX, score);
+        return new Mario(position, DEFAULT.mulY(2), score);
     }
 
 }
