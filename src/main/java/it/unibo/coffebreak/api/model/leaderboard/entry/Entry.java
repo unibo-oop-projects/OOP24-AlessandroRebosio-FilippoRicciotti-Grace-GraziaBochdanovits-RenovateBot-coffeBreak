@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.model.score.entry;
+package it.unibo.coffebreak.api.model.leaderboard.entry;
 
 import java.io.Serializable;
 

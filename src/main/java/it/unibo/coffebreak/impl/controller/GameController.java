@@ -7,7 +7,7 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;

@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.api.model.score.Score;
-import it.unibo.coffebreak.impl.model.score.GameScore;
+import it.unibo.coffebreak.api.model.entities.character.score.Score;
+import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 
 /**
  * Test class for {@link GameScore} implementation. Verifies score

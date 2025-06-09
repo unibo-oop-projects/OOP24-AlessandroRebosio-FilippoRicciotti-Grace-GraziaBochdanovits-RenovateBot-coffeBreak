@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.model.entities;
+package it.unibo.coffebreak.api.model.entities.character.lives;
 
 /**
  * An interface that manages the lives of a character in the game.

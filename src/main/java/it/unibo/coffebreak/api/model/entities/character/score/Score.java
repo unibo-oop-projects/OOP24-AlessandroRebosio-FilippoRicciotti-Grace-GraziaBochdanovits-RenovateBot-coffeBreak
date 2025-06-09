@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.model.score;
+package it.unibo.coffebreak.api.model.entities.character.score;
 
 /**
  * Manages a numeric score value that can be incremented and reset.

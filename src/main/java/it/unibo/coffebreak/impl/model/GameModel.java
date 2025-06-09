@@ -8,12 +8,13 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.level.LevelManager;
-import it.unibo.coffebreak.api.model.score.ScoreManager;
-import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
+import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
-import it.unibo.coffebreak.impl.model.score.GameScoreManager;
 import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 
 /**
@@ -30,7 +31,7 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 public class GameModel implements Model {
 
     private final LevelManager levelManager = new GameLevelManager();
-    private final ScoreManager scoreManager = new GameScoreManager();
+    private final Leaderboard leaderBoard = new GameLeaderboard();
 
     private GameState currentState;
     private volatile boolean running;
@@ -83,7 +84,7 @@ public class GameModel implements Model {
      */
     @Override
     public List<Entry> getLeaderBoard() {
-        return this.scoreManager.getLeaderBoard();
+        return this.leaderBoard.getTopScores();
     }
 
     /**
@@ -118,8 +119,8 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public void addEntryInLeaderBoard() {
-        this.scoreManager.addEntryInLeaderBoard("TODO");
+    public void addEntry(final String name) {
+        this.leaderBoard.addEntry(new ScoreEntry(name, this.getScoreValue()));
     }
 
     /**
@@ -191,6 +192,7 @@ public class GameModel implements Model {
      */
     @Override
     public void stop() {
+        this.leaderBoard.save();
         this.running = false;
     }
 

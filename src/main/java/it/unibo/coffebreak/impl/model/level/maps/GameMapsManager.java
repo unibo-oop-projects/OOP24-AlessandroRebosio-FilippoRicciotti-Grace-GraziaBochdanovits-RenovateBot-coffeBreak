@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import it.unibo.coffebreak.api.model.level.bonus.Bonus;
 import it.unibo.coffebreak.api.model.level.maps.MapsManager;
-import it.unibo.coffebreak.api.model.score.bonus.Bonus;
-import it.unibo.coffebreak.impl.model.score.bonus.GameBonus;
+import it.unibo.coffebreak.impl.model.level.bonus.GameBonus;
 
 /**
  * Concrete implementation of {@link MapsManager} that manages game maps and

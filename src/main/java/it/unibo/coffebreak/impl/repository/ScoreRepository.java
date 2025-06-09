@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.repository.Repository;
 import it.unibo.coffebreak.api.repository.filemanager.FileManager;
 import it.unibo.coffebreak.impl.repository.filemanager.GameFileManager;

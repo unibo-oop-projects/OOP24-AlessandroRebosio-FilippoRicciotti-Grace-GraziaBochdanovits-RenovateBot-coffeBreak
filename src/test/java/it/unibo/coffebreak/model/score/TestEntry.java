@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.api.model.score.entry.Entry;
-import it.unibo.coffebreak.impl.model.score.entry.ScoreEntry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
+import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 
 /**
  * Test class for {@link ScoreEntry} implementation. Verifies entry creation,

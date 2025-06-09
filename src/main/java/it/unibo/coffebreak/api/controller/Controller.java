@@ -3,7 +3,7 @@ package it.unibo.coffebreak.api.controller;
 import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**

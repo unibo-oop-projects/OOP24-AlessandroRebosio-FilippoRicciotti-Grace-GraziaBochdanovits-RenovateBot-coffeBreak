@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.impl.model.score.entry;
+package it.unibo.coffebreak.impl.model.leaderboard.entry;
 
 import java.util.Objects;
 
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 
 /**
  * Immutable implementation of {@link Entry} representing a player's score

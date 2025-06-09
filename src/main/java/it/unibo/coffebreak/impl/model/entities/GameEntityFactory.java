@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.model.entities;
 
 import it.unibo.coffebreak.api.model.entities.EntityFactory;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.entities.character.score.Score;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
@@ -9,7 +10,6 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.api.model.score.Score;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
@@ -17,13 +17,13 @@ import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.enemy.barrel.GameBarrel;
 import it.unibo.coffebreak.impl.model.entities.enemy.fire.GameFire;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.model.entities.npc.princess.Pauline;
 import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLadder;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
-import it.unibo.coffebreak.impl.model.score.GameScore;
 
 /**
  * {@code GameEntityFactory} is the implementation of the

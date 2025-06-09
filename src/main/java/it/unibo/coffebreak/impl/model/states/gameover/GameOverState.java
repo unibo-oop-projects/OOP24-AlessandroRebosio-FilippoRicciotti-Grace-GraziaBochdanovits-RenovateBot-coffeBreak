@@ -16,6 +16,8 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  */
 public class GameOverState extends AbstractState {
 
+    private String name;
+
     /**
      * {@inheritDoc}
      */
@@ -23,6 +25,7 @@ public class GameOverState extends AbstractState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
+                this.name = "TODO";
                 model.setState(MenuState::new);
                 break;
             default:
@@ -35,6 +38,6 @@ public class GameOverState extends AbstractState {
      */
     @Override
     public void onExit(final Model model) {
-        model.addEntryInLeaderBoard();
+        model.addEntry(this.name);
     }
 }

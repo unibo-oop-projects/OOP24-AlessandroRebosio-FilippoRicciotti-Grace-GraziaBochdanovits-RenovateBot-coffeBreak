@@ -1,8 +1,8 @@
-package it.unibo.coffebreak.api.model.score.leaderboard;
+package it.unibo.coffebreak.api.model.leaderboard;
 
 import java.util.List;
 
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 
 /**
  * Represents a ranked collection of {@link Entry}, typically used to track top
@@ -38,4 +38,6 @@ public interface Leaderboard {
      * @return a boolean, if it is true the element was added, otherwise false
      */
     boolean addEntry(Entry entry);
+
+    boolean save();
 }

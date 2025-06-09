@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
-import it.unibo.coffebreak.api.model.score.entry.Entry;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -80,7 +80,7 @@ public interface Model {
     /**
      * Adds the current player's score to the leaderboard.
      */
-    void addEntryInLeaderBoard();
+    void addEntry(String name);
 
     /**
      * Cleans the current list of entities by removing destroyed enemies
