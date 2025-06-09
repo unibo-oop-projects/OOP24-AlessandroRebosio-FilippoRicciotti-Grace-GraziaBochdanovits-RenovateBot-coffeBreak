@@ -38,4 +38,12 @@ public interface GameState {
      * @param deltaTime time in milliseconds since the last update call.
      */
     void update(Model model, float deltaTime);
+
+    /**
+     * Gets Selected option while in states like PAUSE,MENU,GAME OVER.
+     * 
+     * @return integer rapresenting the choice made by the user
+     */
+    int getSelectedOption();
+
 }

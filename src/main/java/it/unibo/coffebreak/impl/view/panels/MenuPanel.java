@@ -1,10 +1,8 @@
 package it.unibo.coffebreak.impl.view.panels;
 
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.impl.model.states.menu.MenuState;
+import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
-import it.unibo.coffebreak.api.view.renders.RenderManager;
-import it.unibo.coffebreak.impl.view.renders.GameRenderManagerImpl;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 import java.awt.Color;
@@ -17,49 +15,46 @@ import java.awt.Font;
  */
 public class MenuPanel implements GameStatePanel {
 
-    private final MenuState menuState;
+    private static final float TITLE_SIZE = 65.0f;
 
-    private static Font TITLE_FONT = null;
-    private static Font OPTION_FONT = null;
+    private static final float OPTION_SIZE = 33.0f;
     private static final Color SELECTED_COLOR = Color.YELLOW;
-    private static final Color DEFAULT_COLOR = Color.WHITE;
 
+    private static final Color DEFAULT_COLOR = Color.WHITE;
     private static final int TITLE_Y = 150;
     private static final int START_GAME_Y = 300;
     private static final int EXIT_Y = 410;
 
     private static final int START_OPTION = 0;
     private static final int QUIT_OPTION = 1;
+    private final GameState menuState;
 
-    private final int screenWidth, screenHeight;
-
-    private final RenderManager renderManager;
-
-    private final ResourceLoader resources;
+    private final Font titleFont;
+    private final Font optionFont;
 
     /**
-     * Constructor for the MenuPanel.
+     * Constructor for the Menu Panel.
      * 
-     * @param menuState the MenuState to display
+     * @param resources ResourceLoader needed for the fonts
+     * @param model     model for retrieving the gamestate
      */
-    public MenuPanel(final ResourceLoader resources, final Model model, final int width,
-            final int height) {
-        this.renderManager = new GameRenderManagerImpl();
-        this.screenHeight = height;
-        this.screenWidth = width;
-        this.resources = Objects.requireNonNull(resources);
-        this.menuState = (MenuState) model.getGameState();
-        TITLE_FONT = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(65.0f);
-        OPTION_FONT = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(33.0f);
+    public MenuPanel(final ResourceLoader resources, final Model model) {
+
+        this.menuState = Objects.requireNonNull(model, "Model must not be null").getGameState();
+        titleFont = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(TITLE_SIZE);
+        optionFont = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(OPTION_SIZE);
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(final Graphics2D g, final int width, final int height) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        g.setFont(TITLE_FONT);
+        g.setFont(titleFont);
         g.setColor(Color.BLUE);
         g.drawString("Coffee", (width - g.getFontMetrics().stringWidth("CoffeeBreak")) / 2, TITLE_Y);
         g.setColor(DEFAULT_COLOR);
@@ -68,7 +63,7 @@ public class MenuPanel implements GameStatePanel {
                         + g.getFontMetrics().stringWidth("Coffee"),
                 TITLE_Y);
 
-        g.setFont(OPTION_FONT);
+        g.setFont(optionFont);
         g.setColor(menuState.getSelectedOption() == START_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
         g.drawString("Start Game", (width - g.getFontMetrics().stringWidth("Start Game")) / 2, START_GAME_Y);
         g.setColor(menuState.getSelectedOption() == QUIT_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
