@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.model.states;
 
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
@@ -39,4 +40,12 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public abstract void handleCommand(Model model, Command command);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Option getSelectedOption() {
+        return Option.NONE;
+    }
 }

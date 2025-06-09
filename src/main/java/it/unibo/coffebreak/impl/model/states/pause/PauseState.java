@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.impl.model.states.pause;
 
+import java.util.List;
+
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
@@ -17,45 +20,40 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  */
 public class PauseState extends AbstractModelState {
 
-    private static final int NUM_OPTIONS = 3;
-    private int selectedOption; // 0 for Start Game,1 for Menu, 2 for Exit
+    private static final List<Option> OPTIONS = List.of(Option.RESUME, Option.EXIT);
+    private int selectedOption = 0;
 
-    private enum PauseOption {
-        START_GAME,
-        MENU,
-        EXIT
+    @Override
+    public void handleCommand(final Model model, final Command command) {
+        switch (command) {
+            case ENTER:
+                switch (OPTIONS.get(selectedOption)) {
+                    case RESUME:
+                        model.setState(InGameState::new);
+                        break;
+                    case EXIT:
+                        model.setState(MenuState::new);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case MOVE_UP:
+                selectedOption = (selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
+                break;
+            case MOVE_DOWN:
+                selectedOption = (selectedOption + 1) % OPTIONS.size();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
-            case ENTER:
-                if (selectedOption == PauseOption.START_GAME.ordinal()) { // TODO: Resume game
-                    model.start();
-                    model.setState(InGameState::new);
-                } else if (selectedOption == PauseOption.MENU.ordinal()) {
-                    model.setState(MenuState::new);
-                } else if (selectedOption == PauseOption.EXIT.ordinal()) {
-                    model.stop();
-                }
-                break;
-            case ESCAPE:
-                model.setState(MenuState::new);
-                break;
-            case QUIT:
-                model.stop();
-                break;
-            case MOVE_UP:
-                selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS;
-                break;
-            case MOVE_DOWN:
-                selectedOption = (selectedOption + 1 + NUM_OPTIONS) % NUM_OPTIONS;
-                break;
-            default:
-                break;
-        }
+    public Option getSelectedOption() {
+        return OPTIONS.get(this.selectedOption);
     }
 }

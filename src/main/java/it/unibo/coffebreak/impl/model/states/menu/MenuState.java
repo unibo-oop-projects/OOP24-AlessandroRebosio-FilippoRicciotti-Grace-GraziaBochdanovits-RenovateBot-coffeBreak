@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.impl.model.states.menu;
 
+import java.util.List;
+
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
@@ -16,13 +19,8 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
  */
 public class MenuState extends AbstractModelState {
 
-    private static final int NUM_OPTIONS = 2;
-    private int selectedOption; // 0 for Start Game, 1 for Exit
-
-    private enum MenuOption {
-        START_GAME,
-        EXIT
-    }
+    private static final List<Option> OPTIONS = List.of(Option.START, Option.EXIT);
+    private int selectedOption = 0;
 
     /**
      * {@inheritDoc}
@@ -31,25 +29,34 @@ public class MenuState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                if (selectedOption == MenuOption.START_GAME.ordinal()) {
-                    model.start();
-                    model.setState(InGameState::new);
-                } else if (selectedOption == MenuOption.EXIT.ordinal()) {
-                    model.stop();
+                switch (OPTIONS.get(this.selectedOption)) {
+                    case START:
+                        model.start();
+                        model.setState(InGameState::new);
+                        break;
+                    case EXIT:
+                        model.stop();
+                        break;
+                    default:
+                        break;
                 }
                 break;
-            case QUIT:
-                model.stop();
-                break;
             case MOVE_UP:
-                selectedOption = (selectedOption - 1 + NUM_OPTIONS) % NUM_OPTIONS;
+                this.selectedOption = (this.selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
                 break;
             case MOVE_DOWN:
-                selectedOption = (selectedOption + 1) % NUM_OPTIONS;
+                this.selectedOption = (this.selectedOption + 1) % OPTIONS.size();
                 break;
             default:
                 break;
         }
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Option getSelectedOption() {
+        return OPTIONS.get(this.selectedOption);
     }
 }

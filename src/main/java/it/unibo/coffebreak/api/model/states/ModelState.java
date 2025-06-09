@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.api.model.states;
 
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 
 /**
@@ -38,4 +39,11 @@ public interface ModelState {
      * @param deltaTime time in milliseconds since the last update call.
      */
     void update(Model model, float deltaTime);
+
+    /**
+     * Returns the currently selected option for this state, if any.
+     *
+     * @return the selected {@link Option}
+     */
+    Option getSelectedOption();
 }
