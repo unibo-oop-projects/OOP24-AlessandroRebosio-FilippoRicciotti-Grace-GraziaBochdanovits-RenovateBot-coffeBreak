@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.panels;
+package it.unibo.coffebreak.impl.view.panel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.api.view.panels.GameStatePanel;
+import it.unibo.coffebreak.api.view.panel.GameStatePanel;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**

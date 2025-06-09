@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.panels;
+package it.unibo.coffebreak.impl.view.panel;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,8 +6,8 @@ import java.io.Serial;
 
 import javax.swing.JPanel;
 
-import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.api.view.renders.RenderManager;
+import it.unibo.coffebreak.api.view.states.ViewState;
 
 /**
  * A resizable panel for game rendering that uses double buffering to prevent
@@ -22,7 +22,7 @@ public class GamePanel extends JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private transient GameStatePanel currentstateScreen; // TODO: state pattern per logica cambio panels
+    private transient ViewState currentstateScreen; // TODO: state pattern per logica cambio panels
 
     /**
      * Paints the component by first clearing the background and then delegating
@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         if (currentstateScreen != null) {
             final Graphics2D g2d = (Graphics2D) g;
-            currentstateScreen.render(g2d, getWidth(), getHeight());
+            currentstateScreen.draw(g2d, getWidth(), getHeight());
         }
     }
 
@@ -45,7 +45,7 @@ public class GamePanel extends JPanel {
      * 
      * @param state the new state screen of the game
      */
-    public void setCurrentState(final GameStatePanel state) {
+    public void setCurrentState(final ViewState state) {
         this.currentstateScreen = state;
         repaint();
     }
@@ -55,7 +55,7 @@ public class GamePanel extends JPanel {
      * 
      * @return the current choice of the user
      */
-    public GameStatePanel getCurrentState() {
+    public ViewState getCurrentState() {
         return this.currentstateScreen;
 
     }
