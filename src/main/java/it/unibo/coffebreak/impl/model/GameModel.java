@@ -10,6 +10,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.score.ScoreManager;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
 import it.unibo.coffebreak.impl.model.score.GameScoreManager;
@@ -101,6 +102,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public List<Entry> getLeaderBoard() {
+        return this.scoreManager.getLeaderBoard();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean addEntity(final Entity entity) {
         return this.levelManager.addEntity(entity);
     }
@@ -186,4 +195,5 @@ public class GameModel implements Model {
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
     }
+
 }

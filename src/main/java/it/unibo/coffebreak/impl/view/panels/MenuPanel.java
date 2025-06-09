@@ -15,13 +15,12 @@ import java.awt.Font;
 /**
  * Panel for the Menu game state.
  */
-public class MenuPanel extends GamePanel implements GameStatePanel {
+public class MenuPanel implements GameStatePanel {
 
- 
     private final MenuState menuState;
 
     private static Font TITLE_FONT = null;
-    private static Font MENU_FONT = null;
+    private static Font OPTION_FONT = null;
     private static final Color SELECTED_COLOR = Color.YELLOW;
     private static final Color DEFAULT_COLOR = Color.WHITE;
 
@@ -51,7 +50,7 @@ public class MenuPanel extends GamePanel implements GameStatePanel {
         this.resources = Objects.requireNonNull(resources);
         this.menuState = (MenuState) model.getGameState();
         TITLE_FONT = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(65.0f);
-        MENU_FONT = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(33.0f);
+        OPTION_FONT = resources.loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(33.0f);
 
     }
 
@@ -69,7 +68,7 @@ public class MenuPanel extends GamePanel implements GameStatePanel {
                         + g.getFontMetrics().stringWidth("Coffee"),
                 TITLE_Y);
 
-        g.setFont(MENU_FONT);
+        g.setFont(OPTION_FONT);
         g.setColor(menuState.getSelectedOption() == START_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);
         g.drawString("Start Game", (width - g.getFontMetrics().stringWidth("Start Game")) / 2, START_GAME_Y);
         g.setColor(menuState.getSelectedOption() == QUIT_OPTION ? SELECTED_COLOR : DEFAULT_COLOR);

@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.score.entry.Entry;
 import it.unibo.coffebreak.api.model.states.GameState;
 
 /**
@@ -69,6 +70,13 @@ public interface Model {
      * Adds the current player's score to the leaderboard.
      */
     void addEntryInLeaderBoard();
+
+    /**
+     * Gets the List with the data of the 5 best plyers.
+     * 
+     * @return List of the 5 best score and the names of the players who achived it
+     */
+    List<Entry> getLeaderBoard();
 
     /**
      * Cleans the current list of entities by removing destroyed enemies
