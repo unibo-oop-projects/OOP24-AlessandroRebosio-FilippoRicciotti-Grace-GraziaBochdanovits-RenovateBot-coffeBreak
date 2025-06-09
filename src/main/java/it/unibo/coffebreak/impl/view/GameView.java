@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
-import it.unibo.coffebreak.impl.model.states.pause.PauseState;
 import it.unibo.coffebreak.impl.view.panels.GameOverPanel;
 import it.unibo.coffebreak.impl.view.panels.GamePanel;
 import it.unibo.coffebreak.impl.view.panels.InGamePanel;
@@ -57,13 +56,13 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         this.gamePanel = new GamePanel();
-        controller.getModel().setState(PauseState::new);
-        gamePanel.setCurrentState(
-                new PausePanel(new ResourceLoader(), controller));
+        //controller.getModel().setState(PauseState::new);
+        //gamePanel.setCurrentState(new PausePanel(new ResourceLoader(), controller));
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
+        this.setStatePanel(controller.getModel().getGameState().toString());
     }
 
     /**
@@ -79,7 +78,8 @@ public class GameView extends JFrame implements View {
      * 
      * @param panel Panel to switch to
      */
-    public void setStatePanel(final String panel) { // TODO: consider enum StateType
+    @Override
+    public final void setStatePanel(final String panel) { // TODO: consider enum StateType
         switch (panel) {
             case "MENU" -> gamePanel.setCurrentState(
                     new MenuPanel(new ResourceLoader(), controller));
