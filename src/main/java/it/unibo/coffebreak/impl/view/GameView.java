@@ -56,12 +56,13 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         this.gamePanel = new GamePanel();
-        gamePanel.setCurrentState(
-                new PausePanel(new ResourceLoader(), controller));
+        //controller.getModel().setState(PauseState::new);
+        //gamePanel.setCurrentState(new PausePanel(new ResourceLoader(), controller));
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
+        this.setStatePanel(controller.getGameState().toString());
     }
 
     /**
@@ -77,7 +78,8 @@ public class GameView extends JFrame implements View {
      * 
      * @param panel Panel to switch to
      */
-    public void setStatePanel(final String panel) { // TODO: consider enum StateType
+    @Override
+    public final void setStatePanel(final String panel) { // TODO: consider enum StateType
         switch (panel) {
             case "MENU" -> gamePanel.setCurrentState(
                     new MenuPanel(new ResourceLoader(), controller));
