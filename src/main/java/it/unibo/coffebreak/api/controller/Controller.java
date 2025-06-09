@@ -121,7 +121,7 @@ public interface Controller {
      * Gets the model the game is running on. //TODO: added because of merging
      * problems might replace with a setState().
      * 
-     * @return the model
+     * @return current Model instance
      */
     Model getModel();
 }

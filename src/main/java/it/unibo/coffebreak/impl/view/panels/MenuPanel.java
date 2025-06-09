@@ -35,8 +35,8 @@ public class MenuPanel implements GameStatePanel {
     /**
      * Constructor for the Menu Panel.
      * 
-     * @param resources ResourceLoader needed for the fonts
-     * @param model     model for retrieving the gamestate
+     * @param resources  ResourceLoader needed for the fonts
+     * @param controller controller for retrieving the gamestate
      */
     public MenuPanel(final ResourceLoader resources, final Controller controller) {
 

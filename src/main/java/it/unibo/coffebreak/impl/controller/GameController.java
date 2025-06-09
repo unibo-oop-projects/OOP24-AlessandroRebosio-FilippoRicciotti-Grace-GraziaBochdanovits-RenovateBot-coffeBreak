@@ -152,6 +152,8 @@ public class GameController implements Controller {
      * {@inheritDoc}
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
+             justification = "Model exposure is required by View logic")
     public Model getModel() {
         return this.model;
     }
