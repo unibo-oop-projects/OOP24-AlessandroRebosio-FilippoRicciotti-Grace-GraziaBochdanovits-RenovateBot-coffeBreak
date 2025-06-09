@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.core;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.core.Engine;
+import it.unibo.coffebreak.api.model.states.GameState;
 import it.unibo.coffebreak.impl.controller.GameController;
 import it.unibo.coffebreak.impl.view.GameView;
 
@@ -29,6 +30,7 @@ public class GameEngine implements Engine {
     @Override
     public void run() {
         long previousTime = System.currentTimeMillis();
+        final GameState currenState = this.controller.getModel().getGameState();
 
         while (controller.isGameActive()) {
             final long currentTime = System.currentTimeMillis();
@@ -36,6 +38,9 @@ public class GameEngine implements Engine {
 
             controller.processInput();
             controller.updateModel(deltaTime);
+            if (!this.controller.getModel().getGameState().toString().equals(currenState.toString())) {
+                this.view.setStatePanel(this.controller.getModel().getGameState().toString());
+            }
             view.updateView();
 
             sleepUntilNextFrame(currentTime);
