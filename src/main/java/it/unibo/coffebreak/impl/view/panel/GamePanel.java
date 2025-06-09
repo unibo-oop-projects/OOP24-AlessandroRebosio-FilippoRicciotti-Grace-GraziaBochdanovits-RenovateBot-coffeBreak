@@ -39,8 +39,31 @@ public class GamePanel extends JPanel implements Panel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         if (currentViewState != null) {
-            final Graphics2D g2d = (Graphics2D) g;
-            currentViewState.draw(g2d, getWidth(), getHeight());
+            final int panelWidth = super.getWidth();
+            final int panelHeight = super.getHeight();
+            final double targetRatio = 4.0 / 3.0;
+
+            int drawWidth = panelWidth;
+            int drawHeight = (int) (panelWidth / targetRatio);
+
+            if (drawHeight > panelHeight) {
+                drawHeight = panelHeight;
+                drawWidth = (int) (panelHeight * targetRatio);
+            }
+
+            final int x = (panelWidth - drawWidth) / 2;
+            final int y = (panelHeight - drawHeight) / 2;
+
+            final Graphics2D g2d = (Graphics2D) g.create();
+
+            g2d.setColor(super.getBackground());
+            g2d.fillRect(0, 0, panelWidth, panelHeight);
+
+            g2d.setClip(x, y, drawWidth, drawHeight);
+            g2d.translate(x, y);
+            this.currentViewState.draw(g2d, drawWidth, drawHeight);
+
+            g2d.dispose();
         }
     }
 
@@ -50,7 +73,7 @@ public class GamePanel extends JPanel implements Panel {
     @Override
     public void updateViewState(final Controller controller) {
         final ViewState nextState = switch (controller.getGameState()) {
-            case MenuState menu -> new MenuView(controller);
+            case final MenuState menu -> new MenuView(controller);
             default -> null;
         };
 

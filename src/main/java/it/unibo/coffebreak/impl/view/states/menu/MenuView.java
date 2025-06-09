@@ -1,6 +1,8 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.impl.model.states.menu.MenuState;
+import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 import java.awt.Color;
@@ -17,16 +19,9 @@ import java.awt.Graphics2D;
  */
 public class MenuView extends AbstractViewState {
 
-    private static final float TITLE_SIZE = 65.0f;
-    private static final float OPTION_SIZE = 33.0f;
-
     private static final Color DEFAULT_COLOR = Color.WHITE;
-    private static final int TITLE_Y = 150;
-    private static final int START_GAME_Y = 300;
-    private static final int EXIT_Y = 410;
 
-    private final Font titleFont;
-    private final Font optionFont;
+    private final Font font;
 
     /**
      * Constructs the main menu view and loads required fonts.
@@ -36,8 +31,7 @@ public class MenuView extends AbstractViewState {
     public MenuView(final Controller controller) {
         super(controller);
 
-        titleFont = super.getResource().loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(TITLE_SIZE);
-        optionFont = super.getResource().loadFont("/fonts/ARCADECLASSIC.TTF").deriveFont(OPTION_SIZE);
+        this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
     /**
@@ -49,23 +43,36 @@ public class MenuView extends AbstractViewState {
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height) {
-        // Background
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        // Title
-        g.setFont(titleFont);
-        g.setColor(Color.BLUE);
-        g.drawString("Coffee", (width - g.getFontMetrics().stringWidth("CoffeeBreak")) / 2, TITLE_Y);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString("Break",
-                ((width - g.getFontMetrics().stringWidth("CoffeeBreak")) / 2)
-                        + g.getFontMetrics().stringWidth("Coffee"),
-                TITLE_Y);
+        final Font titleFont = this.font.deriveFont(height * 0.11f);
+        final Font optionFont = this.font.deriveFont(height * 0.055f);
 
-        // Options
+        g.setFont(titleFont);
+        final var fmTitle = g.getFontMetrics();
+        final int titleY = (int) (height * 0.22);
+        final int titleX = (width - fmTitle.stringWidth("CoffeeBreak")) / 2;
+        g.setColor(Color.BLUE);
+        g.drawString("Coffee", titleX, titleY);
+        g.setColor(DEFAULT_COLOR);
+        g.drawString("Break", titleX + fmTitle.stringWidth("Coffee"), titleY);
+
         g.setFont(optionFont);
-        g.drawString("Start Game", (width - g.getFontMetrics().stringWidth("Start Game")) / 2, START_GAME_Y);
-        g.drawString("Exit", (width - g.getFontMetrics().stringWidth("Exit")) / 2, EXIT_Y);
+        final var fmOption = g.getFontMetrics();
+
+        if (super.getController().getGameState() instanceof final MenuState menuState) {
+            final var options = menuState.getOptions();
+            final int selected = options.indexOf(menuState.getSelectedOption());
+            final int baseY = (int) (height * 0.5);
+            final int stepY = (int) (height * 0.18);
+
+            for (int i = 0; i < options.size(); i++) {
+                final String text = options.get(i).toString();
+                final int y = baseY + i * stepY;
+                g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
+                g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
+            }
+        }
     }
 }
