@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.view.panels;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
@@ -27,7 +27,7 @@ public class MenuPanel implements GameStatePanel {
 
     private static final int START_OPTION = 0;
     private static final int QUIT_OPTION = 1;
-    private final GameState menuState;
+    private final ModelState menuState;
 
     private final Font titleFont;
     private final Font optionFont;

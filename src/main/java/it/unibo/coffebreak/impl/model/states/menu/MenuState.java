@@ -2,12 +2,12 @@ package it.unibo.coffebreak.impl.model.states.menu;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
 
 /**
- * Implementation of {@link GameState} interface;
+ * Implementation of {@link ModelState} interface;
  * <p>
  * Represents the <b>Main Menu</b> state of the game.
  * </p>

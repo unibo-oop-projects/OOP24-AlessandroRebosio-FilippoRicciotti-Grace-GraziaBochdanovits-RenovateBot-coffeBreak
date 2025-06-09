@@ -8,7 +8,7 @@ import it.unibo.coffebreak.api.model.Model;
  * 
  * @author Filippo Ricciotti
  */
-public interface GameState {
+public interface ModelState {
     /**
      * method for signaling the entrance in a new Phase.
      * 

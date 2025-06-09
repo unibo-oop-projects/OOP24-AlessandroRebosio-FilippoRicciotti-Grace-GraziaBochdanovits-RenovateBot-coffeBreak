@@ -7,7 +7,7 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 
 /**
  * Represents the main model interface for the game.
@@ -26,7 +26,7 @@ public interface Model {
      * @param newState Supplier providing the new game state
      * @throws NullPointerException if newState is null
      */
-    void setState(Supplier<GameState> newState);
+    void setState(Supplier<ModelState> newState);
 
     /**
      * Starts the first level of the game.
@@ -50,7 +50,7 @@ public interface Model {
      * 
      * @return the current game state, never null
      */
-    GameState getGameState();
+    ModelState getGameState();
 
     /**
      * Gets all entities currently present in the game world.
@@ -127,7 +127,8 @@ public interface Model {
     /**
      * Gets the current leaderboard data.
      * 
-     * @return an unmodifiable list of leaderboard entries, sorted by score (highest first)
+     * @return an unmodifiable list of leaderboard entries, sorted by score (highest
+     *         first)
      */
     List<Entry> getLeaderBoard();
 

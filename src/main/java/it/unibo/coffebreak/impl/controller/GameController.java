@@ -8,7 +8,7 @@ import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
 
@@ -136,7 +136,7 @@ public class GameController implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public GameState getGameState() {
+    public ModelState getGameState() {
         return this.model.getGameState();
     }
 
@@ -147,15 +147,4 @@ public class GameController implements Controller {
     public boolean isGameActive() {
         return this.model.isRunning();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP",
-             justification = "Model exposure is required by View logic")
-    public Model getModel() {
-        return this.model;
-    }
-
 }

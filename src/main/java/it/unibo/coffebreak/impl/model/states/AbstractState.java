@@ -2,7 +2,7 @@ package it.unibo.coffebreak.impl.model.states;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 
 /**
  * An abstract base class representing a game State.
@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.states.GameState;
  * 
  * @author Filippo Ricciotti
  */
-public abstract class AbstractState implements GameState {
+public abstract class AbstractState implements ModelState {
 
     /**
      * {@inheritDoc}

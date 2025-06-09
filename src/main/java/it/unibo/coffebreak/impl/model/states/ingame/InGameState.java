@@ -3,14 +3,14 @@ package it.unibo.coffebreak.impl.model.states.ingame;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Movable;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseState;
 
 /**
- * Implementation of {@link GameState} interface;
+ * Implementation of {@link ModelState} interface;
  * <p>
  * Represents the <b>In Game state</b> of the game.
  * </p>

@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.states.GameState;
+import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.api.view.panels.GameStatePanel;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
@@ -37,7 +37,7 @@ public class PausePanel implements GameStatePanel {
 
     private final Font titleFont;
     private final Font optionFont;
-    private final GameState pauseState;
+    private final ModelState pauseState;
 
     /**
      * Constructor for the Pause Panel.
