@@ -1,11 +1,10 @@
-package it.unibo.coffebreak.model.score;
+package it.unibo.coffebreak.model.leaderboard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,18 +18,6 @@ import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 /**
  * Comprehensive test suite for {@link Leaderboard} interface and
  * {@link GameLeaderboard} implementation.
- * 
- * <p>
- * Tests verify:
- * <ul>
- * <li>Entry addition and ordering</li>
- * <li>Capacity management</li>
- * <li>Modification tracking</li>
- * <li>Error handling</li>
- * <li>Edge cases</li>
- * </ul>
- * 
- * @author Alessandro Rebosio
  */
 class TestLeaderBoard {
 
@@ -49,15 +36,7 @@ class TestLeaderBoard {
      */
     @BeforeEach
     void init() {
-        this.leaderBoard = new GameLeaderboard(new ArrayList<>());
-    }
-
-    /**
-     * Tests that constructor throws NullPointerException with null input.
-     */
-    @Test
-    void testConstructorWithNullListThrowsException() {
-        assertThrows(NullPointerException.class, () -> new GameLeaderboard(null));
+        leaderBoard = new GameLeaderboard();
     }
 
     /**
@@ -65,14 +44,14 @@ class TestLeaderBoard {
      */
     @Test
     void shouldMaintainDescendingOrder() {
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_2, SCORE_2));
         leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
         leaderBoard.addEntry(new ScoreEntry(PLAYER_3, SCORE_3));
-        leaderBoard.addEntry(new ScoreEntry(PLAYER_2, SCORE_2));
 
         final List<Entry> expected = List.of(
-                new ScoreEntry(PLAYER_3, SCORE_3),
-                new ScoreEntry(PLAYER_2, SCORE_2),
-                new ScoreEntry(PLAYER_1, SCORE_1));
+            new ScoreEntry(PLAYER_3, SCORE_3),
+            new ScoreEntry(PLAYER_2, SCORE_2),
+            new ScoreEntry(PLAYER_1, SCORE_1));
 
         assertEquals(expected, leaderBoard.getTopScores());
     }
@@ -121,7 +100,20 @@ class TestLeaderBoard {
     void shouldAcceptEmptyPlayerNames() {
         final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
         leaderBoard.addEntry(entry);
-        assertEquals(EMPTY_NAME, leaderBoard.getTopScores().getFirst().getName());
+        assertEquals(EMPTY_NAME, leaderBoard.getTopScores().get(0).getName());
+    }
+
+    /**
+     * Tests that changes are persisted to repository.
+     */
+    @Test
+    void shouldPersistChangesToRepository() {
+        leaderBoard.addEntry(new ScoreEntry(PLAYER_1, SCORE_1));
+        leaderBoard.save();
+
+        final Leaderboard newLeaderboard = new GameLeaderboard();
+        assertEquals(1, newLeaderboard.getTopScores().size());
+        assertEquals(PLAYER_1, newLeaderboard.getTopScores().get(0).getName());
     }
 
     /**

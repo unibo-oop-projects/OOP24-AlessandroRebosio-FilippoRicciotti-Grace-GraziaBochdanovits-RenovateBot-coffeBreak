@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.score;
+package it.unibo.coffebreak.model.level.bonus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
