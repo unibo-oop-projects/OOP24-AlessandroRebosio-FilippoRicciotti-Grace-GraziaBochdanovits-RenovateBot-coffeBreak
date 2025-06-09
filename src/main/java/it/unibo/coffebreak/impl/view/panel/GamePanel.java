@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
-import it.unibo.coffebreak.api.view.renders.RenderManager;
+import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuState;
 import it.unibo.coffebreak.impl.view.states.menu.MenuView;

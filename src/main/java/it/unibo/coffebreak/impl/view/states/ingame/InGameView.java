@@ -1,10 +1,13 @@
 package it.unibo.coffebreak.impl.view.states.ingame;
 
 import java.awt.Graphics2D;
+import java.util.List;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.view.renders.RenderManager;
-import it.unibo.coffebreak.impl.view.renders.GameRenderManagerImpl;
+import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.view.render.RenderManager;
+import it.unibo.coffebreak.impl.view.renders.GameRenderManager;
+import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -19,20 +22,22 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class InGameView extends AbstractViewState {
 
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 600;
     private final RenderManager renderManager;
+    private final List<Entity> entities;
 
     /**
      * Constructs an InGameView with the specified controller.
      * Initializes the render manager with a default resolution of 800x600 pixels.
      * 
      * @param controller the game controller that manages the game logic and entities
+     * @param resource the resource loader of the game
      * @throws IllegalArgumentException if the controller is null
      */
-    public InGameView(final Controller controller) {
+    public InGameView(final Controller controller, final ResourceLoader resource) {
         super(controller);
-        this.renderManager = new GameRenderManagerImpl(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        this.entities = controller.getEntities();
+        this.renderManager = new GameRenderManager(resource, 0, 0);
+        //TODO: le screen dimension vanno passate al costruttore
     }
 
     /**
@@ -45,7 +50,7 @@ public class InGameView extends AbstractViewState {
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height) {
-        this.renderManager.updateEntities(super.getController().getEntities());
-        this.renderManager.render(g, width, height);
+        this.renderManager.render(g, entities, 0.0f); 
+        //TODO: il deltaTime andrebbe passato anche a draw ma non ciò voglia di modificare tutto adesso scusate ragazzi
     }
 }

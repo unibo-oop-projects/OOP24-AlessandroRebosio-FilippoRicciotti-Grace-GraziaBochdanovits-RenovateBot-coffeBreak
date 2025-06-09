@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entityrenders.platform;
+package it.unibo.coffebreak.impl.view.renders.entities.platform;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.impl.view.renders.entityrenders.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
@@ -28,12 +28,10 @@ public class PlatformRender extends AbstractEntityRender {
      * Constructs a new PlatformRender with the specified resource loader and screen dimensions.
      *
      * @param resource the resource loader used to load the platform image
-     * @param screenWidth the initial width of the game screen
-     * @param screenHeight the initial height of the game screen
      * @throws NullPointerException if the resource loader is null
      */
-    public PlatformRender(final ResourceLoader resource, final int screenWidth, final int screenHeight) {
-        super(screenWidth, screenHeight);
+    public PlatformRender(final ResourceLoader resource) {
+        super(resource);
         this.platformImage = Objects.requireNonNull(resource, "Resource loader cannot be null").loadImage(PLATFORM_PATH);
     }
 
@@ -41,17 +39,10 @@ public class PlatformRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public void render(final Graphics2D g, final Entity entity) {
-        super.render(g, entity);
-        g.drawImage(platformImage, (int) entity.getPosition().x(), (int) entity.getPosition().y(),
-                    (int) getScaledEntityWidth(entity), (int) getScaledEntityHeight(entity), null);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean canRender(final Entity entity) {
-        return entity instanceof Platform;
+    public void draw(final Graphics2D g, final Entity entity, final float deltaTime) {
+        if (entity instanceof Platform) {
+            g.drawImage(platformImage, (int) entity.getPosition().x(), (int) entity.getPosition().y(),
+                    (int) entity.getDimension().width(), (int) entity.getDimension().height(), null);
+        }
     }
 }
