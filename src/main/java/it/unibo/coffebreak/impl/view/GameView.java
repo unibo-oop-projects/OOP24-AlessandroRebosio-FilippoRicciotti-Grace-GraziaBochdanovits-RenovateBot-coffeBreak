@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverState;
+import it.unibo.coffebreak.impl.model.states.pause.PauseState;
 import it.unibo.coffebreak.impl.view.panels.GameOverPanel;
 import it.unibo.coffebreak.impl.view.panels.GamePanel;
 import it.unibo.coffebreak.impl.view.panels.InGamePanel;
@@ -57,9 +58,9 @@ public class GameView extends JFrame implements View {
         super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
         this.gamePanel = new GamePanel();
-        controller.getModel().setState(GameOverState::new);
+        controller.getModel().setState(PauseState::new);
         gamePanel.setCurrentState(
-                new GameOverPanel(new ResourceLoader(), controller.getModel()));
+                new PausePanel(new ResourceLoader(), controller.getModel()));
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
