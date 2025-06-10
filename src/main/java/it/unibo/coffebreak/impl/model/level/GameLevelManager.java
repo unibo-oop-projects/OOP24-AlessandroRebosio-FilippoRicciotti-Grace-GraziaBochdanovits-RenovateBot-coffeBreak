@@ -4,9 +4,11 @@ import java.util.List;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 import it.unibo.coffebreak.api.model.level.maps.MapsManager;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.level.entity.GameEntityManager;
 import it.unibo.coffebreak.impl.model.level.maps.GameMapsManager;
 
@@ -116,10 +118,10 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void advanceLevel() {
-        // if (this.shouldAdvanceLevel()) {
-            // this.getPlayer().earnPoints(this.getCurrentLevelBonus());
-            // this.loadNextEnitites();
-        // }
+        if (this.shouldAdvanceLevel()) {
+            this.getPlayer().earnPoints(this.getCurrentLevelBonus());
+            this.loadNextEnitites();
+        }
     }
 
     /**
@@ -127,9 +129,15 @@ public class GameLevelManager implements LevelManager {
      * 
      * @return true if the level should be advanced, false otherwise
      */
-    // private boolean shouldAdvanceLevel() {
-    //     return getEntities().stream()
-    //             .anyMatch(e -> e instanceof final Princess princess && princess.isRescued()
-    //                     || !(e instanceof BreakablePlatform));
-    // }
+    private boolean shouldAdvanceLevel() {
+        final boolean hasPrincess = this.getEntities().stream().anyMatch(e -> e instanceof Princess);
+        if (hasPrincess) {
+            return this.getEntities().stream()
+                    .filter(e -> e instanceof Princess)
+                    .map(Princess.class::cast)
+                    .anyMatch(Princess::isRescued);
+        } else {
+            return this.getEntities().stream().noneMatch(e -> e instanceof BreakablePlatform);
+        }
+    }
 }
