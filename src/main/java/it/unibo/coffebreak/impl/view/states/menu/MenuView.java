@@ -46,7 +46,6 @@ public class MenuView extends AbstractViewState {
         g.fillRect(0, 0, width, height);
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font optionFont = this.font.deriveFont(height * 0.055f);
         final Font scoreFont = this.font.deriveFont(height * 0.04f);
 
         g.setFont(scoreFont);
@@ -72,19 +71,6 @@ public class MenuView extends AbstractViewState {
         g.setColor(DEFAULT_COLOR);
         g.drawString("BREAK", titleX + fmTitle.stringWidth("COFFEE"), titleY);
 
-        g.setFont(optionFont);
-        final var fmOption = g.getFontMetrics();
-
-        final var options = super.getController().getGameState().getOptions();
-        final int selected = options.indexOf(super.getController().getGameState().getSelectedOption());
-        final int baseY = (int) (height * 0.5);
-        final int stepY = (int) (height * 0.18);
-
-        for (int i = 0; i < options.size(); i++) {
-            final String text = options.get(i).toString();
-            final int y = baseY + i * stepY;
-            g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-            g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
-        }
+        super.drawOptions(g, height, width);
     }
 }
