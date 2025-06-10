@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities.npc.antagonist;
+package it.unibo.coffebreak.impl.view.render.entities.npc.donkeykong;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
-import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
  * A renderer for the Antagonist that draws him as a yellow rectangle on the
@@ -14,7 +14,7 @@ import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class DonkeyKongrender extends AbstractEntityRender {
+public class DonkeyKongRender extends AbstractEntityRender {
 
     /**
      * Constructs a new DonkeyKong with the specified screen dimensions.
@@ -22,7 +22,7 @@ public class DonkeyKongrender extends AbstractEntityRender {
      *
      * @param resource
      */
-    public DonkeyKongrender(final Loader resource) {
+    public DonkeyKongRender(final Loader resource) {
         super(resource);
     }
 

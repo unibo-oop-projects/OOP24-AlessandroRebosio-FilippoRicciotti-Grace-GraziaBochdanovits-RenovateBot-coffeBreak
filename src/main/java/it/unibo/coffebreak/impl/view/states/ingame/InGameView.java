@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.render.RenderManager;
-import it.unibo.coffebreak.impl.view.renders.GameRenderManager;
+import it.unibo.coffebreak.impl.view.render.GameRenderManager;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**

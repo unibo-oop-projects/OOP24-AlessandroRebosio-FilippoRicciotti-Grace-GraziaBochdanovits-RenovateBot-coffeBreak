@@ -1,13 +1,13 @@
-package it.unibo.coffebreak.impl.view.renders.entities.structure.platform;
+package it.unibo.coffebreak.impl.view.render.entities.structure.platform;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.loader.Loader;
-import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
  * A render implementation for {@link Platform} entities that maintains
@@ -27,20 +27,14 @@ import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
  */
 public class PlatformRender extends AbstractEntityRender {
 
-    private static final String PLATFORM_PATH = "/img/platform_sheet.png";
-    private final transient BufferedImage platformImage;
-
     /**
      * Constructs a new PlatformRender with the specified resource loader and screen
      * dimensions.
      *
      * @param resource the resource loader used to load the platform image
-     * @throws NullPointerException if the resource loader is null
      */
     public PlatformRender(final Loader resource) {
         super(resource);
-        this.platformImage = Objects.requireNonNull(resource, "Resource loader cannot be null")
-                .loadImage(PLATFORM_PATH);
     }
 
     /**
@@ -48,9 +42,11 @@ public class PlatformRender extends AbstractEntityRender {
      */
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime) {
-        if (entity instanceof Platform) {
-            g.drawImage(platformImage, (int) entity.getPosition().x(), (int) entity.getPosition().y(),
-                    (int) entity.getDimension().width(), (int) entity.getDimension().height(), null);
+        if (entity instanceof Ladder) {
+            g.setColor(Color.MAGENTA);
+
+            g.drawRect((int) entity.getPosition().x(), (int) entity.getPosition().y(),
+                    (int) entity.getDimension().width(), (int) entity.getDimension().height());
         }
     }
 }
