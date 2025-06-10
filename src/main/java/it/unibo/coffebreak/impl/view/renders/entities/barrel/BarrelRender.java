@@ -10,9 +10,6 @@ import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
  * A renderer for Barrel entities that draws them as blue circle on the screen.
- * This class extends {@link AbstractScalableRender} to provide scaling
- * functionality
- * based on the screen dimensions.
  * 
  * @author Grazia Bochdanovits de Kavna
  */

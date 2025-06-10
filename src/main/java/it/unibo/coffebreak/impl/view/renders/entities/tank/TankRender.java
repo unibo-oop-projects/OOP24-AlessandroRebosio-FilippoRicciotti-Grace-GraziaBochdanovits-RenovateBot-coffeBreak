@@ -9,13 +9,18 @@ import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for the Tank that draws it as a white rectangle on the
- * screen.
+ * A renderer for the Tank that draws it as a white rectangle on the screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
 public class TankRender extends AbstractEntityRender {
 
+    /**
+     * Constructs a new TankRender with the specified resource loader and screen
+     * dimensions.
+     *
+     * @param resource the resource loader used to load the platform image
+     */
     public TankRender(final Loader resource) {
         super(resource);
     }

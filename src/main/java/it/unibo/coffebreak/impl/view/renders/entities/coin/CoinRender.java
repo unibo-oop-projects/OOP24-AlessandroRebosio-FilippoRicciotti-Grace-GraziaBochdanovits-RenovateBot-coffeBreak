@@ -9,8 +9,7 @@ import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for the Coin that draws it as a yellow circle on the
- * screen.
+ * A renderer for the Coin that draws it as a yellow circle on the screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */

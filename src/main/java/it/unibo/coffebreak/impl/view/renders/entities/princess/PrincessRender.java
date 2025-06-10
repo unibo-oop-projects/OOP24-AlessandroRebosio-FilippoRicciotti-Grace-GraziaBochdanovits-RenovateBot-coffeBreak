@@ -9,8 +9,7 @@ import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for the princess that draws him as a pink rectangle on the
- * screen.
+ * A renderer for the princess that draws him as a pink rectangle on the screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
