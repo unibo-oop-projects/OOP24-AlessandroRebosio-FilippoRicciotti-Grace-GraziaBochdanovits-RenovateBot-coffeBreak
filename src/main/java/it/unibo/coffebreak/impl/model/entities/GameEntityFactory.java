@@ -83,7 +83,7 @@ public class GameEntityFactory implements EntityFactory {
      */
     @Override
     public Antagonist createDonkeyKong(final Position2D position) {
-        return new DonkeyKong(position, DEFAULT.mul(4));
+        return new DonkeyKong(position, DEFAULT.mul(2));
     }
 
     /**
