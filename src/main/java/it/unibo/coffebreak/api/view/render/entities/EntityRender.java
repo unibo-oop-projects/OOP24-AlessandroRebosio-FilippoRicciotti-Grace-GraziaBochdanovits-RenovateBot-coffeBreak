@@ -13,14 +13,14 @@ import it.unibo.coffebreak.api.model.entities.Entity;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface EntityRender {
-	/**
-	 * Renders the specified entity using the provided graphics context.
-	 * Implementations should define the visual representation of the entity
-	 * by drawing appropriate graphics elements.
-	 *
-	 * @param g         the Graphics2D context used for rendering
-	 * @param entity    the entity to be rendered
-	 * @param deltaTime the time passed since the last frame
-	 */
-	void draw(Graphics2D g, Entity entity, float deltaTime);
+    /**
+     * Renders the specified entity using the provided graphics context.
+     * Implementations should define the visual representation of the entity
+     * by drawing appropriate graphics elements.
+     *
+     * @param g         the Graphics2D context used for rendering
+     * @param entity    the entity to be rendered
+     * @param deltaTime the time passed since the last frame
+     */
+    void draw(Graphics2D g, Entity entity, float deltaTime);
 }
