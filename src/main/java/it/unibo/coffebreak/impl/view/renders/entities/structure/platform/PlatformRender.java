@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities.platform;
+package it.unibo.coffebreak.impl.view.renders.entities.structure.platform;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

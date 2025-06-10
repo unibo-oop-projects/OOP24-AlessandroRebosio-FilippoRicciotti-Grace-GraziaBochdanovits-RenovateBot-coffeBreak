@@ -15,10 +15,10 @@ import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
-import it.unibo.coffebreak.impl.view.renders.entities.barrel.BarrelRender;
-import it.unibo.coffebreak.impl.view.renders.entities.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.renders.entities.enemy.barrel.BarrelRender;
 import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
-import it.unibo.coffebreak.impl.view.renders.entities.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.renders.entities.structure.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.PlatformRender;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process

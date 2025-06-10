@@ -7,9 +7,9 @@ import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
-import it.unibo.coffebreak.impl.view.renders.entities.ladder.LadderRender;
 import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
-import it.unibo.coffebreak.impl.view.renders.entities.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.renders.entities.structure.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.PlatformRender;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
