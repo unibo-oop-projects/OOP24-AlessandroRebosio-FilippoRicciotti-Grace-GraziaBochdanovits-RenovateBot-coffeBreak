@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -76,18 +75,16 @@ public class MenuView extends AbstractViewState {
         g.setFont(optionFont);
         final var fmOption = g.getFontMetrics();
 
-        if (super.getController().getGameState() instanceof final MenuModelState menuState) {
-            final var options = menuState.getOptions();
-            final int selected = options.indexOf(menuState.getSelectedOption());
-            final int baseY = (int) (height * 0.5);
-            final int stepY = (int) (height * 0.18);
+        final var options = super.getController().getGameState().getOptions();
+        final int selected = options.indexOf(super.getController().getGameState().getSelectedOption());
+        final int baseY = (int) (height * 0.5);
+        final int stepY = (int) (height * 0.18);
 
-            for (int i = 0; i < options.size(); i++) {
-                final String text = options.get(i).toString();
-                final int y = baseY + i * stepY;
-                g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-                g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
-            }
+        for (int i = 0; i < options.size(); i++) {
+            final String text = options.get(i).toString();
+            final int y = baseY + i * stepY;
+            g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
+            g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
         }
     }
 }

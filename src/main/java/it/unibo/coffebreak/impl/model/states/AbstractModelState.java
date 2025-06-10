@@ -59,7 +59,7 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public List<Option> getOptions() {
-        return List.of(Option.NONE);
+        return List.of();
     }
 
 }
