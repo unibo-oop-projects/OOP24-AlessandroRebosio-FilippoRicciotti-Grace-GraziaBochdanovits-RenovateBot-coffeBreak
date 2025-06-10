@@ -76,7 +76,7 @@ public class GamePanel extends JPanel implements Panel {
     public void updateViewState(final Controller controller) {
         final ViewState nextState = switch (controller.getGameState()) {
             case final MenuModelState menu -> new MenuView(controller);
-            case final PauseModelState menu -> new PauseView(controller);
+            case final PauseModelState pause -> new PauseView(controller);
             default -> null;
         };
 
