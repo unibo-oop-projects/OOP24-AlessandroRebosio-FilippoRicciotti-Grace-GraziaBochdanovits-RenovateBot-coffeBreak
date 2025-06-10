@@ -132,6 +132,8 @@ public interface Model {
      */
     List<Entry> getLeaderBoard();
 
+    int getHighestScore();
+
     /**
      * Adds the current player's score to the leaderboard.
      * 
