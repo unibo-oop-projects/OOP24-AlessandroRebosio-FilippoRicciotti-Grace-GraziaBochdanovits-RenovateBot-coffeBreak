@@ -23,6 +23,8 @@ public interface View extends KeyListener {
     /**
      * Updates the view with the current game state.
      * Typically called once per frame.
+    * 
+    * @param deltaTime The time elapsed since the last update, in seconds.
      */
-    void updateView();
+    void update(float deltaTime);
 }

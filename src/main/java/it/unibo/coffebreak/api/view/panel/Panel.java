@@ -12,7 +12,8 @@ public interface Panel {
     /**
      * Updates the current game screen by switching to the appropriate view state.
      *
+     * @param deltaTime  the time elapsed since the last update
      * @param controller the game controller providing the current game state
      */
-    void updateViewState(Controller controller);
+    void update(float deltaTime, Controller controller);
 }

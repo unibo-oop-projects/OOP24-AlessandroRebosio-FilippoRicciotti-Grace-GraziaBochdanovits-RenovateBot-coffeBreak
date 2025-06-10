@@ -32,6 +32,8 @@ public class GamePanel extends JPanel implements Panel {
     private static final long serialVersionUID = 1L;
     private transient ViewState currentViewState;
 
+    private float deltaTime;
+
     /**
      * Paints the component by first clearing the background and then delegating
      * the rendering to the render manager. Uses a buffer image to prevent
@@ -65,7 +67,7 @@ public class GamePanel extends JPanel implements Panel {
 
             g2d.setClip(x, y, drawWidth, drawHeight);
             g2d.translate(x, y);
-            this.currentViewState.draw(g2d, drawWidth, drawHeight, 0.0f); //TODO: passagli un deltaTime sensato
+            this.currentViewState.draw(g2d, drawWidth, drawHeight, deltaTime);
 
             g2d.dispose();
         }
@@ -75,7 +77,8 @@ public class GamePanel extends JPanel implements Panel {
      * {@inheritDoc}
      */
     @Override
-    public void updateViewState(final Controller controller) {
+    public void update(final float deltaTime, final Controller controller) {
+        this.deltaTime = deltaTime;
         final ViewState nextState = switch (controller.getGameState()) {
             case final MenuModelState menu -> new MenuView(controller);
             case final InGameModelState inGame -> new InGameView(controller);

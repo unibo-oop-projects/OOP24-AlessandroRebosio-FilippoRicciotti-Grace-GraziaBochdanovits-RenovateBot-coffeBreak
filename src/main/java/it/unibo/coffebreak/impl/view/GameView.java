@@ -71,8 +71,8 @@ public class GameView extends JFrame implements View {
      * {@inheritDoc}
      */
     @Override
-    public void updateView() {
-        this.gamePanel.updateViewState(this.controller);
+    public void update(final float deltaTime) {
+        this.gamePanel.update(deltaTime, this.controller);
         this.repaint();
     }
 

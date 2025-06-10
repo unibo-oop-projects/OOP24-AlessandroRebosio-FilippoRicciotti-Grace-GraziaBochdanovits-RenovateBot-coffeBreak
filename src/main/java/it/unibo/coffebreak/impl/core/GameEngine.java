@@ -36,7 +36,7 @@ public class GameEngine implements Engine {
 
             controller.processInput();
             controller.updateModel(deltaTime);
-            view.updateView();
+            view.update(deltaTime);
 
             sleepUntilNextFrame(currentTime);
             previousTime = currentTime;
