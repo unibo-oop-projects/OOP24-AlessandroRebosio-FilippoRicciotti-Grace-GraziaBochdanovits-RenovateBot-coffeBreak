@@ -3,13 +3,8 @@ package it.unibo.coffebreak.impl.view.states.ingame;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
-import it.unibo.coffebreak.api.model.entities.structure.Ladder;
-import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.api.view.render.entities.EntityRender;
-import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
-import it.unibo.coffebreak.impl.view.renders.entities.structure.ladder.LadderRender;
-import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.PlatformRender;
+import it.unibo.coffebreak.api.view.render.RenderManager;
+import it.unibo.coffebreak.impl.view.renders.GameRenderManager;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -27,9 +22,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class InGameView extends AbstractViewState {
 
-    private final EntityRender plafformRender = new PlatformRender(super.getResource());
-    private final EntityRender playerRender = new PlayerRender(super.getResource());
-    private final EntityRender laddRender = new LadderRender(super.getResource());
+    private final RenderManager renderManager = new GameRenderManager(super.getResource());
 
     /**
      * Constructs an InGameView with the specified controller.
@@ -48,16 +41,6 @@ public class InGameView extends AbstractViewState {
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
-        super.getController().getEntities().forEach(t -> {
-            if (t instanceof Platform) {
-                this.plafformRender.draw(g, t, deltaTime);
-            }
-            if (t instanceof MainCharacter) {
-                this.playerRender.draw(g, t, deltaTime);
-            }
-            if (t instanceof Ladder) {
-                this.laddRender.draw(g, t, deltaTime);
-            }
-        });
+        this.renderManager.render(g, super.getController().getEntities(), width, height, deltaTime);
     }
 }

@@ -9,16 +9,28 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
-import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
+import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
+import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
+import it.unibo.coffebreak.impl.view.renders.entities.collectible.coin.CoinRender;
+import it.unibo.coffebreak.impl.view.renders.entities.collectible.hammer.HammerRender;
 import it.unibo.coffebreak.impl.view.renders.entities.enemy.barrel.BarrelRender;
+import it.unibo.coffebreak.impl.view.renders.entities.enemy.fire.FireRender;
 import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
+import it.unibo.coffebreak.impl.view.renders.entities.npc.antagonist.DonkeyKongrender;
+import it.unibo.coffebreak.impl.view.renders.entities.npc.pauline.PaulineRender;
 import it.unibo.coffebreak.impl.view.renders.entities.structure.ladder.LadderRender;
 import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.renders.entities.structure.tank.TankRender;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process
@@ -40,80 +52,47 @@ import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.Platfor
  */
 public final class GameRenderManager implements RenderManager {
 
-    private final Map<Class<? extends Entity>, EntityRender> entityRenderers = new HashMap<>();
-    private final Loader resources;
-    private final int screenWidth;
-    private final int screenHeight;
-    // TODO: andrebbero presi dalla view e poi dovrebbero variare per la questione
-    // del resize ecc...
+    private final Map<Class<? extends Entity>, EntityRender> entityRender = new HashMap<>();
+    private final Loader loader;
 
     /**
-     * Constructs a new GameRenderManagerImpl with the specified initial dimensions.
+     * Constructs a new GameRenderManager with the specified loader.
      * 
-     * @param resources    Resource loader per le immagini/font
-     * @param screenWidth  Larghezza iniziale dello schermo
-     * @param screenHeight Altezza iniziale dello schermo
+     * @param loader the loader used to load resources for entity renders
      */
-    public GameRenderManager(final Loader resources, final int screenWidth, final int screenHeight) {
-        this.resources = Objects.requireNonNull(resources);
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-        registerAllEntityRenders();
+    public GameRenderManager(final Loader loader) {
+        this.loader = loader;
+
+        this.initRender();
     }
 
-    /**
-     * Registers all default entity renders with their corresponding entity types.
-     */
-    private void registerAllEntityRenders() {
-        registerRenderer(Platform.class, new PlatformRender(resources));
-        registerRenderer(Mario.class, new PlayerRender(resources));
-        registerRenderer(Barrel.class, new BarrelRender(resources));
-        registerRenderer(Ladder.class, new LadderRender(resources));
-    }
-
-    /**
-     * Registers a new renderer for a specific entity type.
-     * 
-     * @param entityType the entity class
-     * @param renderer   the renderer implementation
-     */
-    private void registerRenderer(final Class<? extends Entity> entityType, final EntityRender renderer) {
-        entityRenderers.put(Objects.requireNonNull(entityType, "Entity type cannot be null"),
-                Objects.requireNonNull(renderer, "Renderer cannot be null"));
-    }
-
-    /**
-     * <p>
-     * Renders all game elements in the following order:
-     * <ol>
-     * <li>Clears the screen with a black background</li>
-     * <li>Renders all registered static elements</li>
-     * <li>Renders all dynamic entities using their respective renderers</li>
-     * </ol>
-     * </p>
-     * 
-     * <p>
-     * This method also handles resize notifications when the dimensions change.
-     * </p>
-     * 
-     * @param g         the {@link Graphics2D} context to render onto
-     * @param entities
-     * @param deltaTime
-     * @throws NullPointerException if the graphics context or the list is null
-     */
     @Override
-    public void render(final Graphics2D g, final List<Entity> entities, final float deltaTime) {
+    public void render(final Graphics2D g, final List<Entity> entities, final int width, final int height,
+            final float deltaTime) {
         Objects.requireNonNull(g, "Graphics context cannot be null");
         Objects.requireNonNull(entities, "Entities list cannot be null");
 
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, screenWidth, screenHeight);
+        g.fillRect(0, 0, width, height);
 
         entities.forEach(entity -> {
-            entityRenderers.entrySet().stream()
+            entityRender.entrySet().stream()
                     .filter(entry -> entry.getKey().isInstance(entity))
                     .findFirst()
                     .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime));
         });
+    }
+
+    private void initRender() {
+        this.entityRender.put(Coin.class, new CoinRender(loader));
+        this.entityRender.put(Hammer.class, new HammerRender(loader));
+        this.entityRender.put(Barrel.class, new BarrelRender(loader));
+        this.entityRender.put(Fire.class, new FireRender(loader));
+        this.entityRender.put(Mario.class, new PlayerRender(loader));
+        this.entityRender.put(Pauline.class, new PaulineRender(loader));
+        this.entityRender.put(DonkeyKong.class, new DonkeyKongrender(loader));
+        this.entityRender.put(Ladder.class, new LadderRender(loader));
+        this.entityRender.put(NormalPlatform.class, new PlatformRender(loader));
+        this.entityRender.put(GameTank.class, new TankRender(loader));
     }
 }

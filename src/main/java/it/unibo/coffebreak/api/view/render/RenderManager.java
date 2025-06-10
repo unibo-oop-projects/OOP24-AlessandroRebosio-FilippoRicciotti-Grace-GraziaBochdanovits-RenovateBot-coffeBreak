@@ -13,11 +13,14 @@ import it.unibo.coffebreak.api.model.entities.Entity;
  */
 public interface RenderManager {
     /**
-     * Main rendering method that draws all game elements.
-     * 
-     * @param g      Graphics2D context to render onto
-     * @param entities
-     * @param deltaTime
+     * Renders the given list of entities and static elements.
+     *
+     * @param g the Graphics2D context to draw on
+     * @param entities the list of entities to render
+     * @param width the width of the rendering area
+     * @param height the height of the rendering area
+     * @param deltaTime the time elapsed since the last render call, in seconds
      */
-    void render(Graphics2D g, List<Entity> entities, float deltaTime);
+    void render(Graphics2D g, List<Entity> entities, int width, int height,
+            float deltaTime);
 }

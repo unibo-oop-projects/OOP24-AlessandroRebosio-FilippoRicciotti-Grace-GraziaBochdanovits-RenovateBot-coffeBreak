@@ -9,11 +9,12 @@ import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for the Antagonist that draws him as a yellow rectangle on the screen.
+ * A renderer for the Antagonist that draws him as a yellow rectangle on the
+ * screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class AntagonistRender extends AbstractEntityRender {
+public class DonkeyKongrender extends AbstractEntityRender {
 
     /**
      * Constructs a new DonkeyKong with the specified screen dimensions.
@@ -21,7 +22,7 @@ public class AntagonistRender extends AbstractEntityRender {
      *
      * @param resource
      */
-    public AntagonistRender(final Loader resource) {
+    public DonkeyKongrender(final Loader resource) {
         super(resource);
     }
 
