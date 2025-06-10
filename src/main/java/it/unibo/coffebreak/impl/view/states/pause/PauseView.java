@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.model.states.pause.PauseState;
+import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -31,7 +31,7 @@ public class PauseView extends AbstractViewState {
      */
     public PauseView(Controller controller) {
         super(controller);
-        
+
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
@@ -60,7 +60,7 @@ public class PauseView extends AbstractViewState {
         g.setFont(optionFont);
         final var fmOption = g.getFontMetrics();
 
-        if (super.getController().getGameState() instanceof final PauseState pauseState) {
+        if (super.getController().getGameState() instanceof final PauseModelState pauseState) {
             final var options = pauseState.getOptions();
             final int selected = options.indexOf(pauseState.getSelectedOption());
             final int baseY = (int) (height * 0.5);
