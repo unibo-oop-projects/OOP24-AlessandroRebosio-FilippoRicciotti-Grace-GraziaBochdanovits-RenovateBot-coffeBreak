@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.impl.model.states;
 
+import java.util.List;
+
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
@@ -51,5 +53,13 @@ public abstract class AbstractModelState implements ModelState {
     public Option getSelectedOption() {
         return Option.NONE;
     }
-    // TODO: getOoptions return List.of()
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Option> getOptions() {
+        return List.of(Option.NONE);
+    }
+
 }

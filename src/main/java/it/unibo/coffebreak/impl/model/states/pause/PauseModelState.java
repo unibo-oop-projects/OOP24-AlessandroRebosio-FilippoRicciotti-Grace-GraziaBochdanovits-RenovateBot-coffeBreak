@@ -73,6 +73,7 @@ public class PauseModelState extends AbstractModelState {
      *
      * @return the list of {@link Option} available in the pause panel
      */
+    @Override
     public List<Option> getOptions() {
         return Collections.unmodifiableList(OPTIONS);
     }

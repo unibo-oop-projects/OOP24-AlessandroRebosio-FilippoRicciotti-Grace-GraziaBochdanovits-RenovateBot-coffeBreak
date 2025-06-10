@@ -68,13 +68,12 @@ public class MenuModelState extends AbstractModelState {
         return OPTIONS.get(this.selectedOption);
     }
 
-    //TODO: getOptions() return OPTIONS
     /**
      * Returns an unmodifiable list of all available menu options.
      *
      * @return the list of {@link Option} available in the menu
      */
-    // TODO: @Override
+    @Override
     public List<Option> getOptions() {
         return Collections.unmodifiableList(OPTIONS);
     }
