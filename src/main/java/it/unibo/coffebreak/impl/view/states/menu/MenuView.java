@@ -20,6 +20,7 @@ import java.awt.Graphics2D;
 public class MenuView extends AbstractViewState {
 
     private static final Color DEFAULT_COLOR = Color.WHITE;
+    private static final int TEST_SCORE = 15_000;
 
     private final Font font;
     private final String highestScore;
@@ -31,7 +32,8 @@ public class MenuView extends AbstractViewState {
      */
     public MenuView(final Controller controller) {
         super(controller);
-        this.highestScore = Integer.toString(15_000); // controller.getHighestScore();//TODO: handle when list is empty
+        this.highestScore = Integer.toString(TEST_SCORE); // controller.getHighestScore();//TODO: handle when list is
+                                                          // empty
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
@@ -55,23 +57,23 @@ public class MenuView extends AbstractViewState {
 
         final var fmScore = g.getFontMetrics();
         final int scoreY1 = (int) (height * 0.05);
-        final int scoreX1 = (width - fmScore.stringWidth("High Score")) / 2;
+        final int scoreX1 = (width - fmScore.stringWidth("HIGH SCORE")) / 2;
         final int scoreY2 = (int) (height * 0.1);
         final int scoreX2 = (width - fmScore.stringWidth(highestScore)) / 2;
 
         g.setColor(Color.RED);
-        g.drawString("High Score", scoreX1, scoreY1);
+        g.drawString("HIGH SCORE", scoreX1, scoreY1);
         g.setColor(DEFAULT_COLOR);
         g.drawString(highestScore, scoreX2, scoreY2);
 
         g.setFont(titleFont);
         final var fmTitle = g.getFontMetrics();
         final int titleY = (int) (height * 0.33);
-        final int titleX = (width - fmTitle.stringWidth("CoffeeBreak")) / 2;
+        final int titleX = (width - fmTitle.stringWidth("COFFEEBREAK")) / 2;
         g.setColor(Color.BLUE);
-        g.drawString("Coffee", titleX, titleY);
+        g.drawString("COFFEE", titleX, titleY);
         g.setColor(DEFAULT_COLOR);
-        g.drawString("Break", titleX + fmTitle.stringWidth("Coffee"), titleY);
+        g.drawString("BREAK", titleX + fmTitle.stringWidth("COFFEE"), titleY);
 
         g.setFont(optionFont);
         final var fmOption = g.getFontMetrics();
