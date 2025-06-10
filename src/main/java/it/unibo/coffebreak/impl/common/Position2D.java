@@ -23,4 +23,13 @@ public record Position2D(float x, float y) {
         Objects.requireNonNull(vector, "The vector cannot be null");
         return new Position2D(this.x + vector.x(), this.y + vector.y());
     }
+
+    /**
+     * Creates a copy of this Position2D instance.
+     *
+     * @return a new Position2D with the same x and y coordinates as this instance
+     */
+    public Position2D copy() {
+        return new Position2D(this.x, this.y);
+    }
 }

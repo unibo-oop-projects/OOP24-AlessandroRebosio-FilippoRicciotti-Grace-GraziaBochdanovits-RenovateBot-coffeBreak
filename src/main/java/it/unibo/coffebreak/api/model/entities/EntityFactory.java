@@ -13,7 +13,7 @@ import it.unibo.coffebreak.impl.common.Position2D;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
-import it.unibo.coffebreak.impl.model.entities.npc.princess.Pauline;
+import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 
 /**

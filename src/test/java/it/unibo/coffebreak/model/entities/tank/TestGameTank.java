@@ -13,12 +13,13 @@ import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
 /**
  * Test class for {@link GameTank} implementation.
  * 
- * <p>Verifies the behavior of the oil tank entity including:
+ * <p>
+ * Verifies the behavior of the oil tank entity including:
  * <ul>
- *   <li>Proper initialization and construction</li>
- *   <li>Inheritance hierarchy</li>
- *   <li>Collision handling</li>
- *   <li>Null safety in constructor</li>
+ * <li>Proper initialization and construction</li>
+ * <li>Inheritance hierarchy</li>
+ * <li>Collision handling</li>
+ * <li>Null safety in constructor</li>
  * </ul>
  * 
  * @see GameTank
@@ -51,10 +52,10 @@ class TestGameTank {
      */
     @Test
     void testInitialization() {
-        assertEquals(TEST_POSITION, tank.getPosition(), 
-            "Tank position should match constructor argument");
+        assertEquals(TEST_POSITION, tank.getPosition(),
+                "Tank position should match constructor argument");
         assertEquals(TEST_DIMENSION, tank.getDimension(),
-            "Tank dimensions should match constructor argument");
+                "Tank dimensions should match constructor argument");
     }
 
 }

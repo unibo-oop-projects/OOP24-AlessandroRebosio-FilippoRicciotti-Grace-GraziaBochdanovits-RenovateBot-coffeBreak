@@ -118,7 +118,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         if (other instanceof final Platform platform) {
             platform.destroy();
         }
-        // TODO: to be completed
+        // TODO: mario movement
         this.currentState.handleCollision(this, other);
     }
 

@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.view.resources.Resource;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * Render implementation for {@link Mario} player entity.
@@ -20,7 +20,7 @@ public class PlayerRender extends AbstractEntityRender {
      *
      * @param resource
      */
-    public PlayerRender(final ResourceLoader resource) {
+    public PlayerRender(final Resource resource) {
         super(resource);
     }
 

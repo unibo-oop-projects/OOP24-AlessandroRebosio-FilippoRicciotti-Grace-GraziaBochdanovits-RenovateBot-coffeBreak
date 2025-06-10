@@ -12,28 +12,6 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
  * @author Grazia Bochdanovits de Kavna
  */
 public abstract class AbstractMarioState implements CharacterState {
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @return false by default as Mario cannot climb in basic states
-     */
-    @Override
-    public boolean canClimb() {
-        return false;
-    }
-
-    /**
-     * Handles collision with another entity.
-     * Must be implemented by concrete state classes to define state-specific
-     * behavior.
-     * 
-     * @param character the character involved in the collision (typically Mario)
-     * @param other     the other entity involved in the collision
-     */
-    @Override
-    public abstract void handleCollision(MainCharacter character, Entity other);
-
     /**
      * {@inheritDoc}
      * Default empty implementation. Can be overridden by subclasses for
@@ -70,4 +48,33 @@ public abstract class AbstractMarioState implements CharacterState {
     public void update(final MainCharacter character, final float deltaTime) {
         // Default empty implementation
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isExpired() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return false by default as Mario cannot climb in basic states
+     */
+    @Override
+    public boolean canClimb() {
+        return false;
+    }
+
+    /**
+     * Handles collision with another entity.
+     * Must be implemented by concrete state classes to define state-specific
+     * behavior.
+     * 
+     * @param character the character involved in the collision (typically Mario)
+     * @param other     the other entity involved in the collision
+     */
+    @Override
+    public abstract void handleCollision(MainCharacter character, Entity other);
 }

@@ -40,7 +40,9 @@ public class BreakablePlatform extends AbstractPlatform {
      */
     @Override
     public void destroy() {
-        this.isBroken = true;
+        if (!this.isBroken) {
+            this.isBroken = true;
+        }
     }
 
     /**

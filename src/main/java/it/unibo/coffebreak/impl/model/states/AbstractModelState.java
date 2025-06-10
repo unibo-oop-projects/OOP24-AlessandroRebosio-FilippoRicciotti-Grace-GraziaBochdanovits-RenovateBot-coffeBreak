@@ -19,6 +19,7 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public void onEnter(final Model model) {
+        // Default empty implementation
     }
 
     /**
@@ -26,6 +27,7 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public void onExit(final Model model) {
+        // Default empty implementation
     }
 
     /**
@@ -33,6 +35,7 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
+        // Default empty implementation
     }
 
     /**
@@ -48,4 +51,5 @@ public abstract class AbstractModelState implements ModelState {
     public Option getSelectedOption() {
         return Option.NONE;
     }
+    // TODO: getOoptions return List.of()
 }

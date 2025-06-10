@@ -32,7 +32,7 @@ public class GameView extends JFrame implements View {
     private static final long serialVersionUID = 1L;
 
     private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_HEIGHT = 628;
 
     /** Reference to the game controller. */
     private final transient Controller controller;

@@ -43,6 +43,6 @@ public class GameFire extends AbstractEnemy implements Fire, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        // TODO: Auto-generated method stub
+        // TODO: fire movement
     }
 }

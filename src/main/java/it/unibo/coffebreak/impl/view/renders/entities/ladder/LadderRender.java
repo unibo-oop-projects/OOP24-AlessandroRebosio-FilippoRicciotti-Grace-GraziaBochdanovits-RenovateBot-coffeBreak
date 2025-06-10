@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
+import it.unibo.coffebreak.api.view.resources.Resource;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * A renderer for ladder entities that draws them as red rectangles on the screen.
@@ -23,7 +23,7 @@ public class LadderRender extends AbstractEntityRender {
      *
      * @param resource
      */
-    public LadderRender(final ResourceLoader resource) {
+    public LadderRender(final Resource resource) {
         super(resource);
     }
 

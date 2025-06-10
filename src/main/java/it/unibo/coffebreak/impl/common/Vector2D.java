@@ -3,8 +3,10 @@ package it.unibo.coffebreak.impl.common;
 import java.util.Objects;
 
 /**
- * The {@code Vector2D} class represents a mathematical vector in a 2D space with x and y components.
- * This immutable record provides basic vector operations such as addition and scalar multiplication,
+ * The {@code Vector2D} class represents a mathematical vector in a 2D space
+ * with x and y components.
+ * This immutable record provides basic vector operations such as addition and
+ * scalar multiplication,
  * and properly implements equality comparison and hash code generation.
  * 
  * @param x the x-component of the vector
@@ -13,14 +15,18 @@ import java.util.Objects;
  * @author Grazia Bochdanovits de Kavna
  */
 public record Vector2D(float x, float y) {
+    /**
+     * Constructs a zero vector (0, 0).
+     */
+    public Vector2D() {
+        this(0.0f, 0.0f);
+    }
 
     /**
-     * Sums another vector to this vector, returning a new vector with components equal
-     * to the sum of the corresponding components of both vectors.
+     * Adds the given vector to this vector and returns the result as a new Vector2D.
      *
-     * @param other the vector to add to this vector (must not be null)
-     * @return a new {@code Vector2D} representing the vector sum
-     * @throws NullPointerException if the provided vector is null
+     * @param other the vector to add
+     * @return a new Vector2D representing the sum
      */
     public Vector2D sum(final Vector2D other) {
         return new Vector2D(this.x + other.x, this.y + other.y);
@@ -38,15 +44,28 @@ public record Vector2D(float x, float y) {
     }
 
     /**
-     * Compares this vector to the specified object for equality. The result is {@code true}
+     * Returns a copy of this vector. Since {@code Vector2D} is immutable,
+     * this method simply returns this instance.
+     *
+     * @return a copy of this vector (the same instance)
+     */
+    public Vector2D copy() {
+        return new Vector2D(this.x, this.y);
+    }
+
+    /**
+     * Compares this vector to the specified object for equality. The result is
+     * {@code true}
      * if and only if:
      * <ul>
-     *   <li>The argument is not {@code null}</li>
-     *   <li>The argument is a {@code Vector2D} object</li>
-     *   <li>Both vectors have exactly the same x and y components</li>
+     * <li>The argument is not {@code null}</li>
+     * <li>The argument is a {@code Vector2D} object</li>
+     * <li>Both vectors have exactly the same x and y components</li>
      * </ul>
      * 
-     * <p>Note that floating-point comparison is performed using {@link Float#compare} to
+     * <p>
+     * Note that floating-point comparison is performed using {@link Float#compare}
+     * to
      * properly handle special cases like NaN and infinity values.
      *
      * @param obj the object to compare with

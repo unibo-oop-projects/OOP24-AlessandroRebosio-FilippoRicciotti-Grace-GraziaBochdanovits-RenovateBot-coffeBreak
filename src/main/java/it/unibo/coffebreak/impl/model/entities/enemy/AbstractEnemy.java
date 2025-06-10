@@ -52,7 +52,9 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy {
      */
     @Override
     public void destroy() {
-        this.isDestroyed = true;
+        if (!this.isDestroyed) {
+            this.isDestroyed = true;
+        }
     }
 
     /**

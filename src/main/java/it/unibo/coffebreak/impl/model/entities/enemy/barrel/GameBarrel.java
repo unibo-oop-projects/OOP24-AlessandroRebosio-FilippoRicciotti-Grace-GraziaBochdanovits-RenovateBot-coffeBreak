@@ -57,11 +57,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        // if (isDestroyed()) {
-        //     return;
-        // }
-
-        // TODO: Barrel update()
+        // TODO: barrel movement
     }
 
     /**

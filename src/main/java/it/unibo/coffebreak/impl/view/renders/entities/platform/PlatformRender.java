@@ -6,8 +6,8 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.api.view.resources.Resource;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * A render implementation for {@link Platform} entities that maintains proportional
@@ -30,7 +30,7 @@ public class PlatformRender extends AbstractEntityRender {
      * @param resource the resource loader used to load the platform image
      * @throws NullPointerException if the resource loader is null
      */
-    public PlatformRender(final ResourceLoader resource) {
+    public PlatformRender(final Resource resource) {
         super(resource);
         this.platformImage = Objects.requireNonNull(resource, "Resource loader cannot be null").loadImage(PLATFORM_PATH);
     }

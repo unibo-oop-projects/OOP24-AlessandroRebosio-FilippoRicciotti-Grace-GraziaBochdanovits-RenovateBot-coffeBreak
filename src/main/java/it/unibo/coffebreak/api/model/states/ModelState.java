@@ -46,4 +46,6 @@ public interface ModelState {
      * @return the selected {@link Option}
      */
     Option getSelectedOption();
+
+    // TODO: getOptions()
 }

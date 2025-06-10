@@ -6,8 +6,8 @@ import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
-import it.unibo.coffebreak.impl.model.states.gameover.GameOverState;
-import it.unibo.coffebreak.impl.model.states.pause.PauseState;
+import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
+import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
  * Implementation of {@link ModelState} interface;
@@ -17,7 +17,7 @@ import it.unibo.coffebreak.impl.model.states.pause.PauseState;
  * 
  * @author Filippo Ricciotti
  */
-public class InGameState extends AbstractModelState {
+public class InGameModelState extends AbstractModelState {
 
     /**
      * {@inheritDoc}
@@ -26,7 +26,7 @@ public class InGameState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ESCAPE:
-                model.setState(PauseState::new);
+                model.setState(PauseModelState::new);
                 break;
             case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, JUMP:
                 break;
@@ -43,8 +43,7 @@ public class InGameState extends AbstractModelState {
         final var player = model.getMainCharacter();
         final int currentLives = player.getLives();
 
-        // model.getAntagonist().flatMap(a ->
-        // a.tryThrowBarrel(deltaTime)).ifPresent(model::addEntity);
+        // TODO: antagonist throw Barrel
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
@@ -63,7 +62,7 @@ public class InGameState extends AbstractModelState {
         model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {
-            model.setState(GameOverState::new);
+            model.setState(GameOverModelState::new);
         }
     }
 }
