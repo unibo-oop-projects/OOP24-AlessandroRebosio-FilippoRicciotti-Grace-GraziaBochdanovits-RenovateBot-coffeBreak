@@ -4,16 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.view.loader.Loader;
-import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender;
 
 /**
  * A renderer for Fire entities that draws them as red circle on the screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class FireRender extends AbstractEntityRender {
+public class FireRender extends AbstractEnemyRender {
 
     /**
      * Constructs a new FireRender with the specified resource loader and screen
@@ -29,14 +28,12 @@ public class FireRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final Entity entity, final float deltaTime) {
-        if (entity instanceof final Fire fire && !fire.isDestroyed()) {
-            g.setColor(Color.RED);
+    protected void renderEnemy(final Graphics2D g, final Entity entity, final float deltaTime) {
+        g.setColor(Color.RED);
 
-            final int diameter = Math.min((int) entity.getDimension().width(), (int) entity.getDimension().height());
+        final int diameter = Math.min((int) entity.getDimension().width(), (int) entity.getDimension().height());
 
-            g.drawRect((int) entity.getPosition().x(), (int) entity.getPosition().y(), diameter, diameter);
-            g.fillOval((int) entity.getPosition().x(), (int) entity.getPosition().y(), diameter, diameter);
-        }
+        g.drawRect((int) entity.getPosition().x(), (int) entity.getPosition().y(), diameter, diameter);
+        g.fillOval((int) entity.getPosition().x(), (int) entity.getPosition().y(), diameter, diameter);
     }
 }
