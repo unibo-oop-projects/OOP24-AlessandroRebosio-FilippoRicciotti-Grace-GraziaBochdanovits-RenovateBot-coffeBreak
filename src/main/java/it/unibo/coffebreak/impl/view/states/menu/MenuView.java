@@ -40,9 +40,10 @@ public class MenuView extends AbstractViewState {
      * @param g      the graphics context
      * @param width  the width of the window
      * @param height the height of the window
+     * @param deltaTime
      */
     @Override
-    public void draw(final Graphics2D g, final int width, final int height) {
+    public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 

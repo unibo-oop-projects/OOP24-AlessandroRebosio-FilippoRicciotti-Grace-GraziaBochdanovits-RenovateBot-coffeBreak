@@ -62,7 +62,7 @@ public abstract class AbstractViewState implements ViewState {
      * Subclasses must implement their own drawing logic.
      */
     @Override
-    public abstract void draw(Graphics2D g, int width, int height);
+    public abstract void draw(Graphics2D g, int width, int height, float deltaTime);
 
     /**
      * Returns the resource loader used by this view state.

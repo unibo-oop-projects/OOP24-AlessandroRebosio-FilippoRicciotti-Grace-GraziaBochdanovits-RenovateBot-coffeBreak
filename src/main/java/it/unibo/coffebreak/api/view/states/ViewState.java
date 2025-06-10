@@ -36,6 +36,7 @@ public interface ViewState {
      * @param g      the {@link Graphics2D} context to draw on
      * @param width  the width of the rendering area
      * @param height the height of the rendering area
+     * @param deltaTime
      */
-    void draw(Graphics2D g, int width, int height);
+    void draw(Graphics2D g, int width, int height, float deltaTime);
 }

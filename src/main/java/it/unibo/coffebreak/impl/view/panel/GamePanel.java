@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Panel {
 
             g2d.setClip(x, y, drawWidth, drawHeight);
             g2d.translate(x, y);
-            this.currentViewState.draw(g2d, drawWidth, drawHeight);
+            this.currentViewState.draw(g2d, drawWidth, drawHeight, 0.0f); //TODO: passagli un deltaTime sensato
 
             g2d.dispose();
         }
