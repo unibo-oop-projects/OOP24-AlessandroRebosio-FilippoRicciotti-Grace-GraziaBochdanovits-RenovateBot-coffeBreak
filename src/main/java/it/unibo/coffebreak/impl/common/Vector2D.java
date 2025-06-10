@@ -22,6 +22,12 @@ public record Vector2D(float x, float y) {
         this(0.0f, 0.0f);
     }
 
+    /**
+     * Adds the given vector to this vector and returns the result as a new Vector2D.
+     *
+     * @param other the vector to add
+     * @return a new Vector2D representing the sum
+     */
     public Vector2D sum(final Vector2D other) {
         return new Vector2D(this.x + other.x, this.y + other.y);
     }
