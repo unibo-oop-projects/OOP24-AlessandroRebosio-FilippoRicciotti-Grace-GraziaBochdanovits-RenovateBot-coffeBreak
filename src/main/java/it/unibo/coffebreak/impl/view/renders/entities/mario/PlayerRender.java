@@ -33,7 +33,7 @@ public class PlayerRender extends AbstractEntityRender {
             g.setColor(Color.RED);
 
             g.fillRect((int) entity.getPosition().x(), (int) entity.getPosition().y(),
-                        (int) entity.getDimension().width(), (int) entity.getDimension().height());
+                       (int) entity.getDimension().width(), (int) entity.getDimension().height());
         }
     }
 }

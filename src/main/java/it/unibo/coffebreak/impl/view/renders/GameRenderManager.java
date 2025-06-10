@@ -13,12 +13,12 @@ import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
+import it.unibo.coffebreak.api.view.resources.Resource;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.view.renders.entities.barrel.BarrelRender;
 import it.unibo.coffebreak.impl.view.renders.entities.ladder.LadderRender;
 import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
 import it.unibo.coffebreak.impl.view.renders.entities.platform.PlatformRender;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process
@@ -41,7 +41,7 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 public final class GameRenderManager implements RenderManager {
 
     private final Map<Class<? extends Entity>, EntityRender> entityRenderers = new HashMap<>();
-    private final ResourceLoader resources;
+    private final Resource resources;
     private final int screenWidth;
     private final int screenHeight; 
     //TODO: andrebbero presi dalla view e poi dovrebbero variare per la questione del resize ecc...
@@ -53,7 +53,7 @@ public final class GameRenderManager implements RenderManager {
      * @param screenWidth Larghezza iniziale dello schermo
      * @param screenHeight Altezza iniziale dello schermo
      */
-    public GameRenderManager(final ResourceLoader resources, final int screenWidth, final int screenHeight) {
+    public GameRenderManager(final Resource resources, final int screenWidth, final int screenHeight) {
         this.resources = Objects.requireNonNull(resources);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
