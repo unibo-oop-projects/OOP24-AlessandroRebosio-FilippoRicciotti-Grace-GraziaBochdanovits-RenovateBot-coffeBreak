@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities;
+package it.unibo.coffebreak.impl.view.render.entities;
 
 import java.awt.Graphics2D;
 import java.util.Objects;

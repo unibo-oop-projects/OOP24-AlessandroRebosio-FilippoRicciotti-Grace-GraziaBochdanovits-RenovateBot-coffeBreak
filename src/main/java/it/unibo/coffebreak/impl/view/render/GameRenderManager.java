@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders;
+package it.unibo.coffebreak.impl.view.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,10 +15,10 @@ import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
-import it.unibo.coffebreak.impl.view.renders.entities.enemy.barrel.BarrelRender;
-import it.unibo.coffebreak.impl.view.renders.entities.mario.PlayerRender;
-import it.unibo.coffebreak.impl.view.renders.entities.structure.ladder.LadderRender;
-import it.unibo.coffebreak.impl.view.renders.entities.structure.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.render.entities.enemy.barrel.BarrelRender;
+import it.unibo.coffebreak.impl.view.render.entities.mario.PlayerRender;
+import it.unibo.coffebreak.impl.view.render.entities.structure.ladder.LadderRender;
+import it.unibo.coffebreak.impl.view.render.entities.structure.platform.PlatformRender;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process

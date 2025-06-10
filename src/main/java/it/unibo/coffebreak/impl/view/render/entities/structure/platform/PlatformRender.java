@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities.structure.platform;
+package it.unibo.coffebreak.impl.view.render.entities.structure.platform;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -7,7 +7,7 @@ import java.util.Objects;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.loader.Loader;
-import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
  * A render implementation for {@link Platform} entities that maintains

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities.mario;
+package it.unibo.coffebreak.impl.view.render.entities.mario;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
-import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
  * Render implementation for {@link Mario} player entity.

@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.renders.entities.structure.tank;
+package it.unibo.coffebreak.impl.view.render.entities.structure.tank;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.view.loader.Loader;
-import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
  * A renderer for the Tank that draws it as a white rectangle on the screen.
