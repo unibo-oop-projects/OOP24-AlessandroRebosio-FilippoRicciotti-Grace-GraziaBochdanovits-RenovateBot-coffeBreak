@@ -29,7 +29,7 @@ public class PauseView extends AbstractViewState {
      *
      * @param controller the controller to interact with the game logic
      */
-    public PauseView(Controller controller) {
+    public PauseView(final Controller controller) {
         super(controller);
 
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
@@ -43,7 +43,7 @@ public class PauseView extends AbstractViewState {
      * @param height the height of the window
      */
     @Override
-    public void draw(Graphics2D g, int width, int height) {
+    public void draw(final Graphics2D g, final int width, final int height) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 

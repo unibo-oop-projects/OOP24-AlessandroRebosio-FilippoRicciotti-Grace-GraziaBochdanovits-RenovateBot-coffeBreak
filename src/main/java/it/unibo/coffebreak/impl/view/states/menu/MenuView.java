@@ -22,7 +22,7 @@ public class MenuView extends AbstractViewState {
     private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
-    private final int highestScore;
+    private final String highestScore;
 
     /**
      * Constructs the main menu view and loads required fonts.
@@ -31,7 +31,7 @@ public class MenuView extends AbstractViewState {
      */
     public MenuView(final Controller controller) {
         super(controller);
-        this.highestScore = 15000;// controller.getHighestScore();//TODO: handle when list is empty
+        this.highestScore = Integer.toString(15_000); // controller.getHighestScore();//TODO: handle when list is empty
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
@@ -56,13 +56,13 @@ public class MenuView extends AbstractViewState {
         final var fmScore = g.getFontMetrics();
         final int scoreY1 = (int) (height * 0.05);
         final int scoreX1 = (width - fmScore.stringWidth("High Score")) / 2;
-        final int scoreY2 = (int) (height * 0.05);
-        final int scoreX2 = (width - fmScore.stringWidth("" + highestScore)) / 2;
+        final int scoreY2 = (int) (height * 0.1);
+        final int scoreX2 = (width - fmScore.stringWidth(highestScore)) / 2;
 
         g.setColor(Color.RED);
         g.drawString("High Score", scoreX1, scoreY1);
         g.setColor(DEFAULT_COLOR);
-        g.drawString("" + highestScore, scoreX2, scoreY2 + fmScore.getHeight() * 1.5f);
+        g.drawString(highestScore, scoreX2, scoreY2);
 
         g.setFont(titleFont);
         final var fmTitle = g.getFontMetrics();
