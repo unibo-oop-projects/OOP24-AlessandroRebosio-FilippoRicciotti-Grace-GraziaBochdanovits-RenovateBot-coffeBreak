@@ -190,6 +190,17 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public int getHighestScore() {
+        if (!this.leaderBoard.getTopScores().isEmpty()) {
+            return this.leaderBoard.getTopScores().getFirst().getScore();
+        }
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void addEntry(final String name) {
         this.leaderBoard.addEntry(new ScoreEntry(name, this.getScoreValue()));
     }

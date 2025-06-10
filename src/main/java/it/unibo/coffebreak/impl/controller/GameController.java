@@ -121,7 +121,7 @@ public class GameController implements Controller {
      */
     @Override
     public int getHighestScore() {
-        return this.getLeaderBoard().get(0).getScore();
+        return this.model.getHighestScore();
     }
 
     /**

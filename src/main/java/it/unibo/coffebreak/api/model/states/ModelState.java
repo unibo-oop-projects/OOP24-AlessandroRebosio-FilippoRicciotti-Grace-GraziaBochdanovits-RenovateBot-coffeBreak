@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.api.model.states;
 
+import java.util.List;
+
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
@@ -47,5 +49,10 @@ public interface ModelState {
      */
     Option getSelectedOption();
 
-    // TODO: getOptions()
+    /**
+     * Returns an unmodifiable list of all available options.
+     *
+     * @return the list of {@link Option} available
+     */
+    List<Option> getOptions();
 }

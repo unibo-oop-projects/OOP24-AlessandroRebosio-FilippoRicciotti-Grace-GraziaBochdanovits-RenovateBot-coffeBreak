@@ -13,7 +13,9 @@ import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 import it.unibo.coffebreak.impl.view.states.ingame.InGameView;
+import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 import it.unibo.coffebreak.impl.view.states.menu.MenuView;
+import it.unibo.coffebreak.impl.view.states.pause.PauseView;
 
 /**
  * A resizable panel for game rendering that uses double buffering to prevent
@@ -77,6 +79,7 @@ public class GamePanel extends JPanel implements Panel {
         final ViewState nextState = switch (controller.getGameState()) {
             case final MenuModelState menu -> new MenuView(controller);
             case final InGameModelState inGame -> new InGameView(controller);
+            case final PauseModelState pause -> new PauseView(controller);
             default -> null;
         };
 
