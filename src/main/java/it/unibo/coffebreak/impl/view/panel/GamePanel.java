@@ -10,7 +10,9 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
+import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
+import it.unibo.coffebreak.impl.view.states.ingame.InGameView;
 import it.unibo.coffebreak.impl.view.states.menu.MenuView;
 
 /**
@@ -74,6 +76,7 @@ public class GamePanel extends JPanel implements Panel {
     public void updateViewState(final Controller controller) {
         final ViewState nextState = switch (controller.getGameState()) {
             case final MenuModelState menu -> new MenuView(controller);
+            case final InGameModelState inGame -> new InGameView(controller);
             default -> null;
         };
 
