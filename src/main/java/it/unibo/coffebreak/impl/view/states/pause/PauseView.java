@@ -48,7 +48,6 @@ public class PauseView extends AbstractViewState {
         g.fillRect(0, 0, width, height);
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font optionFont = this.font.deriveFont(height * 0.055f);
 
         g.setFont(titleFont);
         final var fmTitle = g.getFontMetrics();
@@ -57,22 +56,7 @@ public class PauseView extends AbstractViewState {
         g.setColor(Color.GREEN);
         g.drawString("PAUSED", titleX, titleY);
 
-        g.setFont(optionFont);
-        final var fmOption = g.getFontMetrics();
-
-        if (super.getController().getGameState() instanceof final PauseModelState pauseState) {
-            final var options = pauseState.getOptions();
-            final int selected = options.indexOf(pauseState.getSelectedOption());
-            final int baseY = (int) (height * 0.5);
-            final int stepY = (int) (height * 0.18);
-
-            for (int i = 0; i < options.size(); i++) {
-                final String text = options.get(i).toString();
-                final int y = baseY + i * stepY;
-                g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-                g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
-            }
-        }
+        super.drawOptions(g, height, width);
     }
 
 }

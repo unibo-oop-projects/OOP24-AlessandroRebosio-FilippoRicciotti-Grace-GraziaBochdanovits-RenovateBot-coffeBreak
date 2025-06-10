@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.view.states;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
@@ -83,5 +84,25 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final Controller getController() {
         return this.controller;
+    }
+
+    protected final void drawOptions(final Graphics2D g, final int height, final int width) {
+
+        final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.055f);
+
+        g.setFont(optionFont);
+        final var fmOption = g.getFontMetrics();
+
+        final var options = this.controller.getGameState().getOptions();
+        final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
+        final int baseY = (int) (height * 0.5);
+        final int stepY = (int) (height * 0.18);
+
+        for (int i = 0; i < options.size(); i++) {
+            final String text = options.get(i).toString();
+            final int y = baseY + i * stepY;
+            g.setColor(i == selected ? Color.YELLOW : Color.WHITE);
+            g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
+        }
     }
 }
