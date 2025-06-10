@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -19,8 +18,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  * @author Filippo Ricciotti
  */
 public class PauseView extends AbstractViewState {
-
-    private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
 
