@@ -43,7 +43,7 @@ public class GameLivesManager implements LivesManager {
      */
     @Override
     public void loseLife() {
-        if (this.lives > 0) {
+        if (this.isAlive()) {
             this.lives--;
         }
     }

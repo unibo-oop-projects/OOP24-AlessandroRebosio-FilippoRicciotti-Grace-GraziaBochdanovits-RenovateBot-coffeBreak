@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.impl.common.BoundingBox2D;
 import it.unibo.coffebreak.impl.common.Position2D;
-import it.unibo.coffebreak.impl.model.entities.npc.princess.Pauline;
+import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
 
 /**
  * Test class for {@link Pauline} implementation.

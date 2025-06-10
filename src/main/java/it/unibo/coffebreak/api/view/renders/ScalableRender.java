@@ -5,7 +5,7 @@ package it.unibo.coffebreak.api.view.renders;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface ScalableRender {
+public interface ScalableRender { // TODO: remove
     /**
      * Called when the container is resized.
      * @param newWidth new width

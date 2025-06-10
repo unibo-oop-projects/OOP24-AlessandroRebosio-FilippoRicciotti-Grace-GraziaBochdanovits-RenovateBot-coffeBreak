@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface RenderManager {
+public interface RenderManager { // TODO: rename folder renders in render
     /**
      * Main rendering method that draws all game elements.
      * 
@@ -26,7 +26,7 @@ public interface RenderManager {
      * 
      * @param entities List of game entities (can be empty but not null)
      */
-    void updateEntities(List<Entity> entities);
+    void updateEntities(List<Entity> entities); // TODO: remove
 
     /**
      * Registers a renderer for entities of specific type.
@@ -34,12 +34,12 @@ public interface RenderManager {
      * @param type     the class of entities this renderer can handle
      * @param renderer the renderer implementation
      */
-    void registerEntityRenderer(Class<? extends Entity> type, EntityRender renderer);
+    void registerEntityRenderer(Class<? extends Entity> type, EntityRender renderer); // TODO: remove
 
     /**
      * Adds a static renderer (background, UI, etc.).
      * 
      * @param render Static render implementation
      */
-    void addStaticRenderer(StaticRender render);
+    void addStaticRenderer(StaticRender render); // TODO: remove
 }

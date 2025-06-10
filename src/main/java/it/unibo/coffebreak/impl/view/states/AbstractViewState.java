@@ -42,6 +42,7 @@ public abstract class AbstractViewState implements ViewState {
      */
     @Override
     public void onEnter() {
+        // Default empty implementation
     }
 
     /**
@@ -53,6 +54,7 @@ public abstract class AbstractViewState implements ViewState {
      */
     @Override
     public void onExit() {
+        // Default empty implementation
     }
 
     /**

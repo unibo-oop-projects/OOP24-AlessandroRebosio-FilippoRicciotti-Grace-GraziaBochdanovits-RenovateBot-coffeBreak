@@ -19,8 +19,8 @@ import it.unibo.coffebreak.impl.common.Vector2D;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private Position2D position;
     private final BoundingBox2D dimension;
+    private Position2D position;
     private Vector2D velocity;
 
     /**
@@ -33,7 +33,7 @@ public abstract class AbstractEntity implements Entity {
     public AbstractEntity(final Position2D position, final BoundingBox2D dimension) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
         this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
-        this.velocity = new Vector2D(0, 0);
+        this.velocity = new Vector2D();
     }
 
     /**
@@ -45,6 +45,17 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * Sets the position of the entity.
+     *
+     * @param position the new position (cannot be {@code null})
+     * @throws NullPointerException if position is {@code null}
+     */
+    @Override
+    public void setPosition(final Position2D position) {
+        this.position = position.copy();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -53,11 +64,21 @@ public abstract class AbstractEntity implements Entity {
     }
 
     /**
+     * Sets the velocity of the entity.
+     *
+     * @param vector the new velocity vector
+     */
+    @Override
+    public final void setVelocity(final Vector2D vector) {
+        this.velocity = vector.copy();
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public Vector2D getVelocity() {
-        return new Vector2D(velocity.x(), velocity.y());
+        return this.velocity;
     }
 
     /**
@@ -72,27 +93,6 @@ public abstract class AbstractEntity implements Entity {
                 && this.getPosition().x() + this.getDimension().width() > entity.getPosition().x()
                 && this.getPosition().y() < entity.getPosition().y() + entity.getDimension().height()
                 && this.getPosition().y() + this.getDimension().height() > entity.getPosition().y();
-    }
-
-    /**
-     * Sets the position of the entity.
-     *
-     * @param position the new position (cannot be {@code null})
-     * @throws NullPointerException if position is {@code null}
-     */
-    @Override
-    public void setPosition(final Position2D position) {
-        this.position = new Position2D(position.x(), position.y());
-    }
-
-    /**
-     * Sets the velocity of the entity.
-     *
-     * @param vector the new velocity vector
-     */
-    @Override
-    public final void setVelocity(final Vector2D vector) {
-        this.velocity = new Vector2D(vector.x(), vector.y());
     }
 
     /**

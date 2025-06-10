@@ -1,6 +1,5 @@
-package it.unibo.coffebreak.impl.model.states.menu;
+package it.unibo.coffebreak.impl.model.states.pause;
 
-import java.util.Collections;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
@@ -8,25 +7,26 @@ import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
-import it.unibo.coffebreak.impl.model.states.ingame.InGameState;
+import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
+import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
  * Implementation of {@link ModelState} interface;
  * <p>
- * Represents the <b>Main Menu</b> state of the game.
+ * Represents the <b>Paused</b> state of the game.
  * </p>
  * 
  * @author Filippo Ricciotti
  */
-public class MenuState extends AbstractModelState {
+public class PauseModelState extends AbstractModelState {
 
-    private static final List<Option> OPTIONS = List.of(Option.START, Option.EXIT);
+    private static final List<Option> OPTIONS = List.of(Option.RESUME, Option.EXIT);
     private int selectedOption;
 
     /**
-     * Constructs a new MenuState with the default selected option (START).
+     * Constructs a new PauseState with the default selected option (START).
      */
-    public MenuState() {
+    public PauseModelState() {
         this.selectedOption = 0;
     }
 
@@ -37,23 +37,22 @@ public class MenuState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                switch (OPTIONS.get(this.selectedOption)) {
-                    case START:
-                        model.start();
-                        model.setState(InGameState::new);
+                switch (OPTIONS.get(selectedOption)) {
+                    case RESUME:
+                        model.setState(InGameModelState::new);
                         break;
                     case EXIT:
-                        model.stop();
+                        model.setState(MenuModelState::new);
                         break;
                     default:
                         break;
                 }
                 break;
             case MOVE_UP:
-                this.selectedOption = (this.selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
+                selectedOption = (selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
                 break;
             case MOVE_DOWN:
-                this.selectedOption = (this.selectedOption + 1) % OPTIONS.size();
+                selectedOption = (selectedOption + 1) % OPTIONS.size();
                 break;
             default:
                 break;
@@ -68,12 +67,5 @@ public class MenuState extends AbstractModelState {
         return OPTIONS.get(this.selectedOption);
     }
 
-    /**
-     * Returns an unmodifiable list of all available menu options.
-     *
-     * @return the list of {@link Option} available in the menu
-     */
-    public List<Option> getOptions() {
-        return Collections.unmodifiableList(OPTIONS);
-    }
+    //TODO: getOptions() return OPTIONS
 }

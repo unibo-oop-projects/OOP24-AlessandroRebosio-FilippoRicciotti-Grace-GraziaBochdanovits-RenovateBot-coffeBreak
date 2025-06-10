@@ -32,7 +32,7 @@ public class BarrelRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public void render(final Graphics2D g, final Entity entity) {
+    public void render(final Graphics2D g, final Entity entity) { // TODO: rename in draw
         super.render(g, entity);
         g.setColor(Color.BLUE);
         g.fillOval((int) entity.getPosition().x(), (int) entity.getPosition().y(), 
@@ -43,7 +43,7 @@ public class BarrelRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public boolean canRender(final Entity entity) {
+    public boolean canRender(final Entity entity) { // TODO: remove
         return entity instanceof Barrel;
     }
 }

@@ -8,11 +8,14 @@ import it.unibo.coffebreak.api.view.renders.EntityRender;
 import it.unibo.coffebreak.impl.view.renders.AbstractScalableRender;
 
 /**
- * An abstract implementation of {@link EntityRender} that provides basic functionality
+ * An abstract implementation of {@link EntityRender} that provides basic
+ * functionality
  * for rendering entities with screen-relative scaling.
  * <p>
- * This class extends {@link AbstractScalableRender} to inherit scaling capabilities
- * based on screen dimensions. Concrete implementations should override the render
+ * This class extends {@link AbstractScalableRender} to inherit scaling
+ * capabilities
+ * based on screen dimensions. Concrete implementations should override the
+ * render
  * method to provide specific rendering logic for different entity types.
  * </p>
  * 
@@ -30,7 +33,8 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * @param screenWidth  the width of the screen used for scaling calculations
      * @param screenHeight the height of the screen used for scaling calculations
      */
-    public AbstractEntityRender(final int screenWidth, final int screenHeight) {
+    public AbstractEntityRender(final int screenWidth, final int screenHeight) { // TODO: use width and height for draw
+                                                                                 // resize
         super(screenWidth, screenHeight);
     }
 
@@ -38,7 +42,7 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * {@inheritDoc}
      */
     @Override
-    public void render(final Graphics2D g,  final Entity entity) {
+    public void render(final Graphics2D g, final Entity entity) { // TODO: remove if and leave requireNonNull
         Objects.requireNonNull(g, "Graphics context cannot be null");
         Objects.requireNonNull(entity, "Entity cannot be null");
         if (!canRender(entity)) {
@@ -52,7 +56,7 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * @param entity the entity to get the scaled width from
      * @return the scaled width of the entity
      */
-    protected final float getScaledEntityWidth(final Entity entity) {
+    protected final float getScaledEntityWidth(final Entity entity) { // TODO: remove
         return getScaledWidth(entity.getDimension().width());
     }
 
@@ -62,7 +66,7 @@ public abstract class AbstractEntityRender extends AbstractScalableRender implem
      * @param entity the entity to get the scaled height from
      * @return the scaled height of the entity
      */
-    protected final float getScaledEntityHeight(final Entity entity) {
+    protected final float getScaledEntityHeight(final Entity entity) { // TODO: remove
         return getScaledHeight(entity.getDimension().height());
     }
 }

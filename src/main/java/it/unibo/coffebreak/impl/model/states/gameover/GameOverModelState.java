@@ -4,7 +4,7 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
-import it.unibo.coffebreak.impl.model.states.menu.MenuState;
+import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
  * Implementation of {@link ModelState} interface;
@@ -14,8 +14,9 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuState;
  * 
  * @author Filippo Ricciotti
  */
-public class GameOverState extends AbstractModelState {
+public class GameOverModelState extends AbstractModelState {
 
+    // TODO: fix name pass from model
     private String name;
 
     /**
@@ -26,7 +27,7 @@ public class GameOverState extends AbstractModelState {
         switch (command) {
             case ENTER:
                 this.name = "TODO";
-                model.setState(MenuState::new);
+                model.setState(MenuModelState::new);
                 break;
             default:
                 break;

@@ -60,6 +60,7 @@ public class WithHammerState extends AbstractMarioState {
      *
      * @return true if the current time is past the expiration time, false otherwise
      */
+    @Override
     public boolean isExpired() {
         return System.currentTimeMillis() >= expirationTime;
     }

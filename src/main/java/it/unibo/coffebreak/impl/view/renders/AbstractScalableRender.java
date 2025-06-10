@@ -8,7 +8,7 @@ import it.unibo.coffebreak.api.view.renders.ScalableRender;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public abstract class AbstractScalableRender implements ScalableRender {
+public abstract class AbstractScalableRender implements ScalableRender { // TODO: remove
 
     private final int screenWidth;
     private final int screenHeight;

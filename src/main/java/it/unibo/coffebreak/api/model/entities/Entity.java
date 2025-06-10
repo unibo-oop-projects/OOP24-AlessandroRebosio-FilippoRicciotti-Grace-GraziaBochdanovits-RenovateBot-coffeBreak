@@ -39,19 +39,19 @@ public interface Entity {
     BoundingBox2D getDimension();
 
     /**
-     * Gets the current velocity vector of this entity.
-     *
-     * @return the current {@link Vector2D} representing the entity's velocity
-     */
-    Vector2D getVelocity();
-
-    /**
      * Sets the velocity vector of this entity.
      * The velocity determines how the entity moves during each update cycle.
      *
      * @param vector the new velocity vector to set
      */
     void setVelocity(Vector2D vector);
+
+    /**
+     * Gets the current velocity vector of this entity.
+     *
+     * @return the current {@link Vector2D} representing the entity's velocity
+     */
+    Vector2D getVelocity();
 
     /**
      * Checks if this entity intersects with another entity.

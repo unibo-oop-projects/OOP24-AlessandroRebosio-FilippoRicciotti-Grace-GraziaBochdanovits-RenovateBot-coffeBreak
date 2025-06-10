@@ -15,7 +15,7 @@ import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
-import it.unibo.coffebreak.impl.model.states.menu.MenuState;
+import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
  * Concrete implementation of the game {@link Model}.
@@ -41,7 +41,7 @@ public class GameModel implements Model {
      * Initializes menu state and sets the game as running.
      */
     public GameModel() {
-        this.setState(MenuState::new);
+        this.setState(MenuModelState::new);
         this.running = true;
     }
 
@@ -209,5 +209,4 @@ public class GameModel implements Model {
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
     }
-
 }

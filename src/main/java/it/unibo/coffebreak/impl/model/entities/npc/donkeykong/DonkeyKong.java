@@ -41,6 +41,8 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      */
     public DonkeyKong(final Position2D position, final BoundingBox2D dimension) {
         super(position, dimension);
+        this.lastThrowTime = 0;
+        // TODO: boolean if donkey must throw Barrel and fix Factory
     }
 
     /**

@@ -42,7 +42,7 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public final class GameRenderManagerImpl implements RenderManager {
+public final class GameRenderManagerImpl implements RenderManager { // TODO: leave it empty, with only render method 
 
     private final List<StaticRender> staticRenders = new ArrayList<>(); // TODO: capire se hanno senso gli static renders
     private final Map<Class<? extends Entity>, EntityRender> entityRenderers = new HashMap<>();

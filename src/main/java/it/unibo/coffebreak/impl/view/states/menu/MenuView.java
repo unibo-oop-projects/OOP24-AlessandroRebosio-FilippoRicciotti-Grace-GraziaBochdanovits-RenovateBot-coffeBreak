@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.model.states.menu.MenuState;
+import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -61,7 +61,7 @@ public class MenuView extends AbstractViewState {
         g.setFont(optionFont);
         final var fmOption = g.getFontMetrics();
 
-        if (super.getController().getGameState() instanceof final MenuState menuState) {
+        if (super.getController().getGameState() instanceof final MenuModelState menuState) {
             final var options = menuState.getOptions();
             final int selected = options.indexOf(menuState.getSelectedOption());
             final int baseY = (int) (height * 0.5);

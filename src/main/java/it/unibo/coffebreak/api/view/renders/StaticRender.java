@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface StaticRender {
+public interface StaticRender { // TODO: remove
     /**
      * Renders the static element using the provided graphics context.
      * This method is called every frame to draw the static content.

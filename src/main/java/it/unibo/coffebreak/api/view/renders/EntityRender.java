@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public interface EntityRender {
+public interface EntityRender { // TOOD: put in ./entities/EntityRender
     /**
      * Renders the specified entity using the provided graphics context.
      * Implementations should define the visual representation of the entity
@@ -20,7 +20,7 @@ public interface EntityRender {
      * @param g the Graphics2D context used for rendering
      * @param entity the entity to be rendered
      */
-    void render(Graphics2D g,  Entity entity);
+    void render(Graphics2D g,  Entity entity); // TODO: raname in draw
 
     /**
      * Checks whether this renderer can handle the specified entity.
@@ -31,5 +31,5 @@ public interface EntityRender {
      * @return true if this renderer can render the given entity, false otherwise
      * @throws NullPointerException if the entity parameter is null
      */
-    boolean canRender(Entity entity);
+    boolean canRender(Entity entity); // TODO: remove
 }

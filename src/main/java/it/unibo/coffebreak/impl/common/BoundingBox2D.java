@@ -42,4 +42,13 @@ public record BoundingBox2D(float width, float height) {
     public BoundingBox2D mul(final int multiply) {
         return this.mulX(multiply).mulY(multiply);
     }
+
+    /**
+     * Creates a copy of this BoundingBox2D.
+     *
+     * @return a new BoundingBox2D with the same width and height
+     */
+    public BoundingBox2D copy() {
+        return new BoundingBox2D(this.width, this.height);
+    }
 }
