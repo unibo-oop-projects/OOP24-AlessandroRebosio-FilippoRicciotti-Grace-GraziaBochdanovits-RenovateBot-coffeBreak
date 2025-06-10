@@ -4,9 +4,9 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.view.resources.Resource;
+import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.states.ViewState;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
+import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 
 /**
  * Abstract implementation of the {@link ViewState} interface.
@@ -19,7 +19,7 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
  */
 public abstract class AbstractViewState implements ViewState {
 
-    private final Resource resourceLoader = new ResourceLoader();
+    private final Loader resourceLoader = new ResourceLoader();
     private final Controller controller;
 
     /**
@@ -70,9 +70,9 @@ public abstract class AbstractViewState implements ViewState {
      * Intended for use only by subclasses to load fonts, images, or sounds.
      * </p>
      *
-     * @return the {@link Resource} instance for this view
+     * @return the {@link Loader} instance for this view
      */
-    protected final Resource getResource() {
+    protected final Loader getResource() {
         return this.resourceLoader;
     }
 

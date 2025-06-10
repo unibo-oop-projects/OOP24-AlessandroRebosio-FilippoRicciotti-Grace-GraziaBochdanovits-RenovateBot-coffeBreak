@@ -6,16 +6,22 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.api.view.resources.Resource;
+import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A render implementation for {@link Platform} entities that maintains proportional
- * sizing relative to the screen dimensions. This render handles the visual representation
- * of platforms in the game, ensuring they scale appropriately when the game window is resized.
+ * A render implementation for {@link Platform} entities that maintains
+ * proportional
+ * sizing relative to the screen dimensions. This render handles the visual
+ * representation
+ * of platforms in the game, ensuring they scale appropriately when the game
+ * window is resized.
  * 
- * <p>The render maintains the original aspect ratio of the platform while scaling it
- * according to the specified screen proportions.</p>
+ * <p>
+ * The render maintains the original aspect ratio of the platform while scaling
+ * it
+ * according to the specified screen proportions.
+ * </p>
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -25,14 +31,16 @@ public class PlatformRender extends AbstractEntityRender {
     private final transient BufferedImage platformImage;
 
     /**
-     * Constructs a new PlatformRender with the specified resource loader and screen dimensions.
+     * Constructs a new PlatformRender with the specified resource loader and screen
+     * dimensions.
      *
      * @param resource the resource loader used to load the platform image
      * @throws NullPointerException if the resource loader is null
      */
-    public PlatformRender(final Resource resource) {
+    public PlatformRender(final Loader resource) {
         super(resource);
-        this.platformImage = Objects.requireNonNull(resource, "Resource loader cannot be null").loadImage(PLATFORM_PATH);
+        this.platformImage = Objects.requireNonNull(resource, "Resource loader cannot be null")
+                .loadImage(PLATFORM_PATH);
     }
 
     /**

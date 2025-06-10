@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
+import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 import java.awt.Color;

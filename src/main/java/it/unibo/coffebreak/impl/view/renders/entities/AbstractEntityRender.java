@@ -4,11 +4,12 @@ import java.awt.Graphics2D;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
-import it.unibo.coffebreak.api.view.resources.Resource;
 
 /**
- * An abstract implementation of {@link EntityRender} that provides basic functionality
+ * An abstract implementation of {@link EntityRender} that provides basic
+ * functionality
  * for rendering entities with screen-relative scaling.
  * 
  * @see EntityRender
@@ -17,7 +18,7 @@ import it.unibo.coffebreak.api.view.resources.Resource;
  */
 public abstract class AbstractEntityRender implements EntityRender {
 
-    private final Resource resource;
+    private final Loader resource;
 
     /**
      * Constructs a new AbstractEntityRender with the specified screen dimensions.
@@ -25,8 +26,8 @@ public abstract class AbstractEntityRender implements EntityRender {
      *
      * @param resource the resource loader for rendering
      */
-    public AbstractEntityRender(final Resource resource) { // TODO: use width and height for draw
-        this.resource = Objects.requireNonNull(resource);  // resize
+    public AbstractEntityRender(final Loader resource) { // TODO: use width and height for draw
+        this.resource = Objects.requireNonNull(resource); // resize
     }
 
     /**
@@ -41,9 +42,9 @@ public abstract class AbstractEntityRender implements EntityRender {
      * Intended for use only by subclasses to load fonts, images, or sounds.
      * </p>
      *
-     * @return the {@link Resource} instance for this view
+     * @return the {@link Loader} instance for this view
      */
-    protected final Resource getResource() {
+    protected final Loader getResource() {
         return this.resource;
     }
 }

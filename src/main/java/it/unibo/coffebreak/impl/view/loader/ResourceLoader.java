@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.view.resources;
+package it.unibo.coffebreak.impl.view.loader;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -15,10 +15,10 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import it.unibo.coffebreak.api.view.resources.Resource;
+import it.unibo.coffebreak.api.view.loader.Loader;
 
 /**
- * Concrete implementation of {@link Resource} that caches loaded resources in
+ * Concrete implementation of {@link Loader} that caches loaded resources in
  * memory.
  * This class handles:
  * <ul>
@@ -33,7 +33,7 @@ import it.unibo.coffebreak.api.view.resources.Resource;
  * 
  * @author Alessandro Rebosio
  */
-public final class ResourceLoader implements Resource {
+public final class ResourceLoader implements Loader {
 
     /**
      * The path to the "Press Start 2P" TrueType font resource within the classpath.

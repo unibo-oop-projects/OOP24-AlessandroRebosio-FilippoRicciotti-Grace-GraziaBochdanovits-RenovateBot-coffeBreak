@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.view.resources;
+package it.unibo.coffebreak.api.view.loader;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
@@ -13,7 +13,7 @@ import javax.sound.sampled.Clip;
  * 
  * @author Alessandro Rebosio
  */
-public interface Resource {
+public interface Loader {
     /**
      * Loads an image from the specified path.
      *

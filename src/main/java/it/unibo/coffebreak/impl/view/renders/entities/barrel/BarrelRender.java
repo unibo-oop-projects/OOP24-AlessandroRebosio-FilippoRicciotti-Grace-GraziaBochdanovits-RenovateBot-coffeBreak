@@ -5,12 +5,13 @@ import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.api.view.resources.Resource;
+import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
  * A renderer for Barrel entities that draws them as blue circle on the screen.
- * This class extends {@link AbstractScalableRender} to provide scaling functionality
+ * This class extends {@link AbstractScalableRender} to provide scaling
+ * functionality
  * based on the screen dimensions.
  * 
  * @author Grazia Bochdanovits de Kavna
@@ -18,12 +19,13 @@ import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 public class BarrelRender extends AbstractEntityRender {
 
     /**
-     * Constructs a new BarrelRender with the specified resource loader and screen dimensions.
+     * Constructs a new BarrelRender with the specified resource loader and screen
+     * dimensions.
      *
      * @param resource the resource loader used to load the platform image
      * @throws NullPointerException if the resource loader is null
      */
-    public BarrelRender(final Resource resource) {
+    public BarrelRender(final Loader resource) {
         super(resource);
     }
 

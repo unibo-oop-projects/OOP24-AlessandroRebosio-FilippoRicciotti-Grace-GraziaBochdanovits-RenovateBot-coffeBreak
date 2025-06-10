@@ -5,12 +5,14 @@ import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
-import it.unibo.coffebreak.api.view.resources.Resource;
+import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for ladder entities that draws them as red rectangles on the screen.
- * This class extends {@link AbstractScalableRender} to provide scaling functionality
+ * A renderer for ladder entities that draws them as red rectangles on the
+ * screen.
+ * This class extends {@link AbstractScalableRender} to provide scaling
+ * functionality
  * based on the screen dimensions.
  * 
  * @author Grazia Bochdanovits de Kavna
@@ -23,7 +25,7 @@ public class LadderRender extends AbstractEntityRender {
      *
      * @param resource
      */
-    public LadderRender(final Resource resource) {
+    public LadderRender(final Loader resource) {
         super(resource);
     }
 
@@ -36,7 +38,7 @@ public class LadderRender extends AbstractEntityRender {
             g.setColor(Color.GRAY);
 
             g.drawRect((int) entity.getPosition().x(), (int) entity.getPosition().y(),
-                        (int) entity.getDimension().width(), (int) entity.getDimension().height());
+                    (int) entity.getDimension().width(), (int) entity.getDimension().height());
         }
     }
 }
