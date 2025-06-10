@@ -132,6 +132,11 @@ public interface Model {
      */
     List<Entry> getLeaderBoard();
 
+    /**
+     * Gets the highest score currently present in the leaderboard.
+     *
+     * @return the highest score value, or 0 if the leaderboard is empty
+     */
     int getHighestScore();
 
     /**
