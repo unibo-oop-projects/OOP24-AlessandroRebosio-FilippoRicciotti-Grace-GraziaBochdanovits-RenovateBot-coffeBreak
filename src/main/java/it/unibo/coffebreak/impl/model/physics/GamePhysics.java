@@ -14,7 +14,7 @@ import it.unibo.coffebreak.impl.common.Vector2D;
 public record GamePhysics() implements Physics {
 
     /** The base movement speed for horizontal and vertical movement. */
-    public static final float BASE_SPEED = 0.1f;
+    public static final float BASE_SPEED = 15f;
 
     /** The force applied when jumping. */
     public static final float JUMP_FORCE = 10f;

@@ -85,9 +85,9 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         }
         this.currentState.update(this, deltaTime);
 
-        super.setVelocity(this.physics.calculateX(deltaTime, Command.MOVE_LEFT));
+        super.setPosition(super.getPosition().sum(this.physics.calculateX(deltaTime, Command.MOVE_RIGHT)));
 
-        // TODO: Mario update()
+        // TODO: Mario movement
     }
 
     /**
@@ -118,7 +118,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         if (other instanceof final Platform platform) {
             platform.destroy();
         }
-        // TODO: mario movement
+        // TODO: mario collision
         this.currentState.handleCollision(this, other);
     }
 
