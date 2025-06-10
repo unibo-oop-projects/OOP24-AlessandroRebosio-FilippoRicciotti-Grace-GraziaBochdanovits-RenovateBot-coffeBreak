@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.model.states.pause;
 
+import java.util.Collections;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
@@ -67,5 +68,12 @@ public class PauseModelState extends AbstractModelState {
         return OPTIONS.get(this.selectedOption);
     }
 
-    //TODO: getOptions() return OPTIONS
+    /**
+     * Returns an unmodifiable list of all available pausw options.
+     *
+     * @return the list of {@link Option} available in the pause panel
+     */
+    public List<Option> getOptions() {
+        return Collections.unmodifiableList(OPTIONS);
+    }
 }

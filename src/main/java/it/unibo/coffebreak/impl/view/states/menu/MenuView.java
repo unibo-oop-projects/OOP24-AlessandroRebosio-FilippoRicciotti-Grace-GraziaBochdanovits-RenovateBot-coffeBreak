@@ -22,6 +22,7 @@ public class MenuView extends AbstractViewState {
     private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
+    private final int highestScore;
 
     /**
      * Constructs the main menu view and loads required fonts.
@@ -30,7 +31,7 @@ public class MenuView extends AbstractViewState {
      */
     public MenuView(final Controller controller) {
         super(controller);
-
+        this.highestScore = 15000;// controller.getHighestScore();//TODO: handle when list is empty
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
@@ -48,10 +49,24 @@ public class MenuView extends AbstractViewState {
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
         final Font optionFont = this.font.deriveFont(height * 0.055f);
+        final Font scoreFont = this.font.deriveFont(height * 0.04f);
+
+        g.setFont(scoreFont);
+
+        final var fmScore = g.getFontMetrics();
+        final int scoreY1 = (int) (height * 0.05);
+        final int scoreX1 = (width - fmScore.stringWidth("High Score")) / 2;
+        final int scoreY2 = (int) (height * 0.05);
+        final int scoreX2 = (width - fmScore.stringWidth("" + highestScore)) / 2;
+
+        g.setColor(Color.RED);
+        g.drawString("High Score", scoreX1, scoreY1);
+        g.setColor(DEFAULT_COLOR);
+        g.drawString("" + highestScore, scoreX2, scoreY2 + fmScore.getHeight() * 1.5f);
 
         g.setFont(titleFont);
         final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.22);
+        final int titleY = (int) (height * 0.33);
         final int titleX = (width - fmTitle.stringWidth("CoffeeBreak")) / 2;
         g.setColor(Color.BLUE);
         g.drawString("Coffee", titleX, titleY);
