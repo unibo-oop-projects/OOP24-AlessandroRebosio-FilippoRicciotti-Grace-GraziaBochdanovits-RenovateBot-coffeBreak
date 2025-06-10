@@ -1,31 +1,27 @@
-package it.unibo.coffebreak.impl.view.renders.entities.barrel;
+package it.unibo.coffebreak.impl.view.renders.entities.collectible.hammer;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.view.loader.Loader;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.view.renders.entities.AbstractEntityRender;
 
 /**
- * A renderer for Barrel entities that draws them as blue circle on the screen.
- * This class extends {@link AbstractScalableRender} to provide scaling
- * functionality
- * based on the screen dimensions.
+ * A renderer for the Hammer that draws it as a white circle on the screen.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public class BarrelRender extends AbstractEntityRender {
+public class HammerRender extends AbstractEntityRender {
 
     /**
-     * Constructs a new BarrelRender with the specified resource loader and screen
-     * dimensions.
+     * Constructs a new Hammer with the specified screen dimensions.
+     * The entity dimensions will be scaled according to these dimensions.
      *
-     * @param resource the resource loader used to load the platform image
-     * @throws NullPointerException if the resource loader is null
+     * @param resource
      */
-    public BarrelRender(final Loader resource) {
+    public HammerRender(final Loader resource) {
         super(resource);
     }
 
@@ -34,8 +30,8 @@ public class BarrelRender extends AbstractEntityRender {
      */
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime) {
-        if (entity instanceof final Barrel barrel && !barrel.isDestroyed()) {
-            g.setColor(Color.BLUE);
+        if (entity instanceof final Hammer hammer && !hammer.isCollected()) {
+            g.setColor(Color.white);
 
             final int diameter = Math.min((int) entity.getDimension().width(), (int) entity.getDimension().height());
 
