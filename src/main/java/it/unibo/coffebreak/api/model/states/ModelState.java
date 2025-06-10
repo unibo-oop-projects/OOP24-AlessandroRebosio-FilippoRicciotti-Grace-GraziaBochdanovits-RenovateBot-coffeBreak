@@ -55,4 +55,6 @@ public interface ModelState {
      * @return the list of {@link Option} available
      */
     List<Option> getOptions();
+
+    String getName();
 }

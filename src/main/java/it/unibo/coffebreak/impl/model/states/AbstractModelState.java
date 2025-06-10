@@ -62,4 +62,8 @@ public abstract class AbstractModelState implements ModelState {
         return List.of();
     }
 
+    @Override
+    public String getName() {
+        return "";
+    }
 }
