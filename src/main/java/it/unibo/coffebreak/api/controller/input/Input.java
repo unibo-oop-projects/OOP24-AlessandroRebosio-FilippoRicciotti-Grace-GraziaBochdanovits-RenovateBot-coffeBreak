@@ -21,6 +21,13 @@ public interface Input {
     Command getCommand();
 
     /**
+     * Retrieves the current direction input.
+     *
+     * @return the {@link Direction} representing the current input direction.
+     */
+    Command getDirection();
+
+    /**
      * Registers a key press event and converts it to a game command.
      *
      * @param keyCode the physical key code that was pressed

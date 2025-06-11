@@ -3,28 +3,22 @@ package it.unibo.coffebreak.api.view;
 import java.awt.event.KeyListener;
 
 /**
- * Represents the View component in the MVC architecture.
+ * The View component in MVC.
  * <p>
- * Responsibilities include:
- * <ul>
- * <li>Displaying the game state to the user</li>
- * <li>Handling user input events</li>
- * <li>Managing the game window</li>
- * </ul>
+ * Responsible for displaying the game state and handling user input.
+ * </p>
  * 
  * @author Alessandro Rebosio
  */
 public interface View extends KeyListener {
     /**
-     * Closes the game view and releases resources.
+     * Closes the view and releases resources.
      */
     void close();
 
     /**
      * Updates the view with the current game state.
-     * Typically called once per frame.
-    * 
-    * @param deltaTime The time elapsed since the last update, in seconds.
+     * @param deltaTime time elapsed since last update, in seconds
      */
     void update(float deltaTime);
 }

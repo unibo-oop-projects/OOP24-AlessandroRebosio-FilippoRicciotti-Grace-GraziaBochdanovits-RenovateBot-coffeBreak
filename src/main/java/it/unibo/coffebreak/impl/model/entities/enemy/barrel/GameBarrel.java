@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.enemy.barrel;
 
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
@@ -33,13 +34,14 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
  * @author Grazia Bochdanovits de Kavna
  */
 public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
-    private static final int DIRECTION = 1;
 
     private final Physics physics;
 
     private final boolean canTransformToFire;
     private boolean isDestroyedByTank;
     private boolean onPlatform;
+
+    private Command direction = Command.MOVE_LEFT;
 
     /**
      * Constructs a new game barrel with specified properties.
@@ -64,7 +66,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        final float vx = DIRECTION * 50f * deltaTime; // TODO: to fix change direction
+        final float vx = switch (this.direction) {
+            case MOVE_RIGHT -> this.physics.moveRight(deltaTime).x();
+            case MOVE_LEFT -> this.physics.moveLeft(deltaTime).x();
+            default -> 0f;
+        };
 
         float vy = physics.gravity(deltaTime).y();
 
@@ -93,7 +99,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-
+        direction = Command.MOVE_RIGHT;
         switch (other) {
             case final Tank tank -> {
                 this.isDestroyedByTank = true;

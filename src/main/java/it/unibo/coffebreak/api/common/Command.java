@@ -63,24 +63,4 @@ public enum Command {
      * Command representing no input or action.
      */
     NONE;
-
-    /**
-     * Returns the opposite directional command, if applicable.
-     * <p>
-     * For example, {@code MOVE_LEFT} returns {@code MOVE_RIGHT}, and vice versa.
-     * If the command has no directional opposite, {@code NONE} is returned.
-     * </p>
-     *
-     * @return the opposite directional {@code Command}, or {@code NONE} if
-     *         undefined
-     */
-    public Command getInverseDirection() {
-        return switch (this) {
-            case MOVE_UP -> MOVE_DOWN;
-            case MOVE_DOWN -> MOVE_UP;
-            case MOVE_LEFT -> MOVE_RIGHT;
-            case MOVE_RIGHT -> MOVE_LEFT;
-            default -> NONE;
-        };
-    }
 }

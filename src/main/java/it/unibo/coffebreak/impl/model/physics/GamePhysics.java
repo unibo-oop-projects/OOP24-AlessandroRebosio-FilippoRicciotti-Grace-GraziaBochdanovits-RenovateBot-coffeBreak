@@ -8,82 +8,64 @@ import it.unibo.coffebreak.impl.common.Vector;
  * Includes gravity, jumping, and constant-speed horizontal movement.
  * All methods return a velocity or acceleration vector scaled by deltaTime.
  * 
- * Usage example:
- * 
- * <pre>
- * GamePhysics physics = new GamePhysics();
- * Vector velocity = physics.moveRight(deltaTime);
- * velocity = velocity.sum(physics.gravity(deltaTime));
- * </pre>
+ * @param speed
+ * @param jumpForce
  * 
  * @author Alessandro Rebosio
  */
-public class GamePhysics implements Physics {
+public record GamePhysics(float speed, float jumpForce) implements Physics {
 
-    private static final float BASE_SPEED = 100;
-    private static final float JUMP_FORCE = 200f;
-    private static final float GRAVITY = -25f;
+    private static final float GRAVITY = -50f;
 
     /**
-     * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the velocity vector for right movement
+     * Default constructor with standard speed and jump force.
+     */
+    public GamePhysics() {
+        this(100f, -GRAVITY);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Vector moveRight(final float deltaTime) {
-        return new Vector(BASE_SPEED, 0f).mul(deltaTime);
+        return new Vector(this.speed, 0f).mul(deltaTime);
     }
 
     /**
-     * Returns the horizontal velocity vector for moving left, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the velocity vector for left movement
+     * {@inheritDoc}
      */
     @Override
     public Vector moveLeft(final float deltaTime) {
-        return new Vector(-BASE_SPEED, 0f).mul(deltaTime);
+        return new Vector(-this.speed, 0f).mul(deltaTime);
     }
 
     /**
-     * Returns the vertical velocity vector for moving up, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the velocity vector for upward movement
+     * {@inheritDoc}
      */
     @Override
     public Vector moveUp(final float deltaTime) {
-        return new Vector(0f, BASE_SPEED).mul(deltaTime);
+        return new Vector(0f, -this.speed).mul(deltaTime);
     }
 
     /**
-     * Returns the vertical velocity vector for moving down, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the velocity vector for downward movement
+     * {@inheritDoc}
      */
     @Override
     public Vector moveDown(final float deltaTime) {
-        return new Vector(0f, -BASE_SPEED).mul(deltaTime);
+        return new Vector(0f, +this.speed).mul(deltaTime);
     }
 
     /**
-     * Returns the vertical velocity vector for jumping, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the velocity vector for jumping
+     * {@inheritDoc}
      */
     @Override
     public Vector jump(final float deltaTime) {
-        return new Vector(0f, JUMP_FORCE).mul(deltaTime);
+        return new Vector(0f, this.jumpForce).mul(deltaTime);
     }
 
     /**
-     * Returns the acceleration vector due to gravity, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
-     * @return the gravity vector
+     * {@inheritDoc}
      */
     @Override
     public Vector gravity(final float deltaTime) {

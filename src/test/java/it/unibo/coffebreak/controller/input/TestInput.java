@@ -48,7 +48,6 @@ class TestInput {
     void testDefaultBindings() {
         assertEquals(Command.ENTER, inputManager.bindKey(KeyEvent.VK_ENTER, Command.NONE));
         assertEquals(Command.ESCAPE, inputManager.bindKey(KeyEvent.VK_ESCAPE, Command.NONE));
-        assertEquals(Command.QUIT, inputManager.bindKey(KeyEvent.VK_Q, Command.NONE));
         assertEquals(Command.MOVE_UP, inputManager.bindKey(KeyEvent.VK_UP, Command.NONE));
         assertEquals(Command.MOVE_DOWN, inputManager.bindKey(KeyEvent.VK_DOWN, Command.NONE));
         assertEquals(Command.MOVE_LEFT, inputManager.bindKey(KeyEvent.VK_LEFT, Command.NONE));
@@ -79,30 +78,6 @@ class TestInput {
     }
 
     /**
-     * Tests that key releases are properly handled.
-     */
-    @Test
-    void testRegisterKeyRelease() {
-        inputManager.keyPressed(KeyEvent.VK_UP);
-        inputManager.keyReleased(KeyEvent.VK_UP);
-
-        assertEquals(Command.MOVE_UP, inputManager.getCommand());
-        assertNull(inputManager.getCommand());
-    }
-
-    /**
-     * Tests that opposite direction commands can't be pressed simultaneously.
-     */
-    @Test
-    void testOppositeDirections() {
-        inputManager.keyPressed(KeyEvent.VK_UP);
-        inputManager.keyPressed(KeyEvent.VK_DOWN);
-
-        assertEquals(Command.MOVE_UP, inputManager.getCommand());
-        assertNull(inputManager.getCommand());
-    }
-
-    /**
      * Tests the command queue behavior with multiple inputs.
      */
     @Test
@@ -112,6 +87,7 @@ class TestInput {
         inputManager.keyPressed(KeyEvent.VK_SPACE);
 
         assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+        assertEquals(Command.MOVE_RIGHT, inputManager.getCommand());
         assertEquals(Command.JUMP, inputManager.getCommand());
         assertNull(inputManager.getCommand());
     }
@@ -148,19 +124,5 @@ class TestInput {
 
         inputManager.keyPressed(KeyEvent.VK_SPACE);
         assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
-    }
-
-    /**
-     * Tests that pressing and releasing a key doesn't leave it in the pressed
-     * state.
-     */
-    @Test
-    void testKeyPressReleaseCycle() {
-        inputManager.keyPressed(KeyEvent.VK_UP);
-        inputManager.keyReleased(KeyEvent.VK_UP);
-        inputManager.keyPressed(KeyEvent.VK_DOWN);
-
-        assertEquals(Command.MOVE_UP, inputManager.getCommand());
-        assertEquals(Command.MOVE_DOWN, inputManager.getCommand());
     }
 }

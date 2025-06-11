@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -10,6 +11,7 @@ import it.unibo.coffebreak.api.model.entities.character.lives.LivesManager;
 import it.unibo.coffebreak.api.model.entities.character.score.Score;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.physics.Physics;
@@ -53,7 +55,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private CharacterState currentState;
 
-    private int moveDirection;
+    private Command moveDirection;
     private boolean onPlatform;
 
     /**
@@ -71,7 +73,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         this.physics = new GamePhysics();
         this.score = score;
 
-        this.moveDirection = 0;
+        this.moveDirection = Command.NONE;
 
         changeState(NormalState::new);
     }
@@ -85,15 +87,22 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public void update(final float deltaTime) {
         float vx = 0f;
-        if (moveDirection == 1) {
-            vx = physics.moveRight(deltaTime).x();
-        } else if (moveDirection == -1) {
-            vx = physics.moveLeft(deltaTime).x();
+        float vy = physics.gravity(deltaTime).y();
+
+        switch (moveDirection) {
+            case MOVE_RIGHT -> vx = physics.moveRight(deltaTime).x();
+            case MOVE_LEFT -> vx = physics.moveLeft(deltaTime).x();
+            default -> vx = 0f;
         }
 
-        float vy = physics.gravity(deltaTime).y();
-        if (this.onPlatform) {
-            vy = 0f;
+        switch (moveDirection) {
+            case MOVE_UP -> vy = physics.moveUp(deltaTime).y();
+            case MOVE_DOWN -> vy = physics.moveDown(deltaTime).y();
+            default -> {
+                if (this.onPlatform) {
+                    vy = 0f;
+                }
+            }
         }
 
         final Vector velocity = new Vector(vx, vy);
@@ -101,6 +110,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         super.setVelocity(velocity);
 
         this.currentState.update(this, deltaTime);
+
         this.onPlatform = false;
     }
 
@@ -128,13 +138,16 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     public void onCollision(final Entity other) {
         switch (other) {
             case final Collectible collectible -> collectible.collect(this);
+            case final Princess princess -> princess.rescue();
             case final Platform platform -> {
-                if (super.getPosition().y() + super.getDimension().height() <= platform.getPosition().y()
+                platform.destroy();
+                if (super.getPosition().y() <= platform.getPosition().y()
                         + platform.getDimension().height()) {
                     this.onPlatform = true;
                 }
             }
-            case final Tank tank -> this.setMoveDirection(0);
+            case final Tank tank -> { // TODO: stop the player
+            }
             default -> {
             }
         }
@@ -147,8 +160,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      * {@inheritDoc}
      */
     @Override
-    public void setMoveDirection(final int dir) {
-        this.moveDirection = dir;
+    public void setDirection(final Command command) {
+        this.moveDirection = command != null ? command : Command.NONE;
     }
 
     /**

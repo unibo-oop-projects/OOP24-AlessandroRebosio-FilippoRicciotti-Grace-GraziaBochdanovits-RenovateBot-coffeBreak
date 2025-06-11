@@ -25,16 +25,14 @@ public class InGameModelState extends AbstractModelState {
      */
     @Override
     public void handleCommand(final Model model, final Command command) {
-        final var player = model.getMainCharacter();
-
         switch (command) {
             case ESCAPE -> model.setState(PauseModelState::new);
-            case MOVE_RIGHT -> player.setMoveDirection(1);
-            case MOVE_LEFT -> player.setMoveDirection(-1);
+            case MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, JUMP -> {
+                model.getMainCharacter().setDirection(command);
+            }
             default -> {
             }
         }
-
     }
 
     /***

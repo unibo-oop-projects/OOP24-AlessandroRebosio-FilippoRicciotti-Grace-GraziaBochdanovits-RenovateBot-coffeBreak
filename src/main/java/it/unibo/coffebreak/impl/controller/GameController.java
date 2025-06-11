@@ -33,20 +33,12 @@ public class GameController implements Controller {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Processes all pending input commands by:
-     * <ol>
-     * <li>Retrieving commands from the input queue</li>
-     * <li>Executing each command on the model</li>
-     * </ol>
-     * Continues until the input queue is empty.
      */
     @Override
     public void processInput() {
-        Command cmd = this.input.getCommand();
-        while (cmd != null) {
+        final Command cmd = this.input.getCommand();
+        if (cmd != null) {
             this.model.handleCommand(cmd);
-            cmd = this.input.getCommand();
         }
     }
 
@@ -57,6 +49,7 @@ public class GameController implements Controller {
      */
     @Override
     public void updateModel(final float deltaTime) {
+        // this.model.handleCommand(this.input.getDirection());
         this.model.update(deltaTime);
     }
 

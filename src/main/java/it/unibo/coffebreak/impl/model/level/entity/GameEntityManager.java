@@ -12,6 +12,7 @@ import it.unibo.coffebreak.api.model.entities.EntityFactory;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
@@ -109,6 +110,7 @@ public class GameEntityManager implements EntityManager {
     public void cleanEntities() {
         this.removeEntities(Collectible.class, Collectible::isCollected);
         this.removeEntities(Enemy.class, Enemy::isDestroyed);
+        this.removeEntities(Platform.class, Platform::isBroken);
     }
 
     /**

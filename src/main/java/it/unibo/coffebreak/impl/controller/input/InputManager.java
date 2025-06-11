@@ -13,19 +13,11 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.controller.input.Input;
 
 /**
- * A thread-safe implementation of {@link Input} that manages keyboard input
- * through a command queue and key binding system.
- * 
+ * Thread-safe implementation of {@link Input} for managing keyboard input.
  * <p>
- * This implementation features:
- * <ul>
- * <li>Key-to-command bindings configuration</li>
- * <li>Input event queuing</li>
- * <li>Press/release state tracking</li>
- * </ul>
- * <p>
- * Uses ConcurrentLinkedQueue for thread-safe command processing and
- * prevents opposite direction commands from being active simultaneously.
+ * Handles key-to-command bindings, input event queuing, and press/release state
+ * tracking.
+ * Designed for use in the Controller layer of MVC.
  * </p>
  * 
  * @author Alessandro Rebosio
@@ -38,24 +30,28 @@ public class InputManager implements Input {
 
     /**
      * Constructs a new InputManager with default key bindings.
-     * Initializes with the following default bindings:
      * <ul>
-     * <li>ENTER → {@link Command#ENTER}
-     * <li>ESCAPE → {@link Command#ESCAPE}
-     * <li>QUIT → {@link Command#QUIT}
-     * <li>Arrow keys → corresponding movement commands
-     * <li>JUMP → {@link Command#JUMP}
+     * <li>ENTER → {@link Command#ENTER}</li>
+     * <li>ESCAPE → {@link Command#ESCAPE}</li>
+     * <li>Q → {@link Command#QUIT}</li>
+     * <li>Arrow keys → movement commands</li>
+     * <li>SPACE → {@link Command#JUMP}</li>
      * </ul>
      */
     public InputManager() {
-        this.initializeDefaultBindings();
+        keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
+        keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESCAPE);
+        keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
+        keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
+        keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
+        keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
+        keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
      * Retrieves and removes the next command from the queue.
-     * Returns {@code null} if no commands are available.
+     * 
+     * @return the next available command, or {@code null} if the queue is empty
      */
     @Override
     public Command getCommand() {
@@ -63,69 +59,70 @@ public class InputManager implements Input {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Processing logic:
-     * <ol>
-     * <li>Looks up command bound to the key</li>
-     * <li>Verifies the inverse command isn't active</li>
-     * <li>Adds to active commands set</li>
-     * <li>Queues the command for processing</li>
-     * </ol>
+     */
+    @Override
+    public Command getDirection() {
+        final boolean right = pressedKeys.contains(Command.MOVE_RIGHT);
+        final boolean left = pressedKeys.contains(Command.MOVE_LEFT);
+        final boolean up = pressedKeys.contains(Command.MOVE_UP);
+        final boolean down = pressedKeys.contains(Command.MOVE_DOWN);
+
+        if (right ^ left) {
+            return right ? Command.MOVE_RIGHT : Command.MOVE_LEFT;
+        }
+        if (up ^ down && !(right || left)) {
+            return up ? Command.MOVE_UP : Command.MOVE_DOWN;
+        }
+        return Command.NONE;
+    }
+
+    /**
+     * Registers a key press event and queues the associated command if not already
+     * active.
+     * 
+     * @param keyCode the key code that was pressed
      */
     @Override
     public void keyPressed(final int keyCode) {
-        final Command command = this.keyBindings.get(keyCode);
-        if (command != null && !this.pressedKeys.contains(command.getInverseDirection())
-                && this.pressedKeys.add(command)) {
-            this.commandQueue.add(command);
+        final Command command = keyBindings.get(keyCode);
+        if (command != null && pressedKeys.add(command)) {
+            commandQueue.add(command);
         }
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Removes the command associated with the released key
-     * from the active commands set.
+     * Registers a key release event and removes the associated command from the
+     * active set.
+     * 
+     * @param keyCode the key code that was released
      */
     @Override
     public void keyReleased(final int keyCode) {
-        this.pressedKeys.remove(keyBindings.get(keyCode));
+        final Command command = keyBindings.get(keyCode);
+        if (command != null) {
+            pressedKeys.remove(command);
+        }
     }
 
     /**
-     * {@inheritDoc}
+     * Binds a physical key to a logical game command.
      * 
-     * @throws NullPointerException if the command parameter is null
+     * @param keyCode the key code to bind
+     * @param command the command to associate with the key
+     * @return the previously bound command, or {@code null} if the key was unbound
+     * @throws NullPointerException if {@code command} is null
      */
     @Override
     public Command bindKey(final int keyCode, final Command command) {
         Objects.requireNonNull(command, "Command cannot be null");
-        return this.keyBindings.put(keyCode, command);
+        return keyBindings.put(keyCode, command);
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Clears all pending commands while maintaining
-     * current key bindings and active key states.
+     * Clears all pending commands from the input queue.
      */
     @Override
     public void clearQueue() {
-        this.commandQueue.clear();
-    }
-
-    /**
-     * Initializes the default key bindings for common game controls.
-     */
-    private void initializeDefaultBindings() {
-        this.keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
-        this.keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESCAPE);
-        this.keyBindings.put(KeyEvent.VK_Q, Command.QUIT);
-        this.keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
-        this.keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
-        this.keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
-        this.keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
-        this.keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
+        commandQueue.clear();
     }
 }
