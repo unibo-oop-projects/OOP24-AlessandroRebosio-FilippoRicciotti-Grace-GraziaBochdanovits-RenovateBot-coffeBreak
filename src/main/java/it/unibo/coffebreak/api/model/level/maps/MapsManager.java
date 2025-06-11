@@ -28,19 +28,16 @@ public interface MapsManager {
     int getBonusValue();
 
     /**
-     * Loads the next map in the current level sequence.
-     * If the sequence ends, it progresses to the next level.
-     * 
-     * @return the lines representing the next map layout
+     * Advances to the next map/level.
      */
-    List<String> loadNextMap();
+    void advanceMap();
 
     /**
-     * Resets the current map to its original state.
-     * 
-     * @return the lines representing the reset map layout
+     * Loads and returns the current map as a list of strings.
+     *
+     * @return a list of strings representing the current map
      */
-    List<String> resetCurrentMap();
+    List<String> loadCurrentMap();
 
     /**
      * Calculates and applies time-based changes to the bonus value.

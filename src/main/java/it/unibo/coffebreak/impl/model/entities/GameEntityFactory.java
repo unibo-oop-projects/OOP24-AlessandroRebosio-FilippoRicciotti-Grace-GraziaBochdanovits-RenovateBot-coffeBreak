@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.model.entities;
 
 import it.unibo.coffebreak.api.model.entities.EntityFactory;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.entities.character.lives.LivesManager;
 import it.unibo.coffebreak.api.model.entities.character.score.Score;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
@@ -10,13 +11,14 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.enemy.barrel.GameBarrel;
 import it.unibo.coffebreak.impl.model.entities.enemy.fire.GameFire;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.mario.lives.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
@@ -40,99 +42,98 @@ public class GameEntityFactory implements EntityFactory {
     /**
      * Deafult entity bounding box dimension.
      */
-    public static final BoundingBox2D DEFAULT_BOUNDINGBOX = new BoundingBox2D(25, 25);
+    public static final Dimension DEFAULT_BOUNDINGBOX = new Dimension(25, 25);
 
     private final Score score = new GameScore();
+    private final LivesManager livesManager = new GameLivesManager();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Coin createCoin(final Position2D position) {
-        return new Coin(position, DEFAULT_BOUNDINGBOX);
+    public Coin createCoin(final Position position) {
+        return new Coin(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Hammer createHammer(final Position2D position) {
-        return new Hammer(position, DEFAULT_BOUNDINGBOX);
+    public Hammer createHammer(final Position position) {
+        return new Hammer(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Barrel createBarrel(final Position2D position) {
+    public Barrel createBarrel(final Position position) {
         // TODO: The first barrel must be able to transform, the others must be randomly
         // (RICCIOTTI)
-        return new GameBarrel(position, DEFAULT_BOUNDINGBOX, false);
+        return new GameBarrel(position, false);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Fire createFire(final Position2D position) {
-        return new GameFire(position, DEFAULT_BOUNDINGBOX);
+    public Fire createFire(final Position position) {
+        return new GameFire(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Antagonist createDonkeyKong(final Position2D position) {
-        // TODO: add a boolean parameter mustThrow to the method and use it in the
-        // DonkeyKong constructor
-        return new DonkeyKong(position, DEFAULT_BOUNDINGBOX.mul(2));
+    public Antagonist createDonkeyKong(final Position position) {
+        return new DonkeyKong(position, true);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Princess createPrincess(final Position2D position) {
-        return new Pauline(position, DEFAULT_BOUNDINGBOX.mulY(2));
+    public Princess createPrincess(final Position position) {
+        return new Pauline(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Ladder createNormalLadder(final Position2D position) {
-        return new NormalLadder(position, DEFAULT_BOUNDINGBOX);
+    public Ladder createNormalLadder(final Position position) {
+        return new NormalLadder(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Platform createNormalPlatform(final Position2D position) {
-        return new NormalPlatform(position, DEFAULT_BOUNDINGBOX);
+    public Platform createNormalPlatform(final Position position) {
+        return new NormalPlatform(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Platform createBreakablePlatform(final Position2D position) {
-        return new BreakablePlatform(position, DEFAULT_BOUNDINGBOX);
+    public Platform createBreakablePlatform(final Position position) {
+        return new BreakablePlatform(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Tank createTank(final Position2D position) {
-        return new GameTank(position, DEFAULT_BOUNDINGBOX.mulY(2));
+    public Tank createTank(final Position position) {
+        return new GameTank(position);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter createMario(final Position2D position) {
-        return new Mario(position, DEFAULT_BOUNDINGBOX.mulY(2), score);
+    public MainCharacter createMario(final Position position) {
+        return new Mario(position, score, livesManager);
     }
 }

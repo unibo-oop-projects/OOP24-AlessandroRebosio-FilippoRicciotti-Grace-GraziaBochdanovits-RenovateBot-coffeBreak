@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.states.ingame;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Movable;
+import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
@@ -28,7 +29,9 @@ public class InGameModelState extends AbstractModelState {
             case ESCAPE:
                 model.setState(PauseModelState::new);
                 break;
-            case MOVE_LEFT, MOVE_RIGHT, MOVE_UP, MOVE_DOWN, JUMP:
+            case MOVE_LEFT, MOVE_RIGHT:
+                break;
+            case MOVE_UP, MOVE_DOWN, JUMP:
                 break;
             default:
                 break;
@@ -43,7 +46,12 @@ public class InGameModelState extends AbstractModelState {
         final var player = model.getMainCharacter();
         final int currentLives = player.getLives();
 
-        // TODO: antagonist throw Barrel
+        model.getEntities().stream()
+                .filter(Antagonist.class::isInstance)
+                .map(Antagonist.class::cast)
+                .findFirst()
+                .orElseThrow()
+                .tryThrowBarrel(deltaTime).ifPresent(model::addEntity);
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)

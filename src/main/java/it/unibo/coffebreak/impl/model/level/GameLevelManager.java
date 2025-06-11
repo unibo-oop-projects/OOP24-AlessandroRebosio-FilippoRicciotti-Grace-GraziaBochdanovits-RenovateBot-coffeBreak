@@ -22,16 +22,8 @@ import it.unibo.coffebreak.impl.model.level.maps.GameMapsManager;
  */
 public class GameLevelManager implements LevelManager {
 
-    private final EntityManager entityManager;
-    private final MapsManager maps;
-
-    /**
-     * Constructs a new {@code GameLevelManager}.
-     */
-    public GameLevelManager() {
-        this.entityManager = new GameEntityManager();
-        this.maps = new GameMapsManager();
-    }
+    private final EntityManager entityManager = new GameEntityManager();
+    private final MapsManager maps = new GameMapsManager();
 
     /**
      * {@inheritDoc}
@@ -46,7 +38,7 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public MainCharacter getPlayer() {
-        return this.entityManager.getPlayer();
+        return this.entityManager.getPlayer().orElseThrow();
     }
 
     /**
@@ -77,8 +69,8 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public void loadNextEnitites() {
-        this.entityManager.loadEntitiesFromMap(this.maps.loadNextMap());
+    public void loadCurrentEntities() {
+        this.entityManager.loadEntitiesFromMap(this.maps.loadCurrentMap());
     }
 
     /**
@@ -110,7 +102,7 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void resetEntities() {
-        this.entityManager.resetEntities(this.maps.resetCurrentMap());
+        this.entityManager.resetEntities(this.maps.loadCurrentMap());
     }
 
     /**
@@ -120,7 +112,8 @@ public class GameLevelManager implements LevelManager {
     public void advanceLevel() {
         if (this.shouldAdvanceLevel()) {
             this.getPlayer().earnPoints(this.getCurrentLevelBonus());
-            this.loadNextEnitites();
+            this.maps.advanceMap();
+            this.loadCurrentEntities();
         }
     }
 

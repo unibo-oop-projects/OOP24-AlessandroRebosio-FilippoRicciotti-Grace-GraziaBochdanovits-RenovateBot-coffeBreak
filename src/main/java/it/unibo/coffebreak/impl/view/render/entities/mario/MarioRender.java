@@ -1,28 +1,26 @@
-package it.unibo.coffebreak.impl.view.render.entities.structure.ladder;
+package it.unibo.coffebreak.impl.view.render.entities.mario;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.view.loader.Loader;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
- * A renderer for ladder entities that draws them as red rectangles on the
- * screen.
- * 
+ * Render implementation for {@link Mario} player entity.
+ *
  * @author Grazia Bochdanovits de Kavna
  */
-public class LadderRender extends AbstractEntityRender {
+public class MarioRender extends AbstractEntityRender {
 
     /**
-     * Constructs a new LadderRender with the specified screen dimensions.
-     * The ladder dimensions will be scaled according to these dimensions.
+     * Constructs a new PlayerRender with specified screen dimensions.
      *
      * @param resource
      */
-    public LadderRender(final Loader resource) {
+    public MarioRender(final Loader resource) {
         super(resource);
     }
 
@@ -30,9 +28,10 @@ public class LadderRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width, final int height) {
-        if (entity instanceof Ladder) {
-            g.setColor(Color.GRAY);
+    public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
+            final int height) {
+        if (entity instanceof Mario) {
+            g.setColor(Color.RED);
 
             final float xRatio = entity.getPosition().x() / 1000f;
             final float yRatio = entity.getPosition().y() / 1000f;
@@ -44,7 +43,7 @@ public class LadderRender extends AbstractEntityRender {
             final int scaledW = (int) (wRatio * width);
             final int scaledH = (int) (hRatio * height);
 
-            g.drawRect(scaledX, scaledY, scaledW, scaledH);
+            g.fillRect(scaledX, scaledY, scaledW, scaledH);
         }
     }
 }

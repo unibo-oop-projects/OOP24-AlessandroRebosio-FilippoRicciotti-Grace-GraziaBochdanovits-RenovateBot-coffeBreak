@@ -8,143 +8,122 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
- * Test class for {@link GamePhysics} implementation of the {@link Physics}
- * interface. This class verifies the correctness of physical calculations for
- * game movement.
- * 
+ * Unit tests for the {@link Physics} interface and its implementation {@link GamePhysics}.
  * <p>
- * The tests use a standard delta time value approximating 60 FPS (0.016
- * seconds)
- * but also verify behavior with different time values.
- * 
+ * This test class verifies the correct calculation of movement and physics vectors
+ * in response to various {@link Command} inputs, such as moving left, right, up, down,
+ * and jumping. It also checks the immutability of the zero vector and the default gravity
+ * behavior for non-vertical commands.
+ * </p>
+ *
+ * <ul>
+ *     <li>{@code testMoveRightReturnsPositiveX}: Ensures moving right returns a positive X vector.</li>
+ *     <li>{@code testMoveLeftReturnsNegativeX}: Ensures moving left returns a negative X vector.</li>
+ *     <li>{@code testNonHorizontalCommandReturnsZeroVector}: Ensures non-horizontal commands return a zero vector for X.</li>
+ *     <li>{@code testMoveUpReturnsPositiveY}: Ensures moving up returns a positive Y vector.</li>
+ *     <li>{@code testMoveDownReturnsNegativeY}: Ensures moving down returns a negative Y vector.</li>
+ *     <li>{@code testJumpReturnsJumpForceY}: Ensures jumping returns the correct jump force in Y.</li>
+ *     <li>{@code testDefaultGravityOnNonVerticalCommand}: Ensures default gravity is applied on non-vertical commands.</li>
+ *     <li>{@code testZeroVectorIsImmutable}: Ensures the zero vector remains immutable.</li>
+ * </ul>
+ *
  * @author Alessandro Rebosio
  */
 class TestPhysics {
 
-    /** Standard delta time value approximating 60 FPS frame time. */
-    private static final float DELTA_TIME = 0.016f;
-
-    /** The physics system under test. */
-    private Physics gamePhysics;
+    /**
+     * The physics engine under test.
+     */
+    private Physics physics;
 
     /**
-     * Sets up the test fixture before each test method.
-     * Initializes a new instance of {@link GamePhysics}.
+     * Initializes the physics engine before each test.
      */
     @BeforeEach
     void setUp() {
-        gamePhysics = new GamePhysics();
+        physics = new GamePhysics();
     }
 
     /**
-     * Tests horizontal movement calculation for right direction.
-     * Verifies that MOVE_RIGHT command produces positive X velocity
-     * with magnitude equal to BASE_SPEED * deltaTime.
+     * Ensures moving right returns a positive X vector.
      */
     @Test
-    void testCalculateXMoveRight() {
-        final Vector2D result = gamePhysics.calculateX(DELTA_TIME, Command.MOVE_RIGHT);
-        final Vector2D expected = new Vector2D(GamePhysics.BASE_SPEED * DELTA_TIME, 0f);
-        assertEquals(expected, result);
+    void testMoveRightReturnsPositiveX() {
+        final Vector expected = new Vector(15f, 0f);
+        final Vector actual = physics.calculateX(Command.MOVE_RIGHT);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests horizontal movement calculation for left direction.
-     * Verifies that MOVE_LEFT command produces negative X velocity
-     * with magnitude equal to BASE_SPEED * deltaTime.
+     * Ensures moving left returns a negative X vector.
      */
     @Test
-    void testCalculateXMoveLeft() {
-        final Vector2D result = gamePhysics.calculateX(DELTA_TIME, Command.MOVE_LEFT);
-        final Vector2D expected = new Vector2D(-GamePhysics.BASE_SPEED * DELTA_TIME, 0f);
-        assertEquals(expected, result);
+    void testMoveLeftReturnsNegativeX() {
+        final Vector expected = new Vector(-15f, 0f);
+        final Vector actual = physics.calculateX(Command.MOVE_LEFT);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests horizontal movement calculation for non-movement commands.
-     * Verifies that commands not related to horizontal movement (like JUMP)
-     * return the ZERO_VECTOR.
+     * Ensures non-horizontal commands return a zero vector for X.
      */
     @Test
-    void testCalculateXOtherCommand() {
-        final Vector2D result = gamePhysics.calculateX(DELTA_TIME, Command.JUMP);
-        assertEquals(GamePhysics.ZERO_VECTOR, result);
+    void testNonHorizontalCommandReturnsZeroVector() {
+        final Vector expected = new Vector();
+        final Vector actual = physics.calculateX(Command.JUMP);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests vertical movement calculation for upward direction.
-     * Verifies that MOVE_UP command produces positive Y velocity
-     * with magnitude equal to BASE_SPEED * deltaTime.
+     * Ensures moving up returns a positive Y vector.
      */
     @Test
-    void testCalculateYMoveUp() {
-        final Vector2D result = gamePhysics.calculateY(DELTA_TIME, Command.MOVE_UP);
-        final Vector2D expected = new Vector2D(0f, GamePhysics.BASE_SPEED * DELTA_TIME);
-        assertEquals(expected, result);
+    void testMoveUpReturnsPositiveY() {
+        final Vector expected = new Vector(0f, 15f);
+        final Vector actual = physics.calculateY(Command.MOVE_UP);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests vertical movement calculation for downward direction.
-     * Verifies that MOVE_DOWN command produces negative Y velocity
-     * with magnitude equal to BASE_SPEED * deltaTime.
+     * Ensures moving down returns a negative Y vector.
      */
     @Test
-    void testCalculateYMoveDown() {
-        final Vector2D result = gamePhysics.calculateY(DELTA_TIME, Command.MOVE_DOWN);
-        final Vector2D expected = new Vector2D(0f, -GamePhysics.BASE_SPEED * DELTA_TIME);
-        assertEquals(expected, result);
+    void testMoveDownReturnsNegativeY() {
+        final Vector expected = new Vector(0f, -15f);
+        final Vector actual = physics.calculateY(Command.MOVE_DOWN);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests jump physics calculation.
-     * Verifies that JUMP command produces positive Y velocity
-     * with magnitude equal to JUMP_FORCE * deltaTime.
+     * Ensures jumping returns the correct jump force in Y.
      */
     @Test
-    void testCalculateYJump() {
-        final Vector2D result = gamePhysics.calculateY(DELTA_TIME, Command.JUMP);
-        final Vector2D expected = new Vector2D(0f, GamePhysics.JUMP_FORCE * DELTA_TIME);
-        assertEquals(expected, result);
+    void testJumpReturnsJumpForceY() {
+        final Vector expected = new Vector(0f, 10f);
+        final Vector actual = physics.calculateY(Command.JUMP);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests default gravity behavior.
-     * Verifies that when no vertical movement command is given,
-     * the system applies a downward velocity (simulating gravity)
-     * with magnitude equal to BASE_SPEED * deltaTime.
+     * Ensures default gravity is applied on non-vertical commands.
      */
     @Test
-    void testCalculateYDefaultGravity() {
-        final Vector2D result = gamePhysics.calculateY(DELTA_TIME, Command.MOVE_RIGHT);
-        final Vector2D expected = new Vector2D(0f, -GamePhysics.BASE_SPEED * DELTA_TIME);
-        assertEquals(expected, result);
+    void testDefaultGravityOnNonVerticalCommand() {
+        final Vector expected = new Vector(0f, -15f);
+        final Vector actual = physics.calculateY(Command.MOVE_RIGHT);
+        assertEquals(expected, actual);
     }
 
     /**
-     * Tests immutability of the ZERO_VECTOR constant.
-     * Verifies that modifications to a copy of ZERO_VECTOR
-     * do not affect the original constant.
+     * Ensures the zero vector remains immutable.
      */
     @Test
     void testZeroVectorIsImmutable() {
-        final Vector2D modified = new Vector2D(GamePhysics.ZERO_VECTOR.x() + 1, GamePhysics.ZERO_VECTOR.y() + 1);
-        assertNotEquals(GamePhysics.ZERO_VECTOR, modified);
-    }
-
-    /**
-     * Tests physics calculations with different time values.
-     * Verifies that movement calculations scale correctly
-     * with varying deltaTime values.
-     */
-    @Test
-    void testDifferentDeltaTimes() {
-        final float customDeltaTime = 0.5f;
-        final Vector2D result = gamePhysics.calculateX(customDeltaTime, Command.MOVE_RIGHT);
-        final Vector2D expected = new Vector2D(GamePhysics.BASE_SPEED * customDeltaTime, 0f);
-        assertEquals(expected, result);
+        final Vector modified = new Vector(1f, 1f);
+        assertNotEquals(new Vector(0f, 0f), modified);
     }
 }

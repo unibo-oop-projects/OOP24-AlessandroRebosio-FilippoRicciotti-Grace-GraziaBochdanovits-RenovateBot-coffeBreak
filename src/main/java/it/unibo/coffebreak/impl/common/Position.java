@@ -10,7 +10,7 @@ import java.util.Objects;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public record Position2D(float x, float y) {
+public record Position(float x, float y) {
     /**
      * Sums this position with another position, creating a new Position2D instance
      * with coordinates equal to the sum of the corresponding coordinates.
@@ -19,9 +19,9 @@ public record Position2D(float x, float y) {
      * @return a new Position2D representing the sum of the two positions
      * @throws NullPointerException if the provided position is null
      */
-    public Position2D sum(final Vector2D vector) {
+    public Position sum(final Vector vector) {
         Objects.requireNonNull(vector, "The vector cannot be null");
-        return new Position2D(this.x + vector.x(), this.y + vector.y());
+        return new Position(this.x + vector.x(), this.y + vector.y());
     }
 
     /**
@@ -29,7 +29,7 @@ public record Position2D(float x, float y) {
      *
      * @return a new Position2D with the same x and y coordinates as this instance
      */
-    public Position2D copy() {
-        return new Position2D(this.x, this.y);
+    public Position copy() {
+        return new Position(this.x, this.y);
     }
 }

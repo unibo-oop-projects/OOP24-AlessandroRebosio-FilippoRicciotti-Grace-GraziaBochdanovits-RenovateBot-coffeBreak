@@ -12,6 +12,7 @@ import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.states.ModelState;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
@@ -32,17 +33,19 @@ public class GameModel implements Model {
 
     private final LevelManager levelManager = new GameLevelManager();
     private final Leaderboard leaderBoard = new GameLeaderboard();
+    private final Dimension gameBounds = new Dimension(800, 628);
 
     private ModelState currentState;
     private volatile boolean running;
 
     /**
-     * Constructs a new GameModel with default initial state.
-     * Initializes menu state and sets the game as running.
+     * Constructs a new {@code GameModel} with the specified game boundaries.
+     * Initializes the game as running and sets the initial state to the menu.
      */
     public GameModel() {
-        this.setState(MenuModelState::new);
         this.running = true;
+
+        this.setState(MenuModelState::new);
     }
 
     /**
@@ -62,7 +65,7 @@ public class GameModel implements Model {
      */
     @Override
     public void start() {
-        this.levelManager.loadNextEnitites();
+        this.levelManager.loadCurrentEntities();
     }
 
     /**
@@ -80,6 +83,14 @@ public class GameModel implements Model {
     @Override
     public boolean isRunning() {
         return this.running;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimension getGameBound() {
+        return this.gameBounds;
     }
 
     /**

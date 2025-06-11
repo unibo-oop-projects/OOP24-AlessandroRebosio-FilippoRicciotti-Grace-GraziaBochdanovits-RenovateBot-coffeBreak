@@ -3,7 +3,6 @@ package it.unibo.coffebreak.impl.model.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -12,14 +11,12 @@ import it.unibo.coffebreak.api.model.entities.character.score.Score;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.api.model.entities.structure.Tank;
+import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
-import it.unibo.coffebreak.impl.model.entities.mario.lives.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
-import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -50,23 +47,22 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private final LivesManager livesManager;
     private final Score score;
-    private final Physics physics;
 
     private CharacterState currentState;
 
     /**
      * Creates a new Mario instance.
      *
-     * @param position  the initial position of Mario
-     * @param dimension the dimensions of Mario's hitbox
-     * @param score the score of Mario
+     * @param position     the initial position of Mario
+     * @param score        the score of Mario
+     * @param livesManager the lives manager for Mario
      */
-    public Mario(final Position2D position, final BoundingBox2D dimension, final Score score) {
-        super(position, dimension);
+    public Mario(final Position position, final Score score, final LivesManager livesManager) {
+        super(position);
+        super.setDimension(super.getDimension().mulHeight(2));
 
-        this.livesManager = new GameLivesManager();
+        this.livesManager = livesManager;
         this.score = score;
-        this.physics = new GamePhysics();
 
         changeState(NormalState::new);
     }
@@ -85,7 +81,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         }
         this.currentState.update(this, deltaTime);
 
-        super.setPosition(super.getPosition().sum(this.physics.calculateX(deltaTime, Command.MOVE_RIGHT)));
+        super.setPosition(super.getPosition().sum(super.getVelocity().sum(new Vector(10, 0)).multiply(deltaTime)));
 
         // TODO: Mario movement
     }
@@ -112,13 +108,15 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof final Collectible collectible) {
-            collectible.collect(this);
+        // TODO: mario collision and if mario collide with tank stop
+        switch (other) {
+            case Collectible collectible -> collectible.collect(this);
+            case Platform platform -> platform.destroy();
+            case Tank tank -> super.setVelocity(new Vector());
+            default -> {
+            }
         }
-        if (other instanceof final Platform platform) {
-            platform.destroy();
-        }
-        // TODO: mario collision
+
         this.currentState.handleCollision(this, other);
     }
 
@@ -128,6 +126,14 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public void earnPoints(final int amount) {
         this.score.increase(amount);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CharacterState getCurrentState() {
+        return this.currentState;
     }
 
     /**

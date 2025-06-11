@@ -30,6 +30,13 @@ public interface MainCharacter extends Entity {
     void earnPoints(int amount);
 
     /**
+     * Returns the current state of the character.
+     *
+     * @return the current {@link CharacterState} of this character
+     */
+    CharacterState getCurrentState();
+
+    /**
      * Method for get score value.
      * 
      * @return the score value

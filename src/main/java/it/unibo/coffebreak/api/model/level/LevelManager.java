@@ -56,7 +56,7 @@ public interface LevelManager {
      * This method should be called when transitioning to a new game area
      * to initialize all required entities.
      */
-    void loadNextEnitites();
+    void loadCurrentEntities();
 
     /**
      * Adds a new entity to the current game level.

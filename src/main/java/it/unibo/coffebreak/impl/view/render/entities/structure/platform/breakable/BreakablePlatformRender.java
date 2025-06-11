@@ -1,18 +1,18 @@
-package it.unibo.coffebreak.impl.view.render.entities.collectible.hammer;
+package it.unibo.coffebreak.impl.view.render.entities.structure.platform.breakable;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.view.loader.Loader;
-import it.unibo.coffebreak.impl.view.render.entities.collectible.AbstractCollectableRender;
+import it.unibo.coffebreak.impl.view.render.entities.structure.platform.AbstractPlatformRender;
 
 /**
- * A renderer for the Hammer that draws it as a white circle on the screen.
+ * A renderer for the Breakable Platform.
  * 
- * @author Grazia Bochdanovits de Kavna
+ * @author Alessandro Rebosio
  */
-public class HammerRender extends AbstractCollectableRender {
+public class BreakablePlatformRender extends AbstractPlatformRender {
 
     /**
      * Constructs a new Hammer with the specified screen dimensions.
@@ -20,7 +20,7 @@ public class HammerRender extends AbstractCollectableRender {
      *
      * @param resource
      */
-    public HammerRender(final Loader resource) {
+    public BreakablePlatformRender(final Loader resource) {
         super(resource);
     }
 
@@ -28,9 +28,9 @@ public class HammerRender extends AbstractCollectableRender {
      * {@inheritDoc}
      */
     @Override
-    protected void renderCollectable(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
+    protected void renderPlatform(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        g.setColor(Color.white);
+        g.setColor(Color.CYAN);
 
         final float xRatio = entity.getPosition().x() / 1000f;
         final float yRatio = entity.getPosition().y() / 1000f;
@@ -43,6 +43,5 @@ public class HammerRender extends AbstractCollectableRender {
         final int scaledH = (int) (hRatio * height);
 
         g.drawRect(scaledX, scaledY, scaledW, scaledH);
-        g.fillOval(scaledX, scaledY, scaledW, scaledH);
     }
 }

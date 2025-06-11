@@ -1,8 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.collectible.hammer;
 
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.collectible.AbstractCollectible;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 
@@ -23,11 +22,10 @@ public class Hammer extends AbstractCollectible {
      * Constructs a new Hammer with the specified position, dimensions, and point
      * value.
      *
-     * @param position  the 2D position of the hammer in the game world
-     * @param dimension the 2D dimensions (size) of the hammer
+     * @param position the 2D position of the hammer in the game world
      */
-    public Hammer(final Position2D position, final BoundingBox2D dimension) {
-        super(position, dimension, VALUE);
+    public Hammer(final Position position) {
+        super(position, VALUE);
     }
 
     /**

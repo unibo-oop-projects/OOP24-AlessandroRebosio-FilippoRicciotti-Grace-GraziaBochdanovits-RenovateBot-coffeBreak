@@ -2,8 +2,7 @@ package it.unibo.coffebreak.impl.model.entities.structure.ladder;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
 /**
@@ -24,11 +23,10 @@ public abstract class AbstractLadder extends AbstractEntity implements Ladder {
     /**
      * Constructs a new AbstractLadder with the given position and dimensions.
      * 
-     * @param position  the top-left position of the ladder in the game world
-     * @param dimension the width and height of the ladder
+     * @param position the top-left position of the ladder in the game world
      */
-    public AbstractLadder(final Position2D position, final BoundingBox2D dimension) {
-        super(position, dimension);
+    public AbstractLadder(final Position position) {
+        super(position);
     }
 
     /**

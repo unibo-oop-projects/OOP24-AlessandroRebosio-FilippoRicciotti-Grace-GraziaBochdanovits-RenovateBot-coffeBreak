@@ -4,8 +4,7 @@ import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
 import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
@@ -27,22 +26,27 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     /**
      * The interval between barrel throws in milliseconds.
      */
-    private static final long BARREL_THROW_INTERVAL = 2000;
+    private static final float BARREL_THROW_INTERVAL = 2.0f;
 
+    private final boolean canThrowBarrel;
     private float lastThrowTime;
 
     /**
-     * Constructs a new Donkey Kong entity with specified position and dimensions.
-     * 
-     * @param position  the initial position of Donkey Kong (cannot be null)
-     * @param dimension the physical dimensions of the character (cannot be null)
+     * Constructs a new Donkey Kong entity with specified position, dimensions, and
+     * barrel-throwing capability.
+     *
+     * @param position       the initial position of Donkey Kong (cannot be null)
+     * @param canThrowBarrel true if Donkey Kong is allowed to throw barrels, false
+     *                       otherwise
      * @throws NullPointerException     if position or dimension are null
      * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
-    public DonkeyKong(final Position2D position, final BoundingBox2D dimension) {
-        super(position, dimension);
+    public DonkeyKong(final Position position, final boolean canThrowBarrel) {
+        super(position);
+        super.setDimension(super.getDimension().mul(2));
+
         this.lastThrowTime = 0;
-        // TODO: boolean if donkey must throw Barrel and fix Factory
+        this.canThrowBarrel = canThrowBarrel;
     }
 
     /**
@@ -54,8 +58,9 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      */
     @Override
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
-        if (deltaTime - lastThrowTime >= BARREL_THROW_INTERVAL) {
-            lastThrowTime = deltaTime;
+        this.lastThrowTime += deltaTime;
+        if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
+            lastThrowTime = 0;
             return Optional.of(new GameEntityFactory().createBarrel(this.getPosition()));
         }
         return Optional.empty();

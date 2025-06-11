@@ -23,7 +23,7 @@ import it.unibo.coffebreak.impl.model.level.bonus.GameBonus;
  */
 public class GameMapsManager implements MapsManager {
 
-    private static final long BONUS_INTERVAL = 2000;
+    private static final long BONUS_INTERVAL = 2;
     private static final List<Integer> MAP_BONUSES = List.of(5000, 6000, 7000, 8000);
     private static final List<List<String>> LEVEL_MAPS = List.of(
             List.of("/maps/Map1.txt", "/maps/Map4.txt"));
@@ -42,6 +42,7 @@ public class GameMapsManager implements MapsManager {
             if (is == null) {
                 throw new MapLoadingException("Map file not found: " + path);
             }
+            this.bonus.setBonus(this.getLevelBonus());
             return reader.lines().toList();
         } catch (final IOException e) {
             throw new MapLoadingException("Error loading map: " + path, e);
@@ -77,25 +78,28 @@ public class GameMapsManager implements MapsManager {
      * {@inheritDoc}
      */
     @Override
-    public List<String> loadNextMap() {
-        final List<String> current = resetCurrentMap();
-        this.bonus.setBonus(this.getLevelBonus());
-
+    public void advanceMap() {
         this.mapIndex++;
-        if (this.mapIndex >= LEVEL_MAPS.get(this.levelIndex).size()) {
-            this.levelIndex = Math.min(this.levelIndex + 1, LEVEL_MAPS.size() - 1);
+
+        final List<String> currentLevelMaps = LEVEL_MAPS.get(Math.min(this.levelIndex, LEVEL_MAPS.size() - 1));
+
+        if (this.mapIndex >= currentLevelMaps.size()) {
             this.mapIndex = 0;
+            if (this.levelIndex < LEVEL_MAPS.size() - 1) {
+                this.levelIndex++;
+            }
         }
-        return current;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<String> resetCurrentMap() {
-        return this.mapCache.computeIfAbsent(LEVEL_MAPS.get(this.levelIndex).get(this.mapIndex),
-                loadMapFromFile);
+    public List<String> loadCurrentMap() {
+        final List<String> currentLevelMaps = LEVEL_MAPS.get(Math.min(levelIndex, LEVEL_MAPS.size() - 1));
+        final String mapPath = currentLevelMaps.get(mapIndex);
+
+        return mapCache.computeIfAbsent(mapPath, loadMapFromFile);
     }
 
     /**

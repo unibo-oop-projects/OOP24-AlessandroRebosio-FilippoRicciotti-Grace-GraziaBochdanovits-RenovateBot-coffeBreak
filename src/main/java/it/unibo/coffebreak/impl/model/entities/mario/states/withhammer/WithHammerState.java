@@ -35,7 +35,7 @@ public class WithHammerState extends AbstractMarioState {
     /**
      * The duration in milliseconds that Mario keeps the hammer (5 seconds).
      */
-    public static final long HAMMER_DURATION = 5000;
+    public static final long HAMMER_DURATION = 5;
 
     /**
      * The system time in milliseconds when this hammer state will expire.

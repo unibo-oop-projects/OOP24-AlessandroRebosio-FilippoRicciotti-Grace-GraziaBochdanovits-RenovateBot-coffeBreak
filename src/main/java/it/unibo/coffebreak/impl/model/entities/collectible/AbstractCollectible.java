@@ -3,8 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.collectible;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
 /**
@@ -23,12 +22,12 @@ public abstract class AbstractCollectible extends AbstractEntity implements Coll
      * Constructs a new {@code GameCollectible} with the specified position,
      * dimensions, and point value.
      *
-     * @param position  the initial position of the collectible
-     * @param dimension the size of the collectible
-     * @param value     the number of points the collectible is worth
+     * @param position the initial position of the collectible
+     * @param value    the number of points the collectible is worth
      */
-    public AbstractCollectible(final Position2D position, final BoundingBox2D dimension, final int value) {
-        super(position, dimension);
+    public AbstractCollectible(final Position position, final int value) {
+        super(position);
+
         this.collected = false;
         this.value = value;
     }

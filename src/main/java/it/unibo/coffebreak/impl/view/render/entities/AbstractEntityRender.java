@@ -26,15 +26,15 @@ public abstract class AbstractEntityRender implements EntityRender {
      *
      * @param resource the resource loader for rendering
      */
-    public AbstractEntityRender(final Loader resource) { // TODO: use width and height for draw
-        this.resource = Objects.requireNonNull(resource); // resize
+    public AbstractEntityRender(final Loader resource) {
+        this.resource = Objects.requireNonNull(resource);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract void draw(Graphics2D g, Entity entity, float deltaTime);
+    public abstract void draw(Graphics2D g, Entity entity, float deltaTime, int width, int height);
 
     /**
      * Returns the resource loader used by this view state.

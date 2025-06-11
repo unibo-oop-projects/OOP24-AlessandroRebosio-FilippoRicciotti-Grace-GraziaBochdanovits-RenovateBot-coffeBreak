@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.api.model.level.entity;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -24,7 +25,7 @@ public interface EntityManager {
      * 
      * @return the player
      */
-    MainCharacter getPlayer();
+    Optional<MainCharacter> getPlayer();
 
     /**
      * Loads entities from a map represented by text lines.

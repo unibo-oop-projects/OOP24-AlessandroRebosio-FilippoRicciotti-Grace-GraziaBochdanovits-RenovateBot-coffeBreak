@@ -8,6 +8,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
+import it.unibo.coffebreak.impl.common.Dimension;
 
 /**
  * Represents the main model interface for the game.
@@ -44,6 +45,13 @@ public interface Model {
      * @return true if the game is running, false otherwise
      */
     boolean isRunning();
+
+    /**
+     * Returns the game bounds of the game area.
+     *
+     * @return the game bounds of the game as an integer
+     */
+    Dimension getGameBound();
 
     /**
      * Gets the current game state.

@@ -12,7 +12,6 @@ import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.api.view.loader.Loader;
@@ -21,17 +20,21 @@ import it.unibo.coffebreak.api.view.render.entities.EntityRender;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
 import it.unibo.coffebreak.impl.view.render.entities.enemy.barrel.BarrelRender;
 import it.unibo.coffebreak.impl.view.render.entities.enemy.fire.FireRender;
-import it.unibo.coffebreak.impl.view.render.entities.mario.PlayerRender;
+import it.unibo.coffebreak.impl.view.render.entities.mario.MarioRender;
 import it.unibo.coffebreak.impl.view.render.entities.structure.ladder.LadderRender;
-import it.unibo.coffebreak.impl.view.render.entities.structure.platform.PlatformRender;
+import it.unibo.coffebreak.impl.view.render.entities.structure.platform.breakable.BreakablePlatformRender;
+import it.unibo.coffebreak.impl.view.render.entities.structure.platform.normal.NormalPlatformRender;
 import it.unibo.coffebreak.impl.view.render.entities.collectible.coin.CoinRender;
 import it.unibo.coffebreak.impl.view.render.entities.collectible.hammer.HammerRender;
 import it.unibo.coffebreak.impl.view.render.entities.structure.tank.TankRender;
 import it.unibo.coffebreak.impl.view.render.entities.npc.donkeykong.DonkeyKongRender;
 import it.unibo.coffebreak.impl.view.render.entities.npc.pauline.PaulineRender;
-
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process
@@ -80,7 +83,7 @@ public final class GameRenderManager implements RenderManager {
             entityRender.entrySet().stream()
                     .filter(entry -> entry.getKey().isInstance(entity))
                     .findFirst()
-                    .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime));
+                    .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
         });
     }
 
@@ -89,11 +92,14 @@ public final class GameRenderManager implements RenderManager {
         this.entityRender.put(Hammer.class, new HammerRender(loader));
         this.entityRender.put(Barrel.class, new BarrelRender(loader));
         this.entityRender.put(Fire.class, new FireRender(loader));
-        this.entityRender.put(Mario.class, new PlayerRender(loader));
+        this.entityRender.put(Mario.class, new MarioRender(loader));
+        this.entityRender.put(Pauline.class, new PaulineRender(loader));
+        this.entityRender.put(DonkeyKong.class, new DonkeyKongRender(loader));
         this.entityRender.put(Princess.class, new PaulineRender(loader));
         this.entityRender.put(Antagonist.class, new DonkeyKongRender(loader));
         this.entityRender.put(Ladder.class, new LadderRender(loader));
-        this.entityRender.put(Platform.class, new PlatformRender(loader));
+        this.entityRender.put(NormalPlatform.class, new NormalPlatformRender(loader));
+        this.entityRender.put(BreakablePlatform.class, new BreakablePlatformRender(loader));
         this.entityRender.put(Tank.class, new TankRender(loader));
     }
 }

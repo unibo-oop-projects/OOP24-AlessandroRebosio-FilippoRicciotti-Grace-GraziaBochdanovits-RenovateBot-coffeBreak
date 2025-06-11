@@ -4,9 +4,9 @@ import javax.swing.JFrame;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.view.panel.GamePanel;
 
-import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
@@ -31,9 +31,6 @@ public class GameView extends JFrame implements View {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 628;
-
     /** Reference to the game controller. */
     private final transient Controller controller;
     private final GamePanel gamePanel;
@@ -46,10 +43,11 @@ public class GameView extends JFrame implements View {
      */
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
+        final Dimension gameBounds = this.controller.getGameBounds();
 
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.setSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        super.setSize(gameBounds.width(), gameBounds.height());
 
         this.gamePanel = new GamePanel();
 

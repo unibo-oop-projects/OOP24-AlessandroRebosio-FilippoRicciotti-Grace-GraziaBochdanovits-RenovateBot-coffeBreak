@@ -2,8 +2,7 @@ package it.unibo.coffebreak.impl.model.entities.structure.platform;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
 /**
@@ -22,11 +21,10 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
-     * @param position  the 2D position of the platform (cannot be null)
-     * @param dimension the 2D dimensions of the platform (cannot be null)
+     * @param position the 2D position of the platform (cannot be null)
      */
-    public AbstractPlatform(final Position2D position, final BoundingBox2D dimension) {
-        super(position, dimension);
+    public AbstractPlatform(final Position position) {
+        super(position);
     }
 
     /**

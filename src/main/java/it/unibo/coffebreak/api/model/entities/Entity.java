@@ -1,26 +1,27 @@
 package it.unibo.coffebreak.api.model.entities;
 
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
-import it.unibo.coffebreak.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.common.Vector;
 
 /**
  * Represents a fundamental game entity with spatial properties and update
  * capability.
  * Implementations can represent both static and dynamic game elements.
  *
- * @see Position2D
- * @see BoundingBox2D
+ * @see Position
+ * @see Dimension
  * 
  * @author Grazia Bochdanovits de Kavna
  */
+
 public interface Entity {
     /**
      * Gets the current position of this entity in game world coordinates.
      *
-     * @return the current {@link Position2D} of this entity (never {@code null})
+     * @return the current {@link Position} of this entity (never {@code null})
      */
-    Position2D getPosition();
+    Position getPosition();
 
     /**
      * Sets the position of this entity in the game world.
@@ -29,14 +30,23 @@ public interface Entity {
      * @param position the new position to set (must not be {@code null})
      * @throws NullPointerException if the position parameter is null
      */
-    void setPosition(Position2D position);
+    void setPosition(Position position);
 
     /**
      * Gets the physical dimensions of this entity.
      *
-     * @return the {@link BoundingBox2D} of this entity (never {@code null})
+     * @return the {@link Dimension} of this entity (never {@code null})
      */
-    BoundingBox2D getDimension();
+    Dimension getDimension();
+
+    /**
+     * Sets the physical dimensions (bounding box) of this entity.
+     * The dimension defines the size and shape of the entity in the game world.
+     *
+     * @param dimension the new {@link Dimension} to set (must not be
+     *                  {@code null})
+     */
+    void setDimension(Dimension dimension);
 
     /**
      * Sets the velocity vector of this entity.
@@ -44,14 +54,14 @@ public interface Entity {
      *
      * @param vector the new velocity vector to set
      */
-    void setVelocity(Vector2D vector);
+    void setVelocity(Vector vector);
 
     /**
      * Gets the current velocity vector of this entity.
      *
-     * @return the current {@link Vector2D} representing the entity's velocity
+     * @return the current {@link Vector} representing the entity's velocity
      */
-    Vector2D getVelocity();
+    Vector getVelocity();
 
     /**
      * Checks if this entity intersects with another entity.

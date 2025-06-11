@@ -14,22 +14,23 @@ import java.util.Objects;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public record Vector2D(float x, float y) {
+public record Vector(float x, float y) {
     /**
      * Constructs a zero vector (0, 0).
      */
-    public Vector2D() {
+    public Vector() {
         this(0.0f, 0.0f);
     }
 
     /**
-     * Adds the given vector to this vector and returns the result as a new Vector2D.
+     * Adds the given vector to this vector and returns the result as a new
+     * Vector2D.
      *
      * @param other the vector to add
      * @return a new Vector2D representing the sum
      */
-    public Vector2D sum(final Vector2D other) {
-        return new Vector2D(this.x + other.x, this.y + other.y);
+    public Vector sum(final Vector other) {
+        return new Vector(this.x + other.x, this.y + other.y);
     }
 
     /**
@@ -39,8 +40,8 @@ public record Vector2D(float x, float y) {
      * @param scalar the multiplication factor
      * @return a new {@code Vector2D} representing the scaled vector
      */
-    public Vector2D multiply(final float scalar) {
-        return new Vector2D(this.x * scalar, this.y * scalar);
+    public Vector multiply(final float scalar) {
+        return new Vector(this.x * scalar, this.y * scalar);
     }
 
     /**
@@ -49,8 +50,8 @@ public record Vector2D(float x, float y) {
      *
      * @return a copy of this vector (the same instance)
      */
-    public Vector2D copy() {
-        return new Vector2D(this.x, this.y);
+    public Vector copy() {
+        return new Vector(this.x, this.y);
     }
 
     /**
@@ -79,7 +80,7 @@ public record Vector2D(float x, float y) {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final Vector2D vector2D = (Vector2D) obj;
+        final Vector vector2D = (Vector) obj;
         return Float.compare(vector2D.x, x) == 0 && Float.compare(vector2D.y, y) == 0;
     }
 

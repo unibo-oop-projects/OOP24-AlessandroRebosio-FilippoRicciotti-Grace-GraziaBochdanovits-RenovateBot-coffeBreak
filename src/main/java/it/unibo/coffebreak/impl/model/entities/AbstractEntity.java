@@ -3,9 +3,9 @@ package it.unibo.coffebreak.impl.model.entities;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.impl.common.BoundingBox2D;
-import it.unibo.coffebreak.impl.common.Position2D;
-import it.unibo.coffebreak.impl.common.Vector2D;
+import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.common.Vector;
 
 /**
  * An abstract base class for all game entities, providing common functionality
@@ -19,28 +19,35 @@ import it.unibo.coffebreak.impl.common.Vector2D;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private final BoundingBox2D dimension;
-    private Position2D position;
-    private Vector2D velocity;
+    private Dimension dimension;
+    private Position position;
+    private Vector velocity;
 
     /**
      * Constructs a new game entity with the specified position and dimensions.
      *
-     * @param position  the initial position of the entity (cannot be {@code null})
-     * @param dimension the dimensions of the entity (cannot be {@code null})
+     * @param position the initial position of the entity (cannot be {@code null})
      * @throws NullPointerException if either position or dimension is {@code null}
      */
-    public AbstractEntity(final Position2D position, final BoundingBox2D dimension) {
+    public AbstractEntity(final Position position) {
         this.position = Objects.requireNonNull(position, "Position cannot be null");
-        this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
-        this.velocity = new Vector2D();
+        this.dimension = new Dimension();
+        this.velocity = new Vector();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public BoundingBox2D getDimension() {
+    public void setDimension(final Dimension dimension) {
+        this.dimension = dimension.copy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimension getDimension() {
         return this.dimension;
     }
 
@@ -51,7 +58,7 @@ public abstract class AbstractEntity implements Entity {
      * @throws NullPointerException if position is {@code null}
      */
     @Override
-    public void setPosition(final Position2D position) {
+    public void setPosition(final Position position) {
         this.position = position.copy();
     }
 
@@ -59,7 +66,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public Position2D getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 
@@ -69,7 +76,7 @@ public abstract class AbstractEntity implements Entity {
      * @param vector the new velocity vector
      */
     @Override
-    public final void setVelocity(final Vector2D vector) {
+    public final void setVelocity(final Vector vector) {
         this.velocity = vector.copy();
     }
 
@@ -77,7 +84,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public Vector2D getVelocity() {
+    public Vector getVelocity() {
         return this.velocity;
     }
 

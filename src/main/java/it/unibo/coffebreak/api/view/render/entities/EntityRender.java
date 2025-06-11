@@ -21,6 +21,8 @@ public interface EntityRender {
      * @param g         the Graphics2D context used for rendering
      * @param entity    the entity to be rendered
      * @param deltaTime the time passed since the last frame
+     * @param width     the width available for rendering the entity
+     * @param height    the height available for rendering the entity
      */
-    void draw(Graphics2D g, Entity entity, float deltaTime);
+    void draw(Graphics2D g, Entity entity, float deltaTime, int width, int height);
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -12,7 +13,7 @@ import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
@@ -44,11 +45,9 @@ public class GameEntityManager implements EntityManager {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getPlayer() {
-        return Objects.requireNonNull(this.player, "The player cannot be null");
+    public Optional<MainCharacter> getPlayer() {
+        return Optional.of(this.player);
     }
-
-    // TODO: getAntagonist like player, method need to be @Override
 
     /**
      * {@inheritDoc}
@@ -63,7 +62,7 @@ public class GameEntityManager implements EntityManager {
         for (int y = 0; y < mapLines.size(); y++) {
             final String line = mapLines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                final Position2D position = new Position2D(x * GameEntityFactory.DEFAULT_BOUNDINGBOX.width(),
+                final Position position = new Position(x * GameEntityFactory.DEFAULT_BOUNDINGBOX.width(),
                         y * GameEntityFactory.DEFAULT_BOUNDINGBOX.height());
                 final char c = line.charAt(x);
 
@@ -76,12 +75,13 @@ public class GameEntityManager implements EntityManager {
                     case 'C' -> this.addEntity(factory.createCoin(position));
                     case 'M' -> {
                         this.player = factory.createMario(position);
-                        this.addEntity(player);
+                        this.addEntity(this.player);
                     }
                     case 'D' -> this.addEntity(factory.createDonkeyKong(position));
                     case 'R' -> this.addEntity(factory.createPrincess(position));
                     default -> {
-                        //TODO: fix Slope
+                        // TODO: fix Slope and Position of the entitiy dont use
+                        // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
                     }
                 }
             }
@@ -129,7 +129,7 @@ public class GameEntityManager implements EntityManager {
      */
     @Override
     public void transformBarrels() {
-        entities.stream()
+        this.entities.stream()
                 .filter(Barrel.class::isInstance)
                 .map(Barrel.class::cast)
                 .filter(Barrel::canTransformToFire)

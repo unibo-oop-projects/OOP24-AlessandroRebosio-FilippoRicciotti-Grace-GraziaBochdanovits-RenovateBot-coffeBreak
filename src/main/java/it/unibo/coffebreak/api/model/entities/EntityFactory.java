@@ -9,7 +9,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.impl.common.Position2D;
+import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
@@ -34,7 +34,7 @@ public interface EntityFactory {
      * @param position
      * @return Coin Entity
      */
-    Collectible createCoin(Position2D position);
+    Collectible createCoin(Position position);
 
     /**
      * Factory Method to create a new {@link Hammer}.
@@ -42,7 +42,7 @@ public interface EntityFactory {
      * @param position
      * @return Hammer Entity
      */
-    Collectible createHammer(Position2D position);
+    Collectible createHammer(Position position);
 
     /**
      * Factory Method to create a new {@link Barrel}.
@@ -50,7 +50,7 @@ public interface EntityFactory {
      * @param position
      * @return Barrel Entity
      */
-    Barrel createBarrel(Position2D position);
+    Barrel createBarrel(Position position);
 
     /**
      * Factory Method to create a new {@link Fire}.
@@ -58,7 +58,7 @@ public interface EntityFactory {
      * @param position
      * @return Fire Entity
      */
-    Fire createFire(Position2D position);
+    Fire createFire(Position position);
 
     /**
      * Factory Method to create a new {@link DonkeyKong}.
@@ -66,7 +66,7 @@ public interface EntityFactory {
      * @param position
      * @return Donkey Kong Entity
      */
-    Antagonist createDonkeyKong(Position2D position);
+    Antagonist createDonkeyKong(Position position);
 
     /**
      * Factory Method to create a new {@link Pauline}.
@@ -74,7 +74,7 @@ public interface EntityFactory {
      * @param position
      * @return Princess Entity
      */
-    Princess createPrincess(Position2D position);
+    Princess createPrincess(Position position);
 
     /**
      * Factory Method to create a new {@link Ladder}.
@@ -82,7 +82,7 @@ public interface EntityFactory {
      * @param position
      * @return Ladder Entity
      */
-    Ladder createNormalLadder(Position2D position);
+    Ladder createNormalLadder(Position position);
 
     /**
      * Factory Method to create a new {@link Platform}.
@@ -90,7 +90,7 @@ public interface EntityFactory {
      * @param position
      * @return Platform Entity
      */
-    Platform createNormalPlatform(Position2D position);
+    Platform createNormalPlatform(Position position);
 
     /**
      * Factory Method to create a new {@link BreakablePlatform}.
@@ -98,7 +98,7 @@ public interface EntityFactory {
      * @param position
      * @return Breakable Platform Entity
      */
-    Platform createBreakablePlatform(Position2D position);
+    Platform createBreakablePlatform(Position position);
 
     /**
      * Factory Method to create a new {@link Tank}.
@@ -106,7 +106,7 @@ public interface EntityFactory {
      * @param position
      * @return Tank Entity
      */
-    Tank createTank(Position2D position);
+    Tank createTank(Position position);
 
     /**
      * Factory Method to create a new {@link Mario}.
@@ -114,5 +114,5 @@ public interface EntityFactory {
      * @param position
      * @return Mario Entity
      */
-    MainCharacter createMario(Position2D position);
+    MainCharacter createMario(Position position);
 }
