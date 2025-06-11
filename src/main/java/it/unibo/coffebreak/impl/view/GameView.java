@@ -8,6 +8,8 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
+import it.unibo.coffebreak.api.view.panel.Panel;
+import it.unibo.coffebreak.impl.view.panel.GamePanel;
 
 /**
  * The main game view component.
@@ -30,6 +32,7 @@ public class GameView extends JFrame implements View {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    private final Panel gamePanel;
 
     /**
      * Constructs a GameView with the given controller.
@@ -39,9 +42,10 @@ public class GameView extends JFrame implements View {
      */
     public GameView(final Controller controller) {
         super(TITLE);
-        Objects.requireNonNull(controller, "Controller cannot be null");
+        this.gamePanel = new GamePanel(Objects.requireNonNull(controller, "Controller cannot be null"));
 
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.add((GamePanel) gamePanel);
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(true);
@@ -60,6 +64,7 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void update(final float deltaTime) {
+        this.gamePanel.update(deltaTime);
         this.repaint();
     }
 }

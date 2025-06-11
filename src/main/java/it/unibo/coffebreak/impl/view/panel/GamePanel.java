@@ -1,12 +1,16 @@
 package it.unibo.coffebreak.impl.view.panel;
 
-import java.awt.Dimensio
-
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.Serial;
 import java.util.Objects;
 
 import javax.swing.JPanel;
+
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -23,8 +27,10 @@ import it.unibo.coffebreak.impl.view.states.menu.MenuView;
 import it.unibo.coffebreak.impl.view.states.pause.PauseView;
 
 /**
- * Resizable panel for game rendering, using double buffering to prevent flickering.
- * This panel automatically adjusts the rendering area size to maintain a 10:16 aspect ratio
+ * Resizable panel for game rendering, using double buffering to prevent
+ * flickering.
+ * This panel automatically adjusts the rendering area size to maintain a 10:16
+ * aspect ratio
  * and delegates drawing of game elements to the current view state.
  * Also handles keyboard input via KeyAdapter.
  * 
@@ -32,9 +38,9 @@ import it.unibo.coffebreak.impl.view.states.pause.PauseView;
  */
 public class GamePanel extends JPanel implements Panel {
 
-    private static final double ASPECT_RATIO = 10.0 / 16.0;
-    private static final int REF_WIDTH = 400;
-    private static final int REF_HEIGHT = 640;
+    private static final int REF_WIDTH = 600;
+    private static final int REF_HEIGHT = 800;
+    private static final double ASPECT_RATIO = 0.75;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -44,7 +50,8 @@ public class GamePanel extends JPanel implements Panel {
     private float deltaTime;
 
     /**
-     * Constructs a GamePanel associated with the given controller and sets up the KeyAdapter.
+     * Constructs a GamePanel associated with the given controller and sets up the
+     * KeyAdapter.
      *
      * @param controller the controller to notify for input events; must not be null
      */
@@ -53,6 +60,7 @@ public class GamePanel extends JPanel implements Panel {
         this.controller = Objects.requireNonNull(controller, "Il controller non può essere null");
 
         super.setFocusable(true);
+
         super.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
@@ -64,11 +72,20 @@ public class GamePanel extends JPanel implements Panel {
                 controller.keyReleased(e.getKeyCode());
             }
         });
+
+        super.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(final ComponentEvent e) {
+                final Rectangle bounds = getBounds(); //TODO: it takes all window size, i need only panel size
+                controller.updateGameBounds(bounds.width, bounds.height);
+            }
+        });
         super.requestFocusInWindow();
     }
 
     /**
-     * Paints the component by centering and scaling the rendering area to maintain a 10:16 aspect ratio.
+     * Paints the component by centering and scaling the rendering area to maintain
+     * a 10:16 aspect ratio.
      * Delegates rendering to the current view state.
      *
      * @param g the graphics context
@@ -105,13 +122,13 @@ public class GamePanel extends JPanel implements Panel {
                 renderHeight / (double) REF_HEIGHT);
         g2d.scale(scale, scale);
 
-        this.currentViewState.draw(g2d, REF_WIDTH, REF_HEIGHT, deltaTime);
+        this.currentViewState.draw(g2d, REF_WIDTH, REF_HEIGHT, deltaTime); // TODO: fix here i think
 
         g.dispose();
     }
 
     /**
-     * Returns the preferred size of the panel (10:16 aspect ratio).
+     * Returns the preferred size of the panel.
      *
      * @return the preferred size
      */
@@ -142,7 +159,8 @@ public class GamePanel extends JPanel implements Panel {
     }
 
     /**
-     * Changes the current view state, calling onExit() and onEnter() as appropriate.
+     * Changes the current view state, calling onExit() and onEnter() as
+     * appropriate.
      *
      * @param newView the new view state to activate
      */
