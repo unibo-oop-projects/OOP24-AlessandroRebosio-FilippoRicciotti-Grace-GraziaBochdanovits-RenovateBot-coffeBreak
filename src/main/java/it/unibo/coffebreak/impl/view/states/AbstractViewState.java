@@ -91,7 +91,6 @@ public abstract class AbstractViewState implements ViewState {
         final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.055f);
 
         g.setFont(optionFont);
-        final var fmOption = g.getFontMetrics();
 
         final var options = this.controller.getGameState().getOptions();
         final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
@@ -101,8 +100,7 @@ public abstract class AbstractViewState implements ViewState {
         for (int i = 0; i < options.size(); i++) {
             final String text = options.get(i).toString();
             final int y = baseY + i * stepY;
-            g.setColor(i == selected ? Color.YELLOW : Color.WHITE);
-            g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
+            this.drawCenteredText(g, text, width, y, (i == selected ? Color.YELLOW : Color.WHITE));
         }
     }
 
