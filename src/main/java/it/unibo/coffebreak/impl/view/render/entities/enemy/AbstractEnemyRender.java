@@ -35,9 +35,11 @@ public abstract class AbstractEnemyRender extends AbstractEntityRender {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width, final int height) {
+    public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
+            final int height) {
         if (entity instanceof final Enemy enemy && !enemy.isDestroyed()) {
             this.renderEnemy(g, entity, deltaTime, width, height);
+            super.draw(g, entity, deltaTime, width, height);
         }
     }
 

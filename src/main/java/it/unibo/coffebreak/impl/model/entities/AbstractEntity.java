@@ -30,9 +30,13 @@ public abstract class AbstractEntity implements Entity {
      * @throws NullPointerException if either position or dimension is {@code null}
      */
     public AbstractEntity(final Position position) {
-        this.position = Objects.requireNonNull(position, "Position cannot be null");
+        Objects.requireNonNull(position, "Position cannot be null");
+
         this.dimension = new Dimension();
         this.velocity = new Vector();
+
+        this.position = position.adjustPositionByDimension(dimension);
+
     }
 
     /**

@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.api.view.panel;
 
-import it.unibo.coffebreak.api.controller.Controller;
-
 /**
  * Represents a generic view panel responsible for displaying the current
  * state of the game.
@@ -12,8 +10,7 @@ public interface Panel {
     /**
      * Updates the current game screen by switching to the appropriate view state.
      *
-     * @param deltaTime  the time elapsed since the last update
-     * @param controller the game controller providing the current game state
+     * @param deltaTime the time elapsed since the last update
      */
-    void update(float deltaTime, Controller controller);
+    void update(float deltaTime);
 }

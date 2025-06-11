@@ -34,7 +34,15 @@ public abstract class AbstractEntityRender implements EntityRender {
      * {@inheritDoc}
      */
     @Override
-    public abstract void draw(Graphics2D g, Entity entity, float deltaTime, int width, int height);
+    public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
+            final int height) {
+        final float scale = 10f / 16f * 0.8f;
+        g.drawRect(
+                (int) (entity.getPosition().x() * scale),
+                (int) (entity.getPosition().y() * scale),
+                (int) (entity.getDimension().width() * scale),
+                (int) (entity.getDimension().height() * scale));
+    }
 
     /**
      * Returns the resource loader used by this view state.

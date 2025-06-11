@@ -33,7 +33,7 @@ public class GameModel implements Model {
 
     private final LevelManager levelManager = new GameLevelManager();
     private final Leaderboard leaderBoard = new GameLeaderboard();
-    private final Dimension gameBounds = new Dimension(800, 628);
+    private Dimension gameBounds;
 
     private ModelState currentState;
     private volatile boolean running;
@@ -58,6 +58,14 @@ public class GameModel implements Model {
         }
         currentState = Objects.requireNonNull(newState.get(), "New state cannot be null");
         currentState.onEnter(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setGameBounds(final int width, final int height) {
+        this.gameBounds = new Dimension(width, height);
     }
 
     /**

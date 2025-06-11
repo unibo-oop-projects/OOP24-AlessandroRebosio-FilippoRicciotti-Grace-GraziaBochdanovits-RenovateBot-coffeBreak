@@ -31,6 +31,7 @@ public class GameEntityManager implements EntityManager {
     private final List<Entity> entities = new ArrayList<>();
 
     private MainCharacter player;
+    private Position tankPosition;
 
     /**
      * {@inheritDoc}
@@ -63,15 +64,17 @@ public class GameEntityManager implements EntityManager {
         for (int y = 0; y < mapLines.size(); y++) {
             final String line = mapLines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                final Position position = new Position(x * GameEntityFactory.DEFAULT_BOUNDINGBOX.width(),
-                        y * GameEntityFactory.DEFAULT_BOUNDINGBOX.height());
+                final Position position = new Position(x, y);
                 final char c = line.charAt(x);
 
                 switch (Character.toUpperCase(c)) {
                     case 'P' -> this.addEntity(factory.createNormalPlatform(position));
-                    case 'B' -> this.addEntity(factory.createBreakablePlatform(position));
+                    case '!' -> this.addEntity(factory.createBreakablePlatform(position));
                     case 'L' -> this.addEntity(factory.createNormalLadder(position));
-                    case 'T' -> this.addEntity(factory.createTank(position));
+                    case 'T' -> {
+                        this.addEntity(factory.createTank(position));
+                        this.tankPosition = position;
+                    }
                     case 'H' -> this.addEntity(factory.createHammer(position));
                     case 'C' -> this.addEntity(factory.createCoin(position));
                     case 'M' -> {
@@ -81,7 +84,7 @@ public class GameEntityManager implements EntityManager {
                     case 'D' -> this.addEntity(factory.createDonkeyKong(position));
                     case 'R' -> this.addEntity(factory.createPrincess(position));
                     default -> {
-                        // TODO: fix Slope and Position of the entitiy dont use
+                        // TODO: fix Slope(: and ;) and Position of the entitiy dont use
                         // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
                     }
                 }
@@ -131,12 +134,12 @@ public class GameEntityManager implements EntityManager {
      */
     @Override
     public void transformBarrels() {
-        this.entities.stream()
+        final List<Barrel> barrelsToTransform = this.entities.stream()
                 .filter(Barrel.class::isInstance)
                 .map(Barrel.class::cast)
                 .filter(Barrel::canTransformToFire)
-                .map(b -> factory.createFire(b.getPosition()))
-                .forEach(this::addEntity);
+                .toList();
+        barrelsToTransform.forEach(t -> this.addEntity(factory.createFire(this.tankPosition)));
     }
 
     /**

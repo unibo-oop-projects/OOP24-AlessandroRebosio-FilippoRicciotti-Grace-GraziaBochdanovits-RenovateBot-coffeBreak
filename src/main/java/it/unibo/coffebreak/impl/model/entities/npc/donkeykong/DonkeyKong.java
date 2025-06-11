@@ -28,6 +28,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      */
     private static final float BARREL_THROW_INTERVAL = 2.0f;
 
+    private final Position initializeBarrelSpawn;
     private final boolean canThrowBarrel;
     private float lastThrowTime;
 
@@ -44,6 +45,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     public DonkeyKong(final Position position, final boolean canThrowBarrel) {
         super(position);
         super.setDimension(super.getDimension().mul(2));
+        this.initializeBarrelSpawn = position;
 
         this.lastThrowTime = 0;
         this.canThrowBarrel = canThrowBarrel;
@@ -61,7 +63,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
         this.lastThrowTime += deltaTime;
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
             lastThrowTime = 0;
-            return Optional.of(new GameEntityFactory().createBarrel(this.getPosition()));
+            return Optional.of(new GameEntityFactory().createBarrel(this.initializeBarrelSpawn));
         }
         return Optional.empty();
     }

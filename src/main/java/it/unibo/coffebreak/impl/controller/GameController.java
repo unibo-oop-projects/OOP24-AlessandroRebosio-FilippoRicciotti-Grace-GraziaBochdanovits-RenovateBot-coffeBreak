@@ -55,6 +55,14 @@ public class GameController implements Controller {
 
     /**
      * {@inheritDoc}
+     */
+    @Override
+    public void updateGameBounds(final int width, final int height) {
+        this.model.setGameBounds(width, height);
+    }
+
+    /**
+     * {@inheritDoc}
      * <p>
      * Forwards the key press event to the input manager for processing.
      * The actual command generation depends on current key bindings.

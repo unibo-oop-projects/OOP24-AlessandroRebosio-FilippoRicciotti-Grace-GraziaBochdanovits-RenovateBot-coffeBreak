@@ -39,6 +39,7 @@ public abstract class AbstractCollectableRender extends AbstractEntityRender {
             final int height) {
         if (entity instanceof final Collectible collectable && !collectable.isCollected()) {
             this.renderCollectable(g, entity, deltaTime, width, height);
+            super.draw(g, entity, deltaTime, width, height);
         }
     }
 

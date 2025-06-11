@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.view;
 
 import javax.swing.JFrame;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
@@ -8,7 +9,6 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
-import it.unibo.coffebreak.impl.view.panel.GamePanel;
 
 /**
  * The main game view component.
@@ -28,9 +28,7 @@ public class GameView extends JFrame implements View {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
     private final transient Controller controller;
-    private final GamePanel gamePanel;
 
     /**
      * Constructs a GameView with the given controller.
@@ -41,11 +39,8 @@ public class GameView extends JFrame implements View {
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
 
-        this.gamePanel = new GamePanel();
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        super.setContentPane(gamePanel);
         super.pack();
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -65,7 +60,6 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void update(final float deltaTime) {
-        this.gamePanel.update(deltaTime, this.controller);
         this.repaint();
     }
 

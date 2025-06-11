@@ -11,7 +11,6 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
-import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
@@ -39,13 +38,8 @@ import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
  */
 public class GameEntityFactory implements EntityFactory {
 
-    /**
-     * Deafult entity bounding box dimension.
-     */
-    public static final Dimension DEFAULT_BOUNDINGBOX = new Dimension(25, 25);
-
-    private final Score score = new GameScore();
     private final LivesManager livesManager = new GameLivesManager();
+    private final Score score = new GameScore();
 
     /**
      * {@inheritDoc}
@@ -70,7 +64,7 @@ public class GameEntityFactory implements EntityFactory {
     public Barrel createBarrel(final Position position) {
         // TODO: The first barrel must be able to transform, the others must be randomly
         // (RICCIOTTI)
-        return new GameBarrel(position, false);
+        return new GameBarrel(position, true);
     }
 
     /**

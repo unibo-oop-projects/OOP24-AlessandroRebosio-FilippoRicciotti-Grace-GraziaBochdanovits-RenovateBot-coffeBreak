@@ -58,6 +58,14 @@ public interface Controller {
     void updateModel(float deltaTime);
 
     /**
+     * Updates the boundaries of the game area with the specified width and height.
+     *
+     * @param width  the new width of the game area
+     * @param height the new height of the game area
+     */
+    void updateGameBounds(int width, int height);
+
+    /**
      * Checks if the game should continue running.
      * Typically delegates to the model's game state.
      * 
@@ -120,7 +128,8 @@ public interface Controller {
     /**
      * Returns the dimensions representing the bounds of the game area.
      *
-     * @return a {@link Dimension} object specifying the width and height of the game bounds
+     * @return a {@link Dimension} object specifying the width and height of the
+     *         game bounds
      */
     Dimension getGameBounds();
 }

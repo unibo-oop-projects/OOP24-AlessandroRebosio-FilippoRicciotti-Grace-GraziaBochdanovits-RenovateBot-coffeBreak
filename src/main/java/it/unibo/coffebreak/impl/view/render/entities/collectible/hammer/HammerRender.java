@@ -30,19 +30,6 @@ public class HammerRender extends AbstractCollectableRender {
     @Override
     protected void renderCollectable(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        g.setColor(Color.white);
-
-        final float xRatio = entity.getPosition().x() / 1000f;
-        final float yRatio = entity.getPosition().y() / 1000f;
-        final float wRatio = entity.getDimension().width() / 1000f;
-        final float hRatio = entity.getDimension().height() / 1000f;
-
-        final int scaledX = (int) (xRatio * width);
-        final int scaledY = (int) (yRatio * height);
-        final int scaledW = (int) (wRatio * width);
-        final int scaledH = (int) (hRatio * height);
-
-        g.drawRect(scaledX, scaledY, scaledW, scaledH);
-        g.fillOval(scaledX, scaledY, scaledW, scaledH);
+        g.setColor(Color.YELLOW);
     }
 }

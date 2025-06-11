@@ -36,6 +36,7 @@ public abstract class AbstractPlatformRender extends AbstractEntityRender {
             final int height) {
         if (entity instanceof final Platform platform && !platform.isBroken()) {
             this.renderPlatform(g, entity, deltaTime, width, height);
+            super.draw(g, entity, deltaTime, width, height);
         }
     }
 
