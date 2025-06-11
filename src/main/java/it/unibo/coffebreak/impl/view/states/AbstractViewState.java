@@ -86,6 +86,13 @@ public abstract class AbstractViewState implements ViewState {
         return this.controller;
     }
 
+    /**
+     * Method responsible for drawing the avaiable options in the current State.
+     * 
+     * @param g      the graphics context
+     * @param width  the width of the window
+     * @param height the height of the window
+     */
     protected final void drawOptions(final Graphics2D g, final int height, final int width) {
 
         final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.055f);
@@ -104,6 +111,15 @@ public abstract class AbstractViewState implements ViewState {
         }
     }
 
+    /**
+     * Method responsible for drawing the text Centered.
+     * 
+     * @param g     the graphics context
+     * @param text  text that needs to be drawn
+     * @param width possibly the width of the window
+     * @param y     y-coordinate to draw the text to
+     * @param color color to set the font to
+     */
     protected final void drawCenteredText(final Graphics2D g, final String text, final int width, final int y,
             final Color color) {
         final var fm = g.getFontMetrics();

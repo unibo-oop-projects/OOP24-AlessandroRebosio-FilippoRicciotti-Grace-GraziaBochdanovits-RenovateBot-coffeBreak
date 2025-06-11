@@ -26,60 +26,42 @@ public class GameOverView extends AbstractViewState {
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
         final Font scoreFont = this.font.deriveFont(height * 0.04f);
+        final var optionFont = this.font.deriveFont(height * 0.055f);
+
+        final var controller = super.getController();
+        final var gameState = controller.getGameState();
 
         g.setFont(scoreFont);
-
-        final var fmScore = g.getFontMetrics();
-        final int scoreY1 = (int) (height * 0.05);
-        final int scoreX1 = (width - fmScore.stringWidth("HIGH SCORE")) / 2;
-        final int scoreY2 = (int) (height * 0.1);
-        final String highestScore = Integer.toString(super.getController().getHighestScore());
-        final int scoreX2 = (width - fmScore.stringWidth(highestScore)) / 2;
-
-        g.setColor(Color.RED);
-        g.drawString("HIGH SCORE", scoreX1, scoreY1);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString(highestScore, scoreX2, scoreY2);
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * 0.05), Color.RED);
+        drawCenteredText(g, String.valueOf(controller.getHighestScore()), width, (int) (height * 0.1), DEFAULT_COLOR);
 
         g.setFont(titleFont);
-        final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.33);
-        final int titleX = (width - fmTitle.stringWidth("GAME OVER")) / 2;
-        g.setColor(Color.RED);
-        g.drawString("GAME OVER", titleX, titleY);
-
-        final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.055f);
+        drawCenteredText(g, "GAME OVER", width, (int) (height * 0.33), Color.RED);
 
         g.setFont(scoreFont);
-        final String insertText = "Insert your name:";
-        final var fmInsert = g.getFontMetrics();
-        final int insertY = (int) (height * 0.55);
-        final int insertX = (width - fmInsert.stringWidth(insertText)) / 2;
-        g.setColor(Color.LIGHT_GRAY);
-        g.drawString(insertText, insertX, insertY);
+        drawCenteredText(g, "Insert your name:", width, (int) (height * 0.55), Color.LIGHT_GRAY);
 
         g.setFont(optionFont);
+        final var fm = g.getFontMetrics();
+        final var options = gameState.getOptions();
+        final int selected = options.indexOf(gameState.getSelectedOption());
 
-        final var options = super.getController().getGameState().getOptions();
-        final int selected = options.indexOf(super.getController().getGameState().getSelectedOption());
         final int baseY = (int) (height * 0.63);
         final int spacing = (int) (width * 0.05);
-        final int totalWidth = 3 * fmInsert.charWidth('W') + 2 * spacing;
+        final int totalWidth = 3 * fm.charWidth('W') + 2 * spacing;
         final int startX = (width - totalWidth) / 2;
-        final String name = super.getController().getGameState().getName();
+        final String name = gameState.getName();
 
         for (int i = 0; i < 3; i++) {
             final String text = String.valueOf(name.charAt(i));
-            final int letterX = startX + i * (fmInsert.charWidth('W') + spacing);
+            final int letterX = startX + i * (fm.charWidth('W') + spacing);
             g.setColor(i == selected ? Color.YELLOW : Color.WHITE);
             g.drawString(text, letterX, baseY);
         }
+
         g.setFont(scoreFont);
-        final String saveText = "[ Save ]";
-        final int saveY = (int) (height * 0.75);
-        final int saveX = (width - fmInsert.stringWidth(saveText)) / 2;
-        g.setColor(selected == options.size() - 1 ? Color.YELLOW : Color.WHITE);
-        g.drawString(saveText, saveX, saveY);
+        drawCenteredText(g, "[ SAVE ]", width, (int) (height * 0.75),
+                (selected == options.size() - 1 ? Color.YELLOW : Color.WHITE));
 
     }
 

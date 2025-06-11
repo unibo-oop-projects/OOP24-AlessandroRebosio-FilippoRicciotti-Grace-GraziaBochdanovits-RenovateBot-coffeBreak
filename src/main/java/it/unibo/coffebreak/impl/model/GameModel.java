@@ -16,7 +16,6 @@ import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
-import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
  * Concrete implementation of the game {@link Model}.

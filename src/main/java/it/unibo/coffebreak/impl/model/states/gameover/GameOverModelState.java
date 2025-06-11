@@ -65,6 +65,11 @@ public class GameOverModelState extends AbstractModelState {
         }
     }
 
+    /**
+     * Getter of the index in the alphabet of the current char.
+     * 
+     * @return position in the alphabet of the current char
+     */
     private int getIndex(char c) {
 
         for (int i = 0; i < alphabet.length; i++) {
@@ -75,6 +80,12 @@ public class GameOverModelState extends AbstractModelState {
         return -1;
     }
 
+    /**
+     * Sets the current char of the name String to the previous corresponding char
+     * of the alphabet.
+     * 
+     * @param nameIndexindex of the current char of the nameString we have to set.
+     */
     private void previousAlphabetChar(int nameIndex) {
         StringBuilder myName = new StringBuilder(this.name);
         this.index = (this.index - 1 + alphabet.length) % alphabet.length;
@@ -83,6 +94,12 @@ public class GameOverModelState extends AbstractModelState {
 
     }
 
+    /**
+     * Sets the current char of the name String to the next corresponding char
+     * of the alphabet.
+     * 
+     * @param nameIndexindex of the current char of the nameString we have to set.
+     */
     private void nextAlphabetChar(int nameIndex) {
         StringBuilder myName = new StringBuilder(this.name);
         this.index = (this.index + 1) % alphabet.length;
@@ -91,6 +108,9 @@ public class GameOverModelState extends AbstractModelState {
 
     }
 
+    /**
+     * Getter of the name String.
+     */
     public String getName() {
         return this.name;
     }
@@ -103,11 +123,17 @@ public class GameOverModelState extends AbstractModelState {
         model.addEntry(this.name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Option getSelectedOption() {
         return OPTIONS.get(this.selectedOption);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Option> getOptions() {
         return Collections.unmodifiableList(OPTIONS);
