@@ -37,7 +37,7 @@ public abstract class AbstractCollectableRender extends AbstractEntityRender {
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        if (entity instanceof final Collectible collectable && collectable.isCollected()) {
+        if (entity instanceof final Collectible collectable && !collectable.isCollected()) {
             this.renderCollectable(g, entity, deltaTime, width, height);
         }
     }
