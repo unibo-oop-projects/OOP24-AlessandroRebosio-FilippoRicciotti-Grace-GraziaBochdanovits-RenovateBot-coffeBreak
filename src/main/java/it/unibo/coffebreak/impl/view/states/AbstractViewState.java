@@ -20,6 +20,30 @@ import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
  */
 public abstract class AbstractViewState implements ViewState {
 
+    /**
+     * Vertical position (as a fraction of total height) for the "HIGH SCORE" label.
+     */
+    public static final float TOP_HEIGHT = 0.05f;
+    /**
+     * Vertical position (as a fraction of total height) for the score value under
+     * "HIGH SCORE".
+     */
+    public static final float SCORE_HEIGHT = 0.1f;
+
+    /**
+     * Vertical position (as a fraction of total height) for the VIEW title.
+     */
+    public static final float TITLE_HEIGHT = 0.33f;
+    /**
+     * Vertical position (as a fraction of total height) for the "Insert your name"
+     * prompt.
+     */
+    public static final float MIDDLE_HEIGHT = 0.55f;
+    /**
+     * Vertical position (as a fraction of total height) for the "[ Save ]" button.
+     */
+    public static final float SAVE_HEIGHT = 0.75f;
+
     private final Resource resourceLoader = new ResourceLoader();
     private final Controller controller;
 
@@ -107,7 +131,7 @@ public abstract class AbstractViewState implements ViewState {
         for (int i = 0; i < options.size(); i++) {
             final String text = options.get(i).toString();
             final int y = baseY + i * stepY;
-            this.drawCenteredText(g, text, width, y, (i == selected ? Color.YELLOW : Color.WHITE));
+            this.drawCenteredText(g, text, width, y, i == selected ? Color.YELLOW : Color.WHITE);
         }
     }
 

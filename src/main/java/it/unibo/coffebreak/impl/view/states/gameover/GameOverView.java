@@ -8,19 +8,36 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
+/**
+ * View state responsible for rendering the GAme Over screen.
+ * <p>
+ * Displays the game over title, your high Score and an interface to insert your
+ * nickname.
+ * </p>
+ * 
+ * @author Filippo Ricciotti
+ */
 public class GameOverView extends AbstractViewState {
 
     private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
 
+    /**
+     * Constructs the Game Over view and loads required fonts.
+     *
+     * @param controller the controller to interact with the game logic
+     */
     public GameOverView(final Controller controller) {
         super(controller);
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void draw(Graphics2D g, int width, int height) {
+    public void draw(final Graphics2D g, final int width, final int height) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
@@ -32,14 +49,15 @@ public class GameOverView extends AbstractViewState {
         final var gameState = controller.getGameState();
 
         g.setFont(scoreFont);
-        drawCenteredText(g, "HIGH SCORE", width, (int) (height * 0.05), Color.RED);
-        drawCenteredText(g, String.valueOf(controller.getHighestScore()), width, (int) (height * 0.1), DEFAULT_COLOR);
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
+        drawCenteredText(g, String.valueOf(controller.getHighestScore()), width, (int) (height * SCORE_HEIGHT),
+                DEFAULT_COLOR);
 
         g.setFont(titleFont);
-        drawCenteredText(g, "GAME OVER", width, (int) (height * 0.33), Color.RED);
+        drawCenteredText(g, "GAME OVER", width, (int) (height * TITLE_HEIGHT), Color.RED);
 
         g.setFont(scoreFont);
-        drawCenteredText(g, "Insert your name:", width, (int) (height * 0.55), Color.LIGHT_GRAY);
+        drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
 
         g.setFont(optionFont);
         final var fm = g.getFontMetrics();
@@ -60,8 +78,8 @@ public class GameOverView extends AbstractViewState {
         }
 
         g.setFont(scoreFont);
-        drawCenteredText(g, "[ SAVE ]", width, (int) (height * 0.75),
-                (selected == options.size() - 1 ? Color.YELLOW : Color.WHITE));
+        drawCenteredText(g, "[ SAVE ]", width, (int) (height * SAVE_HEIGHT),
+                selected == options.size() - 1 ? Color.YELLOW : Color.WHITE);
 
     }
 

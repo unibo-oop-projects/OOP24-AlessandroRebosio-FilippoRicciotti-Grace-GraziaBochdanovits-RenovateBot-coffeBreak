@@ -21,8 +21,8 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 public class GameOverModelState extends AbstractModelState {
 
     private static final List<Option> OPTIONS = List.of(Option.CHAR0, Option.CHAR1, Option.CHAR2, Option.EXIT);
+    private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     private int selectedOption;
-    private static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     private int index;
     // TODO: fix name pass from model
     private String name = "---";
@@ -34,8 +34,9 @@ public class GameOverModelState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                if (Option.EXIT == OPTIONS.get(selectedOption) && !name.contains("-"))
+                if (Option.EXIT == OPTIONS.get(selectedOption) && !name.contains("-")) {
                     model.setState(MenuModelState::new);
+                }
                 break;
             case MOVE_UP:
                 this.selectedOption = (this.selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
@@ -66,51 +67,9 @@ public class GameOverModelState extends AbstractModelState {
     }
 
     /**
-     * Getter of the index in the alphabet of the current char.
-     * 
-     * @return position in the alphabet of the current char
+     * {@inheritDoc}
      */
-    private int getIndex(char c) {
-
-        for (int i = 0; i < alphabet.length; i++) {
-            if (c == alphabet[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Sets the current char of the name String to the previous corresponding char
-     * of the alphabet.
-     * 
-     * @param nameIndexindex of the current char of the nameString we have to set.
-     */
-    private void previousAlphabetChar(int nameIndex) {
-        StringBuilder myName = new StringBuilder(this.name);
-        this.index = (this.index - 1 + alphabet.length) % alphabet.length;
-        myName.setCharAt(nameIndex, alphabet[this.index]);
-        this.name = myName.toString();
-
-    }
-
-    /**
-     * Sets the current char of the name String to the next corresponding char
-     * of the alphabet.
-     * 
-     * @param nameIndexindex of the current char of the nameString we have to set.
-     */
-    private void nextAlphabetChar(int nameIndex) {
-        StringBuilder myName = new StringBuilder(this.name);
-        this.index = (this.index + 1) % alphabet.length;
-        myName.setCharAt(nameIndex, alphabet[this.index]);
-        this.name = myName.toString();
-
-    }
-
-    /**
-     * Getter of the name String.
-     */
+    @Override
     public String getName() {
         return this.name;
     }
@@ -137,5 +96,50 @@ public class GameOverModelState extends AbstractModelState {
     @Override
     public List<Option> getOptions() {
         return Collections.unmodifiableList(OPTIONS);
+    }
+
+    /**
+     * Getter of the index in the alphabet of the current char.
+     * 
+     * @param c whose index we need to find
+     * 
+     * @return position in the alphabet of the current char
+     */
+    private int getIndex(final char c) {
+
+        for (int i = 0; i < ALPHABET.length; i++) {
+            if (c == ALPHABET[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Sets the current char of the name String to the previous corresponding char
+     * of the alphabet.
+     * 
+     * @param nameIndex index of the current char of the nameString we have to set.
+     */
+    private void previousAlphabetChar(final int nameIndex) {
+        final StringBuilder myName = new StringBuilder(this.name);
+        this.index = (this.index - 1 + ALPHABET.length) % ALPHABET.length;
+        myName.setCharAt(nameIndex, ALPHABET[this.index]);
+        this.name = myName.toString();
+
+    }
+
+    /**
+     * Sets the current char of the name String to the next corresponding char
+     * of the alphabet.
+     * 
+     * @param nameIndex index of the current char of the nameString we have to set.
+     */
+    private void nextAlphabetChar(final int nameIndex) {
+        final StringBuilder myName = new StringBuilder(this.name);
+        this.index = (this.index + 1) % ALPHABET.length;
+        myName.setCharAt(nameIndex, ALPHABET[this.index]);
+        this.name = myName.toString();
+
     }
 }

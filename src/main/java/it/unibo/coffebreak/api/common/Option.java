@@ -19,8 +19,11 @@ public enum Option {
     RESUME,
     /** Exit the game or return to the main menu. */
     EXIT,
+    /** First Char of the Player name. */
     CHAR0,
+    /** Second Char of the Player name. */
     CHAR1,
+    /** Third Char of the Player name. */
     CHAR2,
     /** No option selected or not applicable. */
     NONE;

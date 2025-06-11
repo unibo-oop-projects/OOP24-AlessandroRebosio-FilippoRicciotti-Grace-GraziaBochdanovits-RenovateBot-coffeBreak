@@ -56,5 +56,10 @@ public interface ModelState {
      */
     List<Option> getOptions();
 
+    /**
+     * Getter of the Player's name String.
+     * 
+     * @return return player's name string
+     */
     String getName();
 }

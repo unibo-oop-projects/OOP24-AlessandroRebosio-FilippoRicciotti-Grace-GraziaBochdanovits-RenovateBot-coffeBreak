@@ -50,14 +50,14 @@ public class MenuView extends AbstractViewState {
 
         g.setFont(scoreFont);
         final String highestScore = String.valueOf(super.getController().getHighestScore());
-        drawCenteredText(g, "HIGH SCORE", width, (int) (height * 0.05), Color.RED);
-        drawCenteredText(g, highestScore, width, (int) (height * 0.1), DEFAULT_COLOR);
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
+        drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), DEFAULT_COLOR);
 
         g.setFont(titleFont);
-        final int coffeeX = (width - g.getFontMetrics().stringWidth("BREAK"));
-        final int breakX = (width + g.getFontMetrics().stringWidth("COFFEE"));
-        drawCenteredText(g, "COFFEE", coffeeX, (int) (height * 0.33), Color.BLUE);
-        drawCenteredText(g, "BREAK", breakX, (int) (height * 0.33), DEFAULT_COLOR);
+        final int coffeeX = width - g.getFontMetrics().stringWidth("BREAK");
+        final int breakX = width + g.getFontMetrics().stringWidth("COFFEE");
+        drawCenteredText(g, "COFFEE", coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
+        drawCenteredText(g, "BREAK", breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
         super.drawOptions(g, height, width);
     }
