@@ -105,4 +105,12 @@ public abstract class AbstractViewState implements ViewState {
             g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
         }
     }
+
+    protected final void drawCenteredText(final Graphics2D g, final String text, final int width, final int y,
+            final Color color) {
+        final var fm = g.getFontMetrics();
+        final int x = (width - fm.stringWidth(text)) / 2;
+        g.setColor(color);
+        g.drawString(text, x, y);
+    }
 }
