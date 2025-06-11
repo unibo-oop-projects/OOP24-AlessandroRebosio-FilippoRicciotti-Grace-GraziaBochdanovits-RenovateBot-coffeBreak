@@ -35,6 +35,15 @@ public interface ModelState {
     void handleCommand(Model model, Command command);
 
     /**
+     * Processes and executes a direction-related game command, typically used for
+     * handling player movement or directional input.
+     *
+     * @param model model 
+     * @param command the direction command to be executed
+     */
+    void handleDirection(Model model, Command command);
+
+    /**
      * Updates the logic of the current game Phase based on deltaTime.
      * 
      * @param model     model to update

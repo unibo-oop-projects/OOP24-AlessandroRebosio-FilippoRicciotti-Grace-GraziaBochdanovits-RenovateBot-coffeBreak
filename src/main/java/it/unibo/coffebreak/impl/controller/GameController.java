@@ -49,7 +49,7 @@ public class GameController implements Controller {
      */
     @Override
     public void updateModel(final float deltaTime) {
-        // this.model.handleCommand(this.input.getDirection());
+        this.model.handleDirection(this.input.getDirection());
         this.model.update(deltaTime);
     }
 

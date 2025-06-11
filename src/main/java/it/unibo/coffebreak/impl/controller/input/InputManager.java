@@ -33,7 +33,6 @@ public class InputManager implements Input {
      * <ul>
      * <li>ENTER → {@link Command#ENTER}</li>
      * <li>ESCAPE → {@link Command#ESCAPE}</li>
-     * <li>Q → {@link Command#QUIT}</li>
      * <li>Arrow keys → movement commands</li>
      * <li>SPACE → {@link Command#JUMP}</li>
      * </ul>
@@ -59,6 +58,7 @@ public class InputManager implements Input {
     }
 
     /**
+     * {@inheritDoc}
      */
     @Override
     public Command getDirection() {

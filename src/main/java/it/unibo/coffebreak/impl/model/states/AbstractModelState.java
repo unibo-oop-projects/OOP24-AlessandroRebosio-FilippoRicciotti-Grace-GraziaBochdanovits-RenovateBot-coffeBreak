@@ -50,6 +50,14 @@ public abstract class AbstractModelState implements ModelState {
      * {@inheritDoc}
      */
     @Override
+    public void handleDirection(final Model model, final Command command) {
+        // Default empty implementation
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Option getSelectedOption() {
         return Option.NONE;
     }

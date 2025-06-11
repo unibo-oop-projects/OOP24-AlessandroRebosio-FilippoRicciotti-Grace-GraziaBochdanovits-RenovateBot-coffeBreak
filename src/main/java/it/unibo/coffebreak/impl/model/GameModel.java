@@ -228,6 +228,14 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
+    public void handleDirection(final Command command) {
+        this.currentState.handleDirection(this, command);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
     }

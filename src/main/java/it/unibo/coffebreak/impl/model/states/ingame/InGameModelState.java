@@ -35,7 +35,15 @@ public class InGameModelState extends AbstractModelState {
         }
     }
 
-    /***
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleDirection(final Model model, final Command command) {
+        model.getMainCharacter().setDirection(command);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
