@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -19,8 +18,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  * @author Filippo Ricciotti
  */
 public class PauseView extends AbstractViewState {
-
-    private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
 
@@ -49,31 +46,11 @@ public class PauseView extends AbstractViewState {
         g.fillRect(0, 0, width, height);
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font optionFont = this.font.deriveFont(height * 0.055f);
 
         g.setFont(titleFont);
-        final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.22);
-        final int titleX = (width - fmTitle.stringWidth("PAUSED")) / 2;
-        g.setColor(Color.GREEN);
-        g.drawString("PAUSED", titleX, titleY);
+        drawCenteredText(g, "PAUSED", width, (int) (height * TITLE_HEIGHT), Color.GREEN);
 
-        g.setFont(optionFont);
-        final var fmOption = g.getFontMetrics();
-
-        if (super.getController().getGameState() instanceof final PauseModelState pauseState) {
-            final var options = pauseState.getOptions();
-            final int selected = options.indexOf(pauseState.getSelectedOption());
-            final int baseY = (int) (height * 0.5);
-            final int stepY = (int) (height * 0.18);
-
-            for (int i = 0; i < options.size(); i++) {
-                final String text = options.get(i).toString();
-                final int y = baseY + i * stepY;
-                g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-                g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
-            }
-        }
+        super.drawOptions(g, height, width);
     }
 
 }

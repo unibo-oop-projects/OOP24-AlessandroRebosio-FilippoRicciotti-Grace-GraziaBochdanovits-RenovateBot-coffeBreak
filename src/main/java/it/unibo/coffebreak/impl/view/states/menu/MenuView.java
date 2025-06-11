@@ -47,45 +47,19 @@ public class MenuView extends AbstractViewState {
         g.fillRect(0, 0, width, height);
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font optionFont = this.font.deriveFont(height * 0.055f);
         final Font scoreFont = this.font.deriveFont(height * 0.04f);
 
         g.setFont(scoreFont);
-
-        final var fmScore = g.getFontMetrics();
-        final int scoreY1 = (int) (height * 0.05);
-        final int scoreX1 = (width - fmScore.stringWidth("HIGH SCORE")) / 2;
-        final int scoreY2 = (int) (height * 0.1);
-        final String highestScore = Integer.toString(super.getController().getHighestScore());
-        final int scoreX2 = (width - fmScore.stringWidth(highestScore)) / 2;
-
-        g.setColor(Color.RED);
-        g.drawString("HIGH SCORE", scoreX1, scoreY1);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString(highestScore, scoreX2, scoreY2);
+        final String highestScore = String.valueOf(super.getController().getHighestScore());
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
+        drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), DEFAULT_COLOR);
 
         g.setFont(titleFont);
-        final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.33);
-        final int titleX = (width - fmTitle.stringWidth("COFFEEBREAK")) / 2;
-        g.setColor(Color.BLUE);
-        g.drawString("COFFEE", titleX, titleY);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString("BREAK", titleX + fmTitle.stringWidth("COFFEE"), titleY);
+        final int coffeeX = width - g.getFontMetrics().stringWidth("BREAK");
+        final int breakX = width + g.getFontMetrics().stringWidth("COFFEE");
+        drawCenteredText(g, "COFFEE", coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
+        drawCenteredText(g, "BREAK", breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
-        g.setFont(optionFont);
-        final var fmOption = g.getFontMetrics();
-
-        final var options = super.getController().getGameState().getOptions();
-        final int selected = options.indexOf(super.getController().getGameState().getSelectedOption());
-        final int baseY = (int) (height * 0.5);
-        final int stepY = (int) (height * 0.18);
-
-        for (int i = 0; i < options.size(); i++) {
-            final String text = options.get(i).toString();
-            final int y = baseY + i * stepY;
-            g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-            g.drawString(text, (width - fmOption.stringWidth(text)) / 2, y);
-        }
+        super.drawOptions(g, height, width);
     }
 }
