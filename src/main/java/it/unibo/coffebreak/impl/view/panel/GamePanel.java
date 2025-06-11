@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.view.panel;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serial;
@@ -30,6 +31,9 @@ import it.unibo.coffebreak.impl.view.states.pause.PauseView;
  */
 public class GamePanel extends JPanel implements Panel {
 
+    private static final int REF_WIDTH = 400;
+    private static final int REF_HEIGHT = 640;
+
     @Serial
     private static final long serialVersionUID = 1L;
     private transient ViewState currentViewState;
@@ -46,33 +50,38 @@ public class GamePanel extends JPanel implements Panel {
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
-        if (currentViewState != null) {
-            final int panelWidth = super.getWidth();
-            final int panelHeight = super.getHeight();
-            final double targetRatio = 4.0 / 3.0;
+        if (this.currentViewState != null) {
+            final int panelWidth = getWidth();
+            final int panelHeight = getHeight();
 
-            int drawWidth = panelWidth;
-            int drawHeight = (int) (panelWidth / targetRatio);
+            final double scaleX = panelWidth / (double) REF_WIDTH;
+            final double scaleY = panelHeight / (double) REF_HEIGHT;
+            final double scale = Math.min(scaleX, scaleY);
 
-            if (drawHeight > panelHeight) {
-                drawHeight = panelHeight;
-                drawWidth = (int) (panelHeight * targetRatio);
-            }
-
+            final int drawWidth = (int) (REF_WIDTH * scale);
+            final int drawHeight = (int) (REF_HEIGHT * scale);
             final int x = (panelWidth - drawWidth) / 2;
             final int y = (panelHeight - drawHeight) / 2;
 
             final Graphics2D g2d = (Graphics2D) g.create();
-
-            g2d.setColor(super.getBackground());
+            g2d.setColor(getBackground());
             g2d.fillRect(0, 0, panelWidth, panelHeight);
 
-            g2d.setClip(x, y, drawWidth, drawHeight);
             g2d.translate(x, y);
-            this.currentViewState.draw(g2d, drawWidth, drawHeight, deltaTime);
+            g2d.scale(scale, scale);
+
+            this.currentViewState.draw(g2d, REF_WIDTH, REF_HEIGHT, deltaTime);
 
             g2d.dispose();
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(REF_WIDTH, REF_HEIGHT);
     }
 
     /**

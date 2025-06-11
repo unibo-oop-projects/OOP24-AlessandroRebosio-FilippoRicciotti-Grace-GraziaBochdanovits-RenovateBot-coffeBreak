@@ -1,10 +1,8 @@
 package it.unibo.coffebreak.impl.view;
 
 import javax.swing.JFrame;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
-import java.awt.Dimension;
 import java.io.Serial;
 import java.util.Objects;
 
@@ -28,8 +26,6 @@ import it.unibo.coffebreak.impl.view.panel.GamePanel;
  */
 public class GameView extends JFrame implements View {
 
-    private static final float ASPECT_RATIO = 9f / 16f;
-
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -45,16 +41,12 @@ public class GameView extends JFrame implements View {
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
 
-        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        final int height = screenSize.height;
-        final int width = (int) (height * ASPECT_RATIO);
-
+        this.gamePanel = new GamePanel();
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.setSize(width, height);
 
-        this.gamePanel = new GamePanel();
         super.setContentPane(gamePanel);
+        super.pack();
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
         super.setVisible(true);
