@@ -20,9 +20,9 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public class GamePhysics implements Physics {
 
-    private static final float BASE_SPEED = 200f;
-    private static final float JUMP_FORCE = 400f;
-    private static final float GRAVITY = -900f;
+    private static final float BASE_SPEED = 100;
+    private static final float JUMP_FORCE = 200f;
+    private static final float GRAVITY = -25f;
 
     /**
      * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
@@ -87,6 +87,6 @@ public class GamePhysics implements Physics {
      */
     @Override
     public Vector gravity(final float deltaTime) {
-        return new Vector(0f, GRAVITY).mul(deltaTime);
+        return new Vector(0f, -GRAVITY).mul(deltaTime);
     }
 }

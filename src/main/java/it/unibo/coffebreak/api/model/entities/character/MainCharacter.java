@@ -23,6 +23,15 @@ public interface MainCharacter extends Entity {
     void changeState(Supplier<CharacterState> stateSupplier);
 
     /**
+     * Sets the movement direction of the character.
+     *
+     * @param dir the direction in which to move the character.
+     *            The specific values and their meanings should be defined in the
+     *            implementing class or documentation.
+     */
+    void setMoveDirection(int dir);
+
+    /**
      * Increases the character's score by the specified amount.
      * 
      * @param amount the number of points to add to the character's score

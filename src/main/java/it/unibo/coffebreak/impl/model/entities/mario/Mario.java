@@ -53,6 +53,9 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private CharacterState currentState;
 
+    private int moveDirection;
+    private boolean onPlatform;
+
     /**
      * Creates a new Mario instance.
      *
@@ -68,6 +71,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         this.physics = new GamePhysics();
         this.score = score;
 
+        this.moveDirection = 0;
+
         changeState(NormalState::new);
     }
 
@@ -76,14 +81,27 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      * This method should be called every frame to update Mario's position.
      * 
      * @param deltaTime the time elapsed since the last frame (in seconds)
-     * @throws IllegalArgumentException if deltaTime is negative
      */
     @Override
     public void update(final float deltaTime) {
-        if (deltaTime < 0) {
-            throw new IllegalArgumentException("DeltaTime cannot be negative");
+        float vx = 0f;
+        if (moveDirection == 1) {
+            vx = physics.moveRight(deltaTime).x();
+        } else if (moveDirection == -1) {
+            vx = physics.moveLeft(deltaTime).x();
         }
+
+        float vy = physics.gravity(deltaTime).y();
+        if (this.onPlatform) {
+            vy = 0f;
+        }
+
+        final Vector velocity = new Vector(vx, vy);
+        super.setPosition(super.getPosition().sum(velocity));
+        super.setVelocity(velocity);
+
         this.currentState.update(this, deltaTime);
+        this.onPlatform = false;
     }
 
     /**
@@ -109,14 +127,28 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public void onCollision(final Entity other) {
         switch (other) {
-            case Collectible collectible -> collectible.collect(this);
-            case Platform platform -> platform.destroy();
-            case Tank tank -> super.setVelocity(new Vector());
+            case final Collectible collectible -> collectible.collect(this);
+            case final Platform platform -> {
+                if (super.getPosition().y() + super.getDimension().height() <= platform.getPosition().y()
+                        + platform.getDimension().height()) {
+                    this.onPlatform = true;
+                }
+            }
+            case final Tank tank -> this.setMoveDirection(0);
             default -> {
             }
         }
 
         this.currentState.handleCollision(this, other);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMoveDirection(final int dir) {
+        this.moveDirection = dir;
     }
 
     /**

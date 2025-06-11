@@ -3,10 +3,13 @@ package it.unibo.coffebreak.impl.model.entities.enemy.barrel;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.entities.structure.Tank;
+import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
-import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
+import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
  * Concrete implementation of a rolling barrel enemy in the game world.
@@ -30,10 +33,13 @@ import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
  * @author Grazia Bochdanovits de Kavna
  */
 public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
+    private static final int DIRECTION = 1;
+
+    private final Physics physics;
 
     private final boolean canTransformToFire;
-
     private boolean isDestroyedByTank;
+    private boolean onPlatform;
 
     /**
      * Constructs a new game barrel with specified properties.
@@ -46,7 +52,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
     public GameBarrel(final Position position, final boolean canTransformToFire) {
         super(position);
 
+        this.physics = new GamePhysics();
+
         this.canTransformToFire = canTransformToFire;
+        this.isDestroyedByTank = false;
+        this.onPlatform = false;
     }
 
     /**
@@ -54,7 +64,21 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void update(final float deltaTime) {
-        // TODO: barrel movement
+        final float vx = DIRECTION * 50f * deltaTime; // TODO: to fix change direction
+
+        float vy = physics.gravity(deltaTime).y();
+
+        if (this.onPlatform) {
+            vy = 0f;
+        }
+
+        final Position newPos = new Position(
+                super.getPosition().x() + vx,
+                super.getPosition().y() + vy);
+
+        super.setPosition(newPos);
+
+        this.onPlatform = false;
     }
 
     /**
@@ -69,9 +93,20 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        if (other instanceof GameTank) {
-            this.isDestroyedByTank = true;
-            this.destroy();
+
+        switch (other) {
+            case final Tank tank -> {
+                this.isDestroyedByTank = true;
+                this.destroy();
+            }
+            case final Platform platform -> {
+                if (super.getPosition().y() + super.getDimension().height() <= platform.getPosition().y()
+                        + platform.getDimension().height()) {
+                    this.onPlatform = true;
+                }
+            }
+            default -> {
+            }
         }
     }
 
