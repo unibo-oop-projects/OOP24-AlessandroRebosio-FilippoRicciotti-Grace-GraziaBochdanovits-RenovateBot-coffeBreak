@@ -49,27 +49,15 @@ public class MenuView extends AbstractViewState {
         final Font scoreFont = this.font.deriveFont(height * 0.04f);
 
         g.setFont(scoreFont);
-
-        final var fmScore = g.getFontMetrics();
-        final int scoreY1 = (int) (height * 0.05);
-        final int scoreX1 = (width - fmScore.stringWidth("HIGH SCORE")) / 2;
-        final int scoreY2 = (int) (height * 0.1);
-        final String highestScore = Integer.toString(super.getController().getHighestScore());
-        final int scoreX2 = (width - fmScore.stringWidth(highestScore)) / 2;
-
-        g.setColor(Color.RED);
-        g.drawString("HIGH SCORE", scoreX1, scoreY1);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString(highestScore, scoreX2, scoreY2);
+        final String highestScore = String.valueOf(super.getController().getHighestScore());
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * 0.05), Color.RED);
+        drawCenteredText(g, highestScore, width, (int) (height * 0.1), DEFAULT_COLOR);
 
         g.setFont(titleFont);
-        final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.33);
-        final int titleX = (width - fmTitle.stringWidth("COFFEEBREAK")) / 2;
-        g.setColor(Color.BLUE);
-        g.drawString("COFFEE", titleX, titleY);
-        g.setColor(DEFAULT_COLOR);
-        g.drawString("BREAK", titleX + fmTitle.stringWidth("COFFEE"), titleY);
+        final int coffeeX = (width - g.getFontMetrics().stringWidth("BREAK"));
+        final int breakX = (width + g.getFontMetrics().stringWidth("COFFEE"));
+        drawCenteredText(g, "COFFEE", coffeeX, (int) (height * 0.33), Color.BLUE);
+        drawCenteredText(g, "BREAK", breakX, (int) (height * 0.33), DEFAULT_COLOR);
 
         super.drawOptions(g, height, width);
     }
