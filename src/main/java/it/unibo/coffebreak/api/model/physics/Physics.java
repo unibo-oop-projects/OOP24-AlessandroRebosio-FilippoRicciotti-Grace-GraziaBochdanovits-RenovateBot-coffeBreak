@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.api.model.physics;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.impl.common.Vector;
 
 /**
@@ -12,24 +11,50 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public interface Physics {
     /**
-     * Calculates the horizontal movement vector based on the given command and time
-     * delta.
-     * 
-     * @param command   the movement command to process (MOVE_LEFT, MOVE_RIGHT,
-     *                  etc.)
-     * @return a Vector2D representing the horizontal movement
+     * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for right movement
      */
-    Vector calculateX(Command command);
+    Vector moveRight(float deltaTime);
 
     /**
-     * Calculates the vertical movement vector based on the given command and time
-     * delta.
-     * This includes both movement commands (up/down) and physics effects like
-     * gravity.
-     * 
-     * @param command   the movement command to process (MOVE_UP, MOVE_DOWN, JUMP,
-     *                  etc.)
-     * @return a Vector2D representing the vertical movement
+     * Returns the horizontal velocity vector for moving left, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for left movement
      */
-    Vector calculateY(Command command);
+    Vector moveLeft(float deltaTime);
+
+    /**
+     * Returns the vertical velocity vector for moving up, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for upward movement
+     */
+    Vector moveUp(float deltaTime);
+
+    /**
+     * Returns the vertical velocity vector for moving down, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for downward movement
+     */
+    Vector moveDown(float deltaTime);
+
+    /**
+     * Returns the vertical velocity vector for jumping, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for jumping
+     */
+    Vector jump(float deltaTime);
+
+    /**
+     * Returns the acceleration vector due to gravity, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the gravity vector
+     */
+    Vector gravity(float deltaTime);
 }

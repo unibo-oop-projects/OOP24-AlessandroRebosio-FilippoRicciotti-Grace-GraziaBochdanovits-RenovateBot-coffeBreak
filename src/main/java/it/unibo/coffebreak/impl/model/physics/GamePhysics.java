@@ -1,64 +1,92 @@
 package it.unibo.coffebreak.impl.model.physics;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.impl.common.Vector;
 
 /**
- * Implementation of the Physics interface for a game environment.
- * Handles basic 2D movement physics including gravity, jumping,
- * and horizontal movement with constant speed.
+ * Provides basic 2D physics calculations for a platformer game.
+ * Includes gravity, jumping, and constant-speed horizontal movement.
+ * All methods return a velocity or acceleration vector scaled by deltaTime.
+ * 
+ * Usage example:
+ * 
+ * <pre>
+ * GamePhysics physics = new GamePhysics();
+ * Vector velocity = physics.moveRight(deltaTime);
+ * velocity = velocity.sum(physics.gravity(deltaTime));
+ * </pre>
  * 
  * @author Alessandro Rebosio
  */
-public record GamePhysics() implements Physics {
+public class GamePhysics implements Physics {
 
-    private static final float BASE_SPEED = 15f;
-    private static final float JUMP_FORCE = 10f;
+    private static final float BASE_SPEED = 200f;
+    private static final float JUMP_FORCE = 400f;
+    private static final float GRAVITY = -900f;
 
     /**
-     * {@inheritDoc}
+     * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for right movement
      */
     @Override
-    public Vector calculateX(final Command command) {
-        return switch (command) {
-            case MOVE_RIGHT -> horizontalMovement(BASE_SPEED);
-            case MOVE_LEFT -> horizontalMovement(-BASE_SPEED);
-            default -> new Vector();
-        };
+    public Vector moveRight(float deltaTime) {
+        return new Vector(BASE_SPEED, 0f).mul(deltaTime);
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the horizontal velocity vector for moving left, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for left movement
      */
     @Override
-    public Vector calculateY(final Command command) {
-        return switch (command) {
-            case MOVE_UP -> verticalMovement(BASE_SPEED);
-            case MOVE_DOWN -> verticalMovement(-BASE_SPEED);
-            case JUMP -> verticalMovement(JUMP_FORCE);
-            default -> verticalMovement(-BASE_SPEED);
-        };
+    public Vector moveLeft(float deltaTime) {
+        return new Vector(-BASE_SPEED, 0f).mul(deltaTime);
     }
 
     /**
-     * Creates a horizontal movement vector.
-     * 
-     * @param speed the speed of movement (positive for right, negative for
-     *              left)
-     * @return a Vector2D representing horizontal movement
+     * Returns the vertical velocity vector for moving up, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for upward movement
      */
-    private Vector horizontalMovement(final float speed) {
-        return new Vector(speed, 0f);
+    @Override
+    public Vector moveUp(float deltaTime) {
+        return new Vector(0f, BASE_SPEED).mul(deltaTime);
     }
 
     /**
-     * Creates a vertical movement vector.
-     * 
-     * @param speed the speed of movement (positive for down, negative for up)
-     * @return a Vector2D representing vertical movement
+     * Returns the vertical velocity vector for moving down, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for downward movement
      */
-    private Vector verticalMovement(final float speed) {
-        return new Vector(0f, speed);
+    @Override
+    public Vector moveDown(float deltaTime) {
+        return new Vector(0f, -BASE_SPEED).mul(deltaTime);
+    }
+
+    /**
+     * Returns the vertical velocity vector for jumping, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the velocity vector for jumping
+     */
+    @Override
+    public Vector jump(float deltaTime) {
+        return new Vector(0f, JUMP_FORCE).mul(deltaTime);
+    }
+
+    /**
+     * Returns the acceleration vector due to gravity, scaled by deltaTime.
+     *
+     * @param deltaTime the elapsed time in seconds
+     * @return the gravity vector
+     */
+    @Override
+    public Vector gravity(float deltaTime) {
+        return new Vector(0f, GRAVITY).mul(deltaTime);
     }
 }

@@ -12,11 +12,13 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
+import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
+import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -46,6 +48,7 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHamme
 public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private final LivesManager livesManager;
+    private final Physics physics;
     private final Score score;
 
     private CharacterState currentState;
@@ -62,6 +65,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         super.setDimension(super.getDimension().mulHeight(2));
 
         this.livesManager = livesManager;
+        this.physics = new GamePhysics();
         this.score = score;
 
         changeState(NormalState::new);
@@ -80,10 +84,6 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
             throw new IllegalArgumentException("DeltaTime cannot be negative");
         }
         this.currentState.update(this, deltaTime);
-
-        super.setPosition(super.getPosition().sum(super.getVelocity().sum(new Vector(10, 0)).multiply(deltaTime)));
-
-        // TODO: Mario movement
     }
 
     /**
@@ -108,7 +108,6 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      */
     @Override
     public void onCollision(final Entity other) {
-        // TODO: mario collision and if mario collide with tank stop
         switch (other) {
             case Collectible collectible -> collectible.collect(this);
             case Platform platform -> platform.destroy();

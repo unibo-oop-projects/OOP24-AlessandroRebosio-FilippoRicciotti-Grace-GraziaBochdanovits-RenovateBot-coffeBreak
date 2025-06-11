@@ -40,7 +40,7 @@ public record Vector(float x, float y) {
      * @param scalar the multiplication factor
      * @return a new {@code Vector2D} representing the scaled vector
      */
-    public Vector multiply(final float scalar) {
+    public Vector mul(final float scalar) {
         return new Vector(this.x * scalar, this.y * scalar);
     }
 
