@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.view.resources.ResourceLoader;
+import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -37,7 +37,7 @@ public class GameOverView extends AbstractViewState {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final int width, final int height) {
+    public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
