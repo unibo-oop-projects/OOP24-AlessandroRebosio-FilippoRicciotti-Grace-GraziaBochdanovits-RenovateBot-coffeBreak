@@ -1,16 +1,16 @@
 package it.unibo.coffebreak.impl.view;
 
 import javax.swing.JFrame;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.Dimension;
+import java.io.Serial;
+import java.util.Objects;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
-import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.view.panel.GamePanel;
-
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.io.Serial;
-import java.util.Objects;
 
 /**
  * The main game view component.
@@ -28,10 +28,11 @@ import java.util.Objects;
  */
 public class GameView extends JFrame implements View {
 
+    private static final float ASPECT_RATIO = 9f / 16f;
+
     @Serial
     private static final long serialVersionUID = 1L;
 
-    /** Reference to the game controller. */
     private final transient Controller controller;
     private final GamePanel gamePanel;
 
@@ -43,14 +44,16 @@ public class GameView extends JFrame implements View {
      */
     public GameView(final Controller controller) {
         this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
-        final Dimension gameBounds = this.controller.getGameBounds();
+
+        final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        final int height = screenSize.height;
+        final int width = (int) (height * ASPECT_RATIO);
 
         super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.setSize(gameBounds.width(), gameBounds.height());
+        super.setSize(width, height);
 
         this.gamePanel = new GamePanel();
-
         super.setContentPane(gamePanel);
         super.setLocationRelativeTo(null);
         super.addKeyListener(this);
@@ -75,7 +78,7 @@ public class GameView extends JFrame implements View {
     }
 
     /**
-     * Not used in this implementation.
+     * {@inheritDoc}
      */
     @Override
     public void keyTyped(final KeyEvent e) {
@@ -83,9 +86,7 @@ public class GameView extends JFrame implements View {
     }
 
     /**
-     * Sends the pressed key code to the controller.
-     *
-     * @param e the key event triggered when a key is pressed
+     * {@inheritDoc}
      */
     @Override
     public void keyPressed(final KeyEvent e) {
@@ -93,7 +94,7 @@ public class GameView extends JFrame implements View {
     }
 
     /**
-     * Not used in this implementation.
+     * {@inheritDoc}
      */
     @Override
     public void keyReleased(final KeyEvent e) {
