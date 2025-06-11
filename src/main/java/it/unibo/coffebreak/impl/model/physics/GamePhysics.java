@@ -31,7 +31,7 @@ public class GamePhysics implements Physics {
      * @return the velocity vector for right movement
      */
     @Override
-    public Vector moveRight(float deltaTime) {
+    public Vector moveRight(final float deltaTime) {
         return new Vector(BASE_SPEED, 0f).mul(deltaTime);
     }
 
@@ -42,7 +42,7 @@ public class GamePhysics implements Physics {
      * @return the velocity vector for left movement
      */
     @Override
-    public Vector moveLeft(float deltaTime) {
+    public Vector moveLeft(final float deltaTime) {
         return new Vector(-BASE_SPEED, 0f).mul(deltaTime);
     }
 
@@ -53,7 +53,7 @@ public class GamePhysics implements Physics {
      * @return the velocity vector for upward movement
      */
     @Override
-    public Vector moveUp(float deltaTime) {
+    public Vector moveUp(final float deltaTime) {
         return new Vector(0f, BASE_SPEED).mul(deltaTime);
     }
 
@@ -64,7 +64,7 @@ public class GamePhysics implements Physics {
      * @return the velocity vector for downward movement
      */
     @Override
-    public Vector moveDown(float deltaTime) {
+    public Vector moveDown(final float deltaTime) {
         return new Vector(0f, -BASE_SPEED).mul(deltaTime);
     }
 
@@ -75,7 +75,7 @@ public class GamePhysics implements Physics {
      * @return the velocity vector for jumping
      */
     @Override
-    public Vector jump(float deltaTime) {
+    public Vector jump(final float deltaTime) {
         return new Vector(0f, JUMP_FORCE).mul(deltaTime);
     }
 
@@ -86,7 +86,7 @@ public class GamePhysics implements Physics {
      * @return the gravity vector
      */
     @Override
-    public Vector gravity(float deltaTime) {
+    public Vector gravity(final float deltaTime) {
         return new Vector(0f, GRAVITY).mul(deltaTime);
     }
 }
