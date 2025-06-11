@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.api.view;
 
-import java.awt.event.KeyListener;
-
 /**
  * The View component in MVC.
  * <p>
@@ -10,7 +8,7 @@ import java.awt.event.KeyListener;
  * 
  * @author Alessandro Rebosio
  */
-public interface View extends KeyListener {
+public interface View {
     /**
      * Closes the view and releases resources.
      */
@@ -18,6 +16,7 @@ public interface View extends KeyListener {
 
     /**
      * Updates the view with the current game state.
+     * 
      * @param deltaTime time elapsed since last update, in seconds
      */
     void update(float deltaTime);

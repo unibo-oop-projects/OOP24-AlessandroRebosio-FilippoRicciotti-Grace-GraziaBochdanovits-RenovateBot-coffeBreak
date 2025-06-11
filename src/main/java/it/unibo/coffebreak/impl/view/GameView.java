@@ -2,7 +2,6 @@ package it.unibo.coffebreak.impl.view;
 
 import javax.swing.JFrame;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Objects;
@@ -14,8 +13,9 @@ import it.unibo.coffebreak.api.view.View;
  * The main game view component.
  * 
  * <p>
- * This class extends {@link JFrame} and listens for keyboard input.
- * Key events are passed to the game {@link Controller} for processing.
+ * This class extends {@link JFrame} and is responsible for managing the game
+ * window.
+ * Rendering and input handling are delegated to other components.
  * </p>
  * 
  * <p>
@@ -26,9 +26,10 @@ import it.unibo.coffebreak.api.view.View;
  */
 public class GameView extends JFrame implements View {
 
+    private static final String TITLE = "Coffe Break";
+
     @Serial
     private static final long serialVersionUID = 1L;
-    private final transient Controller controller;
 
     /**
      * Constructs a GameView with the given controller.
@@ -37,13 +38,12 @@ public class GameView extends JFrame implements View {
      * @throws NullPointerException if {@code controller} is null
      */
     public GameView(final Controller controller) {
-        this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
+        super(TITLE);
+        Objects.requireNonNull(controller, "Controller cannot be null");
 
-        super.setTitle("Coffe Break");
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.pack();
         super.setLocationRelativeTo(null);
-        super.addKeyListener(this);
         super.setVisible(true);
     }
 
@@ -61,29 +61,5 @@ public class GameView extends JFrame implements View {
     @Override
     public void update(final float deltaTime) {
         this.repaint();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void keyTyped(final KeyEvent e) {
-        // Not used
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void keyPressed(final KeyEvent e) {
-        this.controller.keyPressed(e.getKeyCode());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void keyReleased(final KeyEvent e) {
-        this.controller.keyReleased(e.getKeyCode());
     }
 }
