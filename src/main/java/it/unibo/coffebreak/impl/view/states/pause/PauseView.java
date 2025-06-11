@@ -47,11 +47,7 @@ public class PauseView extends AbstractViewState {
         final Font titleFont = this.font.deriveFont(height * 0.11f);
 
         g.setFont(titleFont);
-        final var fmTitle = g.getFontMetrics();
-        final int titleY = (int) (height * 0.22);
-        final int titleX = (width - fmTitle.stringWidth("PAUSED")) / 2;
-        g.setColor(Color.GREEN);
-        g.drawString("PAUSED", titleX, titleY);
+        drawCenteredText(g, "PAUSED", width, (int) (height * 0.22), Color.GREEN);
 
         super.drawOptions(g, height, width);
     }
