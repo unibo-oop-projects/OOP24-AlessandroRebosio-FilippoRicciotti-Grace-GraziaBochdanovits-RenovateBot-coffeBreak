@@ -23,12 +23,12 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * Vertical position (as a fraction of total height) for the "HIGH SCORE" label.
      */
-    public static final float TOP_HEIGHT = 0.05f;
+    public static final float TOP_HEIGHT = 0.025f;
     /**
      * Vertical position (as a fraction of total height) for the score value under
      * "HIGH SCORE".
      */
-    public static final float SCORE_HEIGHT = 0.1f;
+    public static final float SCORE_HEIGHT = 0.045f;
 
     /**
      * Vertical position (as a fraction of total height) for the VIEW title.
@@ -87,7 +87,26 @@ public abstract class AbstractViewState implements ViewState {
      * Subclasses must implement their own drawing logic.
      */
     @Override
-    public abstract void draw(Graphics2D g, int width, int height, float deltaTime);
+    public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
+
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, width, height);
+
+        final var scoreFont = this.resourceLoader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
+        final String highestScore = String.valueOf(controller.getHighestScore());
+        final String currentScore = "000000"; // String.valueOf(controller.getScoreValue());
+        final String currentLevel = "00"; // String.valueOf(controller.getLevelIndex());
+        final int thirdWidth = (int) (width * 0.66f);
+        g.setFont(scoreFont);
+
+        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
+        drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), Color.WHITE);
+        drawCenteredText(g, "1UP", width / 3, (int) (height * TOP_HEIGHT), Color.RED);
+        drawCenteredText(g, currentScore, width / 3, (int) (height * SCORE_HEIGHT), Color.WHITE);
+        drawCenteredText(g, "L = " + currentLevel, thirdWidth, (int) (height * TOP_HEIGHT),
+                Color.BLUE);
+
+    }
 
     /**
      * Returns the resource loader used by this view state.
@@ -119,14 +138,14 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final void drawOptions(final Graphics2D g, final int height, final int width) {
 
-        final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.055f);
+        final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
 
         g.setFont(optionFont);
 
         final var options = this.controller.getGameState().getOptions();
         final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
         final int baseY = (int) (height * 0.5);
-        final int stepY = (int) (height * 0.18);
+        final int stepY = (int) (height * 0.10);
 
         for (int i = 0; i < options.size(); i++) {
             final String text = options.get(i).toString();

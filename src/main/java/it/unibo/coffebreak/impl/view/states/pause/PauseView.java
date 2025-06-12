@@ -35,15 +35,14 @@ public class PauseView extends AbstractViewState {
     /**
      * Draws the Pause background, title, and options.
      *
-     * @param g      the graphics context
-     * @param width  the width of the window
-     * @param height the height of the window
+     * @param g         the graphics context
+     * @param width     the width of the window
+     * @param height    the height of the window
      * @param deltaTime
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
+        super.draw(g, width, height, deltaTime);
 
         final Font titleFont = this.font.deriveFont(height * 0.11f);
 

@@ -38,28 +38,22 @@ public class GameOverView extends AbstractViewState {
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
+        super.draw(g, width, height, deltaTime);
 
-        final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font scoreFont = this.font.deriveFont(height * 0.04f);
-        final var optionFont = this.font.deriveFont(height * 0.055f);
+        final Font titleFont = this.font.deriveFont(height * 0.05f);
+        final Font labelFont = this.font.deriveFont(height * 0.02f);
+        final var nameFont = this.font.deriveFont(height * 0.02f);
 
         final var controller = super.getController();
         final var gameState = controller.getGameState();
 
-        g.setFont(scoreFont);
-        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
-        drawCenteredText(g, String.valueOf(controller.getHighestScore()), width, (int) (height * SCORE_HEIGHT),
-                DEFAULT_COLOR);
-
         g.setFont(titleFont);
         drawCenteredText(g, "GAME OVER", width, (int) (height * TITLE_HEIGHT), Color.RED);
 
-        g.setFont(scoreFont);
+        g.setFont(labelFont);
         drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
 
-        g.setFont(optionFont);
+        g.setFont(nameFont);
         final var fm = g.getFontMetrics();
         final var options = gameState.getOptions();
         final int selected = options.indexOf(gameState.getSelectedOption());
@@ -73,13 +67,13 @@ public class GameOverView extends AbstractViewState {
         for (int i = 0; i < 3; i++) {
             final String text = String.valueOf(name.charAt(i));
             final int letterX = startX + i * (fm.charWidth('W') + spacing);
-            g.setColor(i == selected ? Color.YELLOW : Color.WHITE);
+            g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
             g.drawString(text, letterX, baseY);
         }
 
-        g.setFont(scoreFont);
+        g.setFont(labelFont);
         drawCenteredText(g, "[ SAVE ]", width, (int) (height * SAVE_HEIGHT),
-                selected == options.size() - 1 ? Color.YELLOW : Color.WHITE);
+                selected == options.size() - 1 ? Color.YELLOW : DEFAULT_COLOR);
 
     }
 

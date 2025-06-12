@@ -36,23 +36,16 @@ public class MenuView extends AbstractViewState {
     /**
      * Draws the main menu background, title, and options.
      *
-     * @param g      the graphics context
-     * @param width  the width of the window
-     * @param height the height of the window
+     * @param g         the graphics context
+     * @param width     the width of the window
+     * @param height    the height of the window
      * @param deltaTime
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
+        super.draw(g, width, height, deltaTime);
 
-        final Font titleFont = this.font.deriveFont(height * 0.11f);
-        final Font scoreFont = this.font.deriveFont(height * 0.04f);
-
-        g.setFont(scoreFont);
-        final String highestScore = String.valueOf(super.getController().getHighestScore());
-        drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
-        drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), DEFAULT_COLOR);
+        final Font titleFont = this.font.deriveFont(height * 0.05f);
 
         g.setFont(titleFont);
         final int coffeeX = width - g.getFontMetrics().stringWidth("BREAK");
