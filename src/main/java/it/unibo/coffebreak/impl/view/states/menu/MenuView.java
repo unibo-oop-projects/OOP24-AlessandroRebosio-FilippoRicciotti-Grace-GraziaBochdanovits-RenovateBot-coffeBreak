@@ -50,6 +50,7 @@ public class MenuView extends AbstractViewState {
         super.draw(g, width, height, deltaTime);
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
+        final Font boardFont = this.font.deriveFont(height * 0.03f);
 
         g.setFont(titleFont);
         final int coffeeX = width - g.getFontMetrics().stringWidth("BREAK");
@@ -57,10 +58,10 @@ public class MenuView extends AbstractViewState {
         drawCenteredText(g, "COFFEE", coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
         drawCenteredText(g, "BREAK", breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
-        g.setFont(titleFont.deriveFont(height * 0.03f));
+        g.setFont(boardFont);
+        final int boardY = (int) (height * 0.40);
+        drawCenteredText(g, "RANK NAME  SCORE ", width, boardY, Color.CYAN);
 
-        // System.out.println(leaderBoard.size());
-        drawCenteredText(g, "RANK NAME  SCORE ", width, (int) (height * 0.40), Color.CYAN);
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);
             final String scoreFormatted = String.format("%06d", entry.getScore());
