@@ -33,7 +33,7 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * Vertical position (as a fraction of total height) for the VIEW title.
      */
-    public static final float TITLE_HEIGHT = 0.33f;
+    public static final float TITLE_HEIGHT = 0.30f;
     /**
      * Vertical position (as a fraction of total height) for the "Insert your name"
      * prompt.
@@ -96,7 +96,7 @@ public abstract class AbstractViewState implements ViewState {
         final String highestScore = String.valueOf(controller.getHighestScore());
         final String currentScore = "000000"; // String.valueOf(controller.getScoreValue());
         final String currentLevel = "00"; // String.valueOf(controller.getLevelIndex());
-        final int thirdWidth = (int) (width * 0.66f);
+        final int thirdWidth = (int) (width + width * 0.66f);
         g.setFont(scoreFont);
 
         drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
@@ -144,7 +144,7 @@ public abstract class AbstractViewState implements ViewState {
 
         final var options = this.controller.getGameState().getOptions();
         final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
-        final int baseY = (int) (height * 0.5);
+        final int baseY = (int) (height * 0.65);
         final int stepY = (int) (height * 0.10);
 
         for (int i = 0; i < options.size(); i++) {

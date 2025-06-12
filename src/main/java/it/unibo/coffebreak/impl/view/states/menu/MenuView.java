@@ -1,12 +1,14 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.util.List;
 
 /**
  * View state responsible for rendering the main menu screen.
@@ -21,6 +23,7 @@ public class MenuView extends AbstractViewState {
     private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
+    private final List<Entry> leaderBoard;
 
     /**
      * Constructs the main menu view and loads required fonts.
@@ -31,6 +34,7 @@ public class MenuView extends AbstractViewState {
         super(controller);
 
         this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
+        leaderBoard = controller.getLeaderBoard();
     }
 
     /**
@@ -52,6 +56,21 @@ public class MenuView extends AbstractViewState {
         final int breakX = width + g.getFontMetrics().stringWidth("COFFEE");
         drawCenteredText(g, "COFFEE", coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
         drawCenteredText(g, "BREAK", breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
+
+        g.setFont(titleFont.deriveFont(height * 0.03f));
+
+        // System.out.println(leaderBoard.size());
+        drawCenteredText(g, "RANK NAME  SCORE ", width, (int) (height * 0.40), Color.CYAN);
+        for (int i = 0; i < leaderBoard.size(); i++) {
+            final Entry entry = leaderBoard.get(i);
+            final String scoreFormatted = String.format("%06d", entry.getScore());
+            final String text = i + 1 + ".   " + entry.getName() + "   " + scoreFormatted;
+            final int baseY = (int) (height * 0.45);
+            final int stepY = (int) (height * 0.03);
+            final int y = baseY + i * stepY;
+
+            drawCenteredText(g, text, width, y, i < 3 ? Color.RED : Color.PINK);
+        }
 
         super.drawOptions(g, height, width);
     }
