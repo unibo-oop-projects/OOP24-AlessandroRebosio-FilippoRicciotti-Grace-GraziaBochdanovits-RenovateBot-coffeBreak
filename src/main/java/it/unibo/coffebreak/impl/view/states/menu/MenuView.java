@@ -66,12 +66,12 @@ public class MenuView extends AbstractViewState {
 
         g.setFont(boardFont);
         final int boardY = (int) (height * 0.60);
-        drawCenteredText(g, "RANK SCORE  NAME ", width, boardY, Color.CYAN);
+        drawCenteredText(g, "RANK  SCORE  NAME ", width, boardY, Color.CYAN);
 
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);
             final String scoreFormatted = String.format("%06d", entry.getScore());
-            final String text = i + 1 + ".   " + scoreFormatted + " " + entry.getName() + "  ";
+            final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.getName() + "  ";
             final int baseY = (int) (height * 0.65);
             final int stepY = (int) (height * 0.03);
             final int y = baseY + i * stepY;
