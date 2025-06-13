@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
+import it.unibo.coffebreak.impl.view.GameView;
 import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -51,12 +52,13 @@ public class MenuView extends AbstractViewState {
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
         final Font boardFont = this.font.deriveFont(height * 0.03f);
+        final String[] title = GameView.TITLE.toUpperCase().split(" ", 2);
 
         g.setFont(titleFont);
-        final int coffeeX = width - g.getFontMetrics().stringWidth("BREAK");
-        final int breakX = width + g.getFontMetrics().stringWidth("COFFEE");
-        drawCenteredText(g, "COFFEE", coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
-        drawCenteredText(g, "BREAK", breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
+        final int coffeeX = width - g.getFontMetrics().stringWidth(title[0] + title[1]) / 2;
+        final int breakX = width + g.getFontMetrics().stringWidth(title[0] + title[1]) / 2;
+        drawCenteredText(g, title[0], coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
+        drawCenteredText(g, title[1], breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
         g.setFont(boardFont);
         final int boardY = (int) (height * 0.40);
