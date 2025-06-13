@@ -9,7 +9,6 @@ import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
 
@@ -49,7 +48,7 @@ public class GameController implements Controller {
      */
     @Override
     public void updateModel(final float deltaTime) {
-        this.model.handleDirection(this.input.getDirection());
+        this.model.handleDirection(this.input.getDirection()); // TODO: to fix
         this.model.update(deltaTime);
     }
 
@@ -129,14 +128,6 @@ public class GameController implements Controller {
     @Override
     public int getLevelIndex() {
         return this.model.getLevelIndex();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Dimension getGameBounds() {
-        return this.model.getGameBound();
     }
 
     /**

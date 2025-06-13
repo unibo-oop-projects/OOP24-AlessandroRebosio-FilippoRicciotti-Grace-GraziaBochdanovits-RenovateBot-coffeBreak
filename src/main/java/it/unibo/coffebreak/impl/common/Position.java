@@ -25,13 +25,16 @@ public record Position(float x, float y) {
     }
 
     /**
-     * Returns a new {@code Position} whose coordinates are scaled by the specified {@code Dimension}.
-     * The x-coordinate is multiplied by the dimension's width, and the y-coordinate is multiplied by the dimension's height.
+     * Returns a new {@code Position} whose coordinates are scaled by the specified
+     * {@code Dimension}.
+     * The x-coordinate is multiplied by the dimension's width, and the y-coordinate
+     * is multiplied by the dimension's height.
      *
-     * @param dimension the {@code Dimension} by which to scale this position's coordinates
+     * @param dimension the {@code Dimension} by which to scale this position's
+     *                  coordinates
      * @return a new {@code Position} with scaled coordinates
      */
-    public Position adjustPositionByDimension(final Dimension dimension) {
+    public Position scalePosition(final Dimension dimension) {
         return new Position(this.x * dimension.width(), this.y * dimension.height());
     }
 

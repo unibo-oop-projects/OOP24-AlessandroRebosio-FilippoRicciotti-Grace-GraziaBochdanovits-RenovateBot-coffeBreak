@@ -61,7 +61,7 @@ public class InputManager implements Input {
      * {@inheritDoc}
      */
     @Override
-    public Command getDirection() {
+    public Command getDirection() { // TODO: to fix
         final boolean right = pressedKeys.contains(Command.MOVE_RIGHT);
         final boolean left = pressedKeys.contains(Command.MOVE_LEFT);
         final boolean up = pressedKeys.contains(Command.MOVE_UP);
@@ -98,10 +98,7 @@ public class InputManager implements Input {
      */
     @Override
     public void keyReleased(final int keyCode) {
-        final Command command = keyBindings.get(keyCode);
-        if (command != null) {
-            pressedKeys.remove(command);
-        }
+        this.pressedKeys.remove(this.keyBindings.get(keyCode));
     }
 
     /**
@@ -114,8 +111,7 @@ public class InputManager implements Input {
      */
     @Override
     public Command bindKey(final int keyCode, final Command command) {
-        Objects.requireNonNull(command, "Command cannot be null");
-        return keyBindings.put(keyCode, command);
+        return keyBindings.put(keyCode, Objects.requireNonNull(command, "Command cannot be null"));
     }
 
     /**
@@ -123,6 +119,7 @@ public class InputManager implements Input {
      */
     @Override
     public void clearQueue() {
-        commandQueue.clear();
+        this.commandQueue.clear();
+        this.pressedKeys.clear();
     }
 }

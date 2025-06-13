@@ -5,7 +5,6 @@ import java.util.List;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.common.Dimension;
 
 /**
  * The game controller in the MVC (Model-View-Controller) pattern.
@@ -124,12 +123,4 @@ public interface Controller {
      * @return the current game state, never null
      */
     ModelState getGameState();
-
-    /**
-     * Returns the dimensions representing the bounds of the game area.
-     *
-     * @return a {@link Dimension} object specifying the width and height of the
-     *         game bounds
-     */
-    Dimension getGameBounds();
 }

@@ -34,11 +34,11 @@ public class GameEngine implements Engine {
             final long currentTime = System.currentTimeMillis();
             final float deltaTime = (currentTime - previousTime) / 1000.0f;
 
-            controller.processInput();
-            controller.updateModel(deltaTime);
-            view.update(deltaTime);
+            this.controller.processInput();
+            this.controller.updateModel(deltaTime);
+            this.view.update(deltaTime);
 
-            sleepUntilNextFrame(currentTime);
+            this.sleepUntilNextFrame(currentTime);
             previousTime = currentTime;
         }
 
