@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.mario.states.withhammer;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 
@@ -53,6 +54,19 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public void onEnter(final MainCharacter character) {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
+        character.setDimension(new Dimension(character.getDimension().width() * 2, 
+                                character.getDimension().height() * 2));
+    }
+
+    /**
+     * Called when exiting hammer state.
+     *
+     * @param character the Mario instance transitioning to this state (non-null)
+     */
+    @Override
+    public void onExit(final MainCharacter character) {
+        character.setDimension(new Dimension(character.getDimension().width() / 2, 
+                                character.getDimension().height() / 2));
     }
 
     /**

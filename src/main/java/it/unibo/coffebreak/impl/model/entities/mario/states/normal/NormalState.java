@@ -26,9 +26,6 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
  */
 public class NormalState extends AbstractMarioState {
 
-    /** fa si che mario salga la scala solo quando è praticamente davanti e non
-     *  in base alla collisione o no....
-     */
     private static final float TOLLERANCE = 0.1f;
     private boolean canClimb;
     private boolean isClimbing;
