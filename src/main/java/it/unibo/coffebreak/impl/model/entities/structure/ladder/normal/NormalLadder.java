@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.structure.ladder.normal;
 
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.structure.ladder.AbstractLadder;
 
@@ -18,9 +19,10 @@ public class NormalLadder extends AbstractLadder {
     /**
      * Constructs a new NormalLadder with the specified position and dimensions.
      * 
-     * @param position the top-left position of the ladder in the game world
+     * @param position  the top-left position of the ladder in the game world
+     * @param dimension the dimension of the ladder in the game world
      */
-    public NormalLadder(final Position position) {
-        super(position);
+    public NormalLadder(final Position position, final Dimension dimension) {
+        super(position, dimension);
     }
 }

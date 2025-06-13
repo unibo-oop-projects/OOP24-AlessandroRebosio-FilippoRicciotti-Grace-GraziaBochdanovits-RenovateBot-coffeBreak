@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
@@ -28,7 +29,6 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      */
     private static final float BARREL_THROW_INTERVAL = 2.0f;
 
-    private final Position initializeBarrelSpawn;
     private final boolean canThrowBarrel;
     private float lastThrowTime;
 
@@ -37,17 +37,15 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      * barrel-throwing capability.
      *
      * @param position       the initial position of Donkey Kong (cannot be null)
+     * @param dimension      the dimension of the pauline in the game world
      * @param canThrowBarrel true if Donkey Kong is allowed to throw barrels, false
      *                       otherwise
      * @throws NullPointerException     if position or dimension are null
      * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
-    public DonkeyKong(final Position position, final boolean canThrowBarrel) {
-        super(position);
-        super.setDimension(super.getDimension().mul(2));
-        this.initializeBarrelSpawn = position;
+    public DonkeyKong(final Position position, final Dimension dimension, final boolean canThrowBarrel) {
+        super(position, dimension);
 
-        this.lastThrowTime = 0;
         this.canThrowBarrel = canThrowBarrel;
     }
 
@@ -63,7 +61,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
         this.lastThrowTime += deltaTime;
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
             lastThrowTime = 0;
-            return Optional.of(new GameEntityFactory().createBarrel(this.initializeBarrelSpawn));
+            return Optional.of(new GameEntityFactory().createBarrel(super.getPosition()));
         }
         return Optional.empty();
     }

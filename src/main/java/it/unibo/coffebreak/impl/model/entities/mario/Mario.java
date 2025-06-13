@@ -15,9 +15,12 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.physics.Physics;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
+import it.unibo.coffebreak.impl.model.entities.mario.lives.GameLivesManager;
+import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
@@ -62,22 +65,20 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     /**
      * Creates a new Mario instance.
      *
-     * @param position     the initial position of Mario
-     * @param score        the score of Mario
-     * @param livesManager the lives manager for Mario
+     * @param position  the initial position of Mario
+     * @param dimension the 2D dimension of the Mario (cannot be null)
      */
-    public Mario(final Position position, final Score score, final LivesManager livesManager) {
-        super(position);
-        super.setDimension(super.getDimension().mulHeight(2));
+    public Mario(final Position position, final Dimension dimension) {
+        super(position, dimension);
 
-        this.livesManager = livesManager;
+        this.livesManager = new GameLivesManager();
         this.physics = new GamePhysics();
-        this.score = score;
+        this.score = new GameScore();
 
         this.moveDirection = Command.NONE;
         this.isFacingRight = true;
 
-        changeState(NormalState::new);
+        this.changeState(NormalState::new);
     }
 
     /**
@@ -171,7 +172,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                 this.setVelocity(new Vector(0, 0));
                 this.moveDirection = Command.NONE;
             }
-            default -> { }
+            default -> {
+            }
         }
 
         this.currentState.handleCollision(this, other);
@@ -179,8 +181,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
     private void handlePlatformCollision(final Platform platform) {
 
-        //controlla se mario sta arrampicando e in quel caso gli
-        //gli è permesso passare attraverso la piattforma
+        // controlla se mario sta arrampicando e in quel caso gli
+        // gli è permesso passare attraverso la piattforma
         if (currentState.isClimbing()) {
 
             final float platformTop = platform.getPosition().y();
@@ -196,8 +198,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
         handleStandardPlatformCollision(platform);
     }
- 
-    //TODO: funziona ma non mi piace, forse non va nemmeno in questa classe 
+
+    // TODO: funziona ma non mi piace, forse non va nemmeno in questa classe
     private void handleStandardPlatformCollision(final Platform platform) {
         final float marioBottom = getPosition().y() + getDimension().height();
         final float marioTop = getPosition().y();
@@ -210,10 +212,10 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         final float platformRight = platformLeft + platform.getDimension().width();
 
         final float[] overlaps = {
-            marioBottom - platformTop,    // TOP
-            platformBottom - marioTop,    // BOTTOM 
-            marioRight - platformLeft,    // LEFT
-            platformRight - marioLeft,     // RIGHT
+                marioBottom - platformTop, // TOP
+                platformBottom - marioTop, // BOTTOM
+                marioRight - platformLeft, // LEFT
+                platformRight - marioLeft, // RIGHT
         };
 
         if (overlaps[0] > 0 && overlaps[1] > 0 && overlaps[2] > 0 && overlaps[3] > 0) {
@@ -250,7 +252,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                         setPosition(new Position(platformRight, getPosition().y()));
                     }
                 }
-                default -> { }
+                default -> {
+                }
             }
         }
     }

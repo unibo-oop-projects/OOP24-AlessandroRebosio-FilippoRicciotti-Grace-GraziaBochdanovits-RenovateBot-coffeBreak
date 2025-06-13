@@ -12,10 +12,21 @@ import it.unibo.coffebreak.api.model.entities.EntityFactory;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
+import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
+import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
+import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
+import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLadder;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
+import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
@@ -31,7 +42,6 @@ public class GameEntityManager implements EntityManager {
     private final List<Entity> entities = new ArrayList<>();
 
     private MainCharacter player;
-    private Position tankPosition;
 
     /**
      * {@inheritDoc}
@@ -64,25 +74,45 @@ public class GameEntityManager implements EntityManager {
         for (int y = 0; y < mapLines.size(); y++) {
             final String line = mapLines.get(y);
             for (int x = 0; x < line.length(); x++) {
-                final Position position = new Position(x, y);
+                final Position position = new Position(x * 25, y * 25);
                 final char c = line.charAt(x);
 
                 switch (Character.toUpperCase(c)) {
-                    case 'P' -> this.addEntity(factory.createNormalPlatform(position));
-                    case '!' -> this.addEntity(factory.createBreakablePlatform(position));
-                    case 'L' -> this.addEntity(factory.createNormalLadder(position));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, new Dimension()));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, new Dimension()));
+                    case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
                     case 'T' -> {
-                        this.addEntity(factory.createTank(position));
-                        this.tankPosition = position;
+                        if (!this.hasEntityOfClass(Tank.class)) {
+                            this.addEntity(factory.createTank(position, new Dimension().mulHeight(2)));
+                        }
                     }
-                    case 'H' -> this.addEntity(factory.createHammer(position));
+                    case 'H' -> this.addEntity(new Hammer(position, new Dimension()));
                     case 'C' -> this.addEntity(factory.createCoin(position));
                     case 'M' -> {
-                        this.player = factory.createMario(position);
-                        this.addEntity(this.player);
+                        if (!this.hasEntityOfClass(MainCharacter.class)) {
+                            this.player = factory.createMario(position, new Dimension().mulHeight(2));
+                            this.addEntity(this.player);
+                        }
                     }
-                    case 'D' -> this.addEntity(factory.createDonkeyKong(position));
-                    case 'R' -> this.addEntity(factory.createPrincess(position));
+                    case 'D' -> {
+                        if (!this.hasEntityOfClass(Antagonist.class)) {
+                            this.addEntity(new DonkeyKong(position, new Dimension().mul(5), false));
+                        }
+                    }
+                    case 'R' -> {
+                        if (!this.hasEntityOfClass(Princess.class)) {
+                            this.addEntity(new Pauline(position, new Dimension().mulHeight(3).mulWidth(2)));
+                        }
+                    }
+                    case '.' -> new AbstractEntity(position, new Dimension()) {
+
+                        @Override
+                        public void onCollision(Entity other) {
+                            // TODO Auto-generated method stub
+                            throw new UnsupportedOperationException("Unimplemented method 'onCollision'");
+                        }
+
+                    };
                     default -> {
                         // TODO: fix Slope(: and ;) and Position of the entitiy dont use
                         // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
@@ -139,7 +169,18 @@ public class GameEntityManager implements EntityManager {
                 .map(Barrel.class::cast)
                 .filter(Barrel::canTransformToFire)
                 .toList();
-        barrelsToTransform.forEach(t -> this.addEntity(factory.createFire(this.tankPosition)));
+        barrelsToTransform.forEach(t -> this.addEntity(factory.createFire(t.getPosition())));
+    }
+
+    /**
+     * Checks if there is already an entity of the given class present.
+     *
+     * @param type the class to check for
+     * @return true if at least one entity of the given class exists, false
+     *         otherwise
+     */
+    private boolean hasEntityOfClass(final Class<? extends Entity> type) {
+        return entities.stream().anyMatch(type::isInstance);
     }
 
     /**

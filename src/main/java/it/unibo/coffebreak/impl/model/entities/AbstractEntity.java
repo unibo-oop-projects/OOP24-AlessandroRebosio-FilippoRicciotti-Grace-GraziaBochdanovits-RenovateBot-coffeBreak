@@ -24,19 +24,17 @@ public abstract class AbstractEntity implements Entity {
     private Vector velocity;
 
     /**
-     * Constructs a new game entity with the specified position and dimensions.
+     * Constructs a new game entity with the specified position and dimension.
      *
-     * @param position the initial position of the entity (cannot be {@code null})
-     * @throws NullPointerException if either position or dimension is {@code null}
+     * @param position the initial position of the entity (not null)
+     * @param dimension the size of the entity (not null)
+     * @throws NullPointerException if either argument is null
      */
-    public AbstractEntity(final Position position) {
-        Objects.requireNonNull(position, "Position cannot be null");
+    public AbstractEntity(final Position position, final Dimension dimension) {
+        this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
+        this.position = Objects.requireNonNull(position, "Position cannot be null");
 
-        this.dimension = new Dimension();
         this.velocity = new Vector();
-
-        this.position = position.adjustPositionByDimension(dimension);
-
     }
 
     /**

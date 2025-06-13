@@ -56,6 +56,7 @@ public class WithHammerState extends AbstractMarioState {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
         character.setDimension(new Dimension(character.getDimension().width() * 2, 
                                 character.getDimension().height() * 2));
+         // TODO: look dimension record, it have mul func
     }
 
     /**
@@ -67,6 +68,7 @@ public class WithHammerState extends AbstractMarioState {
     public void onExit(final MainCharacter character) {
         character.setDimension(new Dimension(character.getDimension().width() / 2, 
                                 character.getDimension().height() / 2));
+        // TODO: add method div, on record dimension
     }
 
     /**

@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.structure.tank;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
+import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
@@ -26,13 +27,13 @@ public class GameTank extends AbstractEntity implements Tank {
     /**
      * Constructs a new oil tank at the specified position with given dimensions.
      *
-     * @param position the fixed position of the tank in game coordinates (cannot
-     *                 be null)
+     * @param position  the fixed position of the tank in game coordinates (cannot
+     *                  be null)
+     * @param dimension the 2D dimension of the tank (cannot be null)
      * @throws NullPointerException if position or dimension are null
      */
-    public GameTank(final Position position) {
-        super(position);
-        super.setDimension(super.getDimension().mulHeight(2));
+    public GameTank(final Position position, final Dimension dimension) {
+        super(position, dimension);
 
         this.isActive = false;
     }
