@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Objects;
+import java.util.concurrent.TransferQueue;
 
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
@@ -49,6 +50,7 @@ public class GameView extends JFrame implements View {
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(true);
+        super.setAlwaysOnTop(true);
     }
 
     /**

@@ -60,21 +60,22 @@ public class MenuView extends AbstractViewState {
         drawCenteredText(g, title[0], coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
         drawCenteredText(g, title[1], breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
+        super.drawOptions(g, height, width);
+
         g.setFont(boardFont);
-        final int boardY = (int) (height * 0.40);
+        final int boardY = (int) (height * 0.60);
         drawCenteredText(g, "RANK NAME  SCORE ", width, boardY, Color.CYAN);
 
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);
             final String scoreFormatted = String.format("%06d", entry.getScore());
             final String text = i + 1 + ".   " + entry.getName() + "   " + scoreFormatted;
-            final int baseY = (int) (height * 0.45);
+            final int baseY = (int) (height * 0.65);
             final int stepY = (int) (height * 0.03);
             final int y = baseY + i * stepY;
 
             drawCenteredText(g, text, width, y, i < 3 ? Color.RED : Color.PINK);
         }
 
-        super.drawOptions(g, height, width);
     }
 }
