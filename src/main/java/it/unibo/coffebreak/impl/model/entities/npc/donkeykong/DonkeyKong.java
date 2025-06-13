@@ -7,7 +7,6 @@ import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
-import it.unibo.coffebreak.impl.model.entities.GameEntityFactory;
 import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
 
 /**
@@ -61,7 +60,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
         this.lastThrowTime += deltaTime;
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
             lastThrowTime = 0;
-            return Optional.of(new GameEntityFactory().createBarrel(super.getPosition()));
+            return Optional.empty();
         }
         return Optional.empty();
     }

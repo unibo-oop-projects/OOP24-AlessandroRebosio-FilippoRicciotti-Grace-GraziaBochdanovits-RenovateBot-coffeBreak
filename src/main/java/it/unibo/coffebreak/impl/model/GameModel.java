@@ -10,12 +10,10 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
-import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
-import it.unibo.coffebreak.impl.model.level.GameLevelManager;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
@@ -31,7 +29,6 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class GameModel implements Model {
 
-    private final LevelManager levelManager = new GameLevelManager();
     private final Leaderboard leaderBoard = new GameLeaderboard();
     private Dimension gameBounds;
 
@@ -73,7 +70,6 @@ public class GameModel implements Model {
      */
     @Override
     public void start() {
-        this.levelManager.loadCurrentEntities();
     }
 
     /**
@@ -114,7 +110,7 @@ public class GameModel implements Model {
      */
     @Override
     public List<Entity> getEntities() {
-        return this.levelManager.getEntities();
+        return List.of();
     }
 
     /**
@@ -122,7 +118,7 @@ public class GameModel implements Model {
      */
     @Override
     public boolean addEntity(final Entity entity) {
-        return this.levelManager.addEntity(entity);
+        return false;
     }
 
     /**
@@ -130,7 +126,6 @@ public class GameModel implements Model {
      */
     @Override
     public void cleanEntities() {
-        this.levelManager.cleanEntities();
     }
 
     /**
@@ -138,7 +133,6 @@ public class GameModel implements Model {
      */
     @Override
     public void resetEntities() {
-        this.levelManager.resetEntities();
     }
 
     /**
@@ -146,7 +140,6 @@ public class GameModel implements Model {
      */
     @Override
     public void transformEntities() {
-        this.levelManager.transformEntities();
     }
 
     /**
@@ -154,7 +147,7 @@ public class GameModel implements Model {
      */
     @Override
     public MainCharacter getMainCharacter() {
-        return this.levelManager.getPlayer();
+        return null;
     }
 
     /**
@@ -170,7 +163,7 @@ public class GameModel implements Model {
      */
     @Override
     public int getBonusValue() {
-        return this.levelManager.getCurrentLevelBonus();
+        return 0;
     }
 
     /**
@@ -178,7 +171,6 @@ public class GameModel implements Model {
      */
     @Override
     public void nextMap() {
-        this.levelManager.advanceLevel();
     }
 
     /**
@@ -186,7 +178,7 @@ public class GameModel implements Model {
      */
     @Override
     public int getLevelIndex() {
-        return this.levelManager.getLevelIndex();
+        return 0;
     }
 
     /**
@@ -194,7 +186,6 @@ public class GameModel implements Model {
      */
     @Override
     public void calculateBonus(final float deltaTime) {
-        this.levelManager.calculateBonus(deltaTime);
     }
 
     /**
