@@ -20,7 +20,7 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
  */
 public class MenuModelState extends AbstractModelState {
 
-    private static final List<Option> OPTIONS = List.of(Option.START, Option.EXIT);
+    private static final List<Option> OPTIONS = List.of(Option.START, Option.QUIT);
     private int selectedOption;
 
     /**
@@ -42,7 +42,7 @@ public class MenuModelState extends AbstractModelState {
                         model.start();
                         model.setState(InGameModelState::new);
                         break;
-                    case EXIT:
+                    case QUIT:
                         model.stop();
                         break;
                     default:

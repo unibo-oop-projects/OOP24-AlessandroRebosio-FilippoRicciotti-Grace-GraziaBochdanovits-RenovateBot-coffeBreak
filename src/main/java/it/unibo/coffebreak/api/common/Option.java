@@ -18,7 +18,11 @@ public enum Option {
     /** Resume the game from the pause menu. */
     RESUME,
     /** Exit the game or return to the main menu. */
-    EXIT,
+    MENU,
+    /**
+     * Quit the game or application.
+     */
+    QUIT,
     /** First Char of the Player name. */
     CHAR0,
     /** Second Char of the Player name. */

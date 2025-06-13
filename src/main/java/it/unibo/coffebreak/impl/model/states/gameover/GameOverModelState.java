@@ -20,7 +20,7 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class GameOverModelState extends AbstractModelState {
 
-    private static final List<Option> OPTIONS = List.of(Option.CHAR0, Option.CHAR1, Option.CHAR2, Option.EXIT);
+    private static final List<Option> OPTIONS = List.of(Option.CHAR0, Option.CHAR1, Option.CHAR2, Option.QUIT);
     private static final char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     private int selectedOption;
     private int index;
@@ -34,7 +34,7 @@ public class GameOverModelState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ENTER:
-                if (Option.EXIT == OPTIONS.get(selectedOption) && !name.contains("-")) {
+                if (Option.QUIT == OPTIONS.get(selectedOption) && !name.contains("-")) {
                     model.setState(MenuModelState::new);
                 }
                 break;
