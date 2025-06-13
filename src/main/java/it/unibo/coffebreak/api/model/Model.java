@@ -29,7 +29,6 @@ public interface Model {
      */
     void setState(Supplier<ModelState> newState);
 
-
     /**
      * Sets the bounds of the game area.
      *
@@ -86,15 +85,9 @@ public interface Model {
     boolean addEntity(Entity entity);
 
     /**
-     * Cleans the current list of entities by removing destroyed enemies
-     * and collected collectibles.
-     */
-    void cleanEntities();
-
-    /**
      * Resets all entities in the current level to their initial state.
      */
-    void resetEntities();
+    void initialEntitiesState();
 
     /**
      * Transforms certain entities according to game logic.

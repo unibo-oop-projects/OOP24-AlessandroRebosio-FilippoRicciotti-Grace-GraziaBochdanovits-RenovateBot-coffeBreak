@@ -52,8 +52,7 @@ public class InGameModelState extends AbstractModelState {
                 .filter(Antagonist.class::isInstance)
                 .map(Antagonist.class::cast)
                 .findFirst()
-                .orElseThrow()
-                .tryThrowBarrel(deltaTime).ifPresent(model::addEntity);
+                .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
         model.getEntities().stream()
                 .filter(Movable.class::isInstance)
@@ -63,11 +62,10 @@ public class InGameModelState extends AbstractModelState {
         GameCollision.checkCollision(model);
 
         if (currentLives != player.getLives()) {
-            model.resetEntities();
+            model.initialEntitiesState();
         }
 
         model.transformEntities();
-        model.cleanEntities();
         model.nextMap();
         model.calculateBonus(deltaTime);
 
