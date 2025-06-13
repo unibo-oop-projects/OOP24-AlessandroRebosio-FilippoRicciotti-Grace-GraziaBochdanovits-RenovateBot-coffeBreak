@@ -68,6 +68,21 @@ public abstract class AbstractMarioState implements CharacterState {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isClimbing() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopClimbing() {
+    }
+
+    /**
      * Handles collision with another entity.
      * Must be implemented by concrete state classes to define state-specific
      * behavior.

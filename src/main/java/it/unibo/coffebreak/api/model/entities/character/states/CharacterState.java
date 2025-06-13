@@ -45,6 +45,16 @@ public interface CharacterState {
     boolean canClimb();
 
     /**
+     * @return true if the character is on a ladder
+     */
+    boolean isClimbing();
+
+    /**
+     * Called when Mario stops climbing (e.g., jumps off or moves away).
+     */
+    void stopClimbing();
+
+    /**
      * Handles collision with another entity while in this state.
      * 
      * @param character the character in this state
