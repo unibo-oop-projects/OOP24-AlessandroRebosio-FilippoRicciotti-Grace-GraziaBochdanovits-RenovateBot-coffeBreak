@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * View state responsible for rendering the main menu screen.
@@ -52,24 +53,25 @@ public class MenuView extends AbstractViewState {
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
         final Font boardFont = this.font.deriveFont(height * 0.03f);
-        final String[] title = GameView.TITLE.toUpperCase().split(" ", 2);
+        final String title = GameView.TITLE.toUpperCase(Locale.getDefault());
+        final String[] titleParts = title.split(" ", 2);
 
         g.setFont(titleFont);
-        final int coffeeX = width - g.getFontMetrics().stringWidth(title[0] + title[1]) / 2;
-        final int breakX = width + g.getFontMetrics().stringWidth(title[0] + title[1]) / 2;
-        drawCenteredText(g, title[0], coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
-        drawCenteredText(g, title[1], breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
+        final int coffeeX = width - g.getFontMetrics().stringWidth(titleParts[0] + titleParts[1]) / 2;
+        final int breakX = width + g.getFontMetrics().stringWidth(titleParts[0] + titleParts[1]) / 2;
+        drawCenteredText(g, titleParts[0], coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
+        drawCenteredText(g, titleParts[1], breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
 
         super.drawOptions(g, height, width);
 
         g.setFont(boardFont);
         final int boardY = (int) (height * 0.60);
-        drawCenteredText(g, "RANK NAME  SCORE ", width, boardY, Color.CYAN);
+        drawCenteredText(g, "RANK SCORE  NAME ", width, boardY, Color.CYAN);
 
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);
             final String scoreFormatted = String.format("%06d", entry.getScore());
-            final String text = i + 1 + ".   " + entry.getName() + "   " + scoreFormatted;
+            final String text = i + 1 + ".   " + scoreFormatted + " " + entry.getName() + "  ";
             final int baseY = (int) (height * 0.65);
             final int stepY = (int) (height * 0.03);
             final int y = baseY + i * stepY;

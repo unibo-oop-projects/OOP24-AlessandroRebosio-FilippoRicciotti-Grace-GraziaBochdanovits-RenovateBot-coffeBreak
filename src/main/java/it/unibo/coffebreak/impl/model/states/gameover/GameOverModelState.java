@@ -21,7 +21,7 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 public class GameOverModelState extends AbstractModelState {
 
     private static final List<Option> OPTIONS = List.of(Option.CHAR0, Option.CHAR1, Option.CHAR2, Option.EXIT);
-    private static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    private static final char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     private int selectedOption;
     private int index;
     // TODO: fix name pass from model
