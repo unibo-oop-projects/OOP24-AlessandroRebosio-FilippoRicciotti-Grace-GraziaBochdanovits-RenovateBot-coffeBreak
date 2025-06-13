@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Objects;
-
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.api.view.panel.Panel;
@@ -28,7 +27,10 @@ import it.unibo.coffebreak.impl.view.panel.GamePanel;
  */
 public class GameView extends JFrame implements View {
 
-    private static final String TITLE = "Coffe Break";
+    /**
+     * String containing the name of the Project.
+     */
+    public static final String TITLE = "Coffee Break";
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -49,6 +51,7 @@ public class GameView extends JFrame implements View {
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(true);
+        super.setAlwaysOnTop(true);
     }
 
     /**

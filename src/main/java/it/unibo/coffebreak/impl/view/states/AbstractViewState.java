@@ -103,7 +103,7 @@ public abstract class AbstractViewState implements ViewState {
         drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), Color.WHITE);
         drawCenteredText(g, "1UP", width / 3, (int) (height * TOP_HEIGHT), Color.RED);
         drawCenteredText(g, currentScore, width / 3, (int) (height * SCORE_HEIGHT), Color.WHITE);
-        drawCenteredText(g, "L = " + currentLevel, thirdWidth, (int) (height * TOP_HEIGHT),
+        drawCenteredText(g, "L = " + currentLevel, thirdWidth, (int) (height * SCORE_HEIGHT),
                 Color.BLUE);
 
     }
@@ -144,8 +144,8 @@ public abstract class AbstractViewState implements ViewState {
 
         final var options = this.controller.getGameState().getOptions();
         final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
-        final int baseY = (int) (height * 0.65);
-        final int stepY = (int) (height * 0.10);
+        final int baseY = (int) (height * 0.40);
+        final int stepY = (int) (height * 0.07);
 
         for (int i = 0; i < options.size(); i++) {
             final String text = options.get(i).toString();
