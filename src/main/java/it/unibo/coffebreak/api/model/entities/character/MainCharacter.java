@@ -72,4 +72,11 @@ public interface MainCharacter extends Entity {
      * @return the number of lives remaining
      */
     int getLives();
+
+    /**
+     * Returns whether Mario is currently facing right.
+     * 
+     * @return true if Mario is facing right, false if facing left
+     */
+    boolean isFacingRight();
 }
