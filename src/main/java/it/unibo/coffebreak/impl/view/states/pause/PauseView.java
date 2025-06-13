@@ -44,7 +44,7 @@ public class PauseView extends AbstractViewState {
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
         super.draw(g, width, height, deltaTime);
 
-        final Font titleFont = this.font.deriveFont(height * 0.11f);
+        final Font titleFont = this.font.deriveFont(height * 0.05f);
 
         g.setFont(titleFont);
         drawCenteredText(g, "PAUSED", width, (int) (height * TITLE_HEIGHT), Color.GREEN);
