@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.view;
 
 import javax.swing.JFrame;
 
+import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.Objects;
@@ -47,11 +48,10 @@ public class GameView extends JFrame implements View {
         this.gamePanel = new GamePanel(Objects.requireNonNull(controller, "Controller cannot be null"));
 
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        super.add((GamePanel) gamePanel);
+        super.add((GamePanel) gamePanel, BorderLayout.CENTER);
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(true);
-        super.setAlwaysOnTop(true);
     }
 
     /**

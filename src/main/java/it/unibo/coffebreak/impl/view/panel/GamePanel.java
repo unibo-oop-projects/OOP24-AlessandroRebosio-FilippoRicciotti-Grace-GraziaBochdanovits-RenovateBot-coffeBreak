@@ -3,7 +3,6 @@ package it.unibo.coffebreak.impl.view.panel;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.io.Serial;
 import java.util.Objects;
 
@@ -38,9 +37,8 @@ import it.unibo.coffebreak.impl.view.states.pause.PauseView;
  */
 public class GamePanel extends JPanel implements Panel {
 
-    private static final int REF_WIDTH = 600;
-    private static final int REF_HEIGHT = 800;
-    private static final double ASPECT_RATIO = 0.75;
+    private static final float TARGET_ASPECT_RATIO = 9f / 16f;
+    private static final float SCREEN_SCALE = 0.7f;
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -76,8 +74,8 @@ public class GamePanel extends JPanel implements Panel {
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                final Rectangle bounds = getBounds(); //TODO: it takes all window size, i need only panel size
-                controller.updateGameBounds(bounds.width, bounds.height);
+                controller.updateGameBounds(getWidth(), getHeight());
+                repaint();
             }
         });
         super.requestFocusInWindow();
@@ -98,33 +96,7 @@ public class GamePanel extends JPanel implements Panel {
             return;
         }
 
-        final int panelWidth = getWidth();
-        final int panelHeight = getHeight();
-        final double panelRatio = (double) panelWidth / panelHeight;
-
-        final int renderWidth, renderHeight;
-        if (panelRatio > ASPECT_RATIO) {
-            renderHeight = panelHeight;
-            renderWidth = (int) (panelHeight * ASPECT_RATIO);
-        } else {
-            renderWidth = panelWidth;
-            renderHeight = (int) (panelWidth / ASPECT_RATIO);
-        }
-
-        final int x = (panelWidth - renderWidth) / 2;
-        final int y = (panelHeight - renderHeight) / 2;
-
-        final Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setClip(x, y, renderWidth, renderHeight);
-        g2d.translate(x, y);
-        final double scale = Math.min(
-                renderWidth / (double) REF_WIDTH,
-                renderHeight / (double) REF_HEIGHT);
-        g2d.scale(scale, scale);
-
-        this.currentViewState.draw(g2d, REF_WIDTH, REF_HEIGHT, deltaTime); // TODO: fix here i think
-
-        g.dispose();
+        this.currentViewState.draw((Graphics2D) g, getWidth(), getHeight(), deltaTime);
     }
 
     /**
@@ -134,7 +106,17 @@ public class GamePanel extends JPanel implements Panel {
      */
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(REF_WIDTH, REF_HEIGHT);
+        final Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+
+        int width = (int) (screenSize.width * SCREEN_SCALE);
+        int height = (int) (width / TARGET_ASPECT_RATIO);
+
+        if (height > screenSize.height * SCREEN_SCALE) {
+            height = (int) (screenSize.height * SCREEN_SCALE);
+            width = (int) (height * TARGET_ASPECT_RATIO);
+        }
+
+        return new Dimension(width, height);
     }
 
     /**
