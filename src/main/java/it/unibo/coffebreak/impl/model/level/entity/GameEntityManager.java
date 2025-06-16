@@ -30,9 +30,8 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
  */
 public class GameEntityManager implements EntityManager {
 
-    private final List<Entity> entities = new LinkedList<>();
     private static final float SLOPE_VAL = 0.06f;
-
+    private final List<Entity> entities = new LinkedList<>();
     private MainCharacter character;
 
     /**
@@ -78,7 +77,7 @@ public class GameEntityManager implements EntityManager {
                         offsetY = -SLOPE_VAL;
                     }
                     trueY -= offsetY;
-                    c = (activeSlope) ? c : 'P';
+                    c = activeSlope ? c : 'P';
                     activeSlope = true;
 
                 }
