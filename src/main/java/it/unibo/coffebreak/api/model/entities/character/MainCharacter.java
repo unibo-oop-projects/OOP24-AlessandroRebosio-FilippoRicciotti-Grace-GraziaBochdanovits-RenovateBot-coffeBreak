@@ -40,16 +40,6 @@ public interface MainCharacter extends Entity {
     void earnPoints(int amount);
 
     /**
-     * Initiates the climbing action for the character.
-     */
-    void startClimbing();
-
-    /**
-     * Terminates the climbing action for the character.
-     */
-    void stopClimbing();
-
-    /**
      * Returns the current state of the character.
      *
      * @return the current {@link CharacterState} of this character
@@ -89,11 +79,4 @@ public interface MainCharacter extends Entity {
      * @return true if Mario is facing right, false if facing left
      */
     boolean isFacingRight();
-
-    /**
-     * Returns whether Mario is currently jumping.
-     * 
-     * @return true if Mario is jumping
-     */
-    boolean isJumping();
 }

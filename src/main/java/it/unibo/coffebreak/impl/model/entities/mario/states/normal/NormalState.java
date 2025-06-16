@@ -73,11 +73,11 @@ public class NormalState extends AbstractMarioState {
 
         if (velocity.y() > 0 && marioFeetY >= platformTop - TOLERANCE) {
             character.setPosition(new Position(character.getPosition().x(), platformTop - character.getDimension().height()));
-            character.stopClimbing();
+            stopClimb();
         } else if (velocity.y() < 0 && character.getPosition().y() <= platformTop + TOLERANCE) {
-            character.stopClimbing();
+            stopClimb();
             character.setVelocity(new Vector(velocity.x(), 0));
-        } //TODO
+        }
     }
 
     /**

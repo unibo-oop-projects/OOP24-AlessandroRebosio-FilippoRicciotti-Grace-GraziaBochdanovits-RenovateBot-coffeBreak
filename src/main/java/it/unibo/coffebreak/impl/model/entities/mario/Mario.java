@@ -61,7 +61,6 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     private Command moveDirection;
     private boolean onPlatform;
     private boolean isFacingRight;
-    private boolean isJumping;
 
     /**
      * Creates a new Mario instance.
@@ -108,13 +107,15 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         switch (moveDirection) {
             case MOVE_UP -> {
                 if (currentState.canClimb()) {
-                    startClimbing();
+                    currentState.startClimb();
+                    onPlatform = false;
                     vy = physics.moveUp(deltaTime).y();
                 }
             }
             case MOVE_DOWN -> {
                 if (currentState.canClimb()) {
-                    startClimbing();
+                    currentState.startClimb();
+                    onPlatform = false;
                     vy = physics.moveDown(deltaTime).y();
                 }
                 if (!onPlatform) {
@@ -165,9 +166,11 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
             case final Princess princess -> princess.rescue();
             case final Platform platform -> {
                 platform.destroy();
-                this.isJumping = false;
                 if (!currentState.isClimbing()) {
                     handleStandardPlatformCollision(platform);
+                } else {
+                    currentState.stopClimb();
+                    onPlatform = true;
                 }
             }
             case final Tank tank -> {
@@ -268,25 +271,6 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      * {@inheritDoc}
      */
     @Override
-    public void startClimbing() {
-        this.currentState.startClimb();
-        this.onPlatform = false;
-        this.isJumping = false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stopClimbing() {
-        this.currentState.stopClimb();
-        this.onPlatform = true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public CharacterState getCurrentState() {
         return this.currentState;
     }
@@ -329,13 +313,5 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public boolean isFacingRight() {
         return this.isFacingRight;
-    }
-
-    /**
-     * @return true if Mario is jumping
-     */
-    @Override
-    public boolean isJumping() {
-        return this.isJumping;
     }
 }

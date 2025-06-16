@@ -43,6 +43,8 @@ public class WithHammerState extends AbstractMarioState {
      */
     private long expirationTime;
 
+    private Dimension originalDimension;
+
     /**
      * Called when entering hammer state. Initializes:
      * <ul>
@@ -54,9 +56,8 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public void onEnter(final MainCharacter character) {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
-        character.setDimension(new Dimension(character.getDimension().width() * 2, 
-                                character.getDimension().height() * 2));
-         // TODO: look dimension record, it have mul func
+        this.originalDimension = new Dimension(character.getDimension().width(), character.getDimension().height());
+        character.setDimension(character.getDimension().mulHeight(3));
     }
 
     /**
@@ -66,9 +67,7 @@ public class WithHammerState extends AbstractMarioState {
      */
     @Override
     public void onExit(final MainCharacter character) {
-        character.setDimension(new Dimension(character.getDimension().width() / 2, 
-                                character.getDimension().height() / 2));
-        // TODO: add method div, on record dimension
+        character.setDimension(originalDimension);
     }
 
     /**
