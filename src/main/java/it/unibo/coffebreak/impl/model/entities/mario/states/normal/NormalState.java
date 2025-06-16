@@ -6,6 +6,8 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
 
@@ -26,7 +28,7 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
  */
 public class NormalState extends AbstractMarioState {
 
-    private static final float TOLLERANCE = 0.1f;
+    private static final float TOLERANCE = 0.1f;
     private boolean canClimb;
     private boolean isClimbing;
 
@@ -42,20 +44,48 @@ public class NormalState extends AbstractMarioState {
         switch (other) {
             case final Enemy enemy -> character.loseLife();
             case final Ladder ladder -> handleLadderCollision(character, ladder);
-            case final Platform platform -> this.canClimb = false; 
-            //TODO: in questo modo però non potrà mai scendere dunque sistemare
+            case final Platform platform -> handlePlatformCollision(character, platform);
             default -> { }
         }
     }
 
     private void handleLadderCollision(final MainCharacter character, final Ladder ladder) {
-        final float marioCenter = character.getPosition().x() + character.getDimension().width() * 0.5f;
-        final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() * 0.5f;
-        this.canClimb = Math.abs(marioCenter - ladderCenter) <= character.getDimension().width() * TOLLERANCE;
-
-        if (canClimb) {
-            this.isClimbing = true;
+        if (!isClimbing) {
+            final float marioCenter = character.getPosition().x() + character.getDimension().width() * 0.5f;
+            final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() * 0.5f;
+            this.canClimb = Math.abs(marioCenter - ladderCenter) <= character.getDimension().width() * TOLERANCE;
         }
+    } 
+
+    private void handlePlatformCollision(final MainCharacter character, final Platform platform) {
+        if (isClimbing) {
+            handleClimbingPlatformCollision(character, platform);
+        } else {
+            this.canClimb = false;
+        }
+    }
+
+    private void handleClimbingPlatformCollision(final MainCharacter character, final Platform platform) {
+
+        final float platformTop = platform.getPosition().y();
+        final float marioFeetY = character.getPosition().y() + character.getDimension().height();
+        final Vector velocity = character.getVelocity();
+
+        if (velocity.y() > 0 && marioFeetY >= platformTop - TOLERANCE) {
+            character.setPosition(new Position(character.getPosition().x(), platformTop - character.getDimension().height()));
+            character.stopClimbing();
+        } else if (velocity.y() < 0 && character.getPosition().y() <= platformTop + TOLERANCE) {
+            character.stopClimbing();
+            character.setVelocity(new Vector(velocity.x(), 0));
+        } //TODO
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canClimb() {
+        return this.canClimb;
     }
 
     /**
@@ -70,15 +100,15 @@ public class NormalState extends AbstractMarioState {
      * {@inheritDoc}
      */
     @Override
-    public void stopClimbing() {
-        this.isClimbing = false;
+    public void startClimb() {
+        this.isClimbing = true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canClimb() {
-        return this.canClimb;
+    public void stopClimb() {
+        this.isClimbing = false;
     }
 }

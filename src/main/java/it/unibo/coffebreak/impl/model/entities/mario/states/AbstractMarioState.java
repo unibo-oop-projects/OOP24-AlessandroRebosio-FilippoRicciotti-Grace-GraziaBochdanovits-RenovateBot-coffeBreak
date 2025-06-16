@@ -69,6 +69,8 @@ public abstract class AbstractMarioState implements CharacterState {
 
     /**
      * {@inheritDoc}
+     * 
+     * @return false by default as Mario cannot climb in basic states
      */
     @Override
     public boolean isClimbing() {
@@ -79,7 +81,16 @@ public abstract class AbstractMarioState implements CharacterState {
      * {@inheritDoc}
      */
     @Override
-    public void stopClimbing() {
+    public void startClimb() {
+        // Default empty implementation
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopClimb() {
+        // Default empty implementation
     }
 
     /**

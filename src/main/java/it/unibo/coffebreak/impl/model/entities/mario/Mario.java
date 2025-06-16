@@ -58,6 +58,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     private Command moveDirection;
     private boolean onPlatform;
     private boolean isFacingRight;
+    private boolean isJumping;
 
     /**
      * Creates a new Mario instance.
@@ -106,11 +107,13 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         switch (moveDirection) {
             case MOVE_UP -> {
                 if (currentState.canClimb()) {
+                    startClimbing();
                     vy = physics.moveUp(deltaTime).y();
                 }
             }
             case MOVE_DOWN -> {
                 if (currentState.canClimb()) {
+                    startClimbing();
                     vy = physics.moveDown(deltaTime).y();
                 }
                 if (!onPlatform) {
@@ -157,15 +160,14 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     public void onCollision(final Entity other) {
         Objects.requireNonNull(other, "Colliding entity cannot be null");
         switch (other) {
-            case final Collectible collectible -> {
-                collectible.collect(this);
-            }
-            case final Princess princess -> {
-                princess.rescue();
-            }
+            case final Collectible collectible -> collectible.collect(this);
+            case final Princess princess -> princess.rescue();
             case final Platform platform -> {
                 platform.destroy();
-                handlePlatformCollision(platform);
+                this.isJumping = false;
+                if (!currentState.isClimbing()) {
+                    handleStandardPlatformCollision(platform);
+                }
             }
             case final Tank tank -> {
                 this.setVelocity(new Vector(0, 0));
@@ -177,28 +179,9 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         this.currentState.handleCollision(this, other);
     }
 
-    private void handlePlatformCollision(final Platform platform) {
-
-        //controlla se mario sta arrampicando e in quel caso gli
-        //gli è permesso passare attraverso la piattforma
-        if (currentState.isClimbing()) {
-
-            final float platformTop = platform.getPosition().y();
-            final float targetY = platformTop - getDimension().height();
-
-            if (getPosition().y() + getDimension().height() >= platformTop - 1f) {
-                setPosition(new Position(getPosition().x(), targetY));
-                this.onPlatform = true;
-                currentState.stopClimbing();
-            }
-            return;
-        }
-
-        handleStandardPlatformCollision(platform);
-    }
- 
-    //TODO: funziona ma non mi piace, forse non va nemmeno in questa classe 
     private void handleStandardPlatformCollision(final Platform platform) {
+        enum CollisionDirection { TOP, BOTTOM, LEFT, RIGHT }
+
         final float marioBottom = getPosition().y() + getDimension().height();
         final float marioTop = getPosition().y();
         final float marioLeft = getPosition().x();
@@ -209,48 +192,56 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         final float platformLeft = platform.getPosition().x();
         final float platformRight = platformLeft + platform.getDimension().width();
 
-        final float[] overlaps = {
-            marioBottom - platformTop,    // TOP
-            platformBottom - marioTop,    // BOTTOM 
-            marioRight - platformLeft,    // LEFT
-            platformRight - marioLeft,     // RIGHT
-        };
+        final float topOverlap = marioBottom - platformTop;
+        final float bottomOverlap = platformBottom - marioTop;
+        final float leftOverlap = marioRight - platformLeft;
+        final float rightOverlap = platformRight - marioLeft;
 
-        if (overlaps[0] > 0 && overlaps[1] > 0 && overlaps[2] > 0 && overlaps[3] > 0) {
-            int minOverlapIndex = 0;
-            for (int i = 1; i < overlaps.length; i++) {
-                if (overlaps[i] < overlaps[minOverlapIndex]) {
-                    minOverlapIndex = i;
-                }
+        if (topOverlap > 0 && bottomOverlap > 0 && leftOverlap > 0 && rightOverlap > 0) {
+            CollisionDirection direction = CollisionDirection.TOP;
+            float minOverlap = topOverlap;
+
+            if (bottomOverlap < minOverlap) {
+                minOverlap = bottomOverlap;
+                direction = CollisionDirection.BOTTOM;
+            }
+            if (leftOverlap < minOverlap) {
+                minOverlap = leftOverlap;
+                direction = CollisionDirection.LEFT;
+            }
+            if (rightOverlap < minOverlap) {
+                direction = CollisionDirection.RIGHT;
             }
 
-            switch (minOverlapIndex) {
-                case 0 -> {
+            switch (direction) {
+                case TOP -> {
                     if (getVelocity().y() >= 0) {
                         this.onPlatform = true;
-                        setPosition(new Position(getPosition().x(), platformTop - getDimension().height()));
                         setVelocity(new Vector(getVelocity().x(), 0));
+                        setPosition(new Position(getPosition().x(), platformTop - getDimension().height()));
                     }
                 }
-                case 1 -> {
+                case BOTTOM -> {
                     if (getVelocity().y() < 0) {
+                        this.onPlatform = false;
                         setVelocity(new Vector(getVelocity().x(), 0));
                         setPosition(new Position(getPosition().x(), platformBottom));
                     }
                 }
-                case 2 -> {
+                case LEFT -> {
                     if (getVelocity().x() > 0) {
+                        this.onPlatform = false;
                         setVelocity(new Vector(0, getVelocity().y()));
                         setPosition(new Position(platformLeft - getDimension().width(), getPosition().y()));
                     }
                 }
-                case 3 -> {
+                case RIGHT -> {
                     if (getVelocity().x() < 0) {
+                        this.onPlatform = false;
                         setVelocity(new Vector(0, getVelocity().y()));
                         setPosition(new Position(platformRight, getPosition().y()));
                     }
                 }
-                default -> { }
             }
         }
     }
@@ -269,6 +260,25 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public void earnPoints(final int amount) {
         this.score.increase(amount);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void startClimbing() {
+        this.currentState.startClimb();
+        this.onPlatform = false;
+        this.isJumping = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void stopClimbing() {
+        this.currentState.stopClimb();
+        this.onPlatform = true;
     }
 
     /**
@@ -317,5 +327,13 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public boolean isFacingRight() {
         return this.isFacingRight;
+    }
+
+    /**
+     * @return true if Mario is jumping
+     */
+    @Override
+    public boolean isJumping() {
+        return this.isJumping;
     }
 }
