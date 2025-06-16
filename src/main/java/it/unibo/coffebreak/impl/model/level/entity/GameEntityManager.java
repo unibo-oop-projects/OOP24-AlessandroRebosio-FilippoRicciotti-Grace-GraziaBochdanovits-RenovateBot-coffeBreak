@@ -94,8 +94,6 @@ public class GameEntityManager implements EntityManager {
                     }
                     case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
                     default -> {
-                        // TODO: fix Slope(: and ;) and Position of the entitiy dont use
-                        // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
                     }
                 }
             }
