@@ -80,7 +80,7 @@ public class GameEntityManager implements EntityManager {
                     } else if (c == ';') {
                         offsetY = -SLOPE_VAL;
                     }
-                    trueY -= offsetY;
+                    trueY -= (x % 2 == 0) ? offsetY : 0;
                     c = activeSlope ? c : 'P';
                     activeSlope = true;
 
