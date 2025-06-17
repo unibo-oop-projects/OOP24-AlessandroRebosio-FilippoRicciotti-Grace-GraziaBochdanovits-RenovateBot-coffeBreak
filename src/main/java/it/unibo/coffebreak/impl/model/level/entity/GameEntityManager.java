@@ -13,12 +13,16 @@ import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.enemy.fire.GameFire;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
 import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLadder;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
+import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 
@@ -92,6 +96,10 @@ public class GameEntityManager implements EntityManager {
                         this.character = new Mario(position, new Dimension());
                         this.addEntity(this.character);
                     }
+                    case 'D' -> this.addEntity(new DonkeyKong(position, new Dimension(), true));
+                    case 'T' -> this.addEntity(new GameTank(position, new Dimension()));
+                    case 'H' -> this.addEntity(new Hammer(position, new Dimension()));
+                    case 'C' -> this.addEntity(new Coin(position, new Dimension()));
                     case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
                     default -> {
                     }
