@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.view.render.entities.structure.platform;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
@@ -17,6 +18,11 @@ import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
  * 
  */
 public abstract class AbstractPlatformRender extends AbstractEntityRender {
+
+    private static final int PLATFORM_X = 109;
+    private static final int PLATFORM_Y = 215;
+    private static final int PLATFORM_WIDTH = 16;
+    private static final int PLATFORM_HEIGHT = 8;
 
     /**
      * Constructs a new PlatformRender with the specified resource loader and screen
@@ -37,6 +43,16 @@ public abstract class AbstractPlatformRender extends AbstractEntityRender {
         if (entity instanceof final Platform platform && !platform.isBroken()) {
             this.renderPlatform(g, entity, deltaTime, width, height);
             super.draw(g, entity, deltaTime, width, height);
+            final BufferedImage spriteSheet = getSpriteSheet();
+            if (spriteSheet != null) {
+                g.drawImage(
+                        spriteSheet,
+                        (int) entity.getPosition().x(),
+                        (int) entity.getPosition().y(),
+                        (int) entity.getPosition().x() + entity.getDimension().width(),
+                        (int) entity.getPosition().y() + entity.getDimension().height(),
+                        PLATFORM_X, PLATFORM_Y, PLATFORM_X + PLATFORM_WIDTH, PLATFORM_Y + PLATFORM_HEIGHT, null);
+            }
         }
     }
 
