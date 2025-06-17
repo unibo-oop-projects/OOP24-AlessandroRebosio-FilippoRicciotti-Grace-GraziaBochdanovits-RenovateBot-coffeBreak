@@ -30,8 +30,8 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
  */
 public class GameEntityManager implements EntityManager {
 
+    private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
-
     private MainCharacter character;
 
     /**
@@ -64,9 +64,25 @@ public class GameEntityManager implements EntityManager {
         this.entities.clear();
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
+            float offsetY = 0;
+            boolean activeSlope = false;
+            float trueY = y;
+
             for (int x = 0; x < line.length(); x++) {
-                final Position position = new Position(x, y).scalePosition(new Dimension());
-                final char c = line.charAt(x);
+                char c = line.charAt(x);
+                if (c == ';' || c == ':' || activeSlope) {
+                    if (c == ':') {
+                        offsetY = SLOPE_VAL;
+                    } else if (c == ';') {
+                        offsetY = -SLOPE_VAL;
+                    }
+                    trueY -= offsetY;
+                    c = activeSlope ? c : 'P';
+                    activeSlope = true;
+
+                }
+
+                final Position position = new Position(x, trueY).scalePosition(new Dimension());
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, new Dimension()));
@@ -78,8 +94,6 @@ public class GameEntityManager implements EntityManager {
                     }
                     case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
                     default -> {
-                        // TODO: fix Slope(: and ;) and Position of the entitiy dont use
-                        // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
                     }
                 }
             }
