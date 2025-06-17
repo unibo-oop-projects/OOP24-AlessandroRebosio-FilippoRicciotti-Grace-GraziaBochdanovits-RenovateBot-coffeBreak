@@ -80,7 +80,8 @@ public class GameEntityManager implements EntityManager {
                     } else if (c == ';') {
                         offsetY = -SLOPE_VAL;
                     }
-                    trueY -= (x % 2 == 0) ? offsetY : 0;
+                    trueY -= (x % 2 == 0) ? offsetY : 0; // TODO: Consider making the sloping platform always an even
+                                                         // number inside map
                     c = activeSlope ? c : 'P';
                     activeSlope = true;
 
