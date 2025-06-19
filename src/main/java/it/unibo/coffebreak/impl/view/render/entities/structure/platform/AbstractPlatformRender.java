@@ -21,7 +21,7 @@ public abstract class AbstractPlatformRender extends AbstractEntityRender {
 
     private static final int PLATFORM_X = 109;
     private static final int PLATFORM_Y = 215;
-    private static final int PLATFORM_WIDTH = 16;
+    private static final int PLATFORM_WIDTH = 8;
     private static final int PLATFORM_HEIGHT = 8;
 
     /**
