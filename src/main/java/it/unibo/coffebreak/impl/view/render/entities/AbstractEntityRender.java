@@ -14,6 +14,8 @@ import it.unibo.coffebreak.api.view.render.entities.EntityRender;
  * functionality for rendering entities with screen-relative scaling and
  * sprite sheet background cleaning.
  * 
+ * This class also removes unwanted background colors from the loaded sprite sheet.
+ * 
  * @author Grazia Bochdanovits de Kavna
  */
 public abstract class AbstractEntityRender implements EntityRender {
@@ -24,19 +26,17 @@ public abstract class AbstractEntityRender implements EntityRender {
     private final BufferedImage spriteSheet;
 
     /**
-     * Constructs a new AbstractEntityRender with the specified screen dimensions.
-     * The scaling will be calculated relative to these dimensions.
-     * 
-     * Also removes the background color from the sprite sheet, replacing it with transparency.
+     * Constructs a new AbstractEntityRender and prepares the cleaned sprite sheet.
      *
      * @param resource the resource loader used to load the sprite sheet
      */
     public AbstractEntityRender(final Loader resource) {
         this.resource = Objects.requireNonNull(resource);
-        final BufferedImage spriteSheet = this.resource.loadImage(PATH);
+        final BufferedImage rawSheet = this.resource.loadImage(PATH);
 
-        final Color backgroundColor = new Color(spriteSheet.getRGB(2, 2), true);
-        this.spriteSheet = removeBackgroundColor(spriteSheet, backgroundColor);
+        final Color color1 = new Color(rawSheet.getRGB(2, 2), true);
+        final Color color2 = new Color(rawSheet.getRGB(0, 0), true);
+        this.spriteSheet = makeTransparent(rawSheet, color1, color2);
     }
 
     /**
@@ -45,72 +45,88 @@ public abstract class AbstractEntityRender implements EntityRender {
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime,
                      final int width, final int height) {
-        g.drawRect((int) entity.getPosition().x(), 
+        g.drawRect((int) entity.getPosition().x(),
                    (int) entity.getPosition().y(),
-                   entity.getDimension().width(), 
+                   entity.getDimension().width(),
                    entity.getDimension().height());
     }
 
     /**
-     * Returns the resource loader used by this view state.
-     * <p>
-     * Intended for use only by subclasses to load fonts, images, or sounds.
-     * </p>
-     *
-     * @return the {@link Loader} instance for this view
+     * @return the {@link Loader} used to load resources
      */
     protected final Loader getResource() {
         return this.resource;
     }
 
     /**
-     * Returns the sprite sheet image with the background removed.
-     *
-     * @return the cleaned {@link BufferedImage} of the sprite sheet
+     * @return the cleaned sprite sheet image
      */
     protected final BufferedImage getSpriteSheet() {
         return this.spriteSheet;
     }
 
     /**
-     * Removes a specific background color from an image,
-     * replacing it with transparency.
+     * Flips an image horizontally.
      *
-     * @param image           the input image
-     * @param backgroundColor the color to be removed
-     * @return a new {@link BufferedImage} with the background removed
+     * @param image the image to flip
+     * @return the horizontally flipped image
+     * @throws NullPointerException if image is null
      */
-    private BufferedImage removeBackgroundColor(final BufferedImage image, final Color backgroundColor) {
-        final int width = image.getWidth();
-        final int height = image.getHeight();
-        final BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    protected BufferedImage flipImageHorizontally(final BufferedImage image) {
+        Objects.requireNonNull(image, "Image cannot be null");
+        final int w = image.getWidth();
+        final int h = image.getHeight();
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                final int pixel = image.getRGB(x, y);
-                final Color currentColor = new Color(pixel, true);
-
-                if (colorsAreClose(currentColor, backgroundColor)) {
-                    newImage.setRGB(x, y, 0x00000000);
-                } else {
-                    newImage.setRGB(x, y, pixel);
-                }
-            }
-        }
-        return newImage;
+        final BufferedImage flipped = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2d = flipped.createGraphics();
+        g2d.drawImage(image, w, 0, -w, h, null);
+        g2d.dispose();
+        return flipped;
     }
 
     /**
-     * Determines whether two colors are similar within a given RGB tolerance.
+     * Makes pixels with specified background colors fully transparent.
+     *
+     * @param image the input sprite sheet
+     * @param bgColors one or more colors to remove
+     * @return a new image with the specified colors removed (transparent)
+     */
+    private BufferedImage makeTransparent(final BufferedImage image, final Color... bgColors) {
+        final int width = image.getWidth();
+        final int height = image.getHeight();
+        final BufferedImage transparentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                final Color pixelColor = new Color(image.getRGB(x, y), true);
+                boolean shouldBeTransparent = false;
+                for (final Color bgColor : bgColors) {
+                    if (colorsAreClose(pixelColor, bgColor)) {
+                        shouldBeTransparent = true;
+                        break;
+                    }
+                }
+                if (shouldBeTransparent) {
+                    transparentImage.setRGB(x, y, 0x00000000);
+                } else {
+                    transparentImage.setRGB(x, y, image.getRGB(x, y));
+                }
+            }
+        }
+        return transparentImage;
+    }
+
+    /**
+     * Determines if two colors are similar within a small RGB tolerance.
      *
      * @param c1 first color
      * @param c2 second color
-     * @return true if the colors are similar, false otherwise
+     * @return true if similar; false otherwise
      */
     private boolean colorsAreClose(final Color c1, final Color c2) {
         final int tolerance = 10;
         return Math.abs(c1.getRed() - c2.getRed()) < tolerance
-                && Math.abs(c1.getGreen() - c2.getGreen()) < tolerance
-                && Math.abs(c1.getBlue() - c2.getBlue()) < tolerance;
+            && Math.abs(c1.getGreen() - c2.getGreen()) < tolerance
+            && Math.abs(c1.getBlue() - c2.getBlue()) < tolerance;
     }
 }
