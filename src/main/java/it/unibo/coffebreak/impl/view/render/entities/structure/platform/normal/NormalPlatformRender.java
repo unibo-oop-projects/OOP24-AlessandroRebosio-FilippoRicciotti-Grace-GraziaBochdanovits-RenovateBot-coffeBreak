@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.impl.view.render.entities.structure.platform.normal;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -30,6 +29,5 @@ public class NormalPlatformRender extends AbstractPlatformRender {
     @Override
     protected void renderPlatform(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        g.setColor(Color.MAGENTA);
     }
 }

@@ -13,12 +13,16 @@ import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.impl.common.Dimension;
 import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
+import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.enemy.fire.GameFire;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
 import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLadder;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
+import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 
@@ -30,8 +34,8 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
  */
 public class GameEntityManager implements EntityManager {
 
+    private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
-
     private MainCharacter character;
 
     /**
@@ -64,9 +68,26 @@ public class GameEntityManager implements EntityManager {
         this.entities.clear();
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
+            float offsetY = 0;
+            boolean activeSlope = false;
+            float trueY = y;
+
             for (int x = 0; x < line.length(); x++) {
-                final Position position = new Position(x, y).scalePosition(new Dimension());
-                final char c = line.charAt(x);
+                char c = line.charAt(x);
+                if (c == ';' || c == ':' || activeSlope) {
+                    if (c == ':') {
+                        offsetY = SLOPE_VAL;
+                    } else if (c == ';') {
+                        offsetY = -SLOPE_VAL;
+                    }
+                    trueY -= (x % 2 == 0) ? offsetY : 0; // TODO: Consider making the sloping platform always an even
+                                                         // number inside map
+                    c = activeSlope ? c : 'P';
+                    activeSlope = true;
+
+                }
+
+                final Position position = new Position(x, trueY).scalePosition(new Dimension());
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, new Dimension()));
@@ -76,10 +97,12 @@ public class GameEntityManager implements EntityManager {
                         this.character = new Mario(position, new Dimension());
                         this.addEntity(this.character);
                     }
+                    case 'D' -> this.addEntity(new DonkeyKong(position, new Dimension(), true));
+                    case 'T' -> this.addEntity(new GameTank(position, new Dimension()));
+                    case 'H' -> this.addEntity(new Hammer(position, new Dimension()));
+                    case 'C' -> this.addEntity(new Coin(position, new Dimension()));
                     case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
                     default -> {
-                        // TODO: fix Slope(: and ;) and Position of the entitiy dont use
-                        // GameEntityFactory.DEFAULT_BOUNDINGBOX use default dim of entity
                     }
                 }
             }
