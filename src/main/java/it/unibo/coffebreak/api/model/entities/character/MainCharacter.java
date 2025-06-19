@@ -79,4 +79,11 @@ public interface MainCharacter extends Entity {
      * @return true if Mario is facing right, false if facing left
      */
     boolean isFacingRight();
+
+    /**
+     * Returns whether Mario is currently jumping.
+     * 
+     * @return true if Mario is jumping, false otherwise
+     */
+    boolean isJumping();
 }

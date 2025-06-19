@@ -61,6 +61,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     private Command moveDirection;
     private boolean onPlatform;
     private boolean isFacingRight;
+    private boolean isJumping;
 
     /**
      * Creates a new Mario instance.
@@ -108,19 +109,27 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
             case MOVE_UP -> {
                 if (currentState.canClimb()) {
                     currentState.startClimb();
-                    onPlatform = false;
+                    this.onPlatform = false;
                     vy = physics.moveUp(deltaTime).y();
                 }
             }
             case MOVE_DOWN -> {
                 if (currentState.canClimb()) {
                     currentState.startClimb();
-                    onPlatform = false;
+                    this.onPlatform = false;
                     vy = physics.moveDown(deltaTime).y();
                 }
                 if (!onPlatform) {
                     vy = physics.moveDown(deltaTime).y();
                 }
+            }
+            case JUMP -> {
+                if (onPlatform && !currentState.isClimbing()) {
+                    vy = physics.jump(deltaTime).y();
+                    vx = isFacingRight ? physics.moveRight(deltaTime).x() : physics.moveLeft(deltaTime).x();
+                    this.onPlatform = false;
+                    this.isJumping = true;
+                } //TODO: to fix when command is fixed
             }
             default -> {
                 if (this.onPlatform) {
@@ -168,17 +177,13 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                 platform.destroy();
                 if (!currentState.isClimbing()) {
                     handleStandardPlatformCollision(platform);
-                } else {
-                    currentState.stopClimb();
-                    onPlatform = true;
                 }
             }
             case final Tank tank -> {
                 this.setVelocity(new Vector(0, 0));
                 this.moveDirection = Command.NONE;
             }
-            default -> {
-            }
+            default -> { }
         }
 
         this.currentState.handleCollision(this, other);
@@ -222,6 +227,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                 case TOP -> {
                     if (getVelocity().y() >= 0) {
                         this.onPlatform = true;
+                        this.isJumping = false;
                         setVelocity(new Vector(getVelocity().x(), 0));
                         setPosition(new Position(getPosition().x(), platformTop - getDimension().height()));
                     }
@@ -313,5 +319,13 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
     @Override
     public boolean isFacingRight() {
         return this.isFacingRight;
+    }
+
+    /**
+     * @return true if Mario is jumping, false otherwise
+     */
+    @Override
+    public boolean isJumping() {
+        return this.isJumping;
     }
 }
