@@ -10,10 +10,10 @@ package it.unibo.coffebreak.impl.common;
  */
 public record Dimension(int width, int height) {
 
-    private static final int DEFAULT_SIZE = 25;
+    private static final int DEFAULT_SIZE = 8;
 
     /**
-     * Creates a {@code Dimension} with default width and height of 25.
+     * Creates a {@code Dimension} with default width and height of 8.
      */
     public Dimension() {
         this(DEFAULT_SIZE, DEFAULT_SIZE);
