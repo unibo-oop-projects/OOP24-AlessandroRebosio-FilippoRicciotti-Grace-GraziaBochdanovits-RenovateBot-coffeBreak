@@ -36,22 +36,6 @@ public record ScoreEntry(String name, int score) implements Entry {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getScore() {
-        return this.score;
-    }
-
-    /**
      * Returns a string representation in format. "ScoreEntry[name=X, score=Y]"
      *
      * @return descriptive string representation

@@ -16,12 +16,12 @@ public interface Entry extends Serializable {
      * 
      * @return the name of the entry
      */
-    String getName();
+    String name();
 
     /**
      * Gets the score value of this entry.
      * 
      * @return the score value
      */
-    int getScore();
+    int score();
 }

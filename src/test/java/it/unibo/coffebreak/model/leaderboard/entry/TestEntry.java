@@ -62,7 +62,7 @@ class TestEntry {
     @Test
     void shouldAcceptEmptyName() {
         final Entry emptyNameEntry = new ScoreEntry(EMPTY_NAME, TEST_SCORE);
-        assertEquals(EMPTY_NAME, emptyNameEntry.getName());
+        assertEquals(EMPTY_NAME, emptyNameEntry.name());
     }
 
     /**
@@ -71,7 +71,7 @@ class TestEntry {
     @Test
     void shouldAcceptMinimumScore() {
         final Entry minScoreEntry = new ScoreEntry(TEST_NAME, MIN_SCORE);
-        assertEquals(MIN_SCORE, minScoreEntry.getScore());
+        assertEquals(MIN_SCORE, minScoreEntry.score());
     }
 
     /**
@@ -80,30 +80,30 @@ class TestEntry {
     @Test
     void shouldAcceptNegativeScores() {
         final Entry negativeEntry = new ScoreEntry(TEST_NAME, NEGATIVE_SCORE);
-        assertEquals(NEGATIVE_SCORE, negativeEntry.getScore());
+        assertEquals(NEGATIVE_SCORE, negativeEntry.score());
     }
 
     /**
-     * Tests getName() returns expected value.
+     * Tests name() returns expected value.
      */
     @Test
     void shouldReturnCorrectName() {
-        assertEquals(TEST_NAME, entry.getName());
+        assertEquals(TEST_NAME, entry.name());
 
         final Entry lowerCaseEntry = new ScoreEntry("reb", TEST_SCORE);
-        assertEquals("reb", lowerCaseEntry.getName());
+        assertEquals("reb", lowerCaseEntry.name());
     }
 
     /**
-     * Tests getScore() returns expected value.
+     * Tests score() returns expected value.
      */
     @Test
     void shouldReturnCorrectScore() {
         final int expected = 2000;
-        assertEquals(TEST_SCORE, entry.getScore());
+        assertEquals(TEST_SCORE, entry.score());
 
         final Entry differentScoreEntry = new ScoreEntry(TEST_NAME, 2000);
-        assertEquals(expected, differentScoreEntry.getScore());
+        assertEquals(expected, differentScoreEntry.score());
     }
 
     /**

@@ -203,7 +203,7 @@ public class GameModel implements Model {
     @Override
     public int getHighestScore() {
         if (!this.leaderBoard.getTopScores().isEmpty()) {
-            return this.leaderBoard.getTopScores().getFirst().getScore();
+            return this.leaderBoard.getTopScores().getFirst().score();
         }
         return 0;
     }

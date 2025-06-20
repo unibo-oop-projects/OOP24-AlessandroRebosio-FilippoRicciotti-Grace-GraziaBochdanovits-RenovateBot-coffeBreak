@@ -87,7 +87,7 @@ class TestScoreRepository {
 
         final List<Entry> restored = repository.load();
         assertEquals(1, restored.size());
-        assertEquals("Mario", restored.get(0).getName());
+        assertEquals("Mario", restored.get(0).name());
     }
 
     /**

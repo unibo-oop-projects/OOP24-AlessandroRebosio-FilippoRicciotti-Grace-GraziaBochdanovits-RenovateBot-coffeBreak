@@ -100,7 +100,7 @@ class TestLeaderBoard {
     void shouldAcceptEmptyPlayerNames() {
         final Entry entry = new ScoreEntry(EMPTY_NAME, SCORE_1);
         leaderBoard.addEntry(entry);
-        assertEquals(EMPTY_NAME, leaderBoard.getTopScores().get(0).getName());
+        assertEquals(EMPTY_NAME, leaderBoard.getTopScores().get(0).name());
     }
 
     /**
@@ -113,7 +113,7 @@ class TestLeaderBoard {
 
         final Leaderboard newLeaderboard = new GameLeaderboard();
         assertEquals(1, newLeaderboard.getTopScores().size());
-        assertEquals(PLAYER_1, newLeaderboard.getTopScores().get(0).getName());
+        assertEquals(PLAYER_1, newLeaderboard.getTopScores().get(0).name());
     }
 
     /**
