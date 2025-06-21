@@ -74,7 +74,8 @@ public class GamePanel extends JPanel implements Panel {
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                controller.updateGameBounds(getWidth(), getHeight());
+                final Dimension gameArea = getPreferredSize();
+                controller.updateGameBounds(gameArea.width, gameArea.height);
                 repaint();
             }
         });

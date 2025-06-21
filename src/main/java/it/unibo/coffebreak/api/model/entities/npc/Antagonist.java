@@ -27,4 +27,14 @@ public interface Antagonist extends Entity {
      *         otherwise empty
      */
     Optional<Barrel> tryThrowBarrel(float deltaTime);
+
+    /**
+     * Checks if the antagonist is currently in the process of throwing a barrel.
+     * <p>
+     * This method can be used to determine if the antagonist is in the throwing animation
+     * or actively performing a throw action.
+     * 
+     * @return true if the antagonist is throwing a barrel, false otherwise
+     */
+    boolean isTrowing();
 }
