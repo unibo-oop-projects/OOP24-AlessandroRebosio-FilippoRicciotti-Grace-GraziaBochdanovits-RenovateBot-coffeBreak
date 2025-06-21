@@ -21,4 +21,23 @@ public interface Platform extends Entity {
      *         false if it's still intact and functional
      */
     boolean isBroken();
+
+    /**
+     * Determines whether characters (like Mario) can pass through this platform.
+     * When true, characters can jump through the platform's bottom
+     * surface without colliding.
+     * 
+     * @return true if the platform is passable,
+     *         false if it should block movement
+     */
+    boolean canPassThrough();
+
+    /**
+     * Determines whether this platform should reverse the movement direction
+     * of entities (like barrels) when they collide with it.
+     * 
+     * @return true if colliding entities should reverse direction,
+     *         false if the collision should have no directional effect
+     */
+    boolean reversesDirection();
 }

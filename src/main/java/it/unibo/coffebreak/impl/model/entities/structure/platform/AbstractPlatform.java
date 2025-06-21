@@ -20,6 +20,8 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
+    private final boolean canPassThrough;
+    private final boolean reversesDirection;
     private boolean broken;
 
     /**
@@ -27,9 +29,15 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      * 
      * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimension of the platform (cannot be null)
+     * @param canPassThrough whether Mario can pass through this platform
+     * @param reversesDirection whether enemy should reverse direction when hitting this platform
      */
-    public AbstractPlatform(final Position position, final Dimension dimension) {
+    public AbstractPlatform(final Position position, final Dimension dimension,
+                            final boolean canPassThrough, final boolean reversesDirection) {
         super(position, dimension);
+        this.canPassThrough = canPassThrough;
+        this.reversesDirection = reversesDirection;
+        this.broken = false;
     }
 
     /**
@@ -58,6 +66,22 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     @Override
     public boolean isBroken() {
         return this.broken;
+    }
+
+    /**
+     * @return true if Mario can pass through this platform (when is climbing)
+     */
+    @Override
+    public boolean canPassThrough() {
+        return this.canPassThrough;
+    }
+
+    /**
+     * @return true if barrels should reverse direction when hitting this platform
+     */
+    @Override
+    public boolean reversesDirection() {
+        return this.reversesDirection;
     }
 
     /**

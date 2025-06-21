@@ -18,9 +18,11 @@ public class NormalPlatform extends AbstractPlatform {
      * 
      * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimension of the platform (cannot be null)
-     * @throws NullPointerException if any parameter is null
+     * @param canPassThrough whether Mario can pass through this platform
+     * @param reversesDirection whether enemy should reverse direction when hitting this platform
      */
-    public NormalPlatform(final Position position, final Dimension dimension) {
-        super(position, dimension);
+    public NormalPlatform(final Position position, final Dimension dimension,
+                            final boolean canPassThrough, final boolean reversesDirection) {
+        super(position, dimension, canPassThrough, reversesDirection);
     }
 }
