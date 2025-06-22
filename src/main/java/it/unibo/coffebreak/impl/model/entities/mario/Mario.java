@@ -175,9 +175,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
             case final Princess princess -> princess.rescue();
             case final Platform platform -> {
                 platform.destroy();
-                if (!currentState.isClimbing()) {
-                    handleStandardPlatformCollision(platform);
-                }
+                handlePlatformCollision(platform);
             }
             case final Tank tank -> {
                 this.setVelocity(new Vector(0, 0));
@@ -189,7 +187,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
         this.currentState.handleCollision(this, other);
     }
 
-    private void handleStandardPlatformCollision(final Platform platform) {
+    private void handlePlatformCollision(final Platform platform) {
         enum CollisionDirection { TOP, BOTTOM, LEFT, RIGHT }
 
         final float marioBottom = getPosition().y() + getDimension().height();
@@ -225,7 +223,13 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
 
             switch (direction) {
                 case TOP -> {
-                    if (getVelocity().y() >= 0) {
+                    if (currentState.isClimbing()) {
+                        currentState.stopClimb();
+                        this.onPlatform = true;
+                        this.isJumping = false;
+                        setVelocity(new Vector(getVelocity().x(), 0));
+                        setPosition(new Position(getPosition().x(), platformTop - getDimension().height()));
+                    } else if (!(platform.canPassThrough() && getVelocity().y() >= 0 && moveDirection == Command.MOVE_DOWN)) {
                         this.onPlatform = true;
                         this.isJumping = false;
                         setVelocity(new Vector(getVelocity().x(), 0));
@@ -233,22 +237,19 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                     }
                 }
                 case BOTTOM -> {
-                    if (getVelocity().y() < 0) {
-                        this.onPlatform = false;
+                    if (!platform.canPassThrough() && getVelocity().y() < 0) {
                         setVelocity(new Vector(getVelocity().x(), 0));
                         setPosition(new Position(getPosition().x(), platformBottom));
                     }
                 }
                 case LEFT -> {
-                    if (getVelocity().x() > 0) {
-                        this.onPlatform = false;
+                    if (getVelocity().x() > 0 && !currentState.isClimbing()) {
                         setVelocity(new Vector(0, getVelocity().y()));
                         setPosition(new Position(platformLeft - getDimension().width(), getPosition().y()));
                     }
                 }
                 case RIGHT -> {
-                    if (getVelocity().x() < 0) {
-                        this.onPlatform = false;
+                    if (getVelocity().x() < 0 && !currentState.isClimbing()) {
                         setVelocity(new Vector(0, getVelocity().y()));
                         setPosition(new Position(platformRight, getPosition().y()));
                     }
