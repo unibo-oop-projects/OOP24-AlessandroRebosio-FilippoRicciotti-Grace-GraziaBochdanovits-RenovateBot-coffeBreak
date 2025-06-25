@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.view.render.RenderManager;
@@ -25,7 +26,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class InGameView extends AbstractViewState {
 
-    private final RenderManager renderManager = new GameRenderManager(super.getResource());
+    private final RenderManager renderManager;
 
     /**
      * Constructs an InGameView with the specified controller.
@@ -33,10 +34,12 @@ public class InGameView extends AbstractViewState {
      * 
      * @param controller the game controller that manages the game logic and
      *                   entities
-     * @throws IllegalArgumentException if the controller is null
+     * @param loader     the resource loader for graphics
      */
-    public InGameView(final Controller controller) {
-        super(controller);
+    public InGameView(final Controller controller, final Loader loader) {
+        super(controller, loader);
+
+        this.renderManager = new GameRenderManager(loader);
     }
 
     /**

@@ -5,7 +5,8 @@ import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
-import java.util.Objects;
+
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.api.view.panel.Panel;
@@ -40,12 +41,12 @@ public class GameView extends JFrame implements View {
     /**
      * Constructs a GameView with the given controller.
      *
-     * @param controller the controller to notify of key events; must not be null
-     * @throws NullPointerException if {@code controller} is null
+     * @param controller the controller to notify of key events
+     * @param loader     the resource loader for graphics
      */
-    public GameView(final Controller controller) {
+    public GameView(final Controller controller, final Loader loader) {
         super(TITLE);
-        this.gamePanel = new GamePanel(Objects.requireNonNull(controller, "Controller cannot be null"));
+        this.gamePanel = new GamePanel(controller, loader);
 
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.add((GamePanel) gamePanel, BorderLayout.CENTER);

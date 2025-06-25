@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.view.states.menu;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
@@ -31,11 +32,12 @@ public class MenuView extends AbstractViewState {
      * Constructs the main menu view and loads required fonts.
      *
      * @param controller the controller to interact with the game logic
+     * @param loader     the resource loader for graphics
      */
-    public MenuView(final Controller controller) {
-        super(controller);
+    public MenuView(final Controller controller, final Loader loader) {
+        super(controller, loader);
 
-        this.font = super.getResource().loadFont(ResourceLoader.FONT_PATH);
+        this.font = loader.loadFont(ResourceLoader.FONT_PATH);
         leaderBoard = controller.getLeaderBoard();
     }
 

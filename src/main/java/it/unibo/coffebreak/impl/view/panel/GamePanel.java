@@ -13,6 +13,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
 import it.unibo.coffebreak.api.view.states.ViewState;
@@ -44,6 +45,7 @@ public class GamePanel extends JPanel implements Panel {
     private static final long serialVersionUID = 1L;
     private transient ViewState currentViewState;
     private final transient Controller controller;
+    private final transient Loader loader;
 
     private float deltaTime;
 
@@ -51,11 +53,15 @@ public class GamePanel extends JPanel implements Panel {
      * Constructs a GamePanel associated with the given controller and sets up the
      * KeyAdapter.
      *
-     * @param controller the controller to notify for input events; must not be null
+     * @param controller the controller to notify for input events
+     * @param loader     the resource loader for graphics
+     * @throws N
      */
-    public GamePanel(final Controller controller) {
+    public GamePanel(final Controller controller, final Loader loader) {
         super();
-        this.controller = Objects.requireNonNull(controller, "Il controller non può essere null");
+
+        this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
+        this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
 
         super.setFocusable(true);
 
@@ -128,11 +134,11 @@ public class GamePanel extends JPanel implements Panel {
     @Override
     public void update(final float deltaTime) {
         this.deltaTime = deltaTime;
-        final ViewState nextState = switch (controller.getGameState()) {
-            case final MenuModelState menu -> new MenuView(controller);
-            case final InGameModelState inGame -> new InGameView(controller);
-            case final PauseModelState pause -> new PauseView(controller);
-            case final GameOverModelState gameOver -> new GameOverView(controller);
+        final ViewState nextState = switch (this.controller.getGameState()) {
+            case final MenuModelState menu -> new MenuView(this.controller, this.loader);
+            case final InGameModelState inGame -> new InGameView(this.controller, this.loader);
+            case final PauseModelState pause -> new PauseView(this.controller, this.loader);
+            case final GameOverModelState gameOver -> new GameOverView(this.controller, this.loader);
             default -> null;
         };
 

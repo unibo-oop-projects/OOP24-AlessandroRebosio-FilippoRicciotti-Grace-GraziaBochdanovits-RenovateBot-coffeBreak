@@ -44,18 +44,19 @@ public abstract class AbstractViewState implements ViewState {
      */
     public static final float SAVE_HEIGHT = 0.75f;
 
-    private final Loader resourceLoader = new ResourceLoader();
     private final Controller controller;
+    private final Loader loader;
 
     /**
      * Constructs an AbstractViewState with the specified controller.
      *
-     * @param controller the controller associated with this view state; must not be
-     *                   null
+     * @param controller the controller associated with this view state
+     * @param loader     the resource loader for graphics
      * @throws NullPointerException if {@code controller} is null
      */
-    public AbstractViewState(final Controller controller) {
+    public AbstractViewState(final Controller controller, final Loader loader) {
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
+        this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
     }
 
     /**
@@ -92,7 +93,7 @@ public abstract class AbstractViewState implements ViewState {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        final var scoreFont = this.resourceLoader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
+        final var scoreFont = this.loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
         final String highestScore = String.valueOf(controller.getHighestScore());
         final String currentScore = "000000"; // String.valueOf(controller.getScoreValue());
         final String currentLevel = "00"; // String.valueOf(controller.getLevelIndex());
@@ -106,18 +107,6 @@ public abstract class AbstractViewState implements ViewState {
         drawCenteredText(g, "L = " + currentLevel, thirdWidth, (int) (height * SCORE_HEIGHT),
                 Color.BLUE);
 
-    }
-
-    /**
-     * Returns the resource loader used by this view state.
-     * <p>
-     * Intended for use only by subclasses to load fonts, images, or sounds.
-     * </p>
-     *
-     * @return the {@link Loader} instance for this view
-     */
-    protected final Loader getResource() {
-        return this.resourceLoader;
     }
 
     /**
@@ -138,7 +127,7 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final void drawOptions(final Graphics2D g, final int height, final int width) {
 
-        final var optionFont = getResource().loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
+        final var optionFont = loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
 
         g.setFont(optionFont);
 

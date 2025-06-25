@@ -1,7 +1,9 @@
 package it.unibo.coffebreak.impl.core;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.core.Engine;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.controller.GameController;
 import it.unibo.coffebreak.impl.view.GameView;
 
@@ -20,8 +22,9 @@ public class GameEngine implements Engine {
      */
     private static final long PERIOD = 16;
 
+    private final Loader loader = new ResourceLoader();
     private final Controller controller = new GameController();
-    private final GameView view = new GameView(this.controller);
+    private final GameView view = new GameView(this.controller, this.loader);
 
     /**
      * {@inheritDoc}
