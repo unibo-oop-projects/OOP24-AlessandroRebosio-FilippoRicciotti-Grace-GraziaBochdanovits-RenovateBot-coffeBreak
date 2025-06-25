@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.impl.model.states.menu;
+package it.unibo.coffebreak.impl.model.states.pause;
 
 import java.util.List;
 
@@ -7,30 +7,25 @@ import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
+import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
 /**
- * State representing the main menu of the game.
+ * State representing the pause menu of the game.
  * <p>
- * Handles option selection and command processing for menu navigation and
+ * Handles option selection and command processing for pause menu navigation and
  * actions.
  * </p>
  *
  * @author Alessandro Rebosio
  */
-public class MenuModelState extends AbstractModelState {
+public class PauseModelState extends AbstractModelState {
 
-    /**
-     * The list of available menu options.
-     */
-    private static final List<Option> OPTIONS = List.of(Option.START, Option.QUIT);
+    private static final List<Option> OPTIONS = List.of(Option.RESUME, Option.MENU, Option.QUIT);
 
-    /**
-     * The index of the currently selected option.
-     */
     private int selectedIndex;
 
     /**
-     * Handles input commands for menu navigation and selection.
+     * Handles input commands for pause menu navigation and selection.
      *
      * @param model   the game model
      * @param command the command to process
@@ -46,9 +41,11 @@ public class MenuModelState extends AbstractModelState {
             }
             case ENTER -> {
                 switch (this.getSelectedOption()) {
-                    case START -> {
-                        model.start();
+                    case RESUME -> {
                         model.setState(new InGameModelState());
+                    }
+                    case MENU -> {
+                        model.setState(new MenuModelState());
                     }
                     case QUIT -> {
                         model.stop();

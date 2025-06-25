@@ -6,6 +6,7 @@ import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
+import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
  * State representing the in-game phase where gameplay occurs.
@@ -30,7 +31,7 @@ public class InGameModelState extends AbstractModelState {
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case ESCAPE -> {
-                model.setState(null);
+                model.setState(new PauseModelState());
             }
             default -> {
             }
