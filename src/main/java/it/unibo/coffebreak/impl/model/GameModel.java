@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
@@ -144,7 +145,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getMainCharacter() {
+    public Optional<MainCharacter> getMainCharacter() {
         return this.levelManager.getMainCharacter();
     }
 
@@ -153,7 +154,10 @@ public class GameModel implements Model {
      */
     @Override
     public int getScoreValue() {
-        return this.getMainCharacter().getScoreValue();
+        if (this.getMainCharacter().isPresent()) {
+            return this.getMainCharacter().get().getScoreValue();
+        }
+        return 0;
     }
 
     /**

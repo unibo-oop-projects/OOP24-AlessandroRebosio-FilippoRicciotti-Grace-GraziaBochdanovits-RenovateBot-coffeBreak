@@ -2,7 +2,6 @@ package it.unibo.coffebreak.impl.view.states.menu;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.view.GameView;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
@@ -10,7 +9,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -23,10 +21,8 @@ import java.util.Locale;
  */
 public class MenuView extends AbstractViewState {
 
-    private static final Color DEFAULT_COLOR = Color.WHITE;
 
     private final Font font;
-    private final List<Entry> leaderBoard;
 
     /**
      * Constructs the main menu view and loads required fonts.
@@ -38,7 +34,6 @@ public class MenuView extends AbstractViewState {
         super(controller, loader);
 
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
-        leaderBoard = controller.getLeaderBoard();
     }
 
     /**
@@ -54,32 +49,25 @@ public class MenuView extends AbstractViewState {
         super.draw(g, width, height, deltaTime);
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
-        final Font boardFont = this.font.deriveFont(height * 0.03f);
-        final String title = GameView.TITLE.toUpperCase(Locale.getDefault());
-        final String[] titleParts = title.split(" ", 2);
+        final String title = GameView.TITLE.replace(" ", "").toUpperCase(Locale.getDefault());
+        int mid = (title.length() + 1) / 2;
+        String left = title.substring(0, mid);
+        String right = title.substring(mid);
 
         g.setFont(titleFont);
-        final int coffeeX = width - g.getFontMetrics().stringWidth(titleParts[0] + titleParts[1]) / 2;
-        final int breakX = width + g.getFontMetrics().stringWidth(titleParts[0] + titleParts[1]) / 2;
-        drawCenteredText(g, titleParts[0], coffeeX, (int) (height * TITLE_HEIGHT), Color.BLUE);
-        drawCenteredText(g, titleParts[1], breakX, (int) (height * TITLE_HEIGHT), DEFAULT_COLOR);
+
+        int leftWidth = g.getFontMetrics().stringWidth(left);
+        int rightWidth = g.getFontMetrics().stringWidth(right);
+        int totalWidth = leftWidth + rightWidth;
+        int x = (width - totalWidth) / 2;
+        int y = (int) (height * TITLE_HEIGHT);
+
+        g.setColor(Color.BLUE);
+        g.drawString(left, x, y);
+
+        g.setColor(Color.WHITE);
+        g.drawString(right, x + leftWidth, y);
 
         super.drawOptions(g, height, width);
-
-        g.setFont(boardFont);
-        final int boardY = (int) (height * 0.60);
-        drawCenteredText(g, "RANK  SCORE  NAME ", width, boardY, Color.CYAN);
-
-        for (int i = 0; i < leaderBoard.size(); i++) {
-            final Entry entry = leaderBoard.get(i);
-            final String scoreFormatted = String.format("%06d", entry.score());
-            final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.name() + "  ";
-            final int baseY = (int) (height * 0.65);
-            final int stepY = (int) (height * 0.03);
-            final int y = baseY + i * stepY;
-
-            drawCenteredText(g, text, width, y, i < 3 ? Color.RED : Color.PINK);
-        }
-
     }
 }

@@ -40,7 +40,7 @@ public final class GameCollision implements Collision {
      */
     public static void checkCollision(final Model model) {
         Objects.requireNonNull(model, "Model cannot be null");
-        final Entity player = model.getMainCharacter();
+        final Entity player = model.getMainCharacter().get();
 
         final Position current = player.getPosition();
         final BoundigBox bounds = model.getGameBound();

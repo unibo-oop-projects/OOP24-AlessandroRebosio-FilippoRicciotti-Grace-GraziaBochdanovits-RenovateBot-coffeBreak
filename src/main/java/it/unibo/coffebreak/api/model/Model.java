@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.api.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -98,7 +99,7 @@ public interface Model {
      * 
      * @return the main character instance, never null
      */
-    MainCharacter getMainCharacter();
+    Optional<MainCharacter> getMainCharacter();
 
     /**
      * Gets the current player score.
