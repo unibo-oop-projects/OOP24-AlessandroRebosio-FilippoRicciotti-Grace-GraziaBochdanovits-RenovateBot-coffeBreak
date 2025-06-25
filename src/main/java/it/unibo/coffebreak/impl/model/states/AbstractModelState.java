@@ -65,7 +65,9 @@ public abstract class AbstractModelState implements ModelState {
      * @return the selected {@link Option}
      */
     @Override
-    public abstract Option getSelectedOption();
+    public Option getSelectedOption() {
+        return Option.NONE;
+    }
 
     /**
      * Returns the list of available options for this state.
@@ -73,6 +75,8 @@ public abstract class AbstractModelState implements ModelState {
      * @return the list of {@link Option}
      */
     @Override
-    public abstract List<Option> getOptions();
+    public List<Option> getOptions() {
+        return List.of();
+    }
 
 }
