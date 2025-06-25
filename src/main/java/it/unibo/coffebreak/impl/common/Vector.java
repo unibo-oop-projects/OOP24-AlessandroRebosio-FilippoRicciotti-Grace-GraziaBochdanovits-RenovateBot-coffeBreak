@@ -14,6 +14,7 @@ import java.util.Objects;
  * @author Grazia Bochdanovits de Kavna
  */
 public record Vector(float x, float y) {
+
     /**
      * Constructs a zero vector (0, 0).
      */

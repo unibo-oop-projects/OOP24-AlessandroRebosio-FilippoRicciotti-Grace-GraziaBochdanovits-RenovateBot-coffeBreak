@@ -11,6 +11,7 @@ import java.util.Objects;
  * @author Grazia Bochdanovits de Kavna
  */
 public record Position(float x, float y) {
+
     /**
      * Sums this position with another position, creating a new Position2D instance
      * with coordinates equal to the sum of the corresponding coordinates.

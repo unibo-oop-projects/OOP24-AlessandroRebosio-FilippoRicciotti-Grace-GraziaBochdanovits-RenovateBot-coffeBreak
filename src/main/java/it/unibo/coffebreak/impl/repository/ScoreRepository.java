@@ -39,14 +39,13 @@ public class ScoreRepository implements Repository<List<Entry>> {
      */
     @Override
     public boolean save(final List<Entry> data) {
-        Objects.requireNonNull(data, "List cannot be null");
-        if (data.isEmpty()) {
+        if (Objects.requireNonNull(data, "List cannot be null").isEmpty()) {
             return true;
         }
 
-        fileManager.createBackup();
+        this.fileManager.createBackup();
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(fileManager.getDataFile()))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(this.fileManager.getDataFile()))) {
             oos.writeObject(data);
             return true;
         } catch (final IOException e) {
@@ -60,14 +59,14 @@ public class ScoreRepository implements Repository<List<Entry>> {
     @Override
     @SuppressWarnings("unchecked")
     public List<Entry> load() {
-        if (!Files.exists(fileManager.getDataFile())) {
+        if (!Files.exists(this.fileManager.getDataFile())) {
             return new ArrayList<>();
         }
 
-        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(fileManager.getDataFile()))) {
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(this.fileManager.getDataFile()))) {
             return (List<Entry>) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            if (fileManager.restoreFromBackup()) {
+            if (this.fileManager.restoreFromBackup()) {
                 return load();
             }
             throw new RepositoryException("Error while loading data", e);
@@ -79,7 +78,7 @@ public class ScoreRepository implements Repository<List<Entry>> {
      */
     @Override
     public boolean deleteAllFiles() {
-        return fileManager.deleteAll();
+        return this.fileManager.deleteAll();
     }
 
     /**
