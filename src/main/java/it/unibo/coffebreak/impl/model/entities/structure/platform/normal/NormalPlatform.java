@@ -26,4 +26,12 @@ public class NormalPlatform extends AbstractPlatform {
             final boolean canPassThrough, final boolean reversesDirection) {
         super(position, dimension, canPassThrough, reversesDirection);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBroken() {
+        return false;
+    }
 }

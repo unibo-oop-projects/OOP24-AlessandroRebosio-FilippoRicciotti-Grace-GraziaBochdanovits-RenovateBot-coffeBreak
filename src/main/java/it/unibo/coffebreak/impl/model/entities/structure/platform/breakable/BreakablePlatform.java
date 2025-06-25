@@ -19,6 +19,8 @@ import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatfo
  */
 public class BreakablePlatform extends AbstractPlatform {
 
+    private boolean broken;
+
     /**
      * Constructs a new breakable platform with specified position, dimensions and
      * slope.
@@ -41,6 +43,14 @@ public class BreakablePlatform extends AbstractPlatform {
      */
     @Override
     public void destroy() {
-        super.broke();
+        this.broken = true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBroken() {
+        return broken;
     }
 }

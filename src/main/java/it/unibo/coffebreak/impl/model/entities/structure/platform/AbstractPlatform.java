@@ -22,7 +22,6 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
 
     private final boolean canPassThrough;
     private final boolean reversesDirection;
-    private boolean broken;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
@@ -38,7 +37,6 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         super(position, dimension);
         this.canPassThrough = canPassThrough;
         this.reversesDirection = reversesDirection;
-        this.broken = false;
     }
 
     /**
@@ -62,14 +60,6 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isBroken() {
-        return this.broken;
-    }
-
-    /**
      * @return true if Mario can pass through this platform (when is climbing)
      */
     @Override
@@ -83,15 +73,5 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     @Override
     public boolean reversesDirection() {
         return this.reversesDirection;
-    }
-
-    /**
-     * Marks this platform as broken by setting its state to true.
-     * Once invoked, the platform is considered unusable or non-functional.
-     * This method is intended to be used by subclasses to update the platform's
-     * status.
-     */
-    protected final void broke() {
-        this.broken = true;
     }
 }
