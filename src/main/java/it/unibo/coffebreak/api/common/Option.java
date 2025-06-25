@@ -33,13 +33,6 @@ public enum Option {
      */
     QUIT,
 
-    /** First Char of the Player name. */
-    CHAR0,
-    /** Second Char of the Player name. */
-    CHAR1,
-    /** Third Char of the Player name. */
-    CHAR2,
-
     /**
      * No option selected or not applicable.
      */

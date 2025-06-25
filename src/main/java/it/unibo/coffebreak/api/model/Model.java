@@ -165,14 +165,6 @@ public interface Model {
     void handleCommand(Command command);
 
     /**
-     * Processes and executes a direction-related game command, typically used for
-     * handling player movement or directional input.
-     *
-     * @param command the direction command to be executed
-     */
-    void handleDirection(Command command);
-
-    /**
      * Updates the game logic based on elapsed time.
      * 
      * @param deltaTime time in seconds since last update

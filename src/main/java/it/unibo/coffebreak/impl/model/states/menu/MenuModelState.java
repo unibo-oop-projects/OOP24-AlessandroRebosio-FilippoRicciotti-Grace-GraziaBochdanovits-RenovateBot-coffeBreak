@@ -1,62 +1,64 @@
 package it.unibo.coffebreak.impl.model.states.menu;
 
-import java.util.Collections;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 
 /**
- * Implementation of {@link ModelState} interface;
+ * State representing the main menu of the game.
  * <p>
- * Represents the <b>Main Menu</b> state of the game.
+ * Handles option selection and command processing for menu navigation and
+ * actions.
  * </p>
- * 
- * @author Filippo Ricciotti
+ *
+ * @author Alessandro Rebosio
  */
 public class MenuModelState extends AbstractModelState {
 
-    private static final List<Option> OPTIONS = List.of(Option.START, Option.QUIT);
-    private int selectedOption;
-
     /**
-     * Constructs a new MenuState with the default selected option (START).
+     * The list of available menu options.
      */
-    public MenuModelState() {
-        this.selectedOption = 0;
-    }
+    private static final List<Option> OPTIONS = List.of(Option.START, Option.QUIT);
 
     /**
-     * {@inheritDoc}
+     * The index of the currently selected option.
+     */
+    private int selectedIndex;
+
+    /**
+     * Handles input commands for menu navigation and selection.
+     *
+     * @param model   the game model
+     * @param command the command to process
      */
     @Override
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
-            case ENTER:
-                switch (OPTIONS.get(this.selectedOption)) {
-                    case START:
+            case MOVE_UP -> {
+                selectedIndex = (selectedIndex - 1 + OPTIONS.size()) % OPTIONS.size();
+            }
+            case MOVE_DOWN -> {
+                selectedIndex = (selectedIndex + 1) % OPTIONS.size();
+            }
+            case ENTER -> {
+                switch (this.getSelectedOption()) {
+                    case START -> {
                         model.start();
                         model.setState(new InGameModelState());
-                        break;
-                    case QUIT:
+                    }
+                    case QUIT -> {
                         model.stop();
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
-                break;
-            case MOVE_UP:
-                this.selectedOption = (this.selectedOption - 1 + OPTIONS.size()) % OPTIONS.size();
-                break;
-            case MOVE_DOWN:
-                this.selectedOption = (this.selectedOption + 1) % OPTIONS.size();
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 
@@ -65,16 +67,15 @@ public class MenuModelState extends AbstractModelState {
      */
     @Override
     public Option getSelectedOption() {
-        return OPTIONS.get(this.selectedOption);
+        return OPTIONS.get(selectedIndex);
     }
 
     /**
-     * Returns an unmodifiable list of all available menu options.
-     *
-     * @return the list of {@link Option} available in the menu
+     * {@inheritDoc}
      */
     @Override
     public List<Option> getOptions() {
-        return Collections.unmodifiableList(OPTIONS);
+        return OPTIONS;
     }
+
 }

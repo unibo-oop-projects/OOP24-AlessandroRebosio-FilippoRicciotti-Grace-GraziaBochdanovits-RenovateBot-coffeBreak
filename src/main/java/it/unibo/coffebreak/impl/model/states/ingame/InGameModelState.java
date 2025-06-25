@@ -4,44 +4,50 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
- * Implementation of {@link ModelState} interface;
+ * State representing the in-game phase where gameplay occurs.
  * <p>
- * Represents the <b>In Game state</b> of the game.
+ * Handles player input, entity updates, collisions, and game progression logic.
  * </p>
- * 
- * @author Filippo Ricciotti
+ *
+ * @author Alessandro Rebosio
  */
 public class InGameModelState extends AbstractModelState {
 
     /**
-     * {@inheritDoc}
+     * Handles commands during the in-game state.
+     * <p>
+     * ESCAPE sets the model state to pause (pause or exit to menu).
+     * </p>
+     *
+     * @param model   the game model
+     * @param command the command to process
      */
     @Override
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
-            case ESCAPE -> model.setState(new PauseModelState());
+            case ESCAPE -> {
+                model.setState(new PauseModelState());
+            }
             default -> {
             }
         }
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleDirection(final Model model, final Command command) {
-        model.getMainCharacter().setDirection(command);
-    }
-
-    /**
-     * {@inheritDoc}
+     * Updates the game logic for the in-game state.
+     * <p>
+     * Updates all entities, handles collisions, manages bonus, and checks for game
+     * over.
+     * </p>
+     *
+     * @param model     the game model
+     * @param deltaTime the time elapsed since the last update (in seconds)
      */
     @Override
     public void update(final Model model, final float deltaTime) {

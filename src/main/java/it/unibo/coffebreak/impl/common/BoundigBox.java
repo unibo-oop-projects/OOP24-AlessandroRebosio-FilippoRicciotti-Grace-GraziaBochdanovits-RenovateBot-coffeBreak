@@ -13,10 +13,10 @@ package it.unibo.coffebreak.impl.common;
 public record BoundigBox(int width, int height) {
 
     /**
-     * Constructs a {@code BoundigBox} with width and height set to 0.
+     * Constructs a {@code BoundigBox} with width and height set to 8.
      */
     public BoundigBox() {
-        this(0, 0);
+        this(8, 8);
     }
 
     /**

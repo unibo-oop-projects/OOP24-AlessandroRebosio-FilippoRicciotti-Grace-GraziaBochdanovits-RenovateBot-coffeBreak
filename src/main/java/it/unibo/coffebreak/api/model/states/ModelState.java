@@ -4,52 +4,28 @@ import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
+import it.unibo.coffebreak.api.common.State;
 import it.unibo.coffebreak.api.model.Model;
 
 /**
- * Interface for handling Game Phases.
- * 
- * @author Filippo Ricciotti
+ * Represents a state of the game model.
+ * <p>
+ * Extends the generic {@link State} interface for {@link Model} and adds
+ * support
+ * for handling game commands.
+ * </p>
+ *
+ * @author Alessandro Rebosio
  */
-public interface ModelState {
-    /**
-     * method for signaling the entrance in a new Phase.
-     * 
-     * @param model the model changing state
-     */
-    void onEnter(Model model);
+public interface ModelState extends State<Model> {
 
     /**
-     * method for signaling a Phase leaving.
-     * 
-     * @param model the model changing state
-     */
-    void onExit(Model model);
-
-    /**
-     * method that handle input depending on the Phase the model is currently in.
-     * 
-     * @param command Input to handle.
-     * @param model   the game model containing the possible Phase to change.
+     * Handles a command for the given model in this state.
+     *
+     * @param model   the model to handle the command for
+     * @param command the command to process
      */
     void handleCommand(Model model, Command command);
-
-    /**
-     * Processes and executes a direction-related game command, typically used for
-     * handling player movement or directional input.
-     *
-     * @param model model 
-     * @param command the direction command to be executed
-     */
-    void handleDirection(Model model, Command command);
-
-    /**
-     * Updates the logic of the current game Phase based on deltaTime.
-     * 
-     * @param model     model to update
-     * @param deltaTime time in milliseconds since the last update call.
-     */
-    void update(Model model, float deltaTime);
 
     /**
      * Returns the currently selected option for this state, if any.
@@ -65,10 +41,4 @@ public interface ModelState {
      */
     List<Option> getOptions();
 
-    /**
-     * Getter of the Player's name String.
-     * 
-     * @return return player's name string
-     */
-    String getName();
 }

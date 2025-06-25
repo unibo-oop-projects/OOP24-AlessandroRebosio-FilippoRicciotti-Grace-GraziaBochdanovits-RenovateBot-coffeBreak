@@ -8,16 +8,21 @@ import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
 /**
- * An abstract base class representing a game State.
- * Implements basic functionality for game states, such as
- * handling Actions, exiting and entering States.
- * 
- * @author Filippo Ricciotti
+ * Abstract base class for model states in the game.
+ * <p>
+ * Implements the {@link ModelState} interface and provides default (empty)
+ * implementations for lifecycle and update methods. Subclasses must implement
+ * command handling and option selection logic.
+ * </p>
+ *
+ * @author Alessandro Rebosio
  */
 public abstract class AbstractModelState implements ModelState {
 
     /**
-     * {@inheritDoc}
+     * Called when entering this state. Default implementation does nothing.
+     *
+     * @param model the model entering this state
      */
     @Override
     public void onEnter(final Model model) {
@@ -25,7 +30,9 @@ public abstract class AbstractModelState implements ModelState {
     }
 
     /**
-     * {@inheritDoc}
+     * Called when exiting this state. Default implementation does nothing.
+     *
+     * @param model the model exiting this state
      */
     @Override
     public void onExit(final Model model) {
@@ -33,7 +40,10 @@ public abstract class AbstractModelState implements ModelState {
     }
 
     /**
-     * {@inheritDoc}
+     * Updates the state logic. Default implementation does nothing.
+     *
+     * @param model     the model being updated
+     * @param deltaTime the time elapsed since the last update (in seconds)
      */
     @Override
     public void update(final Model model, final float deltaTime) {
@@ -41,21 +51,18 @@ public abstract class AbstractModelState implements ModelState {
     }
 
     /**
-     * {@inheritDoc}
+     * Handles input depending on the phase the model is currently in.
+     *
+     * @param model   the game model containing the possible phase to change
+     * @param command the input to handle
      */
     @Override
     public abstract void handleCommand(Model model, Command command);
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleDirection(final Model model, final Command command) {
-        // Default empty implementation
-    }
-
-    /**
-     * {@inheritDoc}
+     * Returns the currently selected option for this state.
+     *
+     * @return the selected {@link Option}
      */
     @Override
     public Option getSelectedOption() {
@@ -63,18 +70,13 @@ public abstract class AbstractModelState implements ModelState {
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the list of available options for this state.
+     *
+     * @return the list of {@link Option}
      */
     @Override
     public List<Option> getOptions() {
         return List.of();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getName() {
-        return "";
-    }
 }
