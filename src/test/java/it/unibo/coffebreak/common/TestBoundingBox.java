@@ -41,8 +41,8 @@ class TestBoundingBox {
     @Test
     void testDefaultConstructor() {
         final BoundigBox defaultBox = new BoundigBox();
-        assertEquals(0, defaultBox.width());
-        assertEquals(0, defaultBox.height());
+        assertEquals(8, defaultBox.width());
+        assertEquals(8, defaultBox.height());
     }
 
     /**
