@@ -47,7 +47,7 @@ public class GameOverView extends AbstractViewState {
         drawCenteredText(g, "GAME OVER", width, (int) (height * TITLE_HEIGHT), Color.RED);
 
         g.setFont(subTitles);
-        drawCenteredText(g, "Press enter to menu...", width, (int) (height * (MIDDLE_HEIGHT + 0.08)), Color.GRAY);
+        drawCenteredText(g, "Press enter to menu...", width, (int) (height * MIDDLE_HEIGHT), Color.GRAY);
     }
 
 }
