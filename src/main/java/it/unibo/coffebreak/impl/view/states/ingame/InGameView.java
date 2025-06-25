@@ -7,6 +7,7 @@ import java.util.List;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
@@ -57,10 +58,12 @@ public class InGameView extends AbstractViewState {
         double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
 
         for (final Entity e : entities) {
-            minX = Math.min(minX, e.getPosition().x());
-            minY = Math.min(minY, e.getPosition().y());
-            maxX = Math.max(maxX, e.getPosition().x() + e.getDimension().width());
-            maxY = Math.max(maxY, e.getPosition().y() + e.getDimension().height());
+            if (e instanceof Platform) {
+                minX = Math.min(minX, e.getPosition().x());
+                minY = Math.min(minY, e.getPosition().y());
+                maxX = Math.max(maxX, e.getPosition().x() + e.getDimension().width());
+                maxY = Math.max(maxY, e.getPosition().y() + e.getDimension().height());
+            }
         }
 
         final double logicalWidth = maxX - minX;
