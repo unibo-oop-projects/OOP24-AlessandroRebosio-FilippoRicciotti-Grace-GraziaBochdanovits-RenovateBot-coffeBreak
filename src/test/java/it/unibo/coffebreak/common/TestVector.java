@@ -8,6 +8,8 @@ import it.unibo.coffebreak.impl.common.Vector;
 
 /**
  * Unit tests for the {@link Vector} record.
+ * 
+ * @author Alessandro Rebosio
  */
 public class TestVector {
 

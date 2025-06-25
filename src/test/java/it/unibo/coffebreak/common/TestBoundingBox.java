@@ -8,6 +8,8 @@ import it.unibo.coffebreak.impl.common.BoundigBox;
 
 /**
  * Unit tests for the {@link BoundigBox} record.
+ * 
+ * @author Alessandro Rebosio
  */
 public class TestBoundingBox {
 

@@ -8,6 +8,8 @@ import it.unibo.coffebreak.impl.common.ResourceLoader;
 
 /**
  * Unit tests for the {@link ResourceLoader} class.
+ * 
+ * @author Alessandro Rebosio
  */
 public class TestResourceLoader {
 

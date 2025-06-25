@@ -10,6 +10,8 @@ import it.unibo.coffebreak.impl.common.BoundigBox;
 
 /**
  * Unit tests for the {@link Position} record.
+ * 
+ * @author Alessandro Rebosio
  */
 public class TestPosition {
 

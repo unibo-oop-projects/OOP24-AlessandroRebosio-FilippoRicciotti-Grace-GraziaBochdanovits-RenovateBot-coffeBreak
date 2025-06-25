@@ -33,61 +33,77 @@ class TestInput {
 
     private InputManager inputManager;
 
-    /**
-     * Sets up a fresh InputManager instance before each test.
-     */
     @BeforeEach
     void setUp() {
         inputManager = new InputManager();
     }
 
     /**
-     * Tests that key presses are correctly converted to commands
-     * and added to the queue.
+     * Tests that default key bindings map the correct KeyEvent codes to Commands.
      */
     @Test
-    void testRegisterKeyPress() {
+    void testDefaultKeyBindings() {
+        inputManager.keyPressed(KeyEvent.VK_ENTER);
+        assertEquals(Command.ENTER, inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_ESCAPE);
+        assertEquals(Command.ESCAPE, inputManager.getCommand());
         inputManager.keyPressed(KeyEvent.VK_UP);
         assertEquals(Command.MOVE_UP, inputManager.getCommand());
-
-        inputManager.keyPressed(KeyEvent.VK_SPACE);
-        assertEquals(Command.JUMP, inputManager.getCommand());
-    }
-
-    /**
-     * Tests that pressing an unbound key doesn't add anything to the queue.
-     */
-    @Test
-    void testUnboundKeyPress() {
-        inputManager.keyPressed(KeyEvent.VK_F1);
-        assertNull(inputManager.getCommand());
-    }
-
-    /**
-     * Tests the command queue behavior with multiple inputs.
-     */
-    @Test
-    void testCommandQueueOrder() {
+        inputManager.keyPressed(KeyEvent.VK_DOWN);
+        assertEquals(Command.MOVE_DOWN, inputManager.getCommand());
         inputManager.keyPressed(KeyEvent.VK_LEFT);
-        inputManager.keyPressed(KeyEvent.VK_RIGHT);
-        inputManager.keyPressed(KeyEvent.VK_SPACE);
-
         assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_RIGHT);
         assertEquals(Command.MOVE_RIGHT, inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
         assertEquals(Command.JUMP, inputManager.getCommand());
-        assertNull(inputManager.getCommand());
     }
 
     /**
-     * Tests that the queue can be properly cleared.
+     * Tests that pressing the same key multiple times does not queue duplicate
+     * commands until released.
+     */
+    @Test
+    void testNoDuplicateCommandWhilePressed() {
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
+        assertEquals(Command.JUMP, inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
+        assertNull(inputManager.getCommand());
+        inputManager.keyReleased(KeyEvent.VK_SPACE);
+        inputManager.keyPressed(KeyEvent.VK_SPACE);
+        assertEquals(Command.JUMP, inputManager.getCommand());
+    }
+
+    /**
+     * Tests that releasing a key removes it from the pressed set.
+     */
+    @Test
+    void testKeyRelease() {
+        inputManager.keyPressed(KeyEvent.VK_LEFT);
+        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+        inputManager.keyReleased(KeyEvent.VK_LEFT);
+        inputManager.keyPressed(KeyEvent.VK_LEFT);
+        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
+    }
+
+    /**
+     * Tests that clearQueue empties the command queue and pressed keys.
      */
     @Test
     void testClearQueue() {
-        inputManager.keyPressed(KeyEvent.VK_ENTER);
-        inputManager.keyPressed(KeyEvent.VK_ESCAPE);
+        inputManager.keyPressed(KeyEvent.VK_RIGHT);
+        inputManager.keyPressed(KeyEvent.VK_UP);
         inputManager.clearQueue();
-
         assertNull(inputManager.getCommand());
+        inputManager.keyPressed(KeyEvent.VK_RIGHT);
+        assertEquals(Command.MOVE_RIGHT, inputManager.getCommand());
     }
 
+    /**
+     * Tests that getCommand returns null if the queue is empty.
+     */
+    @Test
+    void testGetCommandEmpty() {
+        assertNull(inputManager.getCommand());
+    }
 }
