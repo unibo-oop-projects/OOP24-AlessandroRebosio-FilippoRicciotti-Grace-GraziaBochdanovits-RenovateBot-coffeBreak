@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.common;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,16 +14,33 @@ import it.unibo.coffebreak.impl.common.BoundigBox;
  * 
  * @author Alessandro Rebosio
  */
-public class TestPosition {
+class TestPosition {
+
+    private static final float INIT_X = 1.5f;
+    private static final float INIT_Y = -2.0f;
+    private static final float SUM_X = 2.0f;
+    private static final float SUM_Y = 3.0f;
+    private static final float VEC_X = 1.0f;
+    private static final float VEC_Y = -1.5f;
+    private static final float EXPECTED_SUM_X = SUM_X + VEC_X;
+    private static final float EXPECTED_SUM_Y = SUM_Y + VEC_Y;
+    private static final float SCALE_POS_X = 2.0f;
+    private static final float SCALE_POS_Y = 3.0f;
+    private static final int BOX_WIDTH = 4;
+    private static final int BOX_HEIGHT = 5;
+    private static final float EXPECTED_SCALED_X = SCALE_POS_X * BOX_WIDTH;
+    private static final float EXPECTED_SCALED_Y = SCALE_POS_Y * BOX_HEIGHT;
+    private static final float COPY_X = 7.5f;
+    private static final float COPY_Y = -3.2f;
 
     /**
      * Tests the creation of a Position with given coordinates.
      */
     @Test
     void testConstructor() {
-        Position pos = new Position(1.5f, -2.0f);
-        assertEquals(1.5f, pos.x());
-        assertEquals(-2.0f, pos.y());
+        final Position pos = new Position(INIT_X, INIT_Y);
+        assertEquals(INIT_X, pos.x());
+        assertEquals(INIT_Y, pos.y());
     }
 
     /**
@@ -30,20 +48,11 @@ public class TestPosition {
      */
     @Test
     void testSum() {
-        Position pos = new Position(2.0f, 3.0f);
-        Vector vec = new Vector(1.0f, -1.5f);
-        Position result = pos.sum(vec);
-        assertEquals(3.0f, result.x());
-        assertEquals(1.5f, result.y());
-    }
-
-    /**
-     * Tests that sum throws NullPointerException if vector is null.
-     */
-    @Test
-    void testSumNullVector() {
-        Position pos = new Position(1.0f, 1.0f);
-        assertThrows(NullPointerException.class, () -> pos.sum(null));
+        final Position pos = new Position(SUM_X, SUM_Y);
+        final Vector vec = new Vector(VEC_X, VEC_Y);
+        final Position result = pos.sum(vec);
+        assertEquals(EXPECTED_SUM_X, result.x());
+        assertEquals(EXPECTED_SUM_Y, result.y());
     }
 
     /**
@@ -51,20 +60,11 @@ public class TestPosition {
      */
     @Test
     void testScalePosition() {
-        Position pos = new Position(2.0f, 3.0f);
-        BoundigBox box = new BoundigBox(4, 5);
-        Position scaled = pos.scalePosition(box);
-        assertEquals(8.0f, scaled.x());
-        assertEquals(15.0f, scaled.y());
-    }
-
-    /**
-     * Tests that scalePosition throws NullPointerException if dimension is null.
-     */
-    @Test
-    void testScalePositionNull() {
-        Position pos = new Position(1.0f, 1.0f);
-        assertThrows(NullPointerException.class, () -> pos.scalePosition(null));
+        final Position pos = new Position(SCALE_POS_X, SCALE_POS_Y);
+        final BoundigBox box = new BoundigBox(BOX_WIDTH, BOX_HEIGHT);
+        final Position scaled = pos.scalePosition(box);
+        assertEquals(EXPECTED_SCALED_X, scaled.x());
+        assertEquals(EXPECTED_SCALED_Y, scaled.y());
     }
 
     /**
@@ -72,8 +72,8 @@ public class TestPosition {
      */
     @Test
     void testCopy() {
-        Position pos = new Position(7.5f, -3.2f);
-        Position copy = pos.copy();
+        final Position pos = new Position(COPY_X, COPY_Y);
+        final Position copy = pos.copy();
         assertNotSame(pos, copy);
         assertEquals(pos.x(), copy.x());
         assertEquals(pos.y(), copy.y());

@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -16,10 +17,18 @@ import it.unibo.coffebreak.impl.controller.GameController;
  * 
  * @author Alessandro Rebosio
  */
-public class TestGameController {
+class TestGameController {
+
+    private static final float DEFAULT_DELTA_TIME = 0.016f;
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int TEST_KEY_CODE = 10;
 
     private GameController controller;
 
+    /**
+     * Initializes a fresh GameLeaderBoard instance before each test.
+     */
     @BeforeEach
     void setUp() {
         controller = new GameController();
@@ -30,7 +39,7 @@ public class TestGameController {
      */
     @Test
     void testProcessInputNoCommand() {
-        assertDoesNotThrow(() -> controller.processInput());
+        assertDoesNotThrow(controller::processInput);
     }
 
     /**
@@ -38,7 +47,7 @@ public class TestGameController {
      */
     @Test
     void testUpdateModel() {
-        assertDoesNotThrow(() -> controller.updateModel(0.016f));
+        assertDoesNotThrow(() -> controller.updateModel(DEFAULT_DELTA_TIME));
     }
 
     /**
@@ -46,7 +55,7 @@ public class TestGameController {
      */
     @Test
     void testUpdateGameBounds() {
-        assertDoesNotThrow(() -> controller.updateGameBounds(800, 600));
+        assertDoesNotThrow(() -> controller.updateGameBounds(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     }
 
     /**
@@ -54,8 +63,8 @@ public class TestGameController {
      */
     @Test
     void testKeyPressedAndReleased() {
-        assertDoesNotThrow(() -> controller.keyPressed(10));
-        assertDoesNotThrow(() -> controller.keyReleased(10));
+        assertDoesNotThrow(() -> controller.keyPressed(TEST_KEY_CODE));
+        assertDoesNotThrow(() -> controller.keyReleased(TEST_KEY_CODE));
     }
 
     /**
@@ -63,7 +72,7 @@ public class TestGameController {
      */
     @Test
     void testGetEntities() {
-        List<Entity> entities = controller.getEntities();
+        final List<Entity> entities = controller.getEntities();
         assertNotNull(entities);
     }
 
@@ -73,9 +82,9 @@ public class TestGameController {
      */
     @Test
     void testGetIntValues() {
-        assertDoesNotThrow(() -> controller.getBonusValue());
-        assertDoesNotThrow(() -> controller.getHighestScore());
-        assertDoesNotThrow(() -> controller.getLevelIndex());
+        assertDoesNotThrow(controller::getBonusValue);
+        assertDoesNotThrow(controller::getHighestScore);
+        assertDoesNotThrow(controller::getLevelIndex);
     }
 
     /**
@@ -83,7 +92,7 @@ public class TestGameController {
      */
     @Test
     void testGetLeaderBoard() {
-        List<Entry> leaderboard = controller.getLeaderBoard();
+        final List<Entry> leaderboard = controller.getLeaderBoard();
         assertNotNull(leaderboard);
     }
 
@@ -93,7 +102,7 @@ public class TestGameController {
      */
     @Test
     void testGetGameState() {
-        assertDoesNotThrow(() -> controller.getGameState());
+        assertDoesNotThrow(controller::getGameState);
     }
 
     /**
@@ -101,6 +110,6 @@ public class TestGameController {
      */
     @Test
     void testIsGameActive() {
-        assertDoesNotThrow(() -> controller.isGameActive());
+        assertDoesNotThrow(controller::isGameActive);
     }
 }

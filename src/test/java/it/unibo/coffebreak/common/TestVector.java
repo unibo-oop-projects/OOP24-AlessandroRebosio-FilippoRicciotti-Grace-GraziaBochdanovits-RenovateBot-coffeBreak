@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.common;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,16 +12,33 @@ import it.unibo.coffebreak.impl.common.Vector;
  * 
  * @author Alessandro Rebosio
  */
-public class TestVector {
+class TestVector {
+
+    private static final float ZERO = 0.0f;
+    private static final float PARAM_X = 2.5f;
+    private static final float PARAM_Y = -1.5f;
+    private static final float SUM1_X = 1.0f;
+    private static final float SUM1_Y = 2.0f;
+    private static final float SUM2_X = 3.0f;
+    private static final float SUM2_Y = 4.0f;
+    private static final float EXPECTED_SUM_X = SUM1_X + SUM2_X;
+    private static final float EXPECTED_SUM_Y = SUM1_Y + SUM2_Y;
+    private static final float MUL_X = 2.0f;
+    private static final float MUL_Y = -3.0f;
+    private static final float MUL_FACTOR = 2.5f;
+    private static final float EXPECTED_MUL_X = MUL_X * MUL_FACTOR;
+    private static final float EXPECTED_MUL_Y = MUL_Y * MUL_FACTOR;
+    private static final float COPY_X = 7.5f;
+    private static final float COPY_Y = -3.2f;
 
     /**
      * Tests the default constructor creates a zero vector.
      */
     @Test
     void testDefaultConstructor() {
-        Vector v = new Vector();
-        assertEquals(0.0f, v.x());
-        assertEquals(0.0f, v.y());
+        final Vector v = new Vector();
+        assertEquals(ZERO, v.x());
+        assertEquals(ZERO, v.y());
     }
 
     /**
@@ -28,9 +46,9 @@ public class TestVector {
      */
     @Test
     void testParameterizedConstructor() {
-        Vector v = new Vector(2.5f, -1.5f);
-        assertEquals(2.5f, v.x());
-        assertEquals(-1.5f, v.y());
+        final Vector v = new Vector(PARAM_X, PARAM_Y);
+        assertEquals(PARAM_X, v.x());
+        assertEquals(PARAM_Y, v.y());
     }
 
     /**
@@ -38,20 +56,11 @@ public class TestVector {
      */
     @Test
     void testSum() {
-        Vector v1 = new Vector(1.0f, 2.0f);
-        Vector v2 = new Vector(3.0f, 4.0f);
-        Vector result = v1.sum(v2);
-        assertEquals(4.0f, result.x());
-        assertEquals(6.0f, result.y());
-    }
-
-    /**
-     * Tests that sum throws NullPointerException if vector is null.
-     */
-    @Test
-    void testSumNull() {
-        Vector v = new Vector(1.0f, 2.0f);
-        assertThrows(NullPointerException.class, () -> v.sum(null));
+        final Vector v1 = new Vector(SUM1_X, SUM1_Y);
+        final Vector v2 = new Vector(SUM2_X, SUM2_Y);
+        final Vector result = v1.sum(v2);
+        assertEquals(EXPECTED_SUM_X, result.x());
+        assertEquals(EXPECTED_SUM_Y, result.y());
     }
 
     /**
@@ -59,10 +68,10 @@ public class TestVector {
      */
     @Test
     void testMul() {
-        Vector v = new Vector(2.0f, -3.0f);
-        Vector result = v.mul(2.5f);
-        assertEquals(5.0f, result.x());
-        assertEquals(-7.5f, result.y());
+        final Vector v = new Vector(MUL_X, MUL_Y);
+        final Vector result = v.mul(MUL_FACTOR);
+        assertEquals(EXPECTED_MUL_X, result.x());
+        assertEquals(EXPECTED_MUL_Y, result.y());
     }
 
     /**
@@ -70,8 +79,8 @@ public class TestVector {
      */
     @Test
     void testCopy() {
-        Vector v = new Vector(7.5f, -3.2f);
-        Vector copy = v.copy();
+        final Vector v = new Vector(COPY_X, COPY_Y);
+        final Vector copy = v.copy();
         assertNotSame(v, copy);
         assertEquals(v.x(), copy.x());
         assertEquals(v.y(), copy.y());

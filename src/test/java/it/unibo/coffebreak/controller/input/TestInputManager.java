@@ -29,10 +29,13 @@ import it.unibo.coffebreak.impl.controller.input.InputManager;
  * 
  * @author Alessandro Rebosio
  */
-class TestInput {
+class TestInputManager {
 
     private InputManager inputManager;
 
+    /**
+     * Initializes a fresh GameLeaderBoard instance before each test.
+     */
     @BeforeEach
     void setUp() {
         inputManager = new InputManager();

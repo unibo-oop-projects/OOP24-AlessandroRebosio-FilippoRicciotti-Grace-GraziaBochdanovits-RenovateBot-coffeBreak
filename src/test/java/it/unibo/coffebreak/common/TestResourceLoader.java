@@ -1,6 +1,8 @@
 package it.unibo.coffebreak.common;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +13,14 @@ import it.unibo.coffebreak.impl.common.ResourceLoader;
  * 
  * @author Alessandro Rebosio
  */
-public class TestResourceLoader {
+class TestResourceLoader {
 
     /**
      * Tests that loading a non-existent image throws ResourceException.
      */
     @Test
     void testLoadImageNotFound() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertThrows(RuntimeException.class, () -> loader.loadImage("/notfound.png"));
     }
 
@@ -27,7 +29,7 @@ public class TestResourceLoader {
      */
     @Test
     void testLoadFontNotFound() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertThrows(RuntimeException.class, () -> loader.loadFont("/notfound.ttf"));
     }
 
@@ -36,7 +38,7 @@ public class TestResourceLoader {
      */
     @Test
     void testLoadClipNotFound() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertThrows(RuntimeException.class, () -> loader.loadClip("/notfound.wav"));
     }
 
@@ -53,7 +55,7 @@ public class TestResourceLoader {
      */
     @Test
     void testLoadImageValid() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertNotNull(loader.loadImage("/img/sheet.png"));
     }
 
@@ -62,7 +64,7 @@ public class TestResourceLoader {
      */
     @Test
     void testLoadFontValid() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertNotNull(loader.loadFont("/fonts/PressStart2P-Regular.ttf"));
     }
 
@@ -71,7 +73,7 @@ public class TestResourceLoader {
      */
     @Test
     void testLoadClipValid() {
-        ResourceLoader loader = new ResourceLoader();
+        final ResourceLoader loader = new ResourceLoader();
         assertNotNull(loader.loadClip("/sfx/jump.wav"));
     }
 }
