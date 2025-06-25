@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.model.level;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -29,7 +30,7 @@ public class GameLevelManager implements LevelManager {
     private final MapsManager mapsManager = new GameMapsManager();
     private final Bonus levelBonus = new GameBonus();
 
-    private int levelIndex = 1;
+    private int levelIndex;
     private float bonusElapsedTime;
 
     /**
@@ -44,8 +45,8 @@ public class GameLevelManager implements LevelManager {
      * {@inheritDoc}
      */
     @Override
-    public MainCharacter getMainCharacter() {
-        return this.entityManager.getMainCharacter().orElseThrow();
+    public Optional<MainCharacter> getMainCharacter() {
+        return this.entityManager.getMainCharacter();
     }
 
     /**
@@ -107,7 +108,7 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void advance() {
         if (this.mapsManager.advance(this.getEntities())) {
-            this.getMainCharacter().earnPoints(this.getBonusValue());
+            this.getMainCharacter().ifPresent(p -> p.earnPoints(this.getBonusValue()));
             this.levelIndex++;
             this.loadCurrentEntities();
         }

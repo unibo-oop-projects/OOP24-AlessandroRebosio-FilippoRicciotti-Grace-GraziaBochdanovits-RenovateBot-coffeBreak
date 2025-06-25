@@ -51,7 +51,7 @@ public class InGameModelState extends AbstractModelState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-        final var player = model.getMainCharacter();
+        final var player = model.getMainCharacter().get();
         final int currentLives = player.getLives();
 
         model.getEntities().stream()

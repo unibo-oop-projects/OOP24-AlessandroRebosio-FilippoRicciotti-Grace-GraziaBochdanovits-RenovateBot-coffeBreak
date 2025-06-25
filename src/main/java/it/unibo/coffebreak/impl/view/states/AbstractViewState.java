@@ -44,6 +44,8 @@ public abstract class AbstractViewState implements ViewState {
      */
     public static final float SAVE_HEIGHT = 0.75f;
 
+    private static final float DERIVE = 0.02f;
+
     private final Controller controller;
     private final Loader loader;
 
@@ -92,21 +94,20 @@ public abstract class AbstractViewState implements ViewState {
 
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
-
-        final var scoreFont = this.loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
-        final String highestScore = String.valueOf(controller.getHighestScore());
-        final String currentScore = "000000"; // String.valueOf(controller.getScoreValue());
-        final String currentLevel = "00"; // String.valueOf(controller.getLevelIndex());
-        final int thirdWidth = (int) (width + width * 0.66f);
-        g.setFont(scoreFont);
+        g.setFont(this.loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * DERIVE));
 
         drawCenteredText(g, "HIGH SCORE", width, (int) (height * TOP_HEIGHT), Color.RED);
-        drawCenteredText(g, highestScore, width, (int) (height * SCORE_HEIGHT), Color.WHITE);
         drawCenteredText(g, "1UP", width / 3, (int) (height * TOP_HEIGHT), Color.RED);
-        drawCenteredText(g, currentScore, width / 3, (int) (height * SCORE_HEIGHT), Color.WHITE);
-        drawCenteredText(g, "L = " + currentLevel, thirdWidth, (int) (height * SCORE_HEIGHT),
-                Color.BLUE);
+        drawCenteredText(g, String.valueOf(controller.getHighestScore()), width, (int) (height * SCORE_HEIGHT),
+                Color.WHITE);
 
+        drawCenteredText(g, String.format("%06d", controller.getScoreValue()), width / 3,
+                (int) (height * SCORE_HEIGHT),
+                Color.WHITE);
+
+        drawCenteredText(g, "L = " + String.format("%02d", controller.getLevelIndex()), width + width * 2 / 3,
+                (int) (height * SCORE_HEIGHT),
+                Color.BLUE);
     }
 
     /**
@@ -127,7 +128,7 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final void drawOptions(final Graphics2D g, final int height, final int width) {
 
-        final var optionFont = loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * 0.02f);
+        final var optionFont = loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * DERIVE);
 
         g.setFont(optionFont);
 

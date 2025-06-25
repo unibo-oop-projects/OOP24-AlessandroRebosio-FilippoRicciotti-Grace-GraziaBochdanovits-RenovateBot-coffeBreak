@@ -20,8 +20,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class GameOverView extends AbstractViewState {
 
-    private static final Color DEFAULT_COLOR = Color.WHITE;
-
     private final Font font;
 
     /**
@@ -43,40 +41,13 @@ public class GameOverView extends AbstractViewState {
         super.draw(g, width, height, deltaTime);
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
-        final Font labelFont = this.font.deriveFont(height * 0.02f);
-        final var nameFont = this.font.deriveFont(height * 0.02f);
-
-        final var controller = super.getController();
-        final var gameState = controller.getGameState();
+        final Font subTitles = this.font.deriveFont(height * 0.02f);
 
         g.setFont(titleFont);
         drawCenteredText(g, "GAME OVER", width, (int) (height * TITLE_HEIGHT), Color.RED);
 
-        g.setFont(labelFont);
-        // drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
-
-        g.setFont(nameFont);
-        // final var fm = g.getFontMetrics();
-        final var options = gameState.getOptions();
-        final int selected = options.indexOf(gameState.getSelectedOption());
-
-        // final int baseY = (int) (height * 0.63);
-        // final int spacing = (int) (width * 0.05);
-        // final int totalWidth = 3 * fm.charWidth('W') + 2 * spacing;
-        // final int startX = (width - totalWidth) / 2;
-        // final String name = gameState.getName();
-
-        for (int i = 0; i < 3; i++) {
-            // final String text = String.valueOf(name.charAt(i));
-            // final int letterX = startX + i * (fm.charWidth('W') + spacing);
-            g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-            // g.drawString(text, letterX, baseY);
-        }
-
-        g.setFont(labelFont);
-        drawCenteredText(g, "[ SAVE ]", width, (int) (height * SAVE_HEIGHT),
-                selected == options.size() - 1 ? Color.YELLOW : DEFAULT_COLOR);
-
+        g.setFont(subTitles);
+        drawCenteredText(g, "Press enter to menu...", width, (int) (height * (MIDDLE_HEIGHT + 0.08)), Color.GRAY);
     }
 
 }

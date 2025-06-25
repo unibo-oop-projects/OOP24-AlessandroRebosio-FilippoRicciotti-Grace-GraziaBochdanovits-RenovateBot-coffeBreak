@@ -53,5 +53,4 @@ public class PauseView extends AbstractViewState {
 
         super.drawOptions(g, height, width);
     }
-
 }
