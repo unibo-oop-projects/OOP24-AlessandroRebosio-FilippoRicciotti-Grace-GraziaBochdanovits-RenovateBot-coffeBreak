@@ -32,9 +32,11 @@ public record Position(float x, float y) {
      *
      * @param dimension the {@code Dimension} by which to scale this position's
      *                  coordinates
+     * @throws NullPointerException if the provided dimension is null
      * @return a new {@code Position} with scaled coordinates
      */
     public Position scalePosition(final Dimension dimension) {
+        Objects.requireNonNull(dimension, "The vector cannot be null");
         return new Position(this.x * dimension.width(), this.y * dimension.height());
     }
 
