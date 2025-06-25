@@ -21,13 +21,6 @@ public interface Input {
     Command getCommand();
 
     /**
-     * Retrieves the current direction input.
-     *
-     * @return the {@link Direction} representing the current input direction.
-     */
-    Command getDirection();
-
-    /**
      * Registers a key press event and converts it to a game command.
      *
      * @param keyCode the physical key code that was pressed
@@ -40,15 +33,6 @@ public interface Input {
      * @param keyCode the physical key code that was released
      */
     void keyReleased(int keyCode);
-
-    /**
-     * Binds a physical key to a logical game command.
-     *
-     * @param keyCode the key code to bind
-     * @param command the command to associate with the key
-     * @return the previously bound command, or null if the key was unbound
-     */
-    Command bindKey(int keyCode, Command command);
 
     /**
      * Clears all pending commands from the input queue.

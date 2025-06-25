@@ -57,7 +57,7 @@ public class WithHammerState extends AbstractMarioState {
     public void onEnter(final MainCharacter character) {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
         this.originalDimension = new Dimension(character.getDimension().width(), character.getDimension().height());
-        character.setDimension(character.getDimension().mulHeight(3));
+        character.setDimension(character.getDimension().scaleHeight(3));
     }
 
     /**

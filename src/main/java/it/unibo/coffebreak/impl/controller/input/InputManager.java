@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -38,13 +37,13 @@ public class InputManager implements Input {
      * </ul>
      */
     public InputManager() {
-        keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
-        keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESCAPE);
-        keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
-        keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
-        keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
-        keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
-        keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
+        this.keyBindings.put(KeyEvent.VK_ENTER, Command.ENTER);
+        this.keyBindings.put(KeyEvent.VK_ESCAPE, Command.ESCAPE);
+        this.keyBindings.put(KeyEvent.VK_UP, Command.MOVE_UP);
+        this.keyBindings.put(KeyEvent.VK_DOWN, Command.MOVE_DOWN);
+        this.keyBindings.put(KeyEvent.VK_LEFT, Command.MOVE_LEFT);
+        this.keyBindings.put(KeyEvent.VK_RIGHT, Command.MOVE_RIGHT);
+        this.keyBindings.put(KeyEvent.VK_SPACE, Command.JUMP);
     }
 
     /**
@@ -58,25 +57,6 @@ public class InputManager implements Input {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Command getDirection() { // TODO: to fix
-        final boolean right = pressedKeys.contains(Command.MOVE_RIGHT);
-        final boolean left = pressedKeys.contains(Command.MOVE_LEFT);
-        final boolean up = pressedKeys.contains(Command.MOVE_UP);
-        final boolean down = pressedKeys.contains(Command.MOVE_DOWN);
-
-        if (right ^ left) {
-            return right ? Command.MOVE_RIGHT : Command.MOVE_LEFT;
-        }
-        if (up ^ down && !(right || left)) {
-            return up ? Command.MOVE_UP : Command.MOVE_DOWN;
-        }
-        return Command.NONE;
-    }
-
-    /**
      * Registers a key press event and queues the associated command if not already
      * active.
      * 
@@ -85,8 +65,8 @@ public class InputManager implements Input {
     @Override
     public void keyPressed(final int keyCode) {
         final Command command = keyBindings.get(keyCode);
-        if (command != null && pressedKeys.add(command)) {
-            commandQueue.add(command);
+        if (command != null && this.pressedKeys.add(command)) {
+            this.commandQueue.add(command);
         }
     }
 
@@ -99,19 +79,6 @@ public class InputManager implements Input {
     @Override
     public void keyReleased(final int keyCode) {
         this.pressedKeys.remove(this.keyBindings.get(keyCode));
-    }
-
-    /**
-     * Binds a physical key to a logical game command.
-     * 
-     * @param keyCode the key code to bind
-     * @param command the command to associate with the key
-     * @return the previously bound command, or {@code null} if the key was unbound
-     * @throws NullPointerException if {@code command} is null
-     */
-    @Override
-    public Command bindKey(final int keyCode, final Command command) {
-        return keyBindings.put(keyCode, Objects.requireNonNull(command, "Command cannot be null"));
     }
 
     /**
