@@ -14,6 +14,7 @@ import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
+import it.unibo.coffebreak.impl.repository.ScoreRepository;
 
 /**
  * Comprehensive test suite for {@link Leaderboard} interface and
@@ -35,7 +36,8 @@ class TestLeaderBoard {
      * Initializes a fresh GameLeaderBoard instance before each test.
      */
     @BeforeEach
-    void init() {
+    void setUp() {
+        new ScoreRepository().deleteAllFiles();
         leaderBoard = new GameLeaderboard();
     }
 
@@ -49,9 +51,9 @@ class TestLeaderBoard {
         leaderBoard.addEntry(new ScoreEntry(PLAYER_3, SCORE_3));
 
         final List<Entry> expected = List.of(
-            new ScoreEntry(PLAYER_3, SCORE_3),
-            new ScoreEntry(PLAYER_2, SCORE_2),
-            new ScoreEntry(PLAYER_1, SCORE_1));
+                new ScoreEntry(PLAYER_3, SCORE_3),
+                new ScoreEntry(PLAYER_2, SCORE_2),
+                new ScoreEntry(PLAYER_1, SCORE_1));
 
         assertEquals(expected, leaderBoard.getTopScores());
     }
