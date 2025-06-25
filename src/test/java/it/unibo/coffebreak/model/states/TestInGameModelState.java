@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.states;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,15 +20,19 @@ import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
  *
  * @author Alessandro Rebosio
  */
-public class TestInGameModelState {
+class TestInGameModelState {
 
     private InGameModelState state;
     private Model dummyModel;
 
+    /**
+     * Initializes the in game state and dummy model before each test.
+     */
     @BeforeEach
     void setUp() {
         state = new InGameModelState();
         dummyModel = new GameModel();
+        dummyModel.setState(state);
     }
 
     /**
