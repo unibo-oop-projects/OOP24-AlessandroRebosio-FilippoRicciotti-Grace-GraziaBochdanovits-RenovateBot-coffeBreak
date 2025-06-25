@@ -17,14 +17,14 @@ import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
 import it.unibo.coffebreak.api.view.states.ViewState;
-import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
-import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
+// import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
+// import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
-import it.unibo.coffebreak.impl.view.states.ingame.InGameView;
-import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
-import it.unibo.coffebreak.impl.view.states.gameover.GameOverView;
+// import it.unibo.coffebreak.impl.view.states.ingame.InGameView;
+// import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
+// import it.unibo.coffebreak.impl.view.states.gameover.GameOverView;
 import it.unibo.coffebreak.impl.view.states.menu.MenuView;
-import it.unibo.coffebreak.impl.view.states.pause.PauseView;
+// import it.unibo.coffebreak.impl.view.states.pause.PauseView;
 
 /**
  * Resizable panel for game rendering, using double buffering to prevent
@@ -136,9 +136,9 @@ public class GamePanel extends JPanel implements Panel {
         this.deltaTime = deltaTime;
         final ViewState nextState = switch (this.controller.getGameState()) {
             case final MenuModelState menu -> new MenuView(this.controller, this.loader);
-            case final InGameModelState inGame -> new InGameView(this.controller, this.loader);
-            case final PauseModelState pause -> new PauseView(this.controller, this.loader);
-            case final GameOverModelState gameOver -> new GameOverView(this.controller, this.loader);
+            // case final InGameModelState inGame -> new InGameView(this.controller, this.loader);
+            // case final PauseModelState pause -> new PauseView(this.controller, this.loader);
+            // case final GameOverModelState gameOver -> new GameOverView(this.controller, this.loader);
             default -> null;
         };
 

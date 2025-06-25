@@ -56,21 +56,21 @@ public class GameOverView extends AbstractViewState {
         drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
 
         g.setFont(nameFont);
-        final var fm = g.getFontMetrics();
+        // final var fm = g.getFontMetrics();
         final var options = gameState.getOptions();
         final int selected = options.indexOf(gameState.getSelectedOption());
 
-        final int baseY = (int) (height * 0.63);
-        final int spacing = (int) (width * 0.05);
-        final int totalWidth = 3 * fm.charWidth('W') + 2 * spacing;
-        final int startX = (width - totalWidth) / 2;
-        final String name = gameState.getName();
+        // final int baseY = (int) (height * 0.63);
+        // final int spacing = (int) (width * 0.05);
+        // final int totalWidth = 3 * fm.charWidth('W') + 2 * spacing;
+        // final int startX = (width - totalWidth) / 2;
+        // final String name = gameState.getName();
 
         for (int i = 0; i < 3; i++) {
-            final String text = String.valueOf(name.charAt(i));
-            final int letterX = startX + i * (fm.charWidth('W') + spacing);
+            // final String text = String.valueOf(name.charAt(i));
+            // final int letterX = startX + i * (fm.charWidth('W') + spacing);
             g.setColor(i == selected ? Color.YELLOW : DEFAULT_COLOR);
-            g.drawString(text, letterX, baseY);
+            // g.drawString(text, letterX, baseY);
         }
 
         g.setFont(labelFont);
