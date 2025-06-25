@@ -6,29 +6,42 @@ package it.unibo.coffebreak.api.common;
  * <ul>
  * <li>{@link #START}: Start a new game from the main menu.</li>
  * <li>{@link #RESUME}: Resume the game from the pause menu.</li>
- * <li>{@link #EXIT}: Exit the game or return to the main menu.</li>
+ * <li>{@link #QUIT}: Exit the game or return to the main menu.</li>
  * <li>{@link #NONE}: No option selected or not applicable.</li>
  * </ul>
  * 
  * @author Filippo Ricciotti
  */
 public enum Option {
-    /** Start a new game from the main menu. */
+    /**
+     * Start a new game from the main menu.
+     */
     START,
-    /** Resume the game from the pause menu. */
+
+    /**
+     * Resume the game from the pause menu.
+     */
     RESUME,
-    /** Exit the game or return to the main menu. */
+
+    /**
+     * Exit the game or return to the main menu.
+     */
     MENU,
+
     /**
      * Quit the game or application.
      */
     QUIT,
+
     /** First Char of the Player name. */
     CHAR0,
     /** Second Char of the Player name. */
     CHAR1,
     /** Third Char of the Player name. */
     CHAR2,
-    /** No option selected or not applicable. */
+
+    /**
+     * No option selected or not applicable.
+     */
     NONE;
 }
