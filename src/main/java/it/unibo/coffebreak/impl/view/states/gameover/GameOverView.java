@@ -53,7 +53,7 @@ public class GameOverView extends AbstractViewState {
         drawCenteredText(g, "GAME OVER", width, (int) (height * TITLE_HEIGHT), Color.RED);
 
         g.setFont(labelFont);
-        drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
+        // drawCenteredText(g, "Insert your name:", width, (int) (height * MIDDLE_HEIGHT), Color.LIGHT_GRAY);
 
         g.setFont(nameFont);
         // final var fm = g.getFontMetrics();

@@ -6,6 +6,7 @@ import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
+import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
@@ -75,7 +76,7 @@ public class InGameModelState extends AbstractModelState {
         model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {
-            model.setState(null);
+            model.setState(new GameOverModelState());
         }
     }
 }
