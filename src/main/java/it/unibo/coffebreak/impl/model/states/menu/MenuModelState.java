@@ -40,7 +40,7 @@ public class MenuModelState extends AbstractModelState {
                 switch (OPTIONS.get(this.selectedOption)) {
                     case START:
                         model.start();
-                        model.setState(InGameModelState::new);
+                        model.setState(new InGameModelState());
                         break;
                     case QUIT:
                         model.stop();

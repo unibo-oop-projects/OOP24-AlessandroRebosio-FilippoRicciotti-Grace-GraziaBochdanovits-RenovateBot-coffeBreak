@@ -35,7 +35,7 @@ public class GameOverModelState extends AbstractModelState {
         switch (command) {
             case ENTER:
                 if (Option.QUIT == OPTIONS.get(selectedOption) && !name.contains("-")) {
-                    model.setState(MenuModelState::new);
+                    model.setState(new MenuModelState());
                 }
                 break;
             case MOVE_UP:

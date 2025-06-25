@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
@@ -14,7 +15,6 @@ import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;

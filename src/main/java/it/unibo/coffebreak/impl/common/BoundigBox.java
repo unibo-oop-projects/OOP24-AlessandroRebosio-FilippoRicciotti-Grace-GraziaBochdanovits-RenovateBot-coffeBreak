@@ -11,6 +11,14 @@ package it.unibo.coffebreak.impl.common;
  * @author Alessadro Rebosio
  */
 public record BoundigBox(int width, int height) {
+
+    /**
+     * Constructs a {@code BoundigBox} with width and height set to 0.
+     */
+    public BoundigBox() {
+        this(0, 0);
+    }
+
     /**
      * Returns a new {@code BoundigBox} with its width multiplied by the
      * specified factor.

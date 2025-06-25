@@ -40,10 +40,10 @@ public class PauseModelState extends AbstractModelState {
             case ENTER:
                 switch (OPTIONS.get(selectedOption)) {
                     case RESUME:
-                        model.setState(InGameModelState::new);
+                        model.setState(new InGameModelState());
                         break;
                     case MENU:
-                        model.setState(MenuModelState::new);
+                        model.setState(new MenuModelState());
                         break;
                     case QUIT:
                         model.stop();

@@ -3,8 +3,8 @@ package it.unibo.coffebreak.impl.view.render.entities.collectible.hammer;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.view.render.entities.collectible.AbstractCollectableRender;
 

@@ -5,8 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
 
 /**

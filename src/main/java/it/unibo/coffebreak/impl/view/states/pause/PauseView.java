@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**

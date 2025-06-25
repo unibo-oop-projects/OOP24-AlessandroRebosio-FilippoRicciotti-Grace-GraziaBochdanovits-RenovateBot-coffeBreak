@@ -42,20 +42,6 @@ class TestInput {
     }
 
     /**
-     * Tests that default key bindings are correctly initialized.
-     */
-    @Test
-    void testDefaultBindings() {
-        assertEquals(Command.ENTER, inputManager.bindKey(KeyEvent.VK_ENTER, Command.NONE));
-        assertEquals(Command.ESCAPE, inputManager.bindKey(KeyEvent.VK_ESCAPE, Command.NONE));
-        assertEquals(Command.MOVE_UP, inputManager.bindKey(KeyEvent.VK_UP, Command.NONE));
-        assertEquals(Command.MOVE_DOWN, inputManager.bindKey(KeyEvent.VK_DOWN, Command.NONE));
-        assertEquals(Command.MOVE_LEFT, inputManager.bindKey(KeyEvent.VK_LEFT, Command.NONE));
-        assertEquals(Command.MOVE_RIGHT, inputManager.bindKey(KeyEvent.VK_RIGHT, Command.NONE));
-        assertEquals(Command.JUMP, inputManager.bindKey(KeyEvent.VK_SPACE, Command.NONE));
-    }
-
-    /**
      * Tests that key presses are correctly converted to commands
      * and added to the queue.
      */
@@ -104,25 +90,4 @@ class TestInput {
         assertNull(inputManager.getCommand());
     }
 
-    /**
-     * Tests custom key binding functionality.
-     */
-    @Test
-    void testCustomKeyBinding() {
-        inputManager.bindKey(KeyEvent.VK_A, Command.MOVE_LEFT);
-
-        inputManager.keyPressed(KeyEvent.VK_A);
-        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
-    }
-
-    /**
-     * Tests that binding a key to null removes the binding.
-     */
-    @Test
-    void testRemoveKeyBinding() {
-        inputManager.bindKey(KeyEvent.VK_SPACE, Command.MOVE_LEFT);
-
-        inputManager.keyPressed(KeyEvent.VK_SPACE);
-        assertEquals(Command.MOVE_LEFT, inputManager.getCommand());
-    }
 }

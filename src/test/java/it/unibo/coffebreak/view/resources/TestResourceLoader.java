@@ -20,7 +20,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 
 /**
  * Test class for {@link ResourceLoader} functionality.

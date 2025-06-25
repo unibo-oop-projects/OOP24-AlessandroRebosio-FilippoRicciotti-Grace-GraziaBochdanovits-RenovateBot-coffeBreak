@@ -26,7 +26,7 @@ public class InGameModelState extends AbstractModelState {
     @Override
     public void handleCommand(final Model model, final Command command) {
         switch (command) {
-            case ESCAPE -> model.setState(PauseModelState::new);
+            case ESCAPE -> model.setState(new PauseModelState());
             default -> {
             }
         }
@@ -70,7 +70,7 @@ public class InGameModelState extends AbstractModelState {
         model.calculateBonus(deltaTime);
 
         if (player.isGameOver()) {
-            model.setState(GameOverModelState::new);
+            model.setState(new GameOverModelState());
         }
     }
 }

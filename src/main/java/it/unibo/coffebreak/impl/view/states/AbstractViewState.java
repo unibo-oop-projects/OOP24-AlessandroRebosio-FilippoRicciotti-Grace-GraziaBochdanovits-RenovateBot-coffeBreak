@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Objects;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.api.view.states.ViewState;
-import it.unibo.coffebreak.impl.view.loader.ResourceLoader;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 
 /**
  * Abstract implementation of the {@link ViewState} interface.

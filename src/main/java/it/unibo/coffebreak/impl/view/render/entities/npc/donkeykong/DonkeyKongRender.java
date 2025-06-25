@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.api.view.loader.Loader;
 import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
