@@ -2,7 +2,7 @@ package it.unibo.coffebreak.impl.model.entities.structure.platform;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
@@ -27,13 +27,14 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
-     * @param position  the 2D position of the platform (cannot be null)
-     * @param dimension the 2D dimension of the platform (cannot be null)
-     * @param canPassThrough whether Mario can pass through this platform
-     * @param reversesDirection whether enemy should reverse direction when hitting this platform
+     * @param position          the 2D position of the platform (cannot be null)
+     * @param dimension         the 2D dimension of the platform (cannot be null)
+     * @param canPassThrough    whether Mario can pass through this platform
+     * @param reversesDirection whether enemy should reverse direction when hitting
+     *                          this platform
      */
-    public AbstractPlatform(final Position position, final Dimension dimension,
-                            final boolean canPassThrough, final boolean reversesDirection) {
+    public AbstractPlatform(final Position position, final BoundigBox dimension,
+            final boolean canPassThrough, final boolean reversesDirection) {
         super(position, dimension);
         this.canPassThrough = canPassThrough;
         this.reversesDirection = reversesDirection;
@@ -87,7 +88,8 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     /**
      * Marks this platform as broken by setting its state to true.
      * Once invoked, the platform is considered unusable or non-functional.
-     * This method is intended to be used by subclasses to update the platform's status.
+     * This method is intended to be used by subclasses to update the platform's
+     * status.
      */
     protected final void broke() {
         this.broken = true;

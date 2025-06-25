@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.structure.platform.normal;
 
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatform;
 
@@ -16,13 +16,14 @@ public class NormalPlatform extends AbstractPlatform {
      * Constructs a new NormalPlatform with specified position, dimensions and
      * slope.
      * 
-     * @param position  the 2D position of the platform (cannot be null)
-     * @param dimension the 2D dimension of the platform (cannot be null)
-     * @param canPassThrough whether Mario can pass through this platform
-     * @param reversesDirection whether enemy should reverse direction when hitting this platform
+     * @param position          the 2D position of the platform (cannot be null)
+     * @param dimension         the 2D dimension of the platform (cannot be null)
+     * @param canPassThrough    whether Mario can pass through this platform
+     * @param reversesDirection whether enemy should reverse direction when hitting
+     *                          this platform
      */
-    public NormalPlatform(final Position position, final Dimension dimension,
-                            final boolean canPassThrough, final boolean reversesDirection) {
+    public NormalPlatform(final Position position, final BoundigBox dimension,
+            final boolean canPassThrough, final boolean reversesDirection) {
         super(position, dimension, canPassThrough, reversesDirection);
     }
 }

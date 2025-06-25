@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.npc;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
@@ -21,7 +21,7 @@ public abstract class AbstractNpc extends AbstractEntity {
      * @param dimension the dimension of the npc in the game world
      * 
      */
-    public AbstractNpc(final Position position, final Dimension dimension) {
+    public AbstractNpc(final Position position, final BoundigBox dimension) {
         super(position, dimension);
     }
 

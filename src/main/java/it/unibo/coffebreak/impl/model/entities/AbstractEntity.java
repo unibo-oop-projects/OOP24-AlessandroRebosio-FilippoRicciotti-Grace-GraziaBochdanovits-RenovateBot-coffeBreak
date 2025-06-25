@@ -3,7 +3,7 @@ package it.unibo.coffebreak.impl.model.entities;
 import java.util.Objects;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.common.Vector;
 
@@ -19,18 +19,18 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public abstract class AbstractEntity implements Entity {
 
-    private Dimension dimension;
+    private BoundigBox dimension;
     private Position position;
     private Vector velocity;
 
     /**
      * Constructs a new game entity with the specified position and dimension.
      *
-     * @param position the initial position of the entity (not null)
+     * @param position  the initial position of the entity (not null)
      * @param dimension the size of the entity (not null)
      * @throws NullPointerException if either argument is null
      */
-    public AbstractEntity(final Position position, final Dimension dimension) {
+    public AbstractEntity(final Position position, final BoundigBox dimension) {
         this.dimension = Objects.requireNonNull(dimension, "Dimension cannot be null");
         this.position = Objects.requireNonNull(position, "Position cannot be null");
 
@@ -41,7 +41,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public void setDimension(final Dimension dimension) {
+    public void setDimension(final BoundigBox dimension) {
         this.dimension = dimension.copy();
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractEntity implements Entity {
      * {@inheritDoc}
      */
     @Override
-    public Dimension getDimension() {
+    public BoundigBox getDimension() {
         return this.dimension;
     }
 

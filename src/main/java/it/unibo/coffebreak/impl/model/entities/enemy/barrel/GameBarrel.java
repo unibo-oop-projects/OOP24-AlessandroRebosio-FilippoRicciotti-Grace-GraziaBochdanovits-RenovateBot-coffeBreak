@@ -7,7 +7,7 @@ import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
@@ -54,7 +54,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
      *                           destroyed
      * @throws NullPointerException if position, dimension or physics are null
      */
-    public GameBarrel(final Position position, final Dimension dimension, final boolean canTransformToFire) {
+    public GameBarrel(final Position position, final BoundigBox dimension, final boolean canTransformToFire) {
         super(position, dimension);
 
         this.physics = new GamePhysics();

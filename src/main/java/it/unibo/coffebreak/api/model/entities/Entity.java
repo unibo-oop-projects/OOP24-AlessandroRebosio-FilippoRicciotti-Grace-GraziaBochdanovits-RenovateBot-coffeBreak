@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.api.model.entities;
 
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.common.Vector;
 
@@ -10,7 +10,7 @@ import it.unibo.coffebreak.impl.common.Vector;
  * Implementations can represent both static and dynamic game elements.
  *
  * @see Position
- * @see Dimension
+ * @see BoundigBox
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -35,18 +35,18 @@ public interface Entity {
     /**
      * Gets the physical dimensions of this entity.
      *
-     * @return the {@link Dimension} of this entity (never {@code null})
+     * @return the {@link BoundigBox} of this entity (never {@code null})
      */
-    Dimension getDimension();
+    BoundigBox getDimension();
 
     /**
      * Sets the physical dimensions (bounding box) of this entity.
      * The dimension defines the size and shape of the entity in the game world.
      *
-     * @param dimension the new {@link Dimension} to set (must not be
+     * @param dimension the new {@link BoundigBox} to set (must not be
      *                  {@code null})
      */
-    void setDimension(Dimension dimension);
+    void setDimension(BoundigBox dimension);
 
     /**
      * Sets the velocity vector of this entity.

@@ -15,7 +15,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.physics.Physics;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
@@ -69,7 +69,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
      * @param position  the initial position of Mario
      * @param dimension the 2D dimension of the Mario (cannot be null)
      */
-    public Mario(final Position position, final Dimension dimension) {
+    public Mario(final Position position, final BoundigBox dimension) {
         super(position, dimension);
 
         this.livesManager = new GameLivesManager();
@@ -129,7 +129,7 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                     vx = isFacingRight ? physics.moveRight(deltaTime).x() : physics.moveLeft(deltaTime).x();
                     this.onPlatform = false;
                     this.isJumping = true;
-                } //TODO: to fix when command is fixed
+                } // TODO: to fix when command is fixed
             }
             default -> {
                 if (this.onPlatform) {
@@ -181,14 +181,17 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                 this.setVelocity(new Vector(0, 0));
                 this.moveDirection = Command.NONE;
             }
-            default -> { }
+            default -> {
+            }
         }
 
         this.currentState.handleCollision(this, other);
     }
 
     private void handlePlatformCollision(final Platform platform) {
-        enum CollisionDirection { TOP, BOTTOM, LEFT, RIGHT }
+        enum CollisionDirection {
+            TOP, BOTTOM, LEFT, RIGHT
+        }
 
         final float marioBottom = getPosition().y() + getDimension().height();
         final float marioTop = getPosition().y();
@@ -229,7 +232,8 @@ public class Mario extends AbstractEntity implements MainCharacter, Movable {
                         this.isJumping = false;
                         setVelocity(new Vector(getVelocity().x(), 0));
                         setPosition(new Position(getPosition().x(), platformTop - getDimension().height()));
-                    } else if (!(platform.canPassThrough() && getVelocity().y() >= 0 && moveDirection == Command.MOVE_DOWN)) {
+                    } else if (!(platform.canPassThrough() && getVelocity().y() >= 0
+                            && moveDirection == Command.MOVE_DOWN)) {
                         this.onPlatform = true;
                         this.isJumping = false;
                         setVelocity(new Vector(getVelocity().x(), 0));

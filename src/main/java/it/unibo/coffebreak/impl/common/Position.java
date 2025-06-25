@@ -35,7 +35,7 @@ public record Position(float x, float y) {
      * @throws NullPointerException if the provided dimension is null
      * @return a new {@code Position} with scaled coordinates
      */
-    public Position scalePosition(final Dimension dimension) {
+    public Position scalePosition(final BoundigBox dimension) {
         Objects.requireNonNull(dimension, "The vector cannot be null");
         return new Position(this.x * dimension.width(), this.y * dimension.height());
     }

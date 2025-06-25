@@ -5,7 +5,7 @@ import java.util.Objects;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.physics.collision.Collision;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 
 /**
@@ -43,8 +43,8 @@ public final class GameCollision implements Collision {
         final Entity player = model.getMainCharacter();
 
         final Position current = player.getPosition();
-        final Dimension bounds = model.getGameBound();
-        final Dimension size = player.getDimension();
+        final BoundigBox bounds = model.getGameBound();
+        final BoundigBox size = player.getDimension();
 
         final float newX = Math.max(0, Math.min(current.x(), bounds.width() - size.width()));
         final float newY = Math.max(0, Math.min(current.y(), bounds.height() - size.height()));
@@ -57,14 +57,14 @@ public final class GameCollision implements Collision {
                 .forEach(player::onCollision);
 
         model.getEntities().stream()
-            .filter(a -> !a.equals(player))
-            .forEach(a -> model.getEntities().stream()
-                .filter(b -> !a.equals(b) && !b.equals(player))
-                .filter(a::collidesWith)
-                .forEach(b -> {
-                    a.onCollision(b);
-                    b.onCollision(a);
-                }));
+                .filter(a -> !a.equals(player))
+                .forEach(a -> model.getEntities().stream()
+                        .filter(b -> !a.equals(b) && !b.equals(player))
+                        .filter(a::collidesWith)
+                        .forEach(b -> {
+                            a.onCollision(b);
+                            b.onCollision(a);
+                        }));
     }
 
 }

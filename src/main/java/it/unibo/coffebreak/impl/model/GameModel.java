@@ -2,7 +2,6 @@ package it.unibo.coffebreak.impl.model;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
@@ -12,7 +11,7 @@ import it.unibo.coffebreak.api.model.leaderboard.Leaderboard;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.level.LevelManager;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.model.leaderboard.GameLeaderboard;
 import it.unibo.coffebreak.impl.model.leaderboard.entry.ScoreEntry;
 import it.unibo.coffebreak.impl.model.level.GameLevelManager;
@@ -33,7 +32,7 @@ public class GameModel implements Model {
 
     private final Leaderboard leaderBoard = new GameLeaderboard();
     private final LevelManager levelManager = new GameLevelManager();
-    private Dimension gameBounds;
+    private BoundigBox gameBounds;
 
     private ModelState currentState;
     private volatile boolean running;
@@ -45,18 +44,18 @@ public class GameModel implements Model {
     public GameModel() {
         this.running = true;
 
-        this.setState(MenuModelState::new);
+        this.setState(new MenuModelState());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final void setState(final Supplier<ModelState> newState) {
+    public final void setState(final ModelState newState) {
         if (currentState != null) {
             currentState.onExit(this);
         }
-        currentState = Objects.requireNonNull(newState.get(), "New state cannot be null");
+        currentState = Objects.requireNonNull(newState, "The new state cannot be null");
         currentState.onEnter(this);
     }
 
@@ -65,7 +64,7 @@ public class GameModel implements Model {
      */
     @Override
     public void setGameBounds(final int width, final int height) {
-        this.gameBounds = new Dimension(width, height);
+        this.gameBounds = new BoundigBox(width, height);
     }
 
     /**
@@ -97,7 +96,7 @@ public class GameModel implements Model {
      * {@inheritDoc}
      */
     @Override
-    public Dimension getGameBound() {
+    public BoundigBox getGameBound() {
         return this.gameBounds;
     }
 
@@ -202,10 +201,7 @@ public class GameModel implements Model {
      */
     @Override
     public int getHighestScore() {
-        if (!this.leaderBoard.getTopScores().isEmpty()) {
-            return this.leaderBoard.getTopScores().getFirst().score();
-        }
-        return 0;
+        return this.leaderBoard.getTopScore();
     }
 
     /**

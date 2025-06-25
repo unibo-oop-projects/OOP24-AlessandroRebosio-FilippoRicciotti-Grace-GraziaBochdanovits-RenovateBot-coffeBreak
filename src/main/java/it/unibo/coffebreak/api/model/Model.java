@@ -1,14 +1,13 @@
 package it.unibo.coffebreak.api.model;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 
 /**
  * Represents the main model interface for the game.
@@ -24,10 +23,10 @@ public interface Model {
     /**
      * Changes the current game state to the specified one.
      * 
-     * @param newState Supplier providing the new game state
+     * @param newState the new game state
      * @throws NullPointerException if newState is null
      */
-    void setState(Supplier<ModelState> newState);
+    void setState(ModelState newState);
 
     /**
      * Sets the bounds of the game area.
@@ -59,7 +58,7 @@ public interface Model {
      *
      * @return the game bounds of the game as an integer
      */
-    Dimension getGameBound();
+    BoundigBox getGameBound();
 
     /**
      * Gets the current game state.

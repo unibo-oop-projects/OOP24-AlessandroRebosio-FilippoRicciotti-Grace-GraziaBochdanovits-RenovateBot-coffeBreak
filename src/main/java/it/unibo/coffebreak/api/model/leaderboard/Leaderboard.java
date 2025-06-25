@@ -25,6 +25,13 @@ public interface Leaderboard {
     List<Entry> getTopScores();
 
     /**
+     * Returns the highest score currently present in the leaderboard.
+     *
+     * @return the top score as an integer
+     */
+    int getTopScore();
+
+    /**
      * Attempts to add a new entry to the leaderboard if it meets ranking criteria.
      * <p>
      * Specific conditions for eligibility are implementation-dependent

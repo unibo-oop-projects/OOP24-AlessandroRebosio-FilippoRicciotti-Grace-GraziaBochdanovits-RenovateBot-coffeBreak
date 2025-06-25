@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.npc.pauline;
 
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
 
@@ -25,7 +25,7 @@ public class Pauline extends AbstractNpc implements Princess {
      * @param dimension the dimension of the pauline in the game world
      * @throws NullPointerException if either position or dimension are null
      */
-    public Pauline(final Position position, final Dimension dimension) {
+    public Pauline(final Position position, final BoundigBox dimension) {
         super(position, dimension);
     }
 

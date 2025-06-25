@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
 
@@ -42,7 +42,7 @@ class TestPrincess {
      */
     @BeforeEach
     void setUp() {
-        princess = new Pauline(TEST_POSITION, new Dimension());
+        princess = new Pauline(TEST_POSITION, new BoundigBox());
     }
 
     /**

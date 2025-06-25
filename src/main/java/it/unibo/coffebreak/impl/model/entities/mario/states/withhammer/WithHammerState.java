@@ -3,7 +3,7 @@ package it.unibo.coffebreak.impl.model.entities.mario.states.withhammer;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 
@@ -43,7 +43,7 @@ public class WithHammerState extends AbstractMarioState {
      */
     private long expirationTime;
 
-    private Dimension originalDimension;
+    private BoundigBox originalDimension;
 
     /**
      * Called when entering hammer state. Initializes:
@@ -56,7 +56,7 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public void onEnter(final MainCharacter character) {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
-        this.originalDimension = new Dimension(character.getDimension().width(), character.getDimension().height());
+        this.originalDimension = new BoundigBox(character.getDimension().width(), character.getDimension().height());
         character.setDimension(character.getDimension().scaleHeight(3));
     }
 

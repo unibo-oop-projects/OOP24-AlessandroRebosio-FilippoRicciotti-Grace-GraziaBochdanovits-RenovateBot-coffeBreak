@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
-import it.unibo.coffebreak.impl.common.Dimension;
+import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
@@ -87,22 +87,22 @@ public class GameEntityManager implements EntityManager {
 
                 }
 
-                final Position position = new Position(x, trueY).scalePosition(new Dimension());
+                final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
 
                 switch (Character.toUpperCase(c)) {
-                    case 'R' -> this.addEntity(new Pauline(position, new Dimension()));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, new Dimension(), true, true));
-                    case '!' -> this.addEntity(new BreakablePlatform(position, new Dimension(), false, true));
-                    //TODO: metter flag sensati
+                    case 'R' -> this.addEntity(new Pauline(position, new BoundigBox()));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox(), true, true));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox(), false, true));
+                    // TODO: metter flag sensati
                     case 'M' -> {
-                        this.character = new Mario(position, new Dimension());
+                        this.character = new Mario(position, new BoundigBox());
                         this.addEntity(this.character);
                     }
-                    case 'D' -> this.addEntity(new DonkeyKong(position, new Dimension(), true));
-                    case 'T' -> this.addEntity(new GameTank(position, new Dimension()));
-                    case 'H' -> this.addEntity(new Hammer(position, new Dimension()));
-                    case 'C' -> this.addEntity(new Coin(position, new Dimension()));
-                    case 'L' -> this.addEntity(new NormalLadder(position, new Dimension()));
+                    case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), true));
+                    case 'T' -> this.addEntity(new GameTank(position, new BoundigBox()));
+                    case 'H' -> this.addEntity(new Hammer(position, new BoundigBox()));
+                    case 'C' -> this.addEntity(new Coin(position, new BoundigBox()));
+                    case 'L' -> this.addEntity(new NormalLadder(position, new BoundigBox()));
                     default -> {
                     }
                 }
