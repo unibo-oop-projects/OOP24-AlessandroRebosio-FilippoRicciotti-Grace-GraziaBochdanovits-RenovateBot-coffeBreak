@@ -20,7 +20,7 @@ import it.unibo.coffebreak.api.view.render.entities.EntityRender;
  */
 public abstract class AbstractEntityRender implements EntityRender {
 
-    private static final String PATH = "/img/DonkeyKong_sheet.png";
+    private static final String PATH = "/img/sheet.png";
 
     private final Loader resource;
     private final BufferedImage spriteSheet;
