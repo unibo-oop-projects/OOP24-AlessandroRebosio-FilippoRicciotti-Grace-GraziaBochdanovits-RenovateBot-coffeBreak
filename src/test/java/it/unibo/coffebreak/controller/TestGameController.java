@@ -20,8 +20,6 @@ import it.unibo.coffebreak.impl.controller.GameController;
 class TestGameController {
 
     private static final float DEFAULT_DELTA_TIME = 0.016f;
-    private static final int DEFAULT_WIDTH = 800;
-    private static final int DEFAULT_HEIGHT = 600;
     private static final int TEST_KEY_CODE = 10;
 
     private GameController controller;
@@ -48,14 +46,6 @@ class TestGameController {
     @Test
     void testUpdateModel() {
         assertDoesNotThrow(() -> controller.updateModel(DEFAULT_DELTA_TIME));
-    }
-
-    /**
-     * Tests that updateGameBounds does not throw for typical values.
-     */
-    @Test
-    void testUpdateGameBounds() {
-        assertDoesNotThrow(() -> controller.updateGameBounds(DEFAULT_WIDTH, DEFAULT_HEIGHT));
     }
 
     /**

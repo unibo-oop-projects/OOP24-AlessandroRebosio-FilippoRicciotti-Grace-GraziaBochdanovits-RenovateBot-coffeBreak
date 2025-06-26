@@ -30,14 +30,6 @@ public interface Model {
     void setState(ModelState newState);
 
     /**
-     * Sets the bounds of the game area.
-     *
-     * @param width  the width of the game area in pixels
-     * @param height the height of the game area in pixels
-     */
-    void setGameBounds(int width, int height);
-
-    /**
      * Starts the first level of the game.
      */
     void start();

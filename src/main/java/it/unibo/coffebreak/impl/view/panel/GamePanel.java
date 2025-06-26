@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements Panel {
      *
      * @param controller the controller to notify for input events
      * @param loader     the resource loader for graphics
-     * @throws N
+     * @throws NullPointerException if either argument is null
      */
     public GamePanel(final Controller controller, final Loader loader) {
         super();
@@ -80,8 +80,6 @@ public class GamePanel extends JPanel implements Panel {
         super.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(final ComponentEvent e) {
-                final Dimension gameArea = getPreferredSize();
-                controller.updateGameBounds(gameArea.width, gameArea.height);
                 repaint();
             }
         });
