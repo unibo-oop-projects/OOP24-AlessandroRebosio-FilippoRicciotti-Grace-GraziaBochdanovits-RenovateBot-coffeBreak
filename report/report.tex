@@ -30,50 +30,49 @@ Filippo Riccioti
 \chapter{Analisi}
 
 \section{Descrizione e requisiti}
-Il software da noi sviluppato è una riproduzione del celebre videogioco arcade \textit{Donkey Kong}, pubblicato per la prima volta nel 1981 da Nintendo. 
+Il software da noi sviluppato è una riproduzione del celebre videogioco arcade \textit{Donkey Kong}, pubblicato per la prima volta nel 1981 da Nintendo.
+
+Il protagonista è Mario, il cui obiettivo è salvare Pauline, rapita dal gigantesco gorilla Donkey Kong.
 %
-Il protagonista è Mario, il cui obiettivo è salvare Pauline, rapita dal gigantesco gorilla Donkey Kong. 
-%
-Il giocatore prende il controllo di Mario e lo guida in un platform a livelli fissi, caratterizzato da strutture complesse 
+Il giocatore prende il controllo di Mario e lo guida in un platform a livelli fissi, caratterizzato da strutture complesse
 composte da piattaforme, scale e numerosi ostacoli da superare.
 %
-All’inizio di ogni partita, Mario dispone di tre vite. 
-Ogni volta che entra in contatto con un nemico, come barili rotolanti o fiamme, perde una vita e viene riposizionato 
-all’inizio del livello corrente, mantenendo però il punteggio ottenuto fino a quel momento. 
+All'inizio di ogni partita, Mario dispone di tre vite, ogni volta che entra in contatto con un nemico, come barili rotolanti o fiamme, perde una vita e viene riposizionato
+all'inizio del livello corrente.
 %
-La partita continua finché ci sono vite disponibili; una volta esaurite, compare la schermata di \textit{Game Over}, 
-che riporta l’utente al menu principale, da cui è possibile avviare una nuova partita.
+La partita continua finché ci sono vite disponibili; una volta esaurite, compare la schermata di \textit{Game Over},
+che riporta l'utente al menu principale, da cui è possibile avviare una nuova partita.
 %
-Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti. 
-Mario può spostarsi verso sinistra o destra, saltare per evitare i nemici e utilizzare le scale per muoversi verticalmente tra le piattaforme. 
-L’obiettivo di ogni livello è raggiungere la cima della struttura, dove si trovano Donkey Kong e Pauline. 
+Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti.
+Mario può spostarsi verso sinistra o destra, saltare per evitare i nemici e utilizzare le scale per muoversi verticalmente tra le piattaforme.
+L'obiettivo di ogni livello è raggiungere la cima della struttura, dove si trovano Donkey Kong e Pauline.
 %
-I quattro livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente: 
+I quattro livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente:
 con il progredire del gioco, gli ostacoli si muovono più rapidamente, i nemici diventano meno prevedibili e i percorsi sempre più complessi.
 %
-Un aspetto centrale del gioco è il sistema di punteggio, che premia il giocatore per varie azioni compiute durante la partita. 
-I punti vengono assegnati per ogni ostacolo evitato, nemico eliminato o oggetto bonus raccolto, come le monete e il martello, 
-posizionati in punti chiave del livello. 
+Un aspetto centrale del gioco è il sistema di punteggio, che premia il giocatore per varie azioni compiute durante la partita.
+I punti vengono assegnati per ogni ostacolo evitato, nemico eliminato o oggetto bonus raccolto, come le monete e il martello,
+posizionati in punti chiave del livello.
 %
-Un ruolo particolare è riservato al martello, un potenziamento temporaneo che consente a Mario di distruggere barili e nemici per alcuni secondi, 
-offrendo un vantaggio momentaneo e un’opportunità per accumulare punti extra.
+Un ruolo particolare è riservato al martello, un potenziamento temporaneo che consente a Mario di distruggere barili e nemici per alcuni secondi,
+offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 
 
 \subsection*{Requisiti funzionali}
 \begin{itemize}
 	\item \textbf{Controlli di gioco:}
-	il giocatore deve poter controllare il personaggio principale tramite input direzionali: camminata (destra/sinistra), salto e salita/discesa scale.
+	      il giocatore deve poter controllare il personaggio principale tramite input direzionali: camminata (destra/sinistra), salto e salita/discesa scale.
 	\item \textbf{Gestione dei livelli e ostacoli:}
-	il sistema deve generare quattro livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
+	      il sistema deve generare quattro livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
 	\item \textbf{Rilevamento e gestione collisioni:}
-	il sistema deve rilevare le collisione tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
+	      il sistema deve rilevare le collisione tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
 	\item  \textbf{Sistema di punteggio e condizioni di gioco:}
-	il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonue ed eliminazione di nemici con il martello.
-	Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Paulina, e la \textit{condizione di GameOver} quando esaurisce le vite.
+	      il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonue ed eliminazione di nemici con il martello.
+	      Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Paulina, e la \textit{condizione di GameOver} quando esaurisce le vite.
 	\item \textbf{Interfaccia utente:}
-	il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
+	      il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
 	\item \textbf{Menù principale:}
-	il sistema deve offrire un menù iniziale con opzioni per avviare una nuova partita e visualizzare i comandi di gioco.
+	      il sistema deve offrire un menù iniziale con opzioni per avviare una nuova partita e visualizzare i comandi di gioco.
 \end{itemize}
 
 \subsection*{Requisiti non funzionali}
@@ -83,6 +82,7 @@ offrendo un vantaggio momentaneo e un’opportunità per accumulare punti extra.
 	\item Il sistema deve adattarsi correttamente a diverse risoluzioni video standard, mantenendo proporzioni e leggibilità.
 \end{itemize}
 
+\newpage
 \section{Modello del Dominio}
 
 In questa sezione si descrive il modello del \textit{dominio
@@ -392,32 +392,74 @@ Questo schema è fatto male perché:
 
 \chapter{Sviluppo}
 \section{Testing automatizzato}
+In questo progetto abbiamo cercato di creare dei test per ogni classe utilizzando JUnit 5. Facendo in modo che i test coprissero le principali funzionalità del software, abbiamo garantito che le componenti fondamentali fossero verificate automaticamente. Di seguito vengono riportati alcuni esempi di test implementati.
 
-Il testing automatizzato è un requisito di qualunque progetto software che si rispetti, e consente di verificare che non vi siano regressioni nelle funzionalità a fronte di aggiornamenti.
-%
-Per quanto riguarda questo progetto è considerato sufficiente un test minimale, a patto che sia completamente automatico.
-%
-Test che richiedono l'intervento da parte dell'utente sono considerati \textit{negativamente} nel computo del punteggio finale.
-
-\subsection*{Elementi positivi}
-
+\subsubsection*{Common}
 \begin{itemize}
-	\item Si descrivono molto brevemente i componenti che si è deciso di sottoporre a test automatizzato.
-	\item Si utilizzano suite specifiche (e.g. JUnit) per il testing automatico.
+	\item \texttt{TestBoundingBox:} verifica la corretta creazione e il corretto funzionamento delle dimensioni delle entità.
+	\item \texttt{TestResourceLoader:} viene verificato il giusto caricamento delle risorse del gioco.
+	\item \texttt{TestPosition:} testa la gestione delle posizioni nello spazio di gioco.
+	\item \texttt{TestVector:} verifica le operazioni sui vettori.
 \end{itemize}
 
-\subsection*{Elementi negativi}
+\subsubsection*{Controller}
 \begin{itemize}
-	\item Non si realizza alcun test automatico.
-	\item La non presenza di testing viene aggravata dall'adduzione di motivazioni non valide. Ad esempio, si scrive che l'interfaccia grafica non è testata automaticamente perché è \emph{impossibile} farlo\footnote{Testare in modo automatico le interfacce grafiche è possibile (si veda, come esempio, \url{https://github.com/TestFX/TestFX}), semplicemente nel corso non c'è modo e tempo di introdurvi questo livello di complessità. Il fatto che non vi sia stato insegnato come farlo non implica che sia impossibile!}.
-	\item Si descrive un testing di tipo manuale in maniera prolissa.
-	\item Si descrivono test effettuati manualmente che sarebbero potuti essere automatizzati, ad esempio scrivendo che si è usata l'applicazione manualmente.
-	\item Si descrivono test non presenti nei sorgenti del progetto.
-	\item I test, quando eseguiti, falliscono.
+	\item \texttt{TestInputManager:} controlla la gestione degli input da tastiera.
+	\item \texttt{TestGameController:}  testa la logica principale di controllo del gioco.
 \end{itemize}
 
+\newpage
+\subsubsection*{Model}
+\begin{itemize}
+	\item \texttt{TestEntry:} verifica la corretta gestione delle singole voci della classifica.
+	\item \texttt{TestGameLeaderBoard:} verifica la gestione e il salvataggio dei punteggi nella leaderboard.
+	\item \texttt{TestScore:} controlla la gestione e il calcolo dei punteggi.
+	\item \texttt{TestBonus:} verifica la logica dei bonus di gioco.
+	\item \texttt{TestInGameModelState:} testa lo stato del modello durante la partita.
+	\item \texttt{TestMenuModelState:} verifica il comportamento del modello nel menu principale.
+	\item \texttt{TestPauseModelState:} controlla la gestione dello stato di pausa.
+\end{itemize}
+
+\subsubsection*{Repository}
+\begin{itemize}
+	\item \texttt{TestScoreRepository:} verifica la corretta gestione della persistenza e del recupero dei punteggi nella repository.
+\end{itemize}
+
+\newpage
 \section{Note di sviluppo}
 
+\subsection{Alessandro Rebosio}
+\subsubsection{Progettazione con \texttt{generics}}
+Utilizzati i generics per definire interfacce e classi parametrizzate. Permalink
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/3a264084eabd86bac19f9978d9c2aba0c1cbf624/src/main/java/it/unibo/coffebreak/api/common/State.java#L14}
+\end{sloppypar}
+
+\subsubsection{Utilizzo di \texttt{Stream}}
+Utilizzati di frequente, soprattutto per il controllo sulle entità. Permalink di un esempio
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/3a264084eabd86bac19f9978d9c2aba0c1cbf624/src/main/java/it/unibo/coffebreak/impl/model/physics/collision/GameCollision.java#L54-L67}
+\end{sloppypar}
+
+\subsubsection{Utilizzo di lambda expressions}
+Utilizzati di frequente, nel caricamento delle immagini. Permalink di un esempio:
+\begin{sloppypar}
+	\raggedright
+
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/3a264084eabd86bac19f9978d9c2aba0c1cbf624/src/main/java/it/unibo/coffebreak/impl/common/ResourceLoader.java#L99}
+\end{sloppypar}
+
+\subsubsection{Gestione degli \texttt{Optional}}
+Usato per gestire valori che potrebbere essere assenti. Permalink di un esempio
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/3a264084eabd86bac19f9978d9c2aba0c1cbf624/src/main/java/it/unibo/coffebreak/impl/model/states/ingame/InGameModelState.java#L57-L61}
+\end{sloppypar}
+
+
+\subsection{Istruzioni note di sviluppo}
 Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
 %
 Nella prima parte, ciascuno dovrà mostrare degli esempi di codice particolarmente ben realizzati,
@@ -509,31 +551,6 @@ e non va in questa sezione.
 	\item Si elencano design pattern
 \end{itemize}
 
-\subsection{Esempio}
-
-\subsubsection{Utilizzo della libreria SLF4J}
-
-Utilizzata in vari punti.
-Un esempio è \url{https://github.com/AlchemistSimulator/Alchemist/blob/5c17f8b76920c78d955d478864ac1f11508ed9ad/alchemist-swingui/src/main/java/it/unibo/alchemist/boundary/swingui/effect/impl/EffectBuilder.java#L49}
-
-\subsubsection{Utilizzo di \texttt{LoadingCache} dalla libreria Google Guava}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/protelis/AlchemistExecutionContext.java#L141-L143}
-
-\subsubsection{Utilizzo di \texttt{Stream} e lambda expressions}
-
-Usate pervasivamente. Il seguente è un singolo esempio.
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/model/ProtelisIncarnation.java#L98-L120}
-
-\subsubsection{Scrittura di metodo generico con parametri contravarianti}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/protelis/AlchemistExecutionContext.java#L141-L143}
-
-\subsubsection{Protezione da corse critiche usando \texttt{Semaphore}}
-
-Permalink: \url{https://github.com/AlchemistSimulator/Alchemist/blob/d8a1799027d7d685569e15316a32e6394632ce71/alchemist-incarnation-protelis/src/main/java/it/unibo/alchemist/model/ProtelisIncarnation.java#L388-L440}
-
-
 \chapter{Commenti finali}
 
 In quest'ultimo capitolo si tirano le somme del lavoro svolto e si delineano eventuali sviluppi
@@ -563,47 +580,19 @@ Ovviamente \textit{il contenuto della sezione non impatterà il voto finale}.
 \appendix
 \chapter{Guida utente}
 
-\section{Inizio del Gioco}
-All'avvio dell'applicazione, l'unico strumento a disposizione sarà la tastiera. Ci si troverà nel menu principale, dove sarà possibile visualizzare la leaderboard. Le uniche azioni disponibili saranno:
-
-\begin{itemize}
-	\item Avviare una nuova partita tramite il tasto \texttt{ENTER}
-	\item Uscire dal gioco premendo il tasto \texttt{Q}
-\end{itemize}
+\section{Menu Principale}
+All'avvio dell'applicazione, l'unico strumento a disposizione sarà la tastiera. Nel menu principale sarà possibile visualizzare la leaderboard e selezionare le opzioni disponibili tramite le frecce \texttt{SU} e \texttt{GIÙ}. Per confermare la selezione si utilizza il tasto \texttt{ENTER}.
 
 \section{Durante il Gioco}
-Dopo aver premuto \texttt{ENTER}, inizierà il primo livello. L'obiettivo del giocatore è raggiungere la principessa, raccogliendo power-up ed evitando i nemici.
+Entrati in gioco, si parte dal primo livello: lo scopo è raggiungere la principessa evitando i nemici e raccogliendo power-up.
 
-\subsection*{Comandi disponibili:}
-\begin{itemize}
-	\item Movimento del personaggio:
-	      \begin{itemize}
-		      \item \texttt{FRECCIA SU}: Muovi in alto (se solo se in collisione con una scale)
-		      \item \texttt{FRECCIA GIÙ}: Muovi in basso (se solo se sotto il personaggio c'è una scala)
-		      \item \texttt{FRECCIA DESTRA}: Muovi a destra
-		      \item \texttt{FRECCIA SINISTRA}: Muovi a sinistra
-	      \end{itemize}
-	\item \texttt{BARRA SPAZIATRICE}: Salto
-	\item \texttt{ESC}: Pausa del gioco
-\end{itemize}
+Per giocare basta usare la tastiera: ogni \texttt{freccia} muove il personaggio nella rispettiva direzione, la \texttt{barra spaziatrice} fa saltare, mentre le frecce \texttt{SU} e \texttt{GIÙ} funzionano solo in corrispondenza di una scala. In qualsiasi momento, premendo il tasto \texttt{ESC} puoi mettere il gioco in pausa.
 
 \section{Menu di Pausa}
-Nel menu di pausa saranno disponibili le seguenti opzioni:
-\begin{itemize}
-	\item \texttt{ENTER}: Riprendi il livello
-	\item \texttt{ESC}: Esci dal livello (torna al menu principale)
-	\item \texttt{Q}: Esci dal gioco
-\end{itemize}
+Nel menu di pausa si naviga tra le opzioni disponibili con le frecce \texttt{SU} e \texttt{GIÙ}, e si seleziona l'opzione desiderata con \texttt{ENTER}.
 
 \section{Game Over}
-Quando il personaggio perderà tutte le vite, si entrerà nella schermata di Game Over dove:
-\begin{itemize}
-	\item Dovrai inserire il tuo nome (3 lettere) e premere \texttt{ENTER}
-	\item Il nome verrà richiesto solo se il punteggio è tra i primi 5
-	\item Dopo l'inserimento si tornerà al menu principale
-	\item Il punteggio verrà salvato nella leaderboard
-\end{itemize}
-
+Quando il personaggio perde tutte le vite, si entra nella schermata di Game Over. In questa schermata l'unica azione possibile è premere \texttt{ENTER} per tornare al menu principale.
 
 \chapter{Esercitazioni di laboratorio}
 \section{alessandro.rebosio@studio.unibo.it}
