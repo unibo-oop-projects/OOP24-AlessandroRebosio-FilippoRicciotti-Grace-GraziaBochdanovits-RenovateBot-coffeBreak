@@ -31,9 +31,9 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class GameModel implements Model {
 
+    private final BoundigBox gameBounds = new BoundigBox(600, 800);
     private final Leaderboard leaderBoard = new GameLeaderboard();
     private final LevelManager levelManager = new GameLevelManager();
-    private BoundigBox gameBounds;
 
     private ModelState currentState;
     private volatile boolean running;
@@ -58,14 +58,6 @@ public class GameModel implements Model {
         }
         currentState = Objects.requireNonNull(newState, "The new state cannot be null");
         currentState.onEnter(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setGameBounds(final int width, final int height) {
-        this.gameBounds = new BoundigBox(width, height);
     }
 
     /**
