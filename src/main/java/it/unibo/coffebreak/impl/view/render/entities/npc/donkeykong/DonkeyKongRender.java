@@ -28,9 +28,8 @@ public class DonkeyKongRender extends AbstractEntityRender {
     private static final float FRAME_DURATION = 0.03f;
 
     private static final Map<DonkeyKongAnimationType, AnimationInfo> ANIMATIONS = Map.of(
-        DonkeyKongAnimationType.ANGRY, new AnimationInfo(0, 0, 4),
-        DonkeyKongAnimationType.THROW, new AnimationInfo(2, 1, 2)
-    );
+            DonkeyKongAnimationType.ANGRY, new AnimationInfo(0, 0, 4),
+            DonkeyKongAnimationType.THROW, new AnimationInfo(2, 1, 2));
 
     private final Map<Antagonist, AnimationState> animationStates = new HashMap<>();
 
@@ -44,7 +43,8 @@ public class DonkeyKongRender extends AbstractEntityRender {
         super(resource);
     }
 
-    private void updateAnimation(final Antagonist dk, final DonkeyKongAnimationType newAnimation, final float deltaTime) {
+    private void updateAnimation(final Antagonist dk, final DonkeyKongAnimationType newAnimation,
+            final float deltaTime) {
         final AnimationState state = animationStates.computeIfAbsent(dk, k -> new AnimationState());
         final AnimationInfo info = ANIMATIONS.get(newAnimation);
 
@@ -66,9 +66,8 @@ public class DonkeyKongRender extends AbstractEntityRender {
     }
 
     private DonkeyKongAnimationType determineAnimation(final Antagonist dk) {
-        return dk.isTrowing() ? DonkeyKongAnimationType.THROW : DonkeyKongAnimationType.ANGRY;
+        return dk.isThrowing() ? DonkeyKongAnimationType.THROW : DonkeyKongAnimationType.ANGRY;
     }
-
 
     /**
      * {@inheritDoc}
@@ -91,12 +90,11 @@ public class DonkeyKongRender extends AbstractEntityRender {
         final BufferedImage frame = sheet.getSubimage(frameX, frameY, DK_WIDTH, DK_HEIGHT);
 
         g.drawImage(frame,
-            (int) dk.getPosition().x(),
-            (int) dk.getPosition().y(),
-            dk.getDimension().width(),
-            dk.getDimension().height(),
-            null
-        );
+                (int) dk.getPosition().x(),
+                (int) dk.getPosition().y(),
+                dk.getDimension().width(),
+                dk.getDimension().height(),
+                null);
     }
 
     private enum DonkeyKongAnimationType {
@@ -109,11 +107,13 @@ public class DonkeyKongRender extends AbstractEntityRender {
      * on the sprite sheet and the number of frames.
      *
      * @param startColumn the column in the sprite sheet where the animation starts
-     * @param row the row in the sprite sheet where the animation is located
-     * @param frameCount the number of frames in the animation sequence
+     * @param row         the row in the sprite sheet where the animation is located
+     * @param frameCount  the number of frames in the animation sequence
      */
-    private record AnimationInfo(int startColumn, int row, int frameCount) { }
-    //TODO: a sto punto meglio metterlo fuori per tutti
+    private record AnimationInfo(int startColumn, int row, int frameCount) {
+    }
+
+    // TODO: a sto punto meglio metterlo fuori per tutti
     /**
      * Dynamic animation state for each Mario.
      */

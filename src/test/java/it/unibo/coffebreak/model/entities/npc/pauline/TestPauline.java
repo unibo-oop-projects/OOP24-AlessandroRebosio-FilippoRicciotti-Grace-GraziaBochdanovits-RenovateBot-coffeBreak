@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entities.princess;
+package it.unibo.coffebreak.model.entities.npc.pauline;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,7 +25,7 @@ import it.unibo.coffebreak.impl.model.entities.npc.pauline.Pauline;
  * @see Princess
  * @author Grazia Bochdanovits de Kavna
  */
-class TestPrincess {
+class TestPauline {
 
     /** Test position used for princess initialization. */
     private static final Position TEST_POSITION = new Position(10.0f, 20.0f);

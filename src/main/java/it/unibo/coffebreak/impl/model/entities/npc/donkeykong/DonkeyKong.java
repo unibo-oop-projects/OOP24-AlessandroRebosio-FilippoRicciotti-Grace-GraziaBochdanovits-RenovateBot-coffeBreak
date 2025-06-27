@@ -32,7 +32,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     private final boolean canThrowBarrel;
     private float lastThrowTime;
 
-    private boolean isTrowing;
+    private boolean isThrowing;
 
     /**
      * Constructs a new Donkey Kong entity with specified position, dimensions, and
@@ -63,10 +63,10 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
         this.lastThrowTime += deltaTime;
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
             lastThrowTime = 0;
-            this.isTrowing = true;
+            this.isThrowing = true;
             return Optional.of(new GameBarrel(getPosition(), new BoundigBox(), false));
         }
-        this.isTrowing = false;
+        this.isThrowing = false;
         return Optional.empty();
     }
 
@@ -74,7 +74,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      * {@inheritDoc}
      */
     @Override
-    public boolean isTrowing() {
-        return this.isTrowing;
+    public boolean isThrowing() {
+        return this.isThrowing;
     }
 }
