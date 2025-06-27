@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.model.entities.tank;
+package it.unibo.coffebreak.model.entities.structure.tank;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
