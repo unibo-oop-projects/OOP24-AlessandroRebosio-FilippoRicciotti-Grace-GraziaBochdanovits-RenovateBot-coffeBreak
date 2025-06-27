@@ -75,6 +75,7 @@ public class NormalState extends AbstractMarioState {
     @Override
     public void startClimb() {
         this.isClimbing = true;
+        this.canClimb = true;
     }
 
     /**
