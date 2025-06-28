@@ -392,7 +392,7 @@ Questo schema è fatto male perché:
 
 \chapter{Sviluppo}
 \section{Testing automatizzato}
-In questo progetto abbiamo cercato di creare dei test per ogni classe utilizzando JUnit 5. Facendo in modo che i test coprissero le principali funzionalità del software, abbiamo garantito che le componenti fondamentali fossero verificate automaticamente. Di seguito vengono riportati alcuni esempi di test implementati.
+In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte le classi principali. I test progettati assicurano la verifica automatica delle funzionalità fondamentali del softaware. Di seguito vengono riportati alcuni esempi di test implementati.
 
 \subsubsection*{Common}
 \begin{itemize}
@@ -411,6 +411,18 @@ In questo progetto abbiamo cercato di creare dei test per ogni classe utilizzand
 \newpage
 \subsubsection*{Model}
 \begin{itemize}
+	\item \texttt{TestMario}: controlla che il movimento e le funzionalità del personaggio principale avvengano correttamente.
+	\item \texttt{TestLivesManager}: controlla la gestione delle vite del personaggio principale.
+	\item \texttt{TestNormalState}: verifica il comportamento base del personaggio nello stato normale.
+	\item \texttt{TestWithHammerState}: verifica l'attivazione del potere alla raccolta del martello, e la sua durata.
+    \item \texttt{TestPlatform}: controlla il comportamento delle piattaforme normal e breackable.
+    \item \texttt{TestLadder}: verifica il funzionamento delle scale.
+    \item \texttt{TestGameTank}: verifica il funzionamento della tanica d'olio.
+    \item \texttt{TestPauline}: testa il comportamento dell'ostaggio.
+    \item \texttt{TestDonkeyKong}: verifica la logica del lancio dei barili e il comportamento dell'antagonista.
+    \item \texttt{TestBarrel}: controlla il movimento e le collisioni dei barili.
+    \item \texttt{TestFire}: verifica il comportamento delle fiamme.
+    \item \texttt{TestCollectible}: testa la raccolta degli oggetti collezionabili (monete, martelli) e il loro effetto.
 	\item \texttt{TestEntry:} verifica la corretta gestione delle singole voci della classifica.
 	\item \texttt{TestGameLeaderBoard:} verifica la gestione e il salvataggio dei punteggi nella leaderboard.
 	\item \texttt{TestScore:} controlla la gestione e il calcolo dei punteggi.
