@@ -88,21 +88,23 @@ public class GameEntityManager implements EntityManager {
                 }
 
                 final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
+                final BoundigBox bb = new BoundigBox();
 
                 switch (Character.toUpperCase(c)) {
-                    case 'R' -> this.addEntity(new Pauline(position, new BoundigBox()));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox(), true, true));
-                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox(), false, true));
+                    case 'R' -> this.addEntity(new Pauline(position, bb.scaleHeight(2)));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, bb, true, true));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, bb, false, true));
                     // TODO: metter flag sensati
                     case 'M' -> {
-                        this.character = new Mario(position, new BoundigBox());
+                        this.character = new Mario(position, bb);
                         this.addEntity(this.character);
                     }
-                    case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), true));
-                    case 'T' -> this.addEntity(new GameTank(position, new BoundigBox()));
-                    case 'H' -> this.addEntity(new Hammer(position, new BoundigBox()));
-                    case 'C' -> this.addEntity(new Coin(position, new BoundigBox()));
-                    case 'L' -> this.addEntity(new NormalLadder(position, new BoundigBox()));
+                    case 'D' ->
+                        this.addEntity(new DonkeyKong(position, bb.scaleHeight(4).scaleWidth(5), true));
+                    case 'T' -> this.addEntity(new GameTank(position, bb.scaleHeight(2)));
+                    case 'H' -> this.addEntity(new Hammer(position, bb));
+                    case 'C' -> this.addEntity(new Coin(position, bb));
+                    case 'L' -> this.addEntity(new NormalLadder(position, bb));
                     default -> {
                     }
                 }
