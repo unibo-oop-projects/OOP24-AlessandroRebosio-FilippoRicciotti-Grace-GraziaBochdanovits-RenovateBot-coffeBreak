@@ -3,13 +3,16 @@ package it.unibo.coffebreak.impl.view.render.entities.mario;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
+import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
@@ -20,20 +23,23 @@ import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
  */
 public final class MarioRender extends AbstractEntityRender {
 
-    private static final int MARIO_SIZE = 16;
-    private static final int MARIO_X_OFFSET = 1;
-    private static final int MARIO_Y_OFFSET = 1;
-    private static final int MARIO_FRAME_SPACING_X = 2;
-    private static final int MARIO_FRAME_SPACING_Y = 2;
+    private static final int SPRITE_SIZE = 16;
+    private static final int DOUBLE_SPRITE_SIZE = SPRITE_SIZE * 2;
+    private static final int X_OFFSET = 1;
+    private static final int Y_OFFSET = 1;
+    private static final int X_SPACING = 2;
+    private static final int Y_SPACING = 2;
     private static final float FRAME_DURATION = 0.03f;
 
     /** 
      * Mapping of animation types to their sprite sheet information.
      */
-    private static final Map<MarioAnimationType, AnimationInfo> ANIMATIONS = Map.of(
-        MarioAnimationType.IDLE, new AnimationInfo(0, 0, 1),
-        MarioAnimationType.WALK, new AnimationInfo(1, 0, 2),
-        MarioAnimationType.CLIMB, new AnimationInfo(5, 0, 2)
+    private static final Map<MarioAnimationType, AnimationInfo> ANIMATIONS = Map.ofEntries(
+        Map.entry(MarioAnimationType.IDLE,        new AnimationInfo(0, 0, 1, SPRITE_SIZE, SPRITE_SIZE)),
+        Map.entry(MarioAnimationType.WALK,        new AnimationInfo(1, 0, 2, SPRITE_SIZE, SPRITE_SIZE)),
+        Map.entry(MarioAnimationType.CLIMB,       new AnimationInfo(5, 0, 2, SPRITE_SIZE, SPRITE_SIZE)),
+        Map.entry(MarioAnimationType.JUMP,        new AnimationInfo(3, 0, 1, SPRITE_SIZE, SPRITE_SIZE)),
+        Map.entry(MarioAnimationType.WITH_HAMMER, new AnimationInfo(0, 5, 6, DOUBLE_SPRITE_SIZE, DOUBLE_SPRITE_SIZE))
     );
 
     /** 
@@ -44,11 +50,11 @@ public final class MarioRender extends AbstractEntityRender {
     /**
      * Constructs a new MarioRender.
      *
-     * @param resource the loader used to access the sprite sheet
+     * @param loader the loader used to access the sprite sheet
      * @throws NullPointerException if resource is null
      */
-    public MarioRender(final Loader resource) {
-        super(Objects.requireNonNull(resource, "Resource loader cannot be null"));
+    public MarioRender(final Loader loader) {
+        super(Objects.requireNonNull(loader, "Loader cannot be null"));
     }
 
     /**
@@ -57,28 +63,15 @@ public final class MarioRender extends AbstractEntityRender {
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime,
                      final int width, final int height) {
-        Objects.requireNonNull(g, "Graphics context cannot be null");
-        Objects.requireNonNull(entity, "Entity cannot be null");
-
         if (!(entity instanceof Mario mario)) {
             return;
         }
 
-        final MarioAnimationType animType = determineAnimation(mario);
-        updateAnimation(mario, animType, deltaTime);
-        final AnimationState state = animationStates.get(mario);
-        final AnimationInfo info = ANIMATIONS.get(animType);
-        final BufferedImage sheet = Objects.requireNonNull(getSpriteSheet(), "Sprite sheet cannot be null");
+        final MarioAnimationType animation = resolveAnimationType(mario);
+        final BufferedImage frame = updateAndGetFrame(mario, animation, deltaTime);
 
-        final int frameX = MARIO_X_OFFSET + (MARIO_SIZE + MARIO_FRAME_SPACING_X) * (info.startColumn + state.frame);
-        final int frameY = MARIO_Y_OFFSET + (MARIO_SIZE + MARIO_FRAME_SPACING_Y) * info.row;
-
-        BufferedImage frame = sheet.getSubimage(frameX, frameY, MARIO_SIZE, MARIO_SIZE);
-        if (!mario.isFacingRight()) {
-            frame = flipImageHorizontally(frame);
-        }
-
-        g.drawImage(frame,
+        g.drawImage(
+            frame,
             (int) mario.getPosition().x(),
             (int) mario.getPosition().y(),
             mario.getDimension().width(),
@@ -87,79 +80,111 @@ public final class MarioRender extends AbstractEntityRender {
         );
     }
 
-     /**
-     * Determines which animation to play based on Mario's state and velocity.
+    /**
+     * Determines the appropriate animation type based on Mario's current state.
      *
      * @param mario the Mario character to evaluate
-     * @return the appropriate animation type for current state
+     * @return the appropriate MarioAnimationType for the current state
      */
-    private MarioAnimationType determineAnimation(final MainCharacter mario) {
-        if (mario.getCurrentState().isClimbing()) {
-            return MarioAnimationType.CLIMB;
-        }
-        if (Math.abs(mario.getVelocity().x()) != 0.0f) {
-            return MarioAnimationType.WALK;
-        }
-        return MarioAnimationType.IDLE;
+    private MarioAnimationType resolveAnimationType(final MainCharacter mario) {
+        final List<Map.Entry<Predicate<MainCharacter>, MarioAnimationType>> conditions = List.of(
+            Map.entry(m -> m.getCurrentState().isClimbing(), MarioAnimationType.CLIMB),
+            Map.entry(MainCharacter::isJumping, MarioAnimationType.JUMP),
+            Map.entry(m -> m.getCurrentState().equals(new WithHammerState()), MarioAnimationType.WITH_HAMMER),
+            Map.entry(m -> Math.abs(m.getVelocity().x()) > 0.0f, MarioAnimationType.WALK)
+        );
+
+        return conditions.stream()
+            .filter(entry -> entry.getKey().test(mario))
+            .map(Map.Entry::getValue)
+            .findFirst()
+            .orElse(MarioAnimationType.IDLE);
     }
 
     /**
-     * Updates the current animation frame using delta time.
+     * Updates the animation state and returns the current frame to render.
      *
-     * @param mario the Mario character to update
-     * @param newAnimation the new animation type to transition to
-     * @param deltaTime time since last update in seconds
+     * @param mario the Mario character being animated
+     * @param type the current animation type
+     * @param deltaTime the time elapsed since last frame
+     * @return the current frame image to render
      */
-    private void updateAnimation(final Mario mario, final MarioAnimationType newAnimation, final float deltaTime) {
+    private BufferedImage updateAndGetFrame(final Mario mario, final MarioAnimationType type, final float deltaTime) {
         final AnimationState state = animationStates.computeIfAbsent(mario, m -> new AnimationState());
-        final AnimationInfo info = ANIMATIONS.get(newAnimation);
+        final AnimationInfo info = ANIMATIONS.get(type);
 
-        if (state.animation != newAnimation) {
-            state.animation = newAnimation;
-            state.frame = 0;
-            state.timer = 0f;
+        if (!state.currentAnimation.equals(type)) {
+            state.currentAnimation = type;
+            state.frameIndex = 0;
+            state.elapsedTime = 0f;
         }
 
         if (info.frameCount > 1) {
-            state.timer += deltaTime;
-            while (state.timer >= FRAME_DURATION) {
-                state.timer -= FRAME_DURATION;
-                state.frame = (state.frame + 1) % info.frameCount;
+            state.elapsedTime += deltaTime;
+            if (state.elapsedTime >= FRAME_DURATION) {
+                final int frameAdvance = (int) (state.elapsedTime / FRAME_DURATION);
+                state.elapsedTime %= FRAME_DURATION;
+                state.frameIndex = (state.frameIndex + frameAdvance) % info.frameCount;
             }
         } else {
-            state.frame = 0;
+            state.frameIndex = 0;
         }
+
+        return getFrameImage(state.frameIndex, info, mario.isFacingRight());
     }
 
-     /**
-     * Enumeration of all possible Mario animation states.
+    /**
+     * Retrieves the appropriate frame image from the sprite sheet.
+     *
+     * @param frameIndex the index of the frame to retrieve
+     * @param info the animation information
+     * @param facingRight whether the character is facing right
+     * @return the frame image, flipped horizontally if not facing right
+     * @throws NullPointerException if the sprite sheet is not loaded
+     */
+    private BufferedImage getFrameImage(final int frameIndex, final AnimationInfo info, final boolean facingRight) {
+        final BufferedImage sheet = Objects.requireNonNull(getSpriteSheet(), "Sprite sheet cannot be null");
+
+        final int x = X_OFFSET + (SPRITE_SIZE + X_SPACING) * (info.startColumn + frameIndex);
+        final int y = Y_OFFSET + (SPRITE_SIZE + Y_SPACING) * info.row;
+
+        final BufferedImage frame = sheet.getSubimage(x, y, info.frameWidth(), info.frameHeight());
+        return facingRight ? frame : flipImageHorizontally(frame);
+    }
+
+    /**
+     * Enumeration of possible Mario animation types.
      */
     private enum MarioAnimationType {
-        /** Mario standing idle. */
+        /** Character is standing still. */
         IDLE,
-        /** Mario walking. */
+        /** Character is walking. */
         WALK,
-        /** Mario climbing. */
-        CLIMB
-        // TODO: Add animations for remaining states (JUMP, HAMMER, etc.)
+        /** Character is climbing. */
+        CLIMB,
+        /** Character is jumping. */
+        JUMP,
+        /** Character is using a hammer. */
+        WITH_HAMMER
     }
 
     /**
-     * Tracks the information of an animation sequence, including its position
-     * on the sprite sheet and the number of frames.
+     * Record containing animation information for a specific animation type.
      *
-     * @param startColumn the column in the sprite sheet where the animation starts
-     * @param row the row in the sprite sheet where the animation is located
-     * @param frameCount the number of frames in the animation sequence
+     * @param startColumn the starting column in the sprite sheet
+     * @param row the row in the sprite sheet
+     * @param frameCount the number of frames in the animation
+     * @param frameWidth the width of each frame
+     * @param frameHeight the height of each frame
      */
-    private record AnimationInfo(int startColumn, int row, int frameCount) { }
+    private record AnimationInfo(int startColumn, int row, int frameCount, int frameWidth, int frameHeight) { }
 
     /**
-     * Dynamic animation state for each Mario.
+     * Internal class representing the current state of an animation.
      */
     private static final class AnimationState {
-        private MarioAnimationType animation = MarioAnimationType.IDLE;
-        private int frame;
-        private float timer;
+        private MarioAnimationType currentAnimation = MarioAnimationType.IDLE;
+        private int frameIndex;
+        private float elapsedTime;
     }
 }
