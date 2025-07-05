@@ -26,17 +26,21 @@ public final class MarioRender extends AnimatedEntityRender {
     private static final int DOUBLE_SIZE = SPRITE_SIZE * 2;
     private static final int X_OFFSET = 1;
     private static final int Y_OFFSET = 1;
+    private static final int X_WALK = 19;
+    private static final int X_CLIMB = 91;
+    private static final int X_JUMP = 55;
+    private static final int Y_HAMMER = 73;
     private static final int SPACING = 2;
 
     /** 
      * Mapping of animation types to their sprite sheet information.
      */
     private static final Map<MarioAnimationType, AnimationInfo> ANIMATIONS = Map.ofEntries(
-        Map.entry(MarioAnimationType.IDLE,   new AnimationInfo(0, 0, 1, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.WALK,   new AnimationInfo(1, 0, 2, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.CLIMB,  new AnimationInfo(5, 0, 2, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.JUMP,   new AnimationInfo(3, 0, 1, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.HAMMER, new AnimationInfo(0, 5, 6, DOUBLE_SIZE, DOUBLE_SIZE, X_OFFSET, Y_OFFSET, SPACING))
+        Map.entry(MarioAnimationType.IDLE,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
+        Map.entry(MarioAnimationType.WALK,   new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_WALK, Y_OFFSET, SPACING)),
+        Map.entry(MarioAnimationType.CLIMB,  new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_CLIMB, Y_OFFSET, SPACING)),
+        Map.entry(MarioAnimationType.JUMP,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_JUMP, Y_OFFSET, SPACING)),
+        Map.entry(MarioAnimationType.HAMMER, new AnimationInfo(6, DOUBLE_SIZE, DOUBLE_SIZE, X_OFFSET, Y_HAMMER, SPACING))
     );
 
     /**
@@ -87,7 +91,7 @@ public final class MarioRender extends AnimatedEntityRender {
         final List<Map.Entry<Predicate<MainCharacter>, MarioAnimationType>> conditions = List.of(
             Map.entry(m -> m.getCurrentState().isClimbing(), MarioAnimationType.CLIMB),
             Map.entry(MainCharacter::isJumping, MarioAnimationType.JUMP),
-            Map.entry(m -> m.getCurrentState().equals(new WithHammerState()), MarioAnimationType.HAMMER),
+            Map.entry(m -> m.getCurrentState() instanceof WithHammerState, MarioAnimationType.HAMMER),
             Map.entry(m -> Math.abs(m.getVelocity().x()) > 0.0f, MarioAnimationType.WALK)
         );
 

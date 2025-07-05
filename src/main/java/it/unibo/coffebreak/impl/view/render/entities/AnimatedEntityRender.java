@@ -91,8 +91,8 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
         Objects.requireNonNull(info, "AnimationInfo cannot be null");
         final BufferedImage sheet = Objects.requireNonNull(getSpriteSheet(), "Sprite sheet cannot be null");
 
-        final int x = info.xOffset() + (info.frameWidth() + info.spacing()) * (info.startColumn() + frameIndex);
-        final int y = info.yOffset() + (info.frameHeight() + info.spacing()) * info.row();
+        final int x = info.xOffset() + frameIndex * (info.frameWidth() + info.spacing());
+        final int y = info.yOffset();
 
         return sheet.getSubimage(x, y, info.frameWidth(), info.frameHeight());
     }
@@ -112,8 +112,6 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
     /**
      * Configuration record for an animation sequence.
      * 
-     * @param startColumn starting column in sprite sheet
-     * @param row         row in sprite sheet
      * @param frameCount  number of frames in animation
      * @param frameWidth  width of each frame in pixels
      * @param frameHeight height of each frame in pixels
@@ -121,7 +119,7 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
      * @param yOffset     vertical offset of first frame in sprite sheet
      * @param spacing     pixels between frames in sprite sheet
      */
-    public record AnimationInfo(int startColumn, int row, int frameCount, int frameWidth,
+    public record AnimationInfo(int frameCount, int frameWidth,
         int frameHeight, int xOffset, int yOffset, int spacing) {
         /**
          * Compact constructor with parameter validation.
@@ -129,8 +127,6 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
          * @throws NullPointerException if any parameter is null (boxed primitives)
          */
         public AnimationInfo {
-            Objects.requireNonNull(startColumn);
-            Objects.requireNonNull(row);
             Objects.requireNonNull(frameCount);
             Objects.requireNonNull(frameWidth);
             Objects.requireNonNull(frameHeight);

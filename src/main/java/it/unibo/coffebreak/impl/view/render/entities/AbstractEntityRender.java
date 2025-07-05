@@ -3,7 +3,10 @@ package it.unibo.coffebreak.impl.view.render.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -87,7 +90,7 @@ public abstract class AbstractEntityRender implements EntityRender {
     /**
      * Makes pixels with specified background colors fully transparent.
      *
-     * @param image the input sprite sheet
+     * @param image    the input sprite sheet
      * @param bgColors one or more colors to remove
      * @return a new image with the specified colors removed (transparent)
      */
@@ -96,23 +99,17 @@ public abstract class AbstractEntityRender implements EntityRender {
         final int height = image.getHeight();
         final BufferedImage transparentImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        final List<Color> bgColorList = Arrays.asList(bgColors);
+
+        IntStream.range(0, height).forEach(y ->
+            IntStream.range(0, width).forEach(x -> {
                 final Color pixelColor = new Color(image.getRGB(x, y), true);
-                boolean shouldBeTransparent = false;
-                for (final Color bgColor : bgColors) {
-                    if (colorsAreClose(pixelColor, bgColor)) {
-                        shouldBeTransparent = true;
-                        break;
-                    }
-                }
-                if (shouldBeTransparent) {
-                    transparentImage.setRGB(x, y, 0x00000000);
-                } else {
-                    transparentImage.setRGB(x, y, image.getRGB(x, y));
-                }
-            }
-        }
+                final boolean isTransparent = bgColorList.stream().anyMatch(bg -> colorsAreClose(pixelColor, bg));
+                final int rgb = isTransparent ? 0x00000000 : image.getRGB(x, y);
+                transparentImage.setRGB(x, y, rgb);
+            })
+        );
+
         return transparentImage;
     }
 
