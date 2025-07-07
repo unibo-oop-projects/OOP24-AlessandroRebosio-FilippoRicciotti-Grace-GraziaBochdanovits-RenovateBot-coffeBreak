@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.model.states;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
@@ -18,6 +19,16 @@ import it.unibo.coffebreak.api.model.states.ModelState;
  * @author Alessandro Rebosio
  */
 public abstract class AbstractModelState implements ModelState {
+
+    /**
+     * The list of available menu options.
+     */
+    private final List<Option> OPTIONS = new LinkedList<>();
+
+    /**
+     * The index of the currently selected option.
+     */
+    private int selectedIndex;
 
     /**
      * Called when entering this state. Default implementation does nothing.
@@ -57,26 +68,32 @@ public abstract class AbstractModelState implements ModelState {
      * @param command the input to handle
      */
     @Override
-    public abstract void handleCommand(Model model, Command command);
+    public void handleCommand(Model model, Command command) {
+        switch (command) {
+            case MOVE_UP -> {
+                selectedIndex = (selectedIndex - 1 + OPTIONS.size()) % OPTIONS.size();
+            }
+            case MOVE_DOWN -> {
+                selectedIndex = (selectedIndex + 1) % OPTIONS.size();
+            }
+            default -> {
+            }
+        }
+    }
 
     /**
-     * Returns the currently selected option for this state.
-     *
-     * @return the selected {@link Option}
+     * {@inheritDoc}
      */
     @Override
     public Option getSelectedOption() {
-        return Option.NONE;
+        return OPTIONS.get(selectedIndex);
     }
 
     /**
-     * Returns the list of available options for this state.
-     *
-     * @return the list of {@link Option}
+     * {@inheritDoc}
      */
     @Override
     public List<Option> getOptions() {
-        return List.of();
+        return OPTIONS;
     }
-
 }

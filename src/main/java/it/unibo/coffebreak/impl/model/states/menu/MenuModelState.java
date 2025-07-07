@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.impl.model.states.menu;
 
-import java.util.List;
-
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
@@ -19,15 +17,10 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
  */
 public class MenuModelState extends AbstractModelState {
 
-    /**
-     * The list of available menu options.
-     */
-    private static final List<Option> OPTIONS = List.of(Option.START, Option.QUIT);
-
-    /**
-     * The index of the currently selected option.
-     */
-    private int selectedIndex;
+    public MenuModelState() {
+        super.getOptions().add(Option.START);
+        super.getOptions().add(Option.QUIT);
+    }
 
     /**
      * Handles input commands for menu navigation and selection.
@@ -37,15 +30,11 @@ public class MenuModelState extends AbstractModelState {
      */
     @Override
     public void handleCommand(final Model model, final Command command) {
+        super.handleCommand(model, command);
+
         switch (command) {
-            case MOVE_UP -> {
-                selectedIndex = (selectedIndex - 1 + OPTIONS.size()) % OPTIONS.size();
-            }
-            case MOVE_DOWN -> {
-                selectedIndex = (selectedIndex + 1) % OPTIONS.size();
-            }
             case ENTER -> {
-                switch (this.getSelectedOption()) {
+                switch (super.getSelectedOption()) {
                     case START -> {
                         model.start();
                         model.setState(new InGameModelState());
@@ -61,21 +50,4 @@ public class MenuModelState extends AbstractModelState {
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Option getSelectedOption() {
-        return OPTIONS.get(selectedIndex);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Option> getOptions() {
-        return OPTIONS;
-    }
-
 }

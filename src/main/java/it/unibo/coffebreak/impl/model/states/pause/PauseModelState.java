@@ -1,7 +1,5 @@
 package it.unibo.coffebreak.impl.model.states.pause;
 
-import java.util.List;
-
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
@@ -20,10 +18,12 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class PauseModelState extends AbstractModelState {
 
-    private static final List<Option> OPTIONS = List.of(Option.RESUME, Option.MENU, Option.QUIT);
-
-    private int selectedIndex;
-
+    public PauseModelState() {
+        super.getOptions().add(Option.RESUME);
+        super.getOptions().add(Option.MENU);
+        super.getOptions().add(Option.QUIT);
+    }
+    
     /**
      * Handles input commands for pause menu navigation and selection.
      *
@@ -32,13 +32,9 @@ public class PauseModelState extends AbstractModelState {
      */
     @Override
     public void handleCommand(final Model model, final Command command) {
+        super.handleCommand(model, command);
+
         switch (command) {
-            case MOVE_UP -> {
-                selectedIndex = (selectedIndex - 1 + OPTIONS.size()) % OPTIONS.size();
-            }
-            case MOVE_DOWN -> {
-                selectedIndex = (selectedIndex + 1) % OPTIONS.size();
-            }
             case ENTER -> {
                 switch (this.getSelectedOption()) {
                     case RESUME -> {
@@ -58,21 +54,4 @@ public class PauseModelState extends AbstractModelState {
             }
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Option getSelectedOption() {
-        return OPTIONS.get(selectedIndex);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Option> getOptions() {
-        return OPTIONS;
-    }
-
 }
