@@ -2,7 +2,6 @@ package it.unibo.coffebreak.impl.model.states.ingame;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
@@ -63,10 +62,7 @@ public class InGameModelState extends AbstractModelState {
                 .findFirst()
                 .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
-        model.getEntities().stream()
-                .filter(Movable.class::isInstance)
-                .map(Movable.class::cast)
-                .forEach(e -> e.update(deltaTime));
+        model.getEntities().forEach(e -> e.update(deltaTime));
 
         GameCollision.checkCollision(model);
 

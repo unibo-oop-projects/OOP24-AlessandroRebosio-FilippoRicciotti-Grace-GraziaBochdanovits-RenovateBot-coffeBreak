@@ -18,14 +18,18 @@ public interface State<T> {
      *
      * @param t the context or owner entering this state
      */
-    void onEnter(T t);
+    default void onEnter(T t) {
+        // Default empty implementation
+    }
 
     /**
      * Called when exiting this state.
      *
      * @param t the context or owner exiting this state
      */
-    void onExit(T t);
+    default void onExit(T t) {
+        // Default empty implementation
+    }
 
     /**
      * Updates the state logic.
@@ -33,6 +37,8 @@ public interface State<T> {
      * @param t         the context or owner being updated
      * @param deltaTime the time elapsed since the last update (in seconds)
      */
-    void update(T t, float deltaTime);
+    default void update(T t, float deltaTime) {
+        // Default empty implementation
+    }
 
 }

@@ -2,7 +2,6 @@ package it.unibo.coffebreak.impl.model.entities.enemy.barrel;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
@@ -34,7 +33,7 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameBarrel extends AbstractEnemy implements Barrel, Movable {
+public class GameBarrel extends AbstractEnemy implements Barrel {
 
     private final Physics physics;
 

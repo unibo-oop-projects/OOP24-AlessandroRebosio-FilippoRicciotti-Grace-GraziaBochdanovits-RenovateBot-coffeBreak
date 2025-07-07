@@ -86,4 +86,14 @@ public interface Entity {
      * @throws NullPointerException if the other parameter is null
      */
     void onCollision(Entity other);
+
+    /**
+     * Updates the entity's position based on its movement logic.
+     * Implementations should calculate the new position according to:
+     * - The entity's movement characteristics (speed, direction, etc.)
+     * - The elapsed time since the last update
+     * 
+     * @param deltaTime the time elapsed since the last update (in seconds)
+     */
+    void update(float deltaTime);
 }

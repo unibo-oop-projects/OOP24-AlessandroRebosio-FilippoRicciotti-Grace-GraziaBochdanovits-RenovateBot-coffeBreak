@@ -32,37 +32,6 @@ public abstract class AbstractModelState implements ModelState {
     private int selectedIndex;
 
     /**
-     * Called when entering this state. Default implementation does nothing.
-     *
-     * @param model the model entering this state
-     */
-    @Override
-    public void onEnter(final Model model) {
-        // Default empty implementation
-    }
-
-    /**
-     * Called when exiting this state. Default implementation does nothing.
-     *
-     * @param model the model exiting this state
-     */
-    @Override
-    public void onExit(final Model model) {
-        // Default empty implementation
-    }
-
-    /**
-     * Updates the state logic. Default implementation does nothing.
-     *
-     * @param model     the model being updated
-     * @param deltaTime the time elapsed since the last update (in seconds)
-     */
-    @Override
-    public void update(final Model model, final float deltaTime) {
-        // Default empty implementation
-    }
-
-    /**
      * Handles input depending on the phase the model is currently in.
      *
      * @param model   the game model containing the possible phase to change

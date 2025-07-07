@@ -112,5 +112,20 @@ public abstract class AbstractEntity implements Entity {
      * @param other the entity that this entity collided with
      */
     @Override
-    public abstract void onCollision(Entity other);
+    public void onCollision(final Entity other) {
+        // Default empty implementation
+    }
+
+    /**
+     * Updates the entity's position based on its movement logic.
+     * Implementations should calculate the new position according to:
+     * - The entity's movement characteristics (speed, direction, etc.)
+     * - The elapsed time since the last update
+     * 
+     * @param deltaTime the time elapsed since the last update (in seconds)
+     */
+    @Override
+    public void update(final float deltaTime) {
+        // Default empty implementation
+    }
 }

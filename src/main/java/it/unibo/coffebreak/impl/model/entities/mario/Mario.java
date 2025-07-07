@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.lives.LivesManager;
 import it.unibo.coffebreak.api.model.entities.character.score.Score;
@@ -50,7 +49,7 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
  * @see MainCharacter
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements MainCharacter, Movable {
+public class Mario extends AbstractEntity implements MainCharacter {
 
     private final LivesManager livesManager;
     private final Physics physics;

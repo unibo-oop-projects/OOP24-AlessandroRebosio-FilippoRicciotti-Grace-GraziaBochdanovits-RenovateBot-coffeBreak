@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.enemy.fire;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.Movable;
 import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -15,7 +14,7 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameFire extends AbstractEnemy implements Fire, Movable {
+public class GameFire extends AbstractEnemy implements Fire {
 
     /**
      * Constructs a new GameFire with the specified position and dimensions.
