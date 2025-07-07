@@ -79,7 +79,7 @@ class TestMenuModelState {
      */
     @Test
     void testGetOptionsReturnsAllOptions() {
-        final List<Option> options = state.getOptions();
+        final List<Option> options = state.options();
         assertEquals(2, options.size());
         assertTrue(options.contains(Option.START));
         assertTrue(options.contains(Option.QUIT));

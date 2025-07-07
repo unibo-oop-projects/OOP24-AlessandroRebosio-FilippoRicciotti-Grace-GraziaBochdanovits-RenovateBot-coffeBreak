@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.model.states;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public abstract class AbstractModelState implements ModelState {
     /**
      * The list of available menu options.
      */
-    private final List<Option> OPTIONS = new LinkedList<>();
+    private final List<Option> options = new LinkedList<>();
 
     /**
      * The index of the currently selected option.
@@ -68,13 +69,13 @@ public abstract class AbstractModelState implements ModelState {
      * @param command the input to handle
      */
     @Override
-    public void handleCommand(Model model, Command command) {
+    public void handleCommand(final Model model, final Command command) {
         switch (command) {
             case MOVE_UP -> {
-                selectedIndex = (selectedIndex - 1 + OPTIONS.size()) % OPTIONS.size();
+                this.selectedIndex = (this.selectedIndex - 1 + this.options.size()) % options.size();
             }
             case MOVE_DOWN -> {
-                selectedIndex = (selectedIndex + 1) % OPTIONS.size();
+                this.selectedIndex = (this.selectedIndex + 1) % this.options.size();
             }
             default -> {
             }
@@ -86,14 +87,25 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public Option getSelectedOption() {
-        return OPTIONS.get(selectedIndex);
+        return this.options.get(selectedIndex);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Option> getOptions() {
-        return OPTIONS;
+    public List<Option> options() {
+        return Collections.unmodifiableList(this.options);
+    }
+
+    /**
+     * Adds the specified {@link Option} to the collection of options.
+     *
+     * @param option the option to be added
+     * @return {@code true} if the option was added successfully, {@code false} if
+     *         it was already present
+     */
+    protected boolean addOption(final Option option) {
+        return this.options.add(option);
     }
 }

@@ -132,7 +132,7 @@ public abstract class AbstractViewState implements ViewState {
 
         g.setFont(optionFont);
 
-        final var options = this.controller.getGameState().getOptions();
+        final var options = this.controller.getGameState().options();
         final int selected = options.indexOf(this.controller.getGameState().getSelectedOption());
         final int baseY = (int) (height * 0.40);
         final int stepY = (int) (height * 0.07);

@@ -17,9 +17,13 @@ import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
  */
 public class MenuModelState extends AbstractModelState {
 
+    /**
+     * Constructs a new MenuModelState and initializes the available menu options.
+     * Adds the START and QUIT options to the menu.
+     */
     public MenuModelState() {
-        super.getOptions().add(Option.START);
-        super.getOptions().add(Option.QUIT);
+        super.addOption(Option.START);
+        super.addOption(Option.QUIT);
     }
 
     /**

@@ -18,12 +18,16 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class PauseModelState extends AbstractModelState {
 
+    /**
+     * Constructs a new PauseModelState and initializes the available menu options.
+     * Adds the RRESUME, MENU and QUIT options to the menu.
+     */
     public PauseModelState() {
-        super.getOptions().add(Option.RESUME);
-        super.getOptions().add(Option.MENU);
-        super.getOptions().add(Option.QUIT);
+        super.addOption(Option.RESUME);
+        super.addOption(Option.MENU);
+        super.addOption(Option.QUIT);
     }
-    
+
     /**
      * Handles input commands for pause menu navigation and selection.
      *

@@ -91,7 +91,7 @@ class TestPauseModelState {
      */
     @Test
     void testGetOptionsReturnsAllOptions() {
-        final List<Option> options = state.getOptions();
+        final List<Option> options = state.options();
         assertEquals(3, options.size());
         assertTrue(options.contains(Option.RESUME));
         assertTrue(options.contains(Option.MENU));

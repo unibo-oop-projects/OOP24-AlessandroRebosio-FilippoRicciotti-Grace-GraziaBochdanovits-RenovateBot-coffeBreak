@@ -39,6 +39,6 @@ public interface ModelState extends State<Model> {
      *
      * @return the list of {@link Option} available
      */
-    List<Option> getOptions();
+    List<Option> options();
 
 }
