@@ -85,65 +85,27 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 \newpage
 \section{Modello del Dominio}
 
-In questa sezione si descrive il modello del \textit{dominio
-	applicativo}, descrivendo le \textit{entità} in gioco ed i rapporti fra loro.
-%
-Si possono sollevare eventuali aspetti particolarmente impegnativi, descrivendo perché lo sono, senza inserire idee circa possibili soluzioni, ovvero sull'organizzazione interna del software.
-%
-Infatti, la fase di analisi va effettuata \textbf{prima} del progetto: né il progetto né il software esistono nel momento in cui si effettua l'analisi.
-%
-La discussione di aspetti propri del software (ossia, della \textit{soluzione} al problema e non del problema stesso) appartengono alla sfera della progettazione, e vanno discussi successivamente.
+Il gioco si avvia da un \textbf{menù iniziale}, che consente al giocatore di avviare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni 
+precedenti oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione ispirata a \textit{Donkey Kong} (Nintendo, 1981), e 
+posiziona automaticamente il personaggio principale (Jumpman) nella posizione iniziale in basso a sinistra.
 
-È obbligatorio fornire uno schema UML del dominio, che diventerà anche lo scheletro della
-parte ``entity'' del modello dell'applicazione, ovvero degli elementi costitutivi del modello (in ottica MVC - Model View Controller): se l'analisi è ben fatta, dovreste ottenere una gerarchia di concetti che rappresentano le entità che compongono il problema da risolvere.
-%
-Un'analisi ben svolta \textbf{prima} di cimentarsi con lo sviluppo rappresenta un notevole aiuto per
-le fasi successive: è sufficiente descrivere a parole il dominio, quindi estrarre i sostantivi
-utilizzati, capire il loro ruolo all'interno del problema, le relazioni che intercorrono fra loro, e
-reificarli in interfacce.
+La \textbf{partita si sviluppa su due livelli arcade classici}, che si alternano in rotazione ad ogni completamento, ricreando il comportamento dell'originale. Ogni livello 
+presenta una disposizione fissa di piattaforme, scale, ostacoli e nemici (barili o fiamme), con un obiettivo specifico: raggiungere la cima dello schermo evitando gli ostacoli e 
+salvare la damigella in pericolo.
 
-\subsection*{Elementi positivi}
-\begin{itemize}
-	\item Si modella il dominio in forma di UML\@.
-	\item Viene descritto accuratamente il modello del dominio.
-	\item Il modello cattura le entità di dominio, le loro caratteristiche principali,
-	\item e le relazioni che intercorrono fra di loro.
-\end{itemize}
+Il personaggio è controllabile tramite input da tastiera e può muoversi lateralmente, salire scale e saltare. Il gioco gestisce le collisioni con gli elementi di 
+gioco (piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
 
-\subsection*{Elementi negativi}
-\begin{itemize}
-	\item Manca una descrizione a parole del modello del dominio.
-	\item Manca una descrizione UML delle entità del dominio e delle relazioni che intercorrono fra loro.
-	\item Vengono presentati elementi di design, o peggio, implementativi.
-	\item Viene mostrato uno schema UML che include elementi implementativi o non utili alla descrizione del dominio,
-	      ma volti alla soluzione (non devono vedersi, ad esempio, campi o metodi privati).
-\end{itemize}
+La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia, il personaggio può cadere oltre la parte inferiore dello schermo. In tal caso, 
+o se viene colpito da un ostacolo, si attiva la condizione di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione 
+in corso e confrontandolo con il record precedente.
 
-\subsection*{Esempio}
-GLaDOS dovrà essere in grado di accedere ad un'insieme di camere di test.
-%
-Tale insieme di camere prende il nome di percorso.
-%
-Ciascuna camera è composta di challenge successivi.
-%
-GLaDOS è responsabile di associare a ciascun challenge un insieme di consigli (suggestions) destinati all'utente (subject), dipendenti da possibili eventi.
-%
-GLaDOS dovrà poter comunicare coi locali cucina per approntare le torte.
-%
-Le torte potranno essere dolci, oppure semplici promesse di dolci che verranno disattese.
-%
-Gli elementi costitutivi il problema sono sintetizzati in \Cref{img:analysis}.
+Durante la partita, il \textbf{punteggio} è visibile nella parte superiore dello schermo e si aggiorna dinamicamente in base alle azioni 
+del giocatore (es. salto dei barili, raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
 
-Data la complessità di elaborare consigli via AI senza intervento umano, la prima versione del software fornita prevederà una serie di consigli forniti dall'utente.
-%
-Il requisito non funzionale riguardante il consumo energetico richiederà studi specifici sulle performance di GLaDOS che non potranno essere effettuati all'interno del monte ore previsto: tale feature sarà oggetto di futuri lavori.
+Una volta terminata la partita (completamento dei livelli o esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per 
+tornare al menù principale, avviare una nuova partita o uscire.
 
-\begin{figure}[ht]
-	\centering{}
-	\includegraphics{img/analysis.pdf}
-	\caption{Schema UML dell'analisi del problema, con rappresentate le entità principali ed i rapporti fra loro}
-	\label{img:analysis}
-\end{figure}
 
 \chapter{Design}
 
@@ -392,7 +354,7 @@ Questo schema è fatto male perché:
 
 \chapter{Sviluppo}
 \section{Testing automatizzato}
-In questo progetto abbiamo cercato di creare dei test per ogni classe utilizzando JUnit 5. Facendo in modo che i test coprissero le principali funzionalità del software, abbiamo garantito che le componenti fondamentali fossero verificate automaticamente. Di seguito vengono riportati alcuni esempi di test implementati.
+In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte le classi principali. I test progettati assicurano la verifica automatica delle funzionalità fondamentali del software. Di seguito vengono riportati alcuni esempi di test implementati.
 
 \subsubsection*{Common}
 \begin{itemize}
@@ -458,98 +420,28 @@ Usato per gestire valori che potrebbere essere assenti. Permalink di un esempio
 	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/3a264084eabd86bac19f9978d9c2aba0c1cbf624/src/main/java/it/unibo/coffebreak/impl/model/states/ingame/InGameModelState.java#L57-L61}
 \end{sloppypar}
 
+\newpage
+\subsection{Grazia Bochdanovits de Kavna}
+\subsubsection{Utilizzo di \texttt{Stream}}
+Utilizzati di frequente. Permalink di un esempio
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/926d3f1b985c9bba79c5f766ac0070b04fd6185f/src/main/java/it/unibo/coffebreak/impl/view/states/ingame/InGameView.java#L62-L65}
+\end{sloppypar}
 
-\subsection{Istruzioni note di sviluppo}
-Questa sezione, come quella riguardante il design dettagliato va svolta \textbf{singolarmente da ogni membro del gruppo}.
-%
-Nella prima parte, ciascuno dovrà mostrare degli esempi di codice particolarmente ben realizzati,
-che dimostrino proefficienza con funzionalità avanzate del linguaggio e capacità di spingersi oltre le librerie mostrate a lezione.
+\subsubsection{Gestione degli \texttt{Optional}}
+Usato per gestire valori che potrebbere essere assenti. Permalink di un esempio
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/926d3f1b985c9bba79c5f766ac0070b04fd6185f/src/main/java/it/unibo/coffebreak/impl/view/render/GameRenderManager.java#L82-L87}
+\end{sloppypar}
 
-\begin{itemize}
-	\item \textbf{Elencare} (fare un semplice elenco per punti, non un testo!) le feature \textit{avanzate} del linguaggio e dell'ecosistema Java che sono state
-	      utilizzate. Le feature di interesse sono:
-	      \begin{itemize}
-		      \item Progettazione con generici, ad esempio costruzione di nuovi tipi generici, e uso di generici bounded.
-		            L'uso di classi generiche di libreria non è considerato avanzato.
-		      \item Uso di lambda expressions
-		      \item Uso di \texttt{Stream}, di \texttt{Optional} o di altri costrutti funzionali
-		      \item Uso di reflection
-		      \item Definizione ed uso di nuove annotazioni
-		      \item Uso del Java Platform Module System
-		      \item Uso di parti della libreria JDK non spiegate a lezione (networking, compressione, parsing XML, eccetera...)
-		      \item Uso di librerie di terze parti (incluso JavaFX): Google Guava, Apache Commons...
-	      \end{itemize}
-	\item Si faccia molta attenzione a non scrivere banalità, elencando qui features di tipo ``core'', come le eccezioni, le enumerazioni, o le inner class: nessuna di queste è considerata avanzata.
-	\item Per ogni feature avanzata, mostrata, includere:
-	      \begin{itemize}
-		      \item Nome della feature
-		      \item Permalink GitHub al punto nel codice in cui è stata utilizzata
-	      \end{itemize}
-\end{itemize}
-
-In questa sezione, \textit{dopo l'elenco},
-vanno menzionati ed attributi con precisione eventuali pezzi di codice ``riadattati'' (o scopiazzati...) da Internet o da altri progetti,
-pratica che tolleriamo ma che non raccomandiamo.
-%
-Si rammenta agli studenti che non è consentito partire da progetti esistenti e procedere per modifiche successive.
-%
-Si ricorda anche che i docenti hanno in mano strumenti antiplagio piuttosto raffinati e che ``capiscono'' il codice e la storia delle modifiche del progetto,
-per cui tecniche banali come cambiare nomi (di classi, metodi, campi, parametri, o variabili locali),
-aggiungere o togliere commenti,
-oppure riordinare i membri di una classe vengono individuate senza problemi.
-%
-Le regole del progetto spiegano in dettaglio l'approccio dei docenti verso atti gravi come il plagiarismo.
-
-I pattern di design \textbf{non} vanno messi qui.
-%
-L'uso di pattern di design (come suggerisce il nome) è un aspetto avanzato di design, non di implementazione,
-e non va in questa sezione.
-
-\subsection*{Elementi positivi}
-
-\begin{itemize}
-	\item Si elencano gli aspetti avanzati di linguaggio che sono stati impiegati
-	\item Si elencano le librerie che sono state utilizzate
-	\item Per ciascun elemento, si fornisce un permalink
-	\item Ogni permalink fa riferimento ad uno snippet di codice scritto dall'autore della sezione (i docenti verificheranno usando \texttt{git blame})
-	\item Se si è utilizzato un particolare algoritmo, se ne cita la fonte originale.
-	      Ad esempio, se si è usato Mersenne Twister per la generazione di numeri pseudo-random, si cita \cite{mersenne}.
-	\item Si identificano parti di codice prese da altri progetti, dal web, o comunque scritte in forma originale da altre persone.
-	      In tal senso, si ricorda che agli ingegneri non è richiesto di re-inventare la ruota continuamente:
-	      se si cita debitamente la sorgente è tollerato fare uso di di snippet di codice open source per risolvere velocemente problemi non banali.
-	      Nel caso in cui si usino snippet di codice di qualità discutibile,
-	      oltre a menzionarne l'autore originale si invitano gli studenti ad adeguare tali parti di codice agli standard e allo stile del progetto.
-	      Contestualmente, si fa presente che è largamente meglio fare uso di una libreria che copiarsi pezzi di codice:
-	      qualora vi sia scelta (e tipicamente c'è), si preferisca la prima via.
-\end{itemize}
-
-\subsection*{Elementi negativi}
-\begin{itemize}
-	\item Si elencano feature core del linguaggio invece di quelle segnalate. Esempi di feature core da non menzionare sono:
-	      \begin{itemize}
-		      \item eccezioni;
-		      \item classi innestate;
-		      \item enumerazioni;
-		      \item interfacce.
-	      \end{itemize}
-	\item Si elencano applicazioni di terze parti (peggio se per usarle occorre licenza, e lo studente ne è sprovvisto) che non c'entrano nulla con lo sviluppo, ad esempio:
-	      \begin{itemize}
-		      \item Editor di grafica vettoriale come Inkscape o Adobe Illustrator;
-		      \item Editor di grafica scalare come GIMP o Adobe Photoshop;
-		      \item Editor di audio come Audacity;
-		      \item Strumenti di design dell'interfaccia grafica come SceneBuilder: il codice è in ogni caso inteso come sviluppato da voi.
-	      \end{itemize}
-	\item Si descrivono aspetti di scarsa rilevanza, o si scende in dettagli inutili.
-	\item Sono presenti parti di codice sviluppate originalmente da altri che non vengono debitamente segnalate.
-	      In tal senso, si ricorda agli studenti che i docenti hanno accesso a tutti i progetti degli anni passati,
-	      a Stack Overflow,
-	      ai principali blog di sviluppatori ed esperti Java,
-	      ai blog dedicati allo sviluppo di soluzioni e applicazioni
-	      (inclusi blog dedicati ad Android e allo sviluppo di videogame),
-	      nonché ai vari GitHub, GitLab, e Bitbucket.
-	      Conseguentemente, è \emph{molto} conveniente \emph{citare} una fonte ed usarla invece di tentare di spacciare per proprio il lavoro di altri.
-	\item Si elencano design pattern
-\end{itemize}
+\subsubsection{Utilizzo di lambda expressions}
+Utilizzati di frequente, soprattuto nel controllo delle collisioni fra entità. Permalink di un esempio:
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/926d3f1b985c9bba79c5f766ac0070b04fd6185f/src/main/java/it/unibo/coffebreak/impl/model/entities/mario/Mario.java#L173-L186}
+\end{sloppypar}
 
 \chapter{Commenti finali}
 
@@ -607,5 +499,6 @@ Quando il personaggio perde tutte le vite, si entra nella schermata di Game Over
 
 \bibliographystyle{alpha}
 \bibliography{report}
+\nocite{*}
 
 \end{document}
