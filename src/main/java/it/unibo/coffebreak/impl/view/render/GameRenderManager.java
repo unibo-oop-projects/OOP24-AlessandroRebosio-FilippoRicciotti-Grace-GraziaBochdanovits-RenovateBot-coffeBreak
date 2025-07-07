@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.view.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +80,7 @@ public final class GameRenderManager implements RenderManager {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        entities.forEach(entity -> {
+        new ArrayList<>(entities).forEach(entity -> {
             entityRender.entrySet().stream()
                     .filter(entry -> entry.getKey().isInstance(entity))
                     .findFirst()

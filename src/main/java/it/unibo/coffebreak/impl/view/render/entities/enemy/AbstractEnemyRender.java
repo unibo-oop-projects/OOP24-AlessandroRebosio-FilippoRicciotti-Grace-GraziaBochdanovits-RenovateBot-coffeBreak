@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
-import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
 
 /**
  * An abstract base class for rendering enemy entities in the game.
@@ -19,7 +19,7 @@ import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
  *
  * @author Grazia Bochdanovits de Kavna
  */
-public abstract class AbstractEnemyRender extends AbstractEntityRender {
+public abstract class AbstractEnemyRender extends AnimatedEntityRender {
 
     /**
      * Constructs a new AbstractEnemyRender with the specified resource loader.
@@ -39,7 +39,6 @@ public abstract class AbstractEnemyRender extends AbstractEntityRender {
             final int height) {
         if (entity instanceof final Enemy enemy && !enemy.isDestroyed()) {
             this.renderEnemy(g, entity, deltaTime, width, height);
-            super.draw(g, entity, deltaTime, width, height);
         }
     }
 
@@ -58,4 +57,28 @@ public abstract class AbstractEnemyRender extends AbstractEntityRender {
      * @param height    the height available for rendering the entity
      */
     protected abstract void renderEnemy(Graphics2D g, Entity entity, float deltaTime, int width, int height);
+
+    /**
+     * Enumeration of possible enemy animation types.
+     */
+    protected enum EnemyAnimationType {
+        /** Enemy is rolling. */
+        ROLL 
+    }
+
+    /**
+     * Contains shared sprite sheet configuration constants for all enemy renders.
+     */
+    protected static final class Constants {
+        /** Standard enemy sprite size in pixels (width and height). */
+        public static final int SIZE = 16;
+
+        /** Horizontal starting position in sprite sheet. */
+        public static final int X_OFFSET = 1;
+
+        /** Pixels between frames in sprite sheet. */
+        public static final int SPACING = 2;
+
+        private Constants() { }
+    }
 }

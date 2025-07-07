@@ -2,7 +2,8 @@ package it.unibo.coffebreak.impl.view.states.ingame;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
@@ -47,43 +48,42 @@ public class InGameView extends AbstractViewState {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
-        super.draw(g, width, height, deltaTime);
-        final List<Entity> entities = super.getController().getEntities();
+    public void draw(final Graphics2D g, final int panelWidth, final int panelHeight, 
+                        final float deltaTime) {
+        final float marginRatio = 0.1f; 
+        super.draw(g, panelWidth, panelHeight, deltaTime);
 
-        final int hudHeight = (int) (height * 0.10);
-        final int renderAreaHeight = height - hudHeight;
+        final int marginHoriz = (int) (panelWidth * marginRatio);
+        final int marginVert = (int) (panelHeight * marginRatio);
 
-        double minX = Double.MAX_VALUE, minY = Double.MAX_VALUE;
-        double maxX = Double.MIN_VALUE, maxY = Double.MIN_VALUE;
+        final int renderWidth = panelWidth - 2 * marginHoriz;
+        final int renderHeight = panelHeight - 2 * marginVert; 
 
-        for (final Entity e : entities) {
-            if (e instanceof Platform) {
-                minX = Math.min(minX, e.getPosition().x());
-                minY = Math.min(minY, e.getPosition().y());
-                maxX = Math.max(maxX, e.getPosition().x() + e.getDimension().width());
-                maxY = Math.max(maxY, e.getPosition().y() + e.getDimension().height());
-            }
-        }
+        final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
+            .filter(Platform.class::isInstance)
+            .max(Comparator.comparingDouble(e -> 
+                e.getPosition().x() + e.getPosition().y()));
 
-        final double logicalWidth = maxX - minX;
-        final double logicalHeight = maxY - minY;
+        final double platformRight = bottomRightPlatform.get().getPosition().x()
+                                        + bottomRightPlatform.get().getDimension().width();
+        final double platformBottom = bottomRightPlatform.get().getPosition().y()
+                                        + bottomRightPlatform.get().getDimension().height();
 
-        final double scaleX = width / logicalWidth;
-        final double scaleY = renderAreaHeight / logicalHeight;
+        final double scaleX = renderWidth / platformRight;
+        final double scaleY = renderHeight / platformBottom;
         final double scale = Math.min(scaleX, scaleY);
 
-        final double scaledWidth = logicalWidth * scale;
-        final double scaledHeight = logicalHeight * scale;
+        final double scaledWidth = platformRight * scale;
+        final double scaledHeight = platformBottom * scale;
 
-        final double offsetX = (width - scaledWidth) / 2.0;
-        final double offsetY = (height - scaledHeight) / 2.0;
+        final double offsetX = marginHoriz + (renderWidth - scaledWidth) / 2;
+        final double offsetY = marginVert + (renderHeight - scaledHeight) / 2;
 
         final AffineTransform oldTransform = g.getTransform();
         g.translate(offsetX, offsetY);
         g.scale(scale, scale);
 
-        renderManager.render(g, entities, width, renderAreaHeight, deltaTime);
+        this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom, deltaTime);
 
         g.setTransform(oldTransform);
     }

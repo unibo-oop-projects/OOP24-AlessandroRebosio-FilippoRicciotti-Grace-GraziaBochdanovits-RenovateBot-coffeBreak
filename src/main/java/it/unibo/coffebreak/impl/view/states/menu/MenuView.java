@@ -50,17 +50,17 @@ public class MenuView extends AbstractViewState {
 
         final Font titleFont = this.font.deriveFont(height * 0.05f);
         final String title = GameView.TITLE.replace(" ", "").toUpperCase(Locale.getDefault());
-        int mid = (title.length() + 1) / 2;
-        String left = title.substring(0, mid);
-        String right = title.substring(mid);
+        final int mid = (title.length() + 1) / 2;
+        final String left = title.substring(0, mid);
+        final String right = title.substring(mid);
 
         g.setFont(titleFont);
 
-        int leftWidth = g.getFontMetrics().stringWidth(left);
-        int rightWidth = g.getFontMetrics().stringWidth(right);
-        int totalWidth = leftWidth + rightWidth;
-        int x = (width - totalWidth) / 2;
-        int y = (int) (height * TITLE_HEIGHT);
+        final int leftWidth = g.getFontMetrics().stringWidth(left);
+        final int rightWidth = g.getFontMetrics().stringWidth(right);
+        final int totalWidth = leftWidth + rightWidth;
+        final int x = (width - totalWidth) / 2;
+        final int y = (int) (height * TITLE_HEIGHT);
 
         g.setColor(Color.BLUE);
         g.drawString(left, x, y);

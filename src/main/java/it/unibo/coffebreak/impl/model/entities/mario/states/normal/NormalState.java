@@ -46,10 +46,14 @@ public class NormalState extends AbstractMarioState {
     }
 
     private void handleLadderCollision(final MainCharacter character, final Ladder ladder) {
-        if (!isClimbing) {
-            final float marioCenter = character.getPosition().x() + character.getDimension().width() * 0.5f;
-            final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() * 0.5f;
-            this.canClimb = Math.abs(marioCenter - ladderCenter) <= character.getDimension().width() * TOLERANCE;
+        final float marioCenter = character.getPosition().x() + character.getDimension().width() * 0.5f;
+        final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() * 0.5f;
+        final boolean isAligned = Math.abs(marioCenter - ladderCenter) <= character.getDimension().width() * TOLERANCE;
+
+        this.canClimb = isAligned;
+
+        if (isClimbing && !isAligned) {
+            stopClimb();
         }
     }
 
@@ -75,6 +79,7 @@ public class NormalState extends AbstractMarioState {
     @Override
     public void startClimb() {
         this.isClimbing = true;
+        this.canClimb = true;
     }
 
     /**

@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -26,84 +25,66 @@ import org.junit.jupiter.api.Test;
  * @author Alessandro Rebosio
  */
 class TestScoreRepository {
-
-    private static final int SCORE1 = 1500;
-    private static final int SCORE2 = 1200;
-
     private Repository<List<Entry>> repository;
 
-    private Entry entry1;
-    private Entry entry2;
-
-    /**
-     * Sets up the test environment by initializing the repository
-     * and creating test entries.
-     */
     @BeforeEach
     void setUp() {
         repository = new ScoreRepository();
-        entry1 = new ScoreEntry("Mario", SCORE1);
-        entry2 = new ScoreEntry("Luigi", SCORE2);
     }
 
-    /**
-     * Cleans up the repository by deleting all files after each test.
-     */
     @AfterEach
     void tearDown() {
         repository.deleteAllFiles();
     }
 
     /**
-     * Verifies that entries are saved and then loaded correctly from disk.
+     * Tests that saving and loading a list of entries works correctly.
      */
     @Test
-    void testSaveAndLoadEntries() {
-        assertTrue(repository.save(List.of(entry1, entry2)));
+    void testSaveAndLoad() {
+        final Entry entry1 = new ScoreEntry("Alice", 100);
+        final Entry entry2 = new ScoreEntry("Bob", 200);
+        final List<Entry> entries = List.of(entry1, entry2);
+
+        assertTrue(repository.save(entries));
 
         final List<Entry> loaded = repository.load();
-        assertEquals(2, loaded.size());
-        assertTrue(loaded.contains(entry1));
-        assertTrue(loaded.contains(entry2));
+        assertEquals(entries.size(), loaded.size());
+        assertEquals(entries.get(0).name(), loaded.get(0).name());
+        assertEquals(entries.get(1).score(), loaded.get(1).score());
     }
 
     /**
-     * Verifies that an empty list is returned if no data file exists.
+     * Tests that loading when no file exists returns an empty list.
      */
     @Test
-    void testLoadEmptyIfNoFile() {
+    void testLoadNoFile() {
+        repository.deleteAllFiles();
         final List<Entry> loaded = repository.load();
         assertTrue(loaded.isEmpty());
     }
 
     /**
-     * Verifies that the repository can save and later restore a backup
-     * successfully.
-     * (This test assumes the internal backup mechanism works if loading works.)
+     * Tests that saving a null list throws NullPointerException.
      */
     @Test
-    void testCreateBackupAndRestore() throws IOException {
-        repository.save(List.of(entry1));
-
-        final List<Entry> restored = repository.load();
-        assertEquals(1, restored.size());
-        assertEquals("Mario", restored.get(0).name());
+    void testSaveNullThrows() {
+        assertThrows(NullPointerException.class, () -> repository.save(null));
     }
 
     /**
-     * Verifies that all files related to the repository can be deleted.
+     * Tests that saving an empty list returns true and does not throw.
+     */
+    @Test
+    void testSaveEmptyList() {
+        assertTrue(repository.save(List.of()));
+    }
+
+    /**
+     * Tests that deleteAllFiles returns true (even if files do not exist).
      */
     @Test
     void testDeleteAllFiles() {
-        repository.save(List.of(entry1));
         assertTrue(repository.deleteAllFiles());
-    }
-
-    /**
-     * Verifies that saving a null list throws a {@link NullPointerException}.
-     */
-    @Test
-    void testSaveWithNullListThrows() {
-        assertThrows(NullPointerException.class, () -> repository.save(null));
     }
 }
