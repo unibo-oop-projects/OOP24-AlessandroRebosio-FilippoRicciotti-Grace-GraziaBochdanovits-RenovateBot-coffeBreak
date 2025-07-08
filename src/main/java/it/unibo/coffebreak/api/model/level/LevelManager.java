@@ -68,6 +68,21 @@ public interface LevelManager {
     int getLevelIndex();
 
     /**
+     * Returns the number of rows in the level or map managed by this EntityManager.
+     *
+     * @return the number of rows
+     */
+    int getRow();
+
+    /**
+     * Returns the number of columns in the level or map managed by this
+     * EntityManager.
+     *
+     * @return the number of rows
+     */
+    int getColumn();
+
+    /**
      * Advances to the next level.
      */
     void advance();

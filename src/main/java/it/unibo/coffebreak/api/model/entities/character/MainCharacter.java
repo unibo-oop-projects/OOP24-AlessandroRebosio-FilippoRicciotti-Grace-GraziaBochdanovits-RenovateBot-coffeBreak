@@ -27,8 +27,9 @@ public interface MainCharacter extends Entity {
      * Sets the movement direction of the character.
      *
      * @param command the direction in which to move the character.
-     *            The specific values and their meanings should be defined in the
-     *            implementing class or documentation.
+     *                The specific values and their meanings should be defined in
+     *                the
+     *                implementing class or documentation.
      */
     void setDirection(Command command);
 
@@ -72,6 +73,11 @@ public interface MainCharacter extends Entity {
      * @return the number of lives remaining
      */
     int getLives();
+
+    /**
+     * Resets the number of lives back to the initial value defined.
+     */
+    void resetLives();
 
     /**
      * Returns whether Mario is currently facing right.

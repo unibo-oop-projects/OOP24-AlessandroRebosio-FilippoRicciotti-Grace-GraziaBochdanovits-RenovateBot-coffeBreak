@@ -38,7 +38,7 @@ public interface EntityManager {
     /**
      * Loads entities from the provided map data.
      * 
-     * @param map the map data to load entities from
+     * @param map                  the map data to load entities from
      * @param canDonkeyThrowBarrel indicates if Donkey can throw barrels
      */
     void loadEntities(List<String> map, boolean canDonkeyThrowBarrel);
@@ -55,4 +55,18 @@ public interface EntityManager {
      * Transforms entities according to game logic (e.g., removal, replacement).
      */
     void transformEntities();
+
+    /**
+     * Returns the number of rows in the level or map managed by this EntityManager.
+     *
+     * @return the number of rows
+     */
+    int getRow();
+
+    /**
+     * Returns the number of columns in the level or map managed by this EntityManager.
+     *
+     * @return the number of rows
+     */
+    int getColumn();
 }

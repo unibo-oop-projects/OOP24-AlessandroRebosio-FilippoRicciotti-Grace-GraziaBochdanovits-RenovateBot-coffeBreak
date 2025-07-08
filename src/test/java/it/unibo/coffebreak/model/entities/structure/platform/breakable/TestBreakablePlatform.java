@@ -1,6 +1,5 @@
 package it.unibo.coffebreak.model.entities.structure.platform.breakable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,7 +35,7 @@ class TestBreakablePlatform {
      */
     @BeforeEach
     void setUp() {
-        platform = new BreakablePlatform(TEST_POSITION, TEST_DIMENSION, false, false);
+        platform = new BreakablePlatform(TEST_POSITION, TEST_DIMENSION);
     }
 
     /**
@@ -54,19 +53,5 @@ class TestBreakablePlatform {
     void testDestroy() {
         platform.destroy();
         assertTrue(platform.isBroken());
-    }
-
-    /**
-     * Tests constructor behavior and property initialization.
-     */
-    @Test
-    void testConstructorBehavior() {
-        final BreakablePlatform customPlatform = new BreakablePlatform(TEST_POSITION, TEST_DIMENSION, true, true);
-
-        assertEquals(TEST_POSITION, customPlatform.getPosition());
-        assertEquals(TEST_DIMENSION, customPlatform.getDimension());
-        assertTrue(customPlatform.canPassThrough());
-        assertTrue(customPlatform.reversesDirection());
-        assertFalse(customPlatform.isBroken());
     }
 }

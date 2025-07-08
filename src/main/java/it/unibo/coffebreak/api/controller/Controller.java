@@ -109,6 +109,14 @@ public interface Controller {
      */
     int getLevelIndex();
 
+
+    /**
+     * Retrieves the current number of lives remaining for the character.
+     *
+     * @return the number of lives the character has left
+     */
+    int getCharacterLives();
+
     /**
      * Gets the current game state.
      * 

@@ -8,6 +8,7 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.controller.input.InputManager;
@@ -130,6 +131,16 @@ public class GameController implements Controller {
     @Override
     public int getLevelIndex() {
         return this.model.getLevelIndex();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getCharacterLives() {
+        return this.model.getMainCharacter()
+            .map(MainCharacter::getLives)
+            .orElse(0);
     }
 
     /**

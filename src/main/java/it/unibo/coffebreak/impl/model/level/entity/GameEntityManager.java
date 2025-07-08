@@ -36,7 +36,10 @@ public class GameEntityManager implements EntityManager {
 
     private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
-    private MainCharacter character;
+    private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
+
+    private int row;
+    private int column;
 
     /**
      * {@inheritDoc}
@@ -66,6 +69,10 @@ public class GameEntityManager implements EntityManager {
     @Override
     public void loadEntities(final List<String> map, final boolean canDonkeyThrowBarrel) {
         this.entities.clear();
+
+        this.row = map.size();
+        this.column = map.isEmpty() ? 0 : map.get(0).length();
+
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
             float offsetY = 0;
@@ -91,11 +98,11 @@ public class GameEntityManager implements EntityManager {
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, new BoundigBox()));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox(), true, true));
-                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox(), false, true));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox()));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox()));
                     // TODO: metter flag sensati
                     case 'M' -> {
-                        this.character = new Mario(position, new BoundigBox());
+                        this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
                     case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), canDonkeyThrowBarrel));
@@ -141,5 +148,21 @@ public class GameEntityManager implements EntityManager {
                 || (e instanceof final Enemy enemy && enemy.isDestroyed()));
 
         this.entities.addAll(toAdd);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRow() {
+        return row;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumn() {
+        return column;
     }
 }

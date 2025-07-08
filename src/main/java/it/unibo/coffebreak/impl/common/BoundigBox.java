@@ -13,10 +13,15 @@ package it.unibo.coffebreak.impl.common;
 public record BoundigBox(int width, int height) {
 
     /**
+     * The default size for the width and height.
+     */
+    public static final int SIZE = 8;
+
+    /**
      * Constructs a {@code BoundigBox} with width and height set to 8.
      */
     public BoundigBox() {
-        this(8, 8);
+        this(SIZE, SIZE);
     }
 
     /**
