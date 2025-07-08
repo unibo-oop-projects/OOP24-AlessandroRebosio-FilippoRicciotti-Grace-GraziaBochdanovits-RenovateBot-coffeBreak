@@ -104,37 +104,27 @@ public class Mario extends AbstractEntity implements MainCharacter {
             default -> vx = 0f;
         }
 
-        if (currentState.isClimbing() && !currentState.canClimb()) {
-            currentState.stopClimb();
-        }
         switch (moveDirection) {
             case MOVE_UP, MOVE_DOWN -> {
                 if (currentState.canClimb() && !currentState.isClimbing()) {
                     currentState.startClimb();
                 }
 
-                vy = (moveDirection == Command.MOVE_UP)
-                        ? physics.moveUp(deltaTime).y()
+                vy = (moveDirection == Command.MOVE_UP) 
+                        ? physics.moveUp(deltaTime).y() 
                         : physics.moveDown(deltaTime).y();
 
                 if (currentState.isClimbing()) {
                     this.onPlatform = false;
-                } else if (moveDirection == Command.MOVE_DOWN && !onPlatform) {
-                    vy = physics.moveDown(deltaTime).y();
                 }
             }
-
             case JUMP -> {
-                vy = physics.jump(deltaTime).y();
                 if (onPlatform && !currentState.isClimbing()) {
-                    vx = isFacingRight
-                            ? physics.moveRight(deltaTime).x()
-                            : physics.moveLeft(deltaTime).x();
+                    vy = physics.jump(deltaTime).y();
                     this.onPlatform = false;
                     this.isJumping = true;
                 }
             }
-
             default -> {
                 if (onPlatform) {
                     vy = 0f;
@@ -148,7 +138,7 @@ public class Mario extends AbstractEntity implements MainCharacter {
 
         this.currentState.update(this, deltaTime);
 
-        if (!currentState.canClimb() || this.onPlatform && currentState.isClimbing()) {
+        if ((!currentState.canClimb() || onPlatform) && currentState.isClimbing()) {
             currentState.stopClimb();
         }
         this.onPlatform = false;
@@ -182,7 +172,10 @@ public class Mario extends AbstractEntity implements MainCharacter {
             case final Princess princess -> princess.rescue();
             case final Platform platform -> {
                 switch (platform.getCollisionSide(this)) {
-                    case TOP -> onPlatform = true;
+                    case TOP -> {
+                        onPlatform = true;
+                        isJumping = false;
+                    }
                     case LEFT, RIGHT -> { } //TODO: slope
                     default -> { }
                 }
