@@ -89,7 +89,7 @@ public class Mario extends AbstractEntity implements MainCharacter {
      */
     @Override
     public void update(final float deltaTime) {
-        this.isJumping = false; 
+        this.isJumping = false;
         float vx = 0f;
         float vy = physics.gravity(deltaTime).y();
 
@@ -117,8 +117,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 if (currentState.isClimbing()) {
                     this.onPlatform = false;
                     vy = (moveDirection == Command.MOVE_UP)
-                        ? physics.moveUp(deltaTime).y()
-                        : physics.moveDown(deltaTime).y();
+                            ? physics.moveUp(deltaTime).y()
+                            : physics.moveDown(deltaTime).y();
                 } else if (moveDirection == Command.MOVE_DOWN && !onPlatform) {
                     vy = physics.moveDown(deltaTime).y();
                 }
@@ -128,8 +128,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 vy = physics.jump(deltaTime).y();
                 if (onPlatform && !currentState.isClimbing()) {
                     vx = isFacingRight
-                        ? physics.moveRight(deltaTime).x()
-                        : physics.moveLeft(deltaTime).x();
+                            ? physics.moveRight(deltaTime).x()
+                            : physics.moveLeft(deltaTime).x();
                     this.onPlatform = false;
                     this.isJumping = true;
                 }
@@ -188,7 +188,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 this.setVelocity(new Vector(0, 0));
                 this.moveDirection = Command.NONE;
             }
-            default -> { }
+            default -> {
+            }
         }
 
         this.currentState.handleCollision(this, other);
@@ -219,7 +220,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
             case BOTTOM -> {
                 if (!platform.canPassThrough() && getVelocity().y() < 0) {
                     setVelocity(new Vector(getVelocity().x(), 0));
-                    setPosition(new Position(getPosition().x(), platform.getPosition().y() + platform.getDimension().height()));
+                    setPosition(new Position(getPosition().x(),
+                            platform.getPosition().y() + platform.getDimension().height()));
                 }
             }
             case LEFT -> {
@@ -231,14 +233,15 @@ public class Mario extends AbstractEntity implements MainCharacter {
             case RIGHT -> {
                 if (getVelocity().x() < 0 && !currentState.isClimbing()) {
                     setVelocity(new Vector(0, getVelocity().y()));
-                    setPosition(new Position(platform.getPosition().x() + platform.getDimension().width(), getPosition().y()));
+                    setPosition(new Position(platform.getPosition().x() + platform.getDimension().width(),
+                            getPosition().y()));
                 }
             }
         }
     }
 
     private enum CollisionDirection {
-            TOP, BOTTOM, LEFT, RIGHT
+        TOP, BOTTOM, LEFT, RIGHT
     }
 
     private boolean isOverlapping(final Platform platform) {
@@ -253,9 +256,9 @@ public class Mario extends AbstractEntity implements MainCharacter {
         final float platformRight = platformLeft + platform.getDimension().width();
 
         return marioBottom > platformTop
-            && marioTop < platformBottom
-            && marioRight > platformLeft
-            && marioLeft < platformRight;
+                && marioTop < platformBottom
+                && marioRight > platformLeft
+                && marioLeft < platformRight;
     }
 
     private CollisionDirection getCollisionDirection(final Platform platform) {
@@ -335,6 +338,15 @@ public class Mario extends AbstractEntity implements MainCharacter {
     @Override
     public int getLives() {
         return livesManager.getLives();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Resets the number of lives back to the initial value defined.
+     */
+    @Override
+    public void resetLives() {
+        this.livesManager.resetLives();
     }
 
     /**

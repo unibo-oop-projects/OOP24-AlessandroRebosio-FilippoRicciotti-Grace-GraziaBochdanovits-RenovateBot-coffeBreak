@@ -36,7 +36,7 @@ public class GameEntityManager implements EntityManager {
 
     private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
-    private MainCharacter character;
+    private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
 
     /**
      * {@inheritDoc}
@@ -95,7 +95,7 @@ public class GameEntityManager implements EntityManager {
                     case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox(), false, true));
                     // TODO: metter flag sensati
                     case 'M' -> {
-                        this.character = new Mario(position, new BoundigBox());
+                        this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
                     case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), canDonkeyThrowBarrel));

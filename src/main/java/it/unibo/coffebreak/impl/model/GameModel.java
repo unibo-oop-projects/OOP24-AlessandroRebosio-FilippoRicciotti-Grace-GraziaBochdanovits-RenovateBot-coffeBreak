@@ -70,6 +70,7 @@ public class GameModel implements Model {
     @Override
     public void start() {
         this.levelManager.loadCurrentEntities();
+        this.getMainCharacter().ifPresent(MainCharacter::resetLives);
     }
 
     /**
