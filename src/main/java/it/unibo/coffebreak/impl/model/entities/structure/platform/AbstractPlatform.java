@@ -21,6 +21,24 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
     /**
+     * Enum representing the possible sides where a collision can occur between entities.
+     */
+    public enum CollisionSide {
+        /** Collision with the top side of the platform. */
+        TOP, 
+        /** Collision with the bottom side of the platform. */
+        BOTTOM, 
+        /** Collision with the left side of the platform. */
+        LEFT, 
+        /** Collision with the right side of the platform. */
+        RIGHT, 
+        /** No collision or undetermined collision side. */
+        NONE
+    }
+
+    private static final float EPSILON = 0.001f;
+
+    /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
      * @param position          the 2D position of the platform (cannot be null)
@@ -40,6 +58,45 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     @Override
     public void onCollision(final Entity other) {
         // Default empty implementation
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CollisionSide getCollisionSide(final Entity other) {
+        final float platformTop = this.getPosition().y();
+        final float platformBottom = platformTop + this.getDimension().height();
+        final float platformLeft = this.getPosition().x();
+        final float platformRight = platformLeft + this.getDimension().width();
+
+        final float otherTop = other.getPosition().y();
+        final float otherBottom = otherTop + other.getDimension().height();
+        final float otherLeft = other.getPosition().x();
+        final float otherRight = otherLeft + other.getDimension().width();
+
+        final float overlapTop = otherBottom - platformTop;
+        final float overlapBottom = platformBottom - otherTop;
+        final float overlapLeft = otherRight - platformLeft;
+        final float overlapRight = platformRight - otherLeft;
+
+        final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
+                                        Math.min(overlapLeft, overlapRight));
+
+        if (Math.abs(minOverlap - overlapTop) < EPSILON) {
+            return CollisionSide.TOP;
+        }
+        if (Math.abs(minOverlap - overlapBottom) < EPSILON) {
+            return CollisionSide.BOTTOM;
+        }
+        if (Math.abs(minOverlap - overlapLeft) < EPSILON) {
+            return CollisionSide.LEFT;
+        }
+        if (Math.abs(minOverlap - overlapRight) < EPSILON) {
+            return CollisionSide.RIGHT;
+        }
+
+        return CollisionSide.NONE;
     }
 
     /**
