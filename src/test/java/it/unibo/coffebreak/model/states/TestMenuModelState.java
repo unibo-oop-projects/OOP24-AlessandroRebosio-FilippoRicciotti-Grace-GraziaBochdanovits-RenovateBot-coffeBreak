@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.model.GameModel;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 
@@ -35,7 +36,7 @@ class TestMenuModelState {
     @BeforeEach
     void setUp() {
         state = new MenuModelState();
-        dummyModel = new GameModel();
+        dummyModel = new GameModel(new ResourceLoader());
     }
 
     /**

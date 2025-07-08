@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.model.level;
 import java.util.List;
 import java.util.Optional;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.level.LevelManager;
@@ -27,11 +28,21 @@ public class GameLevelManager implements LevelManager {
     private static final int BONUS = 5000;
 
     private final EntityManager entityManager = new GameEntityManager();
-    private final MapsManager mapsManager = new GameMapsManager();
     private final Bonus levelBonus = new GameBonus();
+    private final MapsManager mapsManager;
 
     private int levelIndex;
     private float bonusElapsedTime;
+
+    /**
+     * Constructs a new {@code GameLevelManager} using the specified {@link Loader}.
+     * Initializes the internal {@link GameMapsManager} with the provided loader.
+     *
+     * @param loader the loader used to initialize the game maps manager
+     */
+    public GameLevelManager(final Loader loader) {
+        this.mapsManager = new GameMapsManager(loader);
+    }
 
     /**
      * {@inheritDoc}

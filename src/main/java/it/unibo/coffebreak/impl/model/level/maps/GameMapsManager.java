@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.level.maps.MapsManager;
 import it.unibo.coffebreak.api.model.level.maps.state.MapState;
@@ -22,9 +23,19 @@ import it.unibo.coffebreak.impl.model.level.maps.state.map4.GameMapFour;
  */
 public class GameMapsManager implements MapsManager {
 
-    private final List<MapState> maps = new ArrayList<>(List.of(new GameMapOne(), new GameMapFour()));
-
+    private final List<MapState> maps = new ArrayList<>();
     private int mapIndex;
+
+    /**
+     * Constructs a new {@code GameMapsManager} and initializes the list of game maps.
+     * Adds predefined game maps to the manager using the provided {@link Loader} instance.
+     *
+     * @param loader the {@link Loader} used to initialize each game map
+     */
+    public GameMapsManager(final Loader loader) {
+        this.maps.add(new GameMapOne(loader));
+        this.maps.add(new GameMapFour(loader));
+    }
 
     /**
      * Returns the list of strings representing the current map layout.

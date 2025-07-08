@@ -7,6 +7,7 @@ import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.model.GameModel;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
@@ -44,7 +45,7 @@ class TestPauseModelState {
     @BeforeEach
     void setUp() {
         state = new PauseModelState();
-        dummyModel = new GameModel();
+        dummyModel = new GameModel(new ResourceLoader());
         dummyModel.setState(new InGameModelState());
     }
 

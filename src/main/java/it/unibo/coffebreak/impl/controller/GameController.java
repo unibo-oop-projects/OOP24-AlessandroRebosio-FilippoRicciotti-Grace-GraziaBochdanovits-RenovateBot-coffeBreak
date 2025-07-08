@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.controller;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
@@ -28,7 +29,17 @@ import it.unibo.coffebreak.impl.model.GameModel;
 public class GameController implements Controller {
 
     private final Input input = new InputManager();
-    private final Model model = new GameModel();
+    private final Model model;
+
+    /**
+     * Constructs a new {@code GameController} using the specified {@link Loader}.
+     * Initializes the game model with the provided loader.
+     *
+     * @param loader the loader used to initialize the game model
+     */
+    public GameController(final Loader loader) {
+        this.model = new GameModel(loader);
+    }
 
     /**
      * {@inheritDoc}
