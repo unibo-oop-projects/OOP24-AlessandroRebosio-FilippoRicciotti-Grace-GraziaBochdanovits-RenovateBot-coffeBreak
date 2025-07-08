@@ -21,7 +21,7 @@ public record GamePhysics(float speed, float jumpForce) implements Physics {
      * Default constructor with standard speed and jump force.
      */
     public GamePhysics() {
-        this(100f, -GRAVITY);
+        this(GRAVITY, -GRAVITY * 2);
     }
 
     /**
