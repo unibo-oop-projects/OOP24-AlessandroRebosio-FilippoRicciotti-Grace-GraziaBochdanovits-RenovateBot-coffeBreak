@@ -38,6 +38,9 @@ public class GameEntityManager implements EntityManager {
     private final List<Entity> entities = new LinkedList<>();
     private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
 
+    private int row;
+    private int column;
+
     /**
      * {@inheritDoc}
      * Returns an unmodifiable list of all entities managed by this manager.
@@ -66,6 +69,10 @@ public class GameEntityManager implements EntityManager {
     @Override
     public void loadEntities(final List<String> map, final boolean canDonkeyThrowBarrel) {
         this.entities.clear();
+
+        this.row = map.size();
+        this.column = map.isEmpty() ? 0 : map.get(0).length();
+
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
             float offsetY = 0;
@@ -141,5 +148,21 @@ public class GameEntityManager implements EntityManager {
                 || (e instanceof final Enemy enemy && enemy.isDestroyed()));
 
         this.entities.addAll(toAdd);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRow() {
+        return row;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumn() {
+        return column;
     }
 }

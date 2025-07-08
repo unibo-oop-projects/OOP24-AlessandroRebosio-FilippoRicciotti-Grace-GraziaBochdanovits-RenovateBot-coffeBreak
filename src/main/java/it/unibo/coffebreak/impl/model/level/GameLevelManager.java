@@ -124,4 +124,20 @@ public class GameLevelManager implements LevelManager {
             this.loadCurrentEntities();
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRow() {
+        return this.entityManager.getRow();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumn() {
+        return this.entityManager.getColumn();
+    }
 }

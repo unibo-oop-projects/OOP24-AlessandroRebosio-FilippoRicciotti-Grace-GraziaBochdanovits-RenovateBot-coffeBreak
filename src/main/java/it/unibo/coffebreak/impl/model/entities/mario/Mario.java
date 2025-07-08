@@ -114,11 +114,12 @@ public class Mario extends AbstractEntity implements MainCharacter {
                     currentState.startClimb();
                 }
 
+                vy = (moveDirection == Command.MOVE_UP)
+                        ? physics.moveUp(deltaTime).y()
+                        : physics.moveDown(deltaTime).y();
+
                 if (currentState.isClimbing()) {
                     this.onPlatform = false;
-                    vy = (moveDirection == Command.MOVE_UP)
-                            ? physics.moveUp(deltaTime).y()
-                            : physics.moveDown(deltaTime).y();
                 } else if (moveDirection == Command.MOVE_DOWN && !onPlatform) {
                     vy = physics.moveDown(deltaTime).y();
                 }
@@ -197,91 +198,99 @@ public class Mario extends AbstractEntity implements MainCharacter {
 
     // private void handlePlatformCollision(final Platform platform) {
 
-        // if (!isOverlapping(platform)) {
-        //     return;
-        // }
+    // if (!isOverlapping(platform)) {
+    // return;
+    // }
 
-        // final CollisionDirection direction = getCollisionDirection(platform);
+    // final CollisionDirection direction = getCollisionDirection(platform);
 
-        // switch (direction) {
-        //     case TOP -> {
-        //         if (currentState.isClimbing()) {
-        //             currentState.stopClimb();
-        //             setDirection(Command.NONE);
-        //         }
+    // switch (direction) {
+    // case TOP -> {
+    // if (currentState.isClimbing()) {
+    // currentState.stopClimb();
+    // setDirection(Command.NONE);
+    // }
 
-        //         if (!(platform.canPassThrough() && getVelocity().y() >= 0 && moveDirection == Command.MOVE_DOWN)) {
-        //             this.onPlatform = true;
-        //             this.isJumping = false;
-        //             setVelocity(new Vector(getVelocity().x(), 0));
-        //             setPosition(new Position(getPosition().x(), platform.getPosition().y() - getDimension().height()));
-        //         }
-        //     }
-        //     case BOTTOM -> {
-        //         if (!platform.canPassThrough() && getVelocity().y() < 0) {
-        //             setVelocity(new Vector(getVelocity().x(), 0));
-        //             setPosition(new Position(getPosition().x(),
-        //                     platform.getPosition().y() + platform.getDimension().height()));
-        //         }
-        //     }
-        //     case LEFT -> {
-        //         if (getVelocity().x() > 0 && !currentState.isClimbing()) {
-        //             setVelocity(new Vector(0, getVelocity().y()));
-        //             setPosition(new Position(platform.getPosition().x() - getDimension().width(), getPosition().y()));
-        //         }
-        //     }
-        //     case RIGHT -> {
-        //         if (getVelocity().x() < 0 && !currentState.isClimbing()) {
-        //             setVelocity(new Vector(0, getVelocity().y()));
-        //             setPosition(new Position(platform.getPosition().x() + platform.getDimension().width(),
-        //                     getPosition().y()));
-        //         }
-        //     }
-        // }
+    // if (!(platform.canPassThrough() && getVelocity().y() >= 0 && moveDirection ==
+    // Command.MOVE_DOWN)) {
+    // this.onPlatform = true;
+    // this.isJumping = false;
+    // setVelocity(new Vector(getVelocity().x(), 0));
+    // setPosition(new Position(getPosition().x(), platform.getPosition().y() -
+    // getDimension().height()));
+    // }
+    // }
+    // case BOTTOM -> {
+    // if (!platform.canPassThrough() && getVelocity().y() < 0) {
+    // setVelocity(new Vector(getVelocity().x(), 0));
+    // setPosition(new Position(getPosition().x(),
+    // platform.getPosition().y() + platform.getDimension().height()));
+    // }
+    // }
+    // case LEFT -> {
+    // if (getVelocity().x() > 0 && !currentState.isClimbing()) {
+    // setVelocity(new Vector(0, getVelocity().y()));
+    // setPosition(new Position(platform.getPosition().x() - getDimension().width(),
+    // getPosition().y()));
+    // }
+    // }
+    // case RIGHT -> {
+    // if (getVelocity().x() < 0 && !currentState.isClimbing()) {
+    // setVelocity(new Vector(0, getVelocity().y()));
+    // setPosition(new Position(platform.getPosition().x() +
+    // platform.getDimension().width(),
+    // getPosition().y()));
+    // }
+    // }
+    // }
     // }
 
     // private enum CollisionDirection {
-    //     TOP, BOTTOM, LEFT, RIGHT
+    // TOP, BOTTOM, LEFT, RIGHT
     // }
 
     // private boolean isOverlapping(final Platform platform) {
-    //     final float marioBottom = getPosition().y() + getDimension().height();
-    //     final float marioTop = getPosition().y();
-    //     final float marioLeft = getPosition().x();
-    //     final float marioRight = marioLeft + getDimension().width();
+    // final float marioBottom = getPosition().y() + getDimension().height();
+    // final float marioTop = getPosition().y();
+    // final float marioLeft = getPosition().x();
+    // final float marioRight = marioLeft + getDimension().width();
 
-    //     final float platformTop = platform.getPosition().y();
-    //     final float platformBottom = platformTop + platform.getDimension().height();
-    //     final float platformLeft = platform.getPosition().x();
-    //     final float platformRight = platformLeft + platform.getDimension().width();
+    // final float platformTop = platform.getPosition().y();
+    // final float platformBottom = platformTop + platform.getDimension().height();
+    // final float platformLeft = platform.getPosition().x();
+    // final float platformRight = platformLeft + platform.getDimension().width();
 
-    //     return marioBottom > platformTop
-    //             && marioTop < platformBottom
-    //             && marioRight > platformLeft
-    //             && marioLeft < platformRight;
+    // return marioBottom > platformTop
+    // && marioTop < platformBottom
+    // && marioRight > platformLeft
+    // && marioLeft < platformRight;
     // }
 
     // private CollisionDirection getCollisionDirection(final Platform platform) {
-    //     final float topOverlap = getPosition().y() + getDimension().height() - platform.getPosition().y();
-    //     final float bottomOverlap = platform.getPosition().y() + platform.getDimension().height() - getPosition().y();
-    //     final float leftOverlap = getPosition().x() + getDimension().width() - platform.getPosition().x();
-    //     final float rightOverlap = platform.getPosition().x() + platform.getDimension().width() - getPosition().x();
+    // final float topOverlap = getPosition().y() + getDimension().height() -
+    // platform.getPosition().y();
+    // final float bottomOverlap = platform.getPosition().y() +
+    // platform.getDimension().height() - getPosition().y();
+    // final float leftOverlap = getPosition().x() + getDimension().width() -
+    // platform.getPosition().x();
+    // final float rightOverlap = platform.getPosition().x() +
+    // platform.getDimension().width() - getPosition().x();
 
-    //     float minOverlap = topOverlap;
-    //     CollisionDirection direction = CollisionDirection.TOP;
+    // float minOverlap = topOverlap;
+    // CollisionDirection direction = CollisionDirection.TOP;
 
-    //     if (bottomOverlap < minOverlap) {
-    //         minOverlap = bottomOverlap;
-    //         direction = CollisionDirection.BOTTOM;
-    //     }
-    //     if (leftOverlap < minOverlap) {
-    //         minOverlap = leftOverlap;
-    //         direction = CollisionDirection.LEFT;
-    //     }
-    //     if (rightOverlap < minOverlap) {
-    //         direction = CollisionDirection.RIGHT;
-    //     }
-    //     return direction;
+    // if (bottomOverlap < minOverlap) {
+    // minOverlap = bottomOverlap;
+    // direction = CollisionDirection.BOTTOM;
+    // }
+    // if (leftOverlap < minOverlap) {
+    // minOverlap = leftOverlap;
+    // direction = CollisionDirection.LEFT;
+    // }
+    // if (rightOverlap < minOverlap) {
+    // direction = CollisionDirection.RIGHT;
+    // }
+    // return direction;
     // }
 
     /**

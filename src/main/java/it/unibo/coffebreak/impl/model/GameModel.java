@@ -32,10 +32,10 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
  */
 public class GameModel implements Model {
 
-    private final BoundigBox gameBounds = new BoundigBox(600, 800);
     private final Leaderboard leaderBoard = new GameLeaderboard();
 
     private final LevelManager levelManager;
+    private BoundigBox gameBounds;
     private ModelState currentState;
     private volatile boolean running;
 
@@ -57,10 +57,11 @@ public class GameModel implements Model {
      */
     @Override
     public final void setState(final ModelState newState) {
+        Objects.requireNonNull(newState, "The new state cannot be null");
         if (currentState != null) {
             currentState.onExit(this);
         }
-        currentState = Objects.requireNonNull(newState, "The new state cannot be null");
+        currentState = newState;
         currentState.onEnter(this);
     }
 
@@ -70,6 +71,7 @@ public class GameModel implements Model {
     @Override
     public void start() {
         this.levelManager.loadCurrentEntities();
+        this.updateGameBounds();
         this.getMainCharacter().ifPresent(MainCharacter::resetLives);
     }
 
@@ -151,10 +153,9 @@ public class GameModel implements Model {
      */
     @Override
     public int getScoreValue() {
-        if (this.getMainCharacter().isPresent()) {
-            return this.getMainCharacter().get().getScoreValue();
-        }
-        return 0;
+        return this.getMainCharacter()
+                .map(MainCharacter::getScoreValue)
+                .orElse(0);
     }
 
     /**
@@ -171,6 +172,7 @@ public class GameModel implements Model {
     @Override
     public void nextMap() {
         this.levelManager.advance();
+        this.updateGameBounds();
     }
 
     /**
@@ -227,5 +229,13 @@ public class GameModel implements Model {
     @Override
     public void update(final float deltaTime) {
         this.currentState.update(this, deltaTime);
+    }
+
+    /**
+     * Updates the game bounds based on current level dimensions.
+     */
+    private void updateGameBounds() {
+        this.gameBounds = new BoundigBox(this.levelManager.getColumn(), this.levelManager.getRow())
+                .scale(BoundigBox.SIZE);
     }
 }
