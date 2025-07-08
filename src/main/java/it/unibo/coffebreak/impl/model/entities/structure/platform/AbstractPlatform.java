@@ -20,22 +20,6 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    /**
-     * Enum representing the possible sides where a collision can occur between entities.
-     */
-    public enum CollisionSide {
-        /** Collision with the top side of the platform. */
-        TOP, 
-        /** Collision with the bottom side of the platform. */
-        BOTTOM, 
-        /** Collision with the left side of the platform. */
-        LEFT, 
-        /** Collision with the right side of the platform. */
-        RIGHT, 
-        /** No collision or undetermined collision side. */
-        NONE
-    }
-
     private static final float EPSILON = 0.001f;
 
     /**

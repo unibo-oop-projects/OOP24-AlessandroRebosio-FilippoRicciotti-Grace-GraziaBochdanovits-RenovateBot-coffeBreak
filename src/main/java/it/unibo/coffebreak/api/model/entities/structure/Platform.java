@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.api.model.entities.structure;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatform.CollisionSide;
 
 /**
  * Represents a platform where entities can stand or move on.
@@ -10,6 +9,34 @@ import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatfo
  * @author Alessandro Rebosio
  */
 public interface Platform extends Entity {
+
+    /**
+     * Enum representing the possible sides where a collision can occur between
+     * entities.
+     */
+    enum CollisionSide {
+        /**
+         * Collision with the top side of the platform.
+         */
+        TOP,
+        /**
+         * Collision with the bottom side of the platform.
+         */
+        BOTTOM,
+        /**
+         * Collision with the left side of the platform.
+         */
+        LEFT,
+        /**
+         * Collision with the right side of the platform.
+         */
+        RIGHT,
+        /**
+         * No collision or undetermined collision side.
+         */
+        NONE
+    }
+
     /**
      * Destroys or breaks the platform, changing its state.
      */

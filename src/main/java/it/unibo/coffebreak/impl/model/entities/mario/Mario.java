@@ -12,7 +12,6 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 import it.unibo.coffebreak.api.model.entities.collectible.Collectible;
 import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
-import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -188,10 +187,6 @@ public class Mario extends AbstractEntity implements MainCharacter {
                     default -> { }
                 }
                 platform.destroy();
-            }
-            case final Tank tank -> {
-                this.setVelocity(new Vector(0, 0));
-                this.moveDirection = Command.NONE;
             }
             default -> {
             }
