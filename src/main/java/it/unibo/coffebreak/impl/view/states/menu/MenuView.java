@@ -77,7 +77,7 @@ public class MenuView extends AbstractViewState {
 
         g.setFont(boardFont);
         final int boardY = (int) (height * 0.60);
-        drawCenteredText(g, "RANK  SCORE  NAME ", width, boardY, Color.CYAN);
+        drawCenteredText(g, "RANK  SCORE  NAME", width, boardY, Color.CYAN);
 
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);

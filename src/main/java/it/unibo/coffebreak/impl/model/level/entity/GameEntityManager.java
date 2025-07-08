@@ -91,7 +91,7 @@ public class GameEntityManager implements EntityManager {
                 final BoundigBox bb = new BoundigBox();
 
                 switch (Character.toUpperCase(c)) {
-                    case 'R' -> this.addEntity(new Pauline(position, bb.scaleHeight(2)));
+                    case 'R' -> this.addEntity(new Pauline(position, bb));
                     case 'P' -> this.addEntity(new NormalPlatform(position, bb, true, true));
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb, false, true));
                     // TODO: metter flag sensati
@@ -100,8 +100,8 @@ public class GameEntityManager implements EntityManager {
                         this.addEntity(this.character);
                     }
                     case 'D' ->
-                        this.addEntity(new DonkeyKong(position, bb.scaleHeight(4).scaleWidth(5), true));
-                    case 'T' -> this.addEntity(new GameTank(position, bb.scaleHeight(2)));
+                        this.addEntity(new DonkeyKong(position, bb, true));
+                    case 'T' -> this.addEntity(new GameTank(position, bb));
                     case 'H' -> this.addEntity(new Hammer(position, bb));
                     case 'C' -> this.addEntity(new Coin(position, bb));
                     case 'L' -> this.addEntity(new NormalLadder(position, bb));
