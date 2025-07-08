@@ -34,7 +34,7 @@ public interface EntityManager {
      * 
      * @param map the map data to load entities from
      */
-    void loadEntities(List<String> map);
+    void loadEntities(List<String> map, boolean canDonkeyThrowBarrel);
 
     /**
      * Adds a new entity to the level.

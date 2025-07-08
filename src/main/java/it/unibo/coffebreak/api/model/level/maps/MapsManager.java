@@ -46,4 +46,15 @@ public interface MapsManager {
      * @return true if the level should advance, false otherwise
      */
     boolean shouldAdvance(List<Entity> entities);
+
+    /**
+     * Determines whether Donkey is allowed to throw a barrel in the current map
+     * state.
+     * This method must be implemented by subclasses to specify the conditions under
+     * which
+     * Donkey can perform the barrel-throwing action.
+     *
+     * @return true if Donkey can throw a barrel in this map state, false otherwise
+     */
+    boolean canDonkeyThrowBarrel();
 }

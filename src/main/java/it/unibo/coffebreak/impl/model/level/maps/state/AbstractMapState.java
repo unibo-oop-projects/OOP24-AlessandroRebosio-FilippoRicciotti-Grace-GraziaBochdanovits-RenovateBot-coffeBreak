@@ -73,6 +73,18 @@ public abstract class AbstractMapState implements MapState {
     public abstract boolean shouldAdvance(List<Entity> entities);
 
     /**
+     * Determines whether Donkey is allowed to throw a barrel in the current map
+     * state.
+     * This method must be implemented by subclasses to specify the conditions under
+     * which
+     * Donkey can perform the barrel-throwing action.
+     *
+     * @return true if Donkey can throw a barrel in this map state, false otherwise
+     */
+    @Override
+    public abstract boolean canDonkeyThrowBarrel();
+
+    /**
      * Loads the map data from the resource file using the index directly.
      * The resource path is constructed as "maps/map{index}.txt".
      *

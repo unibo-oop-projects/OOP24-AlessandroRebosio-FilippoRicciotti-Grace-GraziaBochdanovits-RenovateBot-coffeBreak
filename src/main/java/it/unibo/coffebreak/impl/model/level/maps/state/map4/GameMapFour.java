@@ -34,4 +34,12 @@ public class GameMapFour extends AbstractMapState {
                 .map(BreakablePlatform.class::cast)
                 .noneMatch(bp -> !bp.isBroken());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canDonkeyThrowBarrel() {
+        return false;
+    }
 }

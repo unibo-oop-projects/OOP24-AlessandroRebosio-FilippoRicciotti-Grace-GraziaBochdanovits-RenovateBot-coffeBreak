@@ -64,7 +64,7 @@ public class GameEntityManager implements EntityManager {
      * @param map the map representation to load entities from
      */
     @Override
-    public void loadEntities(final List<String> map) {
+    public void loadEntities(final List<String> map, final boolean canDonkeyThrowBarrel) {
         this.entities.clear();
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
@@ -98,7 +98,7 @@ public class GameEntityManager implements EntityManager {
                         this.character = new Mario(position, new BoundigBox());
                         this.addEntity(this.character);
                     }
-                    case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), true));
+                    case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), canDonkeyThrowBarrel));
                     case 'T' -> this.addEntity(new GameTank(position, new BoundigBox()));
                     case 'H' -> this.addEntity(new Hammer(position, new BoundigBox()));
                     case 'C' -> this.addEntity(new Coin(position, new BoundigBox()));

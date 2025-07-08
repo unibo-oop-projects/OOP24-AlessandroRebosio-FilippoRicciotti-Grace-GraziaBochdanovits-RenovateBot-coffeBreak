@@ -35,4 +35,12 @@ public class GameMapOne extends AbstractMapState {
                 .anyMatch(Princess::isRescued);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canDonkeyThrowBarrel() {
+        return true;
+    }
+
 }

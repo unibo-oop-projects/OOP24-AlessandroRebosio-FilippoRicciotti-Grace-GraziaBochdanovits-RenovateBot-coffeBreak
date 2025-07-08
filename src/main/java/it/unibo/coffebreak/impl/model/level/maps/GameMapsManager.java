@@ -84,4 +84,18 @@ public class GameMapsManager implements MapsManager {
     private MapState getMaps() {
         return this.maps.get(this.mapIndex);
     }
+
+    /**
+     * Determines whether Donkey is allowed to throw a barrel in the current map
+     * state.
+     * This method must be implemented by subclasses to specify the conditions under
+     * which
+     * Donkey can perform the barrel-throwing action.
+     *
+     * @return true if Donkey can throw a barrel in this map state, false otherwise
+     */
+    @Override
+    public boolean canDonkeyThrowBarrel() {
+        return this.maps.get(this.mapIndex).canDonkeyThrowBarrel();
+    }
 }

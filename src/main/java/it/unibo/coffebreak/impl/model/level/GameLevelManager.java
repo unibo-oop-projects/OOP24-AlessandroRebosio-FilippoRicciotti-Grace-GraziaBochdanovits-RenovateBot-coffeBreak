@@ -71,7 +71,7 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void loadCurrentEntities() {
         this.levelBonus.setBonus(BONUS);
-        this.entityManager.loadEntities(this.mapsManager.currentMap());
+        this.entityManager.loadEntities(this.mapsManager.currentMap(), this.mapsManager.canDonkeyThrowBarrel());
     }
 
     /**
