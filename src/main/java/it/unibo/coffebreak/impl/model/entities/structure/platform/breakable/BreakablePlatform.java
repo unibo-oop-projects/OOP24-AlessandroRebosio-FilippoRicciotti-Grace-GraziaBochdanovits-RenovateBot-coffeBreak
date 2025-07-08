@@ -29,13 +29,9 @@ public class BreakablePlatform extends AbstractPlatform {
      *                          coordinates
      *                          (cannot be null)
      * @param dimension         the 2D dimension of the platform (cannot be null)
-     * @param canPassThrough    whether Mario can pass through this platform
-     * @param reversesDirection whether enemy should reverse direction when hitting
-     *                          this platform
      */
-    public BreakablePlatform(final Position position, final BoundigBox dimension,
-            final boolean canPassThrough, final boolean reversesDirection) {
-        super(position, dimension, canPassThrough, reversesDirection);
+    public BreakablePlatform(final Position position, final BoundigBox dimension) {
+        super(position, dimension);
     }
 
     /**

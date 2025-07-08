@@ -91,8 +91,8 @@ public class GameEntityManager implements EntityManager {
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, new BoundigBox()));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox(), true, true));
-                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox(), false, true));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox()));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox()));
                     // TODO: metter flag sensati
                     case 'M' -> {
                         this.character.setPosition(position);

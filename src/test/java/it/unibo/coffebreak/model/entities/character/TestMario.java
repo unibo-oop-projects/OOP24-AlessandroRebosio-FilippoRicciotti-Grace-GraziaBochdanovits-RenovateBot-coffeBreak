@@ -140,7 +140,7 @@ class TestMario {
     void testCollisionWithPlatform() {
         when(mockPlatform.getPosition()).thenReturn(PLATFORM_POSITION);
         when(mockPlatform.getDimension()).thenReturn(new BoundigBox(1, 1));
-        when(mockPlatform.canPassThrough()).thenReturn(false);
+        // when(mockPlatform.canPassThrough()).thenReturn(false);
 
         assertTrue(mario.collidesWith(mockPlatform));
 

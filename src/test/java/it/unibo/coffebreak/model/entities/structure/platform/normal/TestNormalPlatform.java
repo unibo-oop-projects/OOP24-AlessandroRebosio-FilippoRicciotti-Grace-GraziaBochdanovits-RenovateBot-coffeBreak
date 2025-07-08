@@ -1,8 +1,6 @@
 package it.unibo.coffebreak.model.entities.structure.platform.normal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -32,23 +30,10 @@ class TestNormalPlatform {
      */
     @Test
     void testIsBrokenAlwaysFalse() {
-        final NormalPlatform platform = new NormalPlatform(TEST_POSITION, TEST_DIMENSION, false, false);
+        final NormalPlatform platform = new NormalPlatform(TEST_POSITION, TEST_DIMENSION);
         assertFalse(platform.isBroken());
 
         platform.destroy();
         assertFalse(platform.isBroken());
-    }
-
-    /**
-     * Tests the constructor behavior and property initialization.
-     */
-    @Test
-    void testConstructorBehavior() {
-        final NormalPlatform platform = new NormalPlatform(TEST_POSITION, TEST_DIMENSION, true, true);
-
-        assertEquals(TEST_POSITION, platform.getPosition());
-        assertEquals(TEST_DIMENSION, platform.getDimension());
-        assertTrue(platform.canPassThrough());
-        assertTrue(platform.reversesDirection());
     }
 }
