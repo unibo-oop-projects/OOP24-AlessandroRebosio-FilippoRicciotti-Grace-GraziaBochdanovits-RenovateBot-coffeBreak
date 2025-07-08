@@ -81,8 +81,8 @@ public class MenuView extends AbstractViewState {
 
         for (int i = 0; i < leaderBoard.size(); i++) {
             final Entry entry = leaderBoard.get(i);
-            final String scoreFormatted = String.format("%06d", entry.getScore());
-            final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.getName() + "  ";
+            final String scoreFormatted = String.format("%06d", entry.score());
+            final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.name() + "  ";
             final int baseY = (int) (height * 0.65);
             final int stepY = (int) (height * 0.03);
             final int yPos = baseY + i * stepY;
