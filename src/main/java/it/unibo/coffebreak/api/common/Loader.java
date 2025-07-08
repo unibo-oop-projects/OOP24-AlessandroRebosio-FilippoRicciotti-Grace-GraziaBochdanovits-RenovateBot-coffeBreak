@@ -2,6 +2,7 @@ package it.unibo.coffebreak.api.common;
 
 import java.awt.Font;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.sound.sampled.Clip;
 
@@ -45,4 +46,14 @@ public interface Loader {
      * @return the loaded {@link Clip}
      */
     Clip loadClip(String path);
+
+    /**
+     * Loads a map from the specified file path.
+     *
+     * @param path the path to the file containing the map data
+     * @return a list of strings representing the loaded map
+     * @throws IOException if an I/O error occurs while reading the file
+     */
+    List<String> loadMap(String path);
+
 }

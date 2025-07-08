@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.model.GameModel;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
@@ -31,7 +32,7 @@ class TestInGameModelState {
     @BeforeEach
     void setUp() {
         state = new InGameModelState();
-        dummyModel = new GameModel();
+        dummyModel = new GameModel(new ResourceLoader());
         dummyModel.setState(state);
     }
 

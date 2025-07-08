@@ -3,9 +3,13 @@ package it.unibo.coffebreak.impl.common;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -54,6 +58,7 @@ public final class ResourceLoader implements Loader {
     private static final Map<String, BufferedImage> IMAGE_CACHE = new HashMap<>();
     private static final Map<String, Font> FONT_CACHE = new HashMap<>();
     private static final Map<String, Clip> SOUND_CACHE = new HashMap<>();
+    private static final Map<String, List<String>> MAP_CACHE = new HashMap<>();
 
     /**
      * Loads a resource from the specified path using the provided loader function.
@@ -139,8 +144,7 @@ public final class ResourceLoader implements Loader {
     @Override
     public Clip loadClip(final String path) {
         return SOUND_CACHE.computeIfAbsent(path, p -> loadResource(p, is -> {
-            try {
-                final AudioInputStream audioIn = AudioSystem.getAudioInputStream(is);
+            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(is)) {
                 final Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 return clip;
@@ -148,6 +152,23 @@ public final class ResourceLoader implements Loader {
                 throw new ResourceException("Failed to load clip: " + p, e);
             }
         }, "Audio resource not found: ", "Failed to load clip: "));
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws ResourceException if the resource cannot be found or
+     *                           loaded
+     */
+    @Override
+    public List<String> loadMap(final String path) {
+        return MAP_CACHE.computeIfAbsent(path, p -> loadResource(p, is -> {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                return reader.lines().toList();
+            } catch (final IOException e) {
+                throw new ResourceException("Failed to load map: " + p, e);
+            }
+        }, "Map resource not found: ", "Failed to load map: "));
     }
 
     /**
@@ -162,6 +183,8 @@ public final class ResourceLoader implements Loader {
         SOUND_CACHE.values().stream().filter(Clip::isRunning).forEach(Clip::stop);
         SOUND_CACHE.values().forEach(Clip::close);
         SOUND_CACHE.clear();
+
+        MAP_CACHE.clear();
     }
 
     /**

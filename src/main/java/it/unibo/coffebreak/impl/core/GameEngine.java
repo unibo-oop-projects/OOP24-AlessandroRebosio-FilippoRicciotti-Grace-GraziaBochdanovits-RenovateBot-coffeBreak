@@ -23,7 +23,7 @@ public class GameEngine implements Engine {
     private static final long PERIOD = 16;
 
     private final Loader loader = new ResourceLoader();
-    private final Controller controller = new GameController();
+    private final Controller controller = new GameController(this.loader);
     private final GameView view = new GameView(this.controller, this.loader);
 
     /**

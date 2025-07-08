@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -33,16 +34,19 @@ public class GameModel implements Model {
 
     private final BoundigBox gameBounds = new BoundigBox(600, 800);
     private final Leaderboard leaderBoard = new GameLeaderboard();
-    private final LevelManager levelManager = new GameLevelManager();
 
+    private final LevelManager levelManager;
     private ModelState currentState;
     private volatile boolean running;
 
     /**
      * Constructs a new {@code GameModel} with the specified game boundaries.
      * Initializes the game as running and sets the initial state to the menu.
+     *
+     * @param loader the loader used to load map resources
      */
-    public GameModel() {
+    public GameModel(final Loader loader) {
+        this.levelManager = new GameLevelManager(loader);
         this.running = true;
 
         this.setState(new MenuModelState());

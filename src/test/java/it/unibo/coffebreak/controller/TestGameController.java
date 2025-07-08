@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
+import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.controller.GameController;
 
 /**
@@ -29,7 +30,7 @@ class TestGameController {
      */
     @BeforeEach
     void setUp() {
-        controller = new GameController();
+        controller = new GameController(new ResourceLoader());
     }
 
     /**

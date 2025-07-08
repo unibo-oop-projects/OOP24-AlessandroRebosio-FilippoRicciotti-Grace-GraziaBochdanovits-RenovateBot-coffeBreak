@@ -33,8 +33,15 @@ public interface EntityManager {
      * Loads entities from the provided map data.
      * 
      * @param map the map data to load entities from
+     * 
      */
-    void loadEntities(List<String> map);
+    /**
+     * Loads entities from the provided map data.
+     * 
+     * @param map the map data to load entities from
+     * @param canDonkeyThrowBarrel indicates if Donkey can throw barrels
+     */
+    void loadEntities(List<String> map, boolean canDonkeyThrowBarrel);
 
     /**
      * Adds a new entity to the level.

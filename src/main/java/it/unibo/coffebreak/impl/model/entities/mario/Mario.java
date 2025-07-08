@@ -125,8 +125,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
             }
 
             case JUMP -> {
+                vy = physics.jump(deltaTime).y();
                 if (onPlatform && !currentState.isClimbing()) {
-                    vy = physics.jump(deltaTime).y();
                     vx = isFacingRight
                         ? physics.moveRight(deltaTime).x()
                         : physics.moveLeft(deltaTime).x();
