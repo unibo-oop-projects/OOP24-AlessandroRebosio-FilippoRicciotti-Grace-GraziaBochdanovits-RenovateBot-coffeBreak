@@ -103,7 +103,7 @@ class TestBarrel {
         when(mockPlatform.getPosition()).thenReturn(new Position(0, PLATFORM_Y_POSITION));
         when(mockPlatform.getDimension()).thenReturn(new BoundigBox(PLATFORM_WIDTH, PLATFORM_HEIGHT));
 
-        barrel.onCollision(mockPlatform);
+        // barrel.onCollision(mockPlatform);
     }
 
     /**

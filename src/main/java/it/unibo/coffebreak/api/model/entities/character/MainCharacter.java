@@ -2,7 +2,6 @@ package it.unibo.coffebreak.api.model.entities.character;
 
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 
@@ -22,16 +21,6 @@ public interface MainCharacter extends Entity {
      * @param stateSupplier supplier providing the new state
      */
     void changeState(Supplier<CharacterState> stateSupplier);
-
-    /**
-     * Sets the movement direction of the character.
-     *
-     * @param command the direction in which to move the character.
-     *                The specific values and their meanings should be defined in
-     *                the
-     *                implementing class or documentation.
-     */
-    void setDirection(Command command);
 
     /**
      * Increases the character's score by the specified amount.

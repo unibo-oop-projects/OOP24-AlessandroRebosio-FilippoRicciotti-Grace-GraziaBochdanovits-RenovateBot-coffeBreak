@@ -33,9 +33,6 @@ public class InGameModelState extends AbstractModelState {
             case ESCAPE -> {
                 model.setState(new PauseModelState());
             }
-            case MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_UP, JUMP -> { // TODO: to fix
-                model.getMainCharacter().ifPresent(p -> p.setDirection(command));
-            }
             default -> {
             }
         }

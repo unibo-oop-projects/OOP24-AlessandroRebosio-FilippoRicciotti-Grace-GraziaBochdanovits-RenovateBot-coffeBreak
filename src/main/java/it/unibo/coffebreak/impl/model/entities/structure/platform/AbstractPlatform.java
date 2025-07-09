@@ -25,8 +25,8 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
-     * @param position          the 2D position of the platform (cannot be null)
-     * @param dimension         the 2D dimension of the platform (cannot be null)
+     * @param position  the 2D position of the platform (cannot be null)
+     * @param dimension the 2D dimension of the platform (cannot be null)
      */
     public AbstractPlatform(final Position position, final BoundigBox dimension) {
         super(position, dimension);
@@ -35,13 +35,14 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     /**
      * {@inheritDoc}
      * <p>
-     * Current implementation does nothing when a collision occurs.
-     * This should be overridden to implement specific collision behavior.
+     * Positions any colliding entity on top of this platform to prevent
+     * intersection.
      * </p>
      */
     @Override
     public void onCollision(final Entity other) {
-        // Default empty implementation
+        other.setPosition(new Position(other.getPosition().x(),
+                this.getPosition().y() - other.getDimension().height()));
     }
 
     /**
@@ -65,7 +66,7 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         final float overlapRight = platformRight - otherLeft;
 
         final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
-                                        Math.min(overlapLeft, overlapRight));
+                Math.min(overlapLeft, overlapRight));
 
         if (Math.abs(minOverlap - overlapTop) < EPSILON) {
             return CollisionSide.TOP;
