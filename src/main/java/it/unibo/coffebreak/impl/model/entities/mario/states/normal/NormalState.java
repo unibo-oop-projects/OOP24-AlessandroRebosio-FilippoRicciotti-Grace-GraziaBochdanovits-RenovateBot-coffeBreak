@@ -37,7 +37,6 @@ public class NormalState extends AbstractMarioState {
      */
     @Override
     public void handleCollision(final MainCharacter character, final Entity other) {
-
         switch (other) {
             case final Enemy enemy -> character.loseLife();
             case final Ladder ladder -> handleLadderCollision(character, ladder);

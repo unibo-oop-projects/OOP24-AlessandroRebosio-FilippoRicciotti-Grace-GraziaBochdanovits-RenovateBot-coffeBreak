@@ -41,8 +41,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
     private boolean isDestroyedByTank;
     private boolean onPlatform;
 
-    private boolean moveRight = true;
-
     /**
      * Constructs a new game barrel with specified properties.
      *
@@ -55,7 +53,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      */
     public GameBarrel(final Position position, final BoundigBox dimension, final boolean canTransformToFire) {
         super(position, dimension);
-
         this.canTransformToFire = canTransformToFire;
     }
 
@@ -64,10 +61,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      */
     @Override
     public void update(final float deltaTime) {
-        float vx = this.moveRight ? this.physics.moveRight(deltaTime).x() : this.physics.moveLeft(deltaTime).x();
-        float vy = !this.onPlatform ? this.physics.gravity(deltaTime).y() : 0f;
+        final float vx = this.physics.moveRight(deltaTime).x();
+        final float vy = !this.onPlatform ? this.physics.gravity(deltaTime).y() : 0f;
 
         super.setPosition(super.getPosition().sum(new Vector(vx, vy)));
+
         this.onPlatform = false;
     }
 
@@ -91,11 +89,9 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
             case final Platform platform -> {
                 switch (platform.getCollisionSide(this)) {
                     case TOP -> {
-                        super.setPosition(new Position(super.getPosition().x(),
-                                platform.getPosition().y() - super.getDimension().height()));
+                        this.onPlatform = true;
                     }
                     default -> {
-                        this.onPlatform = true;
                     }
                 }
             }
@@ -112,16 +108,5 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
     @Override
     public boolean canTransformToFire() {
         return this.canTransformToFire && this.isDestroyedByTank;
-    }
-
-    /**
-     * Checks if the barrel has reached the edge of the current platform
-     * and should reverse direction to stay on the platform.
-     * This method should be called by the collision detection system
-     * when no platform is detected below the barrel.
-     */
-    public void reverseDirection() {
-        this.moveRight = !this.moveRight;
-        this.onPlatform = false; // Will start falling
     }
 }

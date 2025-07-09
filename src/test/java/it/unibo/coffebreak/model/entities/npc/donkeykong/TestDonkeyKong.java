@@ -27,7 +27,7 @@ import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
  * @author Grazia Bochdanovits de Kavna
  */
 class TestDonkeyKong {
-    private static final float TEST_THROW_INTERVAL = 2.0f;
+    private static final float TEST_THROW_INTERVAL = 3.0f;
     private static final float SMALL_DELTA = 0.1f;
     private static final float HALF_INTERVAL = TEST_THROW_INTERVAL / 2;
     private static final float OVER_INTERVAL = TEST_THROW_INTERVAL + SMALL_DELTA;

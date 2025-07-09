@@ -56,7 +56,7 @@ public class Mario extends AbstractEntity implements MainCharacter {
     private CharacterState currentState;
 
     private boolean onPlatform;
-    private boolean isFacingRight;
+    private final boolean isFacingRight;
     private boolean isJumping;
 
     /**
@@ -73,15 +73,22 @@ public class Mario extends AbstractEntity implements MainCharacter {
         this.changeState(NormalState::new);
     }
 
+    /**
+     * Updates the state of the Mario entity for the current frame.
+     * <p>
+     * Applies gravity to Mario's vertical velocity unless he is on a platform,
+     * in which case the vertical velocity is set to zero. Updates Mario's position
+     * based on the calculated velocity and resets the platform state.
+     * </p>
+     *
+     * @param deltaTime the time elapsed since the last update, in seconds
+     */
     @Override
     public void update(final float deltaTime) {
-        float vy = this.physics.gravity(deltaTime).y();
+        final float vx = this.physics.moveLeft(deltaTime).x();
+        final float vy = !this.onPlatform ? this.physics.gravity(deltaTime).y() : 0f;
 
-        if (this.onPlatform) {
-            vy = 0f;
-        }
-
-        super.setPosition(super.getPosition().sum(new Vector(-1, vy)));
+        super.setPosition(super.getPosition().sum(new Vector(vx, vy)));
 
         this.onPlatform = false;
     }
@@ -127,16 +134,6 @@ public class Mario extends AbstractEntity implements MainCharacter {
             }
             default -> {
             }
-            // case TOP -> {
-            // if (this.currentState.isClimbing()) {
-            // this.currentState.stopClimb();
-            // }
-            // this.isJumping = false;
-            // this.onPlatform = true;
-            // setVelocity(new Vector(getVelocity().x(), 0));
-            // setPosition(new Position(getPosition().x(),
-            // platform.getPosition().y() - getDimension().height() + epsilon));
-            // }
             // case LEFT -> {
             // if (getVelocity().x() > 0 && !currentState.isClimbing()) {
             // setVelocity(new Vector(0, getVelocity().y()));

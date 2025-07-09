@@ -15,13 +15,15 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public record GamePhysics(float speed, float jumpForce) implements Physics {
 
-    private static final float GRAVITY = -50f;
+    private static final float GRAVITY = 50; // Positive value, applied downward
+    private static final float DEFAULT_SPEED = 20; // Reduced speed for smoother movement
+    private static final float DEFAULT_JUMP_FORCE = 80; // Positive jump force
 
     /**
      * Default constructor with standard speed and jump force.
      */
     public GamePhysics() {
-        this(-GRAVITY, GRAVITY * 2);
+        this(DEFAULT_SPEED, DEFAULT_JUMP_FORCE);
     }
 
     /**
@@ -61,7 +63,7 @@ public record GamePhysics(float speed, float jumpForce) implements Physics {
      */
     @Override
     public Vector jump(final float deltaTime) {
-        return new Vector(0f, this.jumpForce).mul(deltaTime);
+        return new Vector(0f, -this.jumpForce).mul(deltaTime); // Negative Y = upward
     }
 
     /**
@@ -69,6 +71,6 @@ public record GamePhysics(float speed, float jumpForce) implements Physics {
      */
     @Override
     public Vector gravity(final float deltaTime) {
-        return new Vector(0f, -GRAVITY).mul(deltaTime);
+        return new Vector(0f, GRAVITY).mul(deltaTime); // Positive Y = downward
     }
 }
