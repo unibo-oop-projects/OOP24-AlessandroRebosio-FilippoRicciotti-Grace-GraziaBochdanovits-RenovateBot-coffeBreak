@@ -95,21 +95,23 @@ public class GameEntityManager implements EntityManager {
                 }
 
                 final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
+                final BoundigBox bb = new BoundigBox();
 
                 switch (Character.toUpperCase(c)) {
-                    case 'R' -> this.addEntity(new Pauline(position, new BoundigBox()));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, new BoundigBox()));
-                    case '!' -> this.addEntity(new BreakablePlatform(position, new BoundigBox()));
+                    case 'R' -> this.addEntity(new Pauline(position, bb));
+                    case 'P' -> this.addEntity(new NormalPlatform(position, bb));
+                    case '!' -> this.addEntity(new BreakablePlatform(position, bb));
                     // TODO: metter flag sensati
                     case 'M' -> {
                         this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
-                    case 'D' -> this.addEntity(new DonkeyKong(position, new BoundigBox(), canDonkeyThrowBarrel));
-                    case 'T' -> this.addEntity(new GameTank(position, new BoundigBox()));
-                    case 'H' -> this.addEntity(new Hammer(position, new BoundigBox()));
-                    case 'C' -> this.addEntity(new Coin(position, new BoundigBox()));
-                    case 'L' -> this.addEntity(new NormalLadder(position, new BoundigBox()));
+                    case 'D' ->
+                        this.addEntity(new DonkeyKong(position, bb, canDonkeyThrowBarrel));
+                    case 'T' -> this.addEntity(new GameTank(position, bb));
+                    case 'H' -> this.addEntity(new Hammer(position, bb));
+                    case 'C' -> this.addEntity(new Coin(position, bb));
+                    case 'L' -> this.addEntity(new NormalLadder(position, bb));
                     default -> {
                     }
                 }
