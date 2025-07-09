@@ -22,8 +22,6 @@ import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
-import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
-import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl.Event;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -52,9 +50,9 @@ import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl.Event;
  */
 public class Mario extends AbstractEntity implements MainCharacter {
 
-    private final LivesManager livesManager;
-    private final Physics physics;
-    private final Score score;
+    private final LivesManager livesManager = new GameLivesManager();
+    private final Physics physics = new GamePhysics();
+    private final Score score = new GameScore();
 
     private CharacterState currentState;
 
@@ -71,10 +69,6 @@ public class Mario extends AbstractEntity implements MainCharacter {
      */
     public Mario(final Position position, final BoundigBox dimension) {
         super(position, dimension);
-
-        this.livesManager = new GameLivesManager();
-        this.physics = new GamePhysics();
-        this.score = new GameScore();
 
         this.moveDirection = Command.NONE;
         this.isFacingRight = true;
@@ -106,17 +100,14 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 case MOVE_RIGHT -> {
                     vx = physics.moveRight(deltaTime).x();
                     this.isFacingRight = true;
-                SoundManagerImpl.getInstance().loop(Event.WALKING);
 
                 }
                 case MOVE_LEFT -> {
                     vx = physics.moveLeft(deltaTime).x();
                     this.isFacingRight = false;
-                SoundManagerImpl.getInstance().loop(Event.WALKING);
                 }
                 default -> {
                 vx = 0f;
-                SoundManagerImpl.getInstance().stop(Event.WALKING);
 
             }
             }
@@ -138,8 +129,6 @@ public class Mario extends AbstractEntity implements MainCharacter {
             vy = physics.jump(deltaTime).y();
             this.onPlatform = false;
             this.isJumping = true;
-                    SoundManagerImpl.getInstance().stop(Event.WALKING);
-                    SoundManagerImpl.getInstance().play(Event.JUMP);
         } else if (onPlatform) {
             vy = 0f;
         }
@@ -189,7 +178,7 @@ public class Mario extends AbstractEntity implements MainCharacter {
     }
 
     private void handlePlatformCollision(final Platform platform) {
-        final float epsilon = 0.1f;
+        final float epsilon = 0f;
         switch (platform.getCollisionSide(this)) {
             case TOP -> {
                 if (this.currentState.isClimbing()) {
