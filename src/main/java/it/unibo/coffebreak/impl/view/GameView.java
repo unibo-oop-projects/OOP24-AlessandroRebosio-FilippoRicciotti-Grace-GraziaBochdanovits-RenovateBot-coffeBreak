@@ -11,7 +11,7 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.api.view.panel.Panel;
 import it.unibo.coffebreak.impl.view.panel.GamePanel;
-import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
+import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
 
 /**
  * The main game view component.
@@ -61,7 +61,7 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void close() {
-        SoundManagerImpl.getInstance().dispose();
+        GameSoundManager.getInstance().dispose();
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 

@@ -11,7 +11,7 @@ import it.unibo.coffebreak.impl.common.ResourceLoader;
  * Centralised audio manager that pre‑loads every sound {@link Clip} once and
  * plays it on demand.
  */
-public final class SoundManagerImpl implements SoundManager {
+public final class GameSoundManager implements SoundManager {
 
     /**
      * Enumeration of every game event that has an associated sound.
@@ -66,12 +66,12 @@ public final class SoundManagerImpl implements SoundManager {
         }
     }
 
-    private static final SoundManager INSTANCE = new SoundManagerImpl();
+    private static final SoundManager INSTANCE = new GameSoundManager();
 
     private final Map<Event, Clip> clips = new EnumMap<>(Event.class);
     private final ResourceLoader loader = new ResourceLoader();
 
-    private SoundManagerImpl() {
+    private GameSoundManager() {
         for (final Event e : Event.values()) {
             final Clip clip = this.loader.loadClip(e.path());
 

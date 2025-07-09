@@ -2,7 +2,7 @@ package it.unibo.coffebreak.api.view.sound;
 
 import javax.sound.sampled.Clip;
 
-import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl.Event;
+import it.unibo.coffebreak.impl.view.sound.GameSoundManager.Event;
 
 /**
  * Contract for any audio system used by the game.
