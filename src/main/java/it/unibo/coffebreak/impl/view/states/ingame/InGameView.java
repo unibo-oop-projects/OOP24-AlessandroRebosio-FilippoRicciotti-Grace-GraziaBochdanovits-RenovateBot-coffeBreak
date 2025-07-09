@@ -11,6 +11,8 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
+import it.unibo.coffebreak.impl.view.sound.SoundManager;
+import it.unibo.coffebreak.impl.view.sound.SoundManager.Event;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -40,7 +42,7 @@ public class InGameView extends AbstractViewState {
      */
     public InGameView(final Controller controller, final Loader loader) {
         super(controller, loader);
-
+        SoundManager.getInstance().loop(Event.BACKGROUND);
         this.renderManager = new GameRenderManager(loader);
     }
 
@@ -48,26 +50,25 @@ public class InGameView extends AbstractViewState {
      * {@inheritDoc}
      */
     @Override
-    public void draw(final Graphics2D g, final int panelWidth, final int panelHeight, 
-                        final float deltaTime) {
-        final float marginRatio = 0.1f; 
+    public void draw(final Graphics2D g, final int panelWidth, final int panelHeight,
+            final float deltaTime) {
+        final float marginRatio = 0.1f;
         super.draw(g, panelWidth, panelHeight, deltaTime);
 
         final int marginHoriz = (int) (panelWidth * marginRatio);
         final int marginVert = (int) (panelHeight * marginRatio);
 
         final int renderWidth = panelWidth - 2 * marginHoriz;
-        final int renderHeight = panelHeight - 2 * marginVert; 
+        final int renderHeight = panelHeight - 2 * marginVert;
 
         final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
-            .filter(Platform.class::isInstance)
-            .max(Comparator.comparingDouble(e -> 
-                e.getPosition().x() + e.getPosition().y()));
+                .filter(Platform.class::isInstance)
+                .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()));
 
         final double platformRight = bottomRightPlatform.get().getPosition().x()
-                                        + bottomRightPlatform.get().getDimension().width();
+                + bottomRightPlatform.get().getDimension().width();
         final double platformBottom = bottomRightPlatform.get().getPosition().y()
-                                        + bottomRightPlatform.get().getDimension().height();
+                + bottomRightPlatform.get().getDimension().height();
 
         final double scaleX = renderWidth / platformRight;
         final double scaleY = renderHeight / platformBottom;
@@ -83,7 +84,8 @@ public class InGameView extends AbstractViewState {
         g.translate(offsetX, offsetY);
         g.scale(scale, scale);
 
-        this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom, deltaTime);
+        this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom,
+                deltaTime);
 
         g.setTransform(oldTransform);
     }

@@ -22,6 +22,8 @@ import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
+import it.unibo.coffebreak.impl.view.sound.SoundManager;
+import it.unibo.coffebreak.impl.view.sound.SoundManager.Event;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -96,12 +98,19 @@ public class Mario extends AbstractEntity implements MainCharacter {
             case MOVE_RIGHT -> {
                 vx = physics.moveRight(deltaTime).x();
                 this.isFacingRight = true;
+                SoundManager.getInstance().loop(Event.WALKING);
+
             }
             case MOVE_LEFT -> {
                 vx = physics.moveLeft(deltaTime).x();
                 this.isFacingRight = false;
+                SoundManager.getInstance().loop(Event.WALKING);
             }
-            default -> vx = 0f;
+            default -> {
+                vx = 0f;
+                SoundManager.getInstance().stop(Event.WALKING);
+
+            }
         }
 
         if (currentState.isClimbing() && !currentState.canClimb()) {
@@ -122,6 +131,7 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 } else if (moveDirection == Command.MOVE_DOWN && !onPlatform) {
                     vy = physics.moveDown(deltaTime).y();
                 }
+
             }
 
             case JUMP -> {
@@ -132,6 +142,8 @@ public class Mario extends AbstractEntity implements MainCharacter {
                             : physics.moveLeft(deltaTime).x();
                     this.onPlatform = false;
                     this.isJumping = true;
+                    SoundManager.getInstance().stop(Event.WALKING);
+                    SoundManager.getInstance().play(Event.JUMP);
                 }
             }
 
@@ -183,8 +195,10 @@ public class Mario extends AbstractEntity implements MainCharacter {
             case final Platform platform -> {
                 switch (platform.getCollisionSide(this)) {
                     case TOP -> onPlatform = true;
-                    case LEFT, RIGHT -> { } //TODO: slope
-                    default -> { }
+                    case LEFT, RIGHT -> {
+                    } // TODO: slope
+                    default -> {
+                    }
                 }
                 platform.destroy();
             }
