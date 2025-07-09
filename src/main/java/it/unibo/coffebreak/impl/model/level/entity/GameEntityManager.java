@@ -114,9 +114,8 @@ public class GameEntityManager implements EntityManager {
                     case 'R' -> this.addEntity(new Pauline(position, bb));
                     case 'P' -> this.addEntity(new NormalPlatform(position, bb));
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
-                    // TODO: metter flag sensati
                     case 'M' -> {
-                        this.character.setPosition(position); // TODO: ask rebo if its ok to move here new Mario()
+                        this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
                     case 'D' ->
@@ -130,41 +129,6 @@ public class GameEntityManager implements EntityManager {
                 }
             }
         }
-    }
-
-    /**
-     * Method used to find sizes of the entities by counting how many times is their
-     * corresponding char present inside the map.
-     * 
-     * @param map the map representation to load entities from
-     * @param c   List of Character of which we have to find width and height
-     * @return Map with the character and the corresponding width and height
-     */
-    private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
-        final Map<Character, List<Integer>> sizes = new HashMap<>();
-        for (int y = 0; y < map.size(); y++) {
-            final String line = map.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                final char k = line.charAt(x);
-
-                if (c.contains(k) && !sizes.containsKey(k)) {
-                    int width = 1;
-                    while (x + width < line.length() && line.charAt(x + width) == k) {
-                        width++;
-                    }
-
-                    int height = 1;
-                    while (y + height < row && map.get(y + height).charAt(x) == k) {
-                        height++;
-                    }
-                    x += width;
-                    sizes.put(k, List.of(width, height));
-                }
-
-            }
-        }
-
-        return sizes;
     }
 
     /**
@@ -214,5 +178,40 @@ public class GameEntityManager implements EntityManager {
     @Override
     public int getColumn() {
         return column;
+    }
+
+    /**
+     * Method used to find sizes of the entities by counting how many times is their
+     * corresponding char present inside the map.
+     * 
+     * @param map the map representation to load entities from
+     * @param c   List of Character of which we have to find width and height
+     * @return Map with the character and the corresponding width and height
+     */
+    private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
+        final Map<Character, List<Integer>> sizes = new HashMap<>();
+        for (int y = 0; y < map.size(); y++) {
+            final String line = map.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                final char k = line.charAt(x);
+
+                if (c.contains(k) && !sizes.containsKey(k)) {
+                    int width = 1;
+                    while (x + width < line.length() && line.charAt(x + width) == k) {
+                        width++;
+                    }
+
+                    int height = 1;
+                    while (y + height < row && map.get(y + height).charAt(x) == k) {
+                        height++;
+                    }
+                    x += width;
+                    sizes.put(k, List.of(width, height));
+                }
+
+            }
+        }
+
+        return sizes;
     }
 }
