@@ -6,7 +6,7 @@ import it.unibo.coffebreak.api.core.Engine;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.controller.GameController;
 import it.unibo.coffebreak.impl.view.GameView;
-import it.unibo.coffebreak.impl.view.sound.SoundManager;
+import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
 
 /**
  * Implementation of {@link Engine} that manages the game loop with a fixed
@@ -45,7 +45,7 @@ public class GameEngine implements Engine {
             this.sleepUntilNextFrame(currentTime);
             previousTime = currentTime;
         }
-        SoundManager.getInstance().dispose();
+        SoundManagerImpl.getInstance().dispose();
         view.close();
     }
 

@@ -11,8 +11,8 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
-import it.unibo.coffebreak.impl.view.sound.SoundManager;
-import it.unibo.coffebreak.impl.view.sound.SoundManager.Event;
+import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
+import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl.Event;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -42,7 +42,7 @@ public class InGameView extends AbstractViewState {
      */
     public InGameView(final Controller controller, final Loader loader) {
         super(controller, loader);
-        SoundManager.getInstance().loop(Event.BACKGROUND);
+        SoundManagerImpl.getInstance().loop(Event.BACKGROUND);
         this.renderManager = new GameRenderManager(loader);
     }
 
