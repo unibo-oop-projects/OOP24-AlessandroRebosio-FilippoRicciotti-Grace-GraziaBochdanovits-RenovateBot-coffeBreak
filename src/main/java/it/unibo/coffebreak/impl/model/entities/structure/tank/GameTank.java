@@ -22,7 +22,6 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public class GameTank extends AbstractEntity implements Tank {
 
-    private static final int SCALE_HEIGHT = 2;
     private boolean isActive;
 
     /**
@@ -34,7 +33,7 @@ public class GameTank extends AbstractEntity implements Tank {
      * @throws NullPointerException if position or dimension are null
      */
     public GameTank(final Position position, final BoundigBox dimension) {
-        super(position, dimension.scaleHeight(SCALE_HEIGHT));
+        super(position, dimension);
 
         this.isActive = false;
     }

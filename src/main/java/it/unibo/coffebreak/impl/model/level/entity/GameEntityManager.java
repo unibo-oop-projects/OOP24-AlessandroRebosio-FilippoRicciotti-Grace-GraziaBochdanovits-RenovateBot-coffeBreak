@@ -99,12 +99,12 @@ public class GameEntityManager implements EntityManager {
                 }
 
                 final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
-                final BoundigBox bb = new BoundigBox();
+                BoundigBox bb = new BoundigBox();
 
                 if (sizes.containsKey(c) && ids.contains(c)) {
-                    final int w = sizes.get(c).indexOf(0);
-                    final int h = sizes.get(c).indexOf(1);
-                    bb.scaleWidth(w).scaleHeight(h);
+                    final int w = sizes.get(c).get(0);
+                    final int h = sizes.get(c).get(1);
+                    bb = new BoundigBox().scaleWidth(w).scaleHeight(h);
                     sizes.remove(c);
                 } else if (ids.contains(c)) {
                     c = '.';
