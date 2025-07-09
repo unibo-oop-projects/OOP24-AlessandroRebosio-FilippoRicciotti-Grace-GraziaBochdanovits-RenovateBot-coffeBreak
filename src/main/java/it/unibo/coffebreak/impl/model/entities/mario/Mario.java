@@ -3,7 +3,6 @@ package it.unibo.coffebreak.impl.model.entities.mario;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.lives.LivesManager;
@@ -56,7 +55,6 @@ public class Mario extends AbstractEntity implements MainCharacter {
 
     private CharacterState currentState;
 
-    private Command moveDirection;
     private boolean onPlatform;
     private boolean isFacingRight;
     private boolean isJumping;
@@ -70,78 +68,21 @@ public class Mario extends AbstractEntity implements MainCharacter {
     public Mario(final Position position, final BoundigBox dimension) {
         super(position, dimension);
 
-        this.moveDirection = Command.NONE;
         this.isFacingRight = true;
 
         this.changeState(NormalState::new);
     }
 
-    /**
-     * Moves Mario according to his current command, physic and state.
-     * This method should be called every frame to update Mario's position.
-     * 
-     * @param deltaTime the time elapsed since the last frame (in seconds)
-     */
     @Override
     public void update(final float deltaTime) {
-        this.isJumping = false;
-        float vx = 0f;
-        float vy = physics.gravity(deltaTime).y();
+        float vy = this.physics.gravity(deltaTime).y();
 
-        final boolean shouldStartClimbing = (moveDirection == Command.MOVE_UP || moveDirection == Command.MOVE_DOWN) 
-                            && currentState.canClimb() 
-                            && !currentState.isClimbing();
-        if (shouldStartClimbing) {
-            currentState.startClimb();
-        }
-
-        if (!currentState.isClimbing()) {
-            switch (moveDirection) {
-                case MOVE_RIGHT -> {
-                    vx = physics.moveRight(deltaTime).x();
-                    this.isFacingRight = true;
-
-                }
-                case MOVE_LEFT -> {
-                    vx = physics.moveLeft(deltaTime).x();
-                    this.isFacingRight = false;
-                }
-                default -> {
-                vx = 0f;
-
-            }
-            }
-        } else {
-            if (!currentState.canClimb()) {
-                currentState.stopClimb();
-            } else {
-                switch (moveDirection) {
-                    case MOVE_UP   -> vy = physics.moveUp(deltaTime).y();
-                    case MOVE_DOWN -> vy = physics.moveDown(deltaTime).y();
-                    default -> vy = 0f;
-                }
-                this.onPlatform = false;
-            }
-
-        }
-
-        if (moveDirection == Command.JUMP && onPlatform) {
-            vy = physics.jump(deltaTime).y();
-            this.onPlatform = false;
-            this.isJumping = true;
-        } else if (onPlatform) {
+        if (this.onPlatform) {
             vy = 0f;
         }
 
-        final Vector velocity = new Vector(vx, vy);
-        super.setPosition(super.getPosition().sum(velocity));
-        super.setVelocity(velocity);
+        super.setPosition(super.getPosition().sum(new Vector(-1, vy)));
 
-        this.currentState.update(this, deltaTime);
-
-        if ((!currentState.canClimb() || onPlatform) && currentState.isClimbing()) {
-            currentState.stopClimb();
-        }
         this.onPlatform = false;
     }
 
@@ -169,54 +110,54 @@ public class Mario extends AbstractEntity implements MainCharacter {
     public void onCollision(final Entity other) {
         Objects.requireNonNull(other, "Colliding entity cannot be null");
         switch (other) {
-            case final Platform platform -> handlePlatformCollision(platform);
+            case final Platform platform -> this.handlePlatformCollision(platform);
             case final Collectible collectible -> collectible.collect(this);
             case final Princess princess -> princess.rescue();
-            default -> { }
+            default -> {
+            }
         }
         this.currentState.handleCollision(this, other);
     }
 
     private void handlePlatformCollision(final Platform platform) {
-        final float epsilon = 0f;
         switch (platform.getCollisionSide(this)) {
             case TOP -> {
-                if (this.currentState.isClimbing()) {
-                    this.currentState.stopClimb();
-                }
-                this.isJumping = false;
                 this.onPlatform = true;
-                setVelocity(new Vector(getVelocity().x(), 0));
-                setPosition(new Position(getPosition().x(),
-                    platform.getPosition().y() - getDimension().height() + epsilon));
-            }
-            case LEFT -> {
-                if (getVelocity().x() > 0 && !currentState.isClimbing()) {
-                    setVelocity(new Vector(0, getVelocity().y()));
-                    setPosition(new Position(platform.getPosition().x() - getDimension().width() - epsilon,
-                        getPosition().y()));
-                }
-            }
-            case RIGHT -> {
-                if (getVelocity().x() < 0 && !currentState.isClimbing()) {
-                    setVelocity(new Vector(0, getVelocity().y()));
-                    setPosition(new Position(platform.getPosition().x() + platform.getDimension().width() + epsilon,
-                        getPosition().y()));
-                }
+                this.isJumping = false;
             }
             default -> {
-                this.onPlatform = false;
             }
+            // case TOP -> {
+            // if (this.currentState.isClimbing()) {
+            // this.currentState.stopClimb();
+            // }
+            // this.isJumping = false;
+            // this.onPlatform = true;
+            // setVelocity(new Vector(getVelocity().x(), 0));
+            // setPosition(new Position(getPosition().x(),
+            // platform.getPosition().y() - getDimension().height() + epsilon));
+            // }
+            // case LEFT -> {
+            // if (getVelocity().x() > 0 && !currentState.isClimbing()) {
+            // setVelocity(new Vector(0, getVelocity().y()));
+            // setPosition(new Position(platform.getPosition().x() - getDimension().width()
+            // - epsilon,
+            // getPosition().y()));
+            // }
+            // }
+            // case RIGHT -> {
+            // if (getVelocity().x() < 0 && !currentState.isClimbing()) {
+            // setVelocity(new Vector(0, getVelocity().y()));
+            // setPosition(new Position(platform.getPosition().x() +
+            // platform.getDimension().width() + epsilon,
+            // getPosition().y()));
+            // }
+            // }
+            // default -> {
+            // this.onPlatform = false;
+            // }
         }
         platform.destroy();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDirection(final Command command) {
-        this.moveDirection = command != null ? command : Command.NONE;
     }
 
     /**
