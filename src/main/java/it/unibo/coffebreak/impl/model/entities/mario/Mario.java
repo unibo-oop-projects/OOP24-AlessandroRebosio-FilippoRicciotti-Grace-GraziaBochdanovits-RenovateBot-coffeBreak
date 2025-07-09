@@ -22,6 +22,8 @@ import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
+import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
+import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl.Event;
 
 /**
  * Represents the main player character (Mario) in the game.
@@ -104,12 +106,19 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 case MOVE_RIGHT -> {
                     vx = physics.moveRight(deltaTime).x();
                     this.isFacingRight = true;
+                SoundManagerImpl.getInstance().loop(Event.WALKING);
+
                 }
                 case MOVE_LEFT -> {
                     vx = physics.moveLeft(deltaTime).x();
                     this.isFacingRight = false;
+                SoundManagerImpl.getInstance().loop(Event.WALKING);
                 }
-                default -> vx = 0f;
+                default -> {
+                vx = 0f;
+                SoundManagerImpl.getInstance().stop(Event.WALKING);
+
+            }
             }
         } else {
             if (!currentState.canClimb()) {
@@ -122,12 +131,15 @@ public class Mario extends AbstractEntity implements MainCharacter {
                 }
                 this.onPlatform = false;
             }
+
         }
 
         if (moveDirection == Command.JUMP && onPlatform) {
             vy = physics.jump(deltaTime).y();
             this.onPlatform = false;
             this.isJumping = true;
+                    SoundManagerImpl.getInstance().stop(Event.WALKING);
+                    SoundManagerImpl.getInstance().play(Event.JUMP);
         } else if (onPlatform) {
             vy = 0f;
         }
