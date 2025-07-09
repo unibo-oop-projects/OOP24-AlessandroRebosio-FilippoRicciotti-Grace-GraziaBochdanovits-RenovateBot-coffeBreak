@@ -74,8 +74,8 @@ public class GameEntityManager implements EntityManager {
 
         this.row = map.size();
         this.column = map.isEmpty() ? 0 : map.get(0).length();
-        List<Character> ids = List.of('M', 'D', 'R', 'T');
-        Map<Character, List<Integer>> sizes = findSize(map, ids);
+        final List<Character> ids = List.of('M', 'D', 'R', 'T');
+        final Map<Character, List<Integer>> sizes = findSize(map, ids);
 
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
@@ -141,11 +141,11 @@ public class GameEntityManager implements EntityManager {
      * @return Map with the character and the corresponding width and height
      */
     private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
-        HashMap<Character, List<Integer>> sizes = new HashMap<>();
+        final Map<Character, List<Integer>> sizes = new HashMap<>();
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
             for (int x = 0; x < line.length(); x++) {
-                char k = line.charAt(x);
+                final char k = line.charAt(x);
 
                 if (c.contains(k) && !sizes.containsKey(k)) {
                     int width = 1;
