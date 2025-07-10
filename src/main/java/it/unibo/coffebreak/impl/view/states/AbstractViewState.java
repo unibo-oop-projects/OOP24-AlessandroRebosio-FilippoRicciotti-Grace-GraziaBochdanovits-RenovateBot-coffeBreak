@@ -54,8 +54,9 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * Constructs an AbstractViewState with the specified controller.
      *
-     * @param controller the controller associated with this view state
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller associated with this view state
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      * @throws NullPointerException if {@code controller} is null
      */
     public AbstractViewState(final Controller controller, final Loader loader, final SoundManager soundManager) {
@@ -142,6 +143,15 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final Controller getController() {
         return this.controller;
+    }
+
+    /**
+     * Returns the soundManager responsible for playing clips.
+     *
+     * @return soundManager
+     */
+    protected final SoundManager getSoundManager() {
+        return this.soundManager;
     }
 
     /**

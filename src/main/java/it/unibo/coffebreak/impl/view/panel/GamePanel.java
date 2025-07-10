@@ -47,15 +47,16 @@ public class GamePanel extends JPanel implements Panel {
     private transient ViewState currentViewState;
     private final transient Controller controller;
     private final transient Loader loader;
-    private final SoundManager soundManager;
+    private final transient SoundManager soundManager;
     private float deltaTime;
 
     /**
      * Constructs a GamePanel associated with the given controller and sets up the
      * KeyAdapter.
      *
-     * @param controller the controller to notify for input events
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller to notify for input events
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      * @throws NullPointerException if either argument is null
      */
     public GamePanel(final Controller controller, final Loader loader, final SoundManager soundManager) {

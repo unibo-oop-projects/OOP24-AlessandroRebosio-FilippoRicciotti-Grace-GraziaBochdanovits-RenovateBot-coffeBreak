@@ -27,8 +27,9 @@ public class GameOverView extends AbstractViewState {
     /**
      * Constructs the Game Over view and loads required fonts.
      *
-     * @param controller the controller to interact with the game logic
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller to interact with the game logic
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      */
     public GameOverView(final Controller controller, final Loader loader, final SoundManager soundManager) {
         super(controller, loader, soundManager);

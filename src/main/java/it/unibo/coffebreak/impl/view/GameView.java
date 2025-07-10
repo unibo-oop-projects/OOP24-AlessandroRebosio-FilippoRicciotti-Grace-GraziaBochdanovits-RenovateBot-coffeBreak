@@ -39,7 +39,7 @@ public class GameView extends JFrame implements View {
     @Serial
     private static final long serialVersionUID = 1L;
     private final Panel gamePanel;
-    private final SoundManager soundManager;
+    private final transient SoundManager soundManager;
 
     /**
      * Constructs a GameView with the given controller.

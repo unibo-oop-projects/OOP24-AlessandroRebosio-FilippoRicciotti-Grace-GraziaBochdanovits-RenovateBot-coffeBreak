@@ -36,14 +36,16 @@ public class InGameView extends AbstractViewState {
          * Constructs an InGameView with the specified controller.
          * Initializes the render manager with a default resolution of 800x600 pixels.
          * 
-         * @param controller the game controller that manages the game logic and
-         *                   entities
-         * @param loader     the resource loader for graphics
+         * @param controller   the game controller that manages the game logic and
+         *                     entities
+         * @param loader       the resource loader for graphics
+         * 
+         * @param soundManager the sound Manager responsible for playing the clips
          */
         public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
                 super(controller, loader, soundManager);
                 this.renderManager = new GameRenderManager(loader);
-                soundManager.play(Event.BACKGROUND);
+                soundManager.loop(Event.BACKGROUND);
         }
 
         /**
