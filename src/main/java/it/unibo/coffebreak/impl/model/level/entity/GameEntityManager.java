@@ -79,26 +79,11 @@ public class GameEntityManager implements EntityManager {
 
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
-            float offsetY = 0;
-            boolean activeSlope = false;
-            float trueY = y;
 
             for (int x = 0; x < line.length(); x++) {
                 char c = line.charAt(x);
-                if (c == ';' || c == ':' || activeSlope) {
-                    if (c == ':') {
-                        offsetY = SLOPE_VAL;
-                    } else if (c == ';') {
-                        offsetY = -SLOPE_VAL;
-                    }
-                    trueY -= (x % 2 == 0) ? offsetY : 0; // TODO: Consider making the sloping platform always an even
-                                                         // number inside map
-                    c = activeSlope ? c : 'P';
-                    activeSlope = true;
 
-                }
-
-                final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
+                final Position position = new Position(x, y).scalePosition(new BoundigBox());
                 BoundigBox bb = new BoundigBox();
 
                 if (sizes.containsKey(c) && ids.contains(c)) {
