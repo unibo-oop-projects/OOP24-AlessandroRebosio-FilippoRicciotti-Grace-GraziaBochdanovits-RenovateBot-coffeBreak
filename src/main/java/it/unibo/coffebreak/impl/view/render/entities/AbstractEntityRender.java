@@ -48,10 +48,6 @@ public abstract class AbstractEntityRender implements EntityRender {
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime,
                      final int width, final int height) {
-        g.drawRect((int) entity.getPosition().x(),
-                   (int) entity.getPosition().y(),
-                   entity.getDimension().width(),
-                   entity.getDimension().height());
     }
 
     /**

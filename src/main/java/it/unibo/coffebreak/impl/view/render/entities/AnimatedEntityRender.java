@@ -67,10 +67,10 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
 
         if (info.frameCount() > 1) {
             state.elapsedTime += deltaTime;
-            if (state.elapsedTime >= DEFAULT_FRAME_DURATION) {
-                final int frameAdvance = (int) (state.elapsedTime / DEFAULT_FRAME_DURATION);
-                state.elapsedTime %= DEFAULT_FRAME_DURATION;
-                state.frameIndex = (state.frameIndex + frameAdvance) % info.frameCount();
+
+            while (state.elapsedTime >= DEFAULT_FRAME_DURATION) {
+                state.frameIndex = (state.frameIndex + 1) % info.frameCount();
+                state.elapsedTime -= DEFAULT_FRAME_DURATION;
             }
         } else {
             state.frameIndex = 0;

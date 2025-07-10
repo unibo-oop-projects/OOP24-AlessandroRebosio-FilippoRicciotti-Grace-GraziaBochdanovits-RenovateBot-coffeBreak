@@ -14,15 +14,14 @@ import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender;
  */
 public class BarrelRender extends AbstractEnemyRender {
 
+    private static final int SIZE = 16;
+    private static final int X_OFFSET = 1;
     private static final int Y_OFFSET = 229;
+    private static final int SPACING = 2;
 
     private static final AnimationInfo ANIMATION = new AnimationInfo(
-            4, 
-            AbstractEnemyRender.Constants.SIZE,
-            AbstractEnemyRender.Constants.SIZE,
-            AbstractEnemyRender.Constants.X_OFFSET,
-            Y_OFFSET,
-            AbstractEnemyRender.Constants.SPACING);
+            4, SIZE, SIZE, X_OFFSET, Y_OFFSET, SPACING);
+
     /**
      * Constructs a new BarrelRender with the specified resource loader and screen
      * dimensions.

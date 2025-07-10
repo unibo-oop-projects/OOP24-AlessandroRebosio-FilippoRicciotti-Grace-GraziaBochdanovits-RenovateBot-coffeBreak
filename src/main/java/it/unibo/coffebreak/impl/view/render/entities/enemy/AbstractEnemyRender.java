@@ -65,20 +65,4 @@ public abstract class AbstractEnemyRender extends AnimatedEntityRender {
         /** Enemy is rolling. */
         ROLL 
     }
-
-    /**
-     * Contains shared sprite sheet configuration constants for all enemy renders.
-     */
-    protected static final class Constants {
-        /** Standard enemy sprite size in pixels (width and height). */
-        public static final int SIZE = 16;
-
-        /** Horizontal starting position in sprite sheet. */
-        public static final int X_OFFSET = 1;
-
-        /** Pixels between frames in sprite sheet. */
-        public static final int SPACING = 2;
-
-        private Constants() { }
-    }
 }
