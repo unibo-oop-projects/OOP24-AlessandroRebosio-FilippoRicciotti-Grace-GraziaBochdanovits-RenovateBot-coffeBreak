@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -174,28 +175,49 @@ public class GameEntityManager implements EntityManager {
      */
     private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
         final Map<Character, List<Integer>> sizes = new HashMap<>();
-        for (int y = 0; y < map.size(); y++) {
-            final String line = map.get(y);
-            for (int x = 0; x < line.length(); x++) {
-                final char k = line.charAt(x);
+        // for (int y = 0; y < map.size(); y++) {
+        // final String line = map.get(y);
+        // for (int x = 0; x < line.length(); x++) {
+        // final char k = line.charAt(x);
 
-                if (c.contains(k) && !sizes.containsKey(k)) {
-                    int width = 1;
-                    while (x + width < line.length() && line.charAt(x + width) == k) {
-                        width++;
-                    }
+        // if (c.contains(k) && !sizes.containsKey(k)) {
+        // int width = 1;
+        // while (x + width < line.length() && line.charAt(x + width) == k) {
+        // width++;
+        // }
 
-                    int height = 1;
-                    while (y + height < row && map.get(y + height).charAt(x) == k) {
-                        height++;
-                    }
-                    x += width;
-                    sizes.put(k, List.of(width, height));
-                }
+        // int height = 1;
+        // while (y + height < row && map.get(y + height).charAt(x) == k) {
+        // height++;
+        // }
+        // x += width;
+        // sizes.put(k, List.of(width, height));
+        // }
 
+        // }
+        // }
+
+        IntStream.range(0, map.size()).forEach(y -> IntStream.range(0, map.get(y).length()).forEach(x -> {
+            final char k = map.get(y).charAt(x);
+
+            if (c.contains(k) && !sizes.containsKey(k)) {
+                final int startX = x;
+
+                final int width = (int) map.get(y).substring(startX) // counts consecutive chars on the x-coord
+                        .chars()
+                        .takeWhile(ch -> ch == k)
+                        .count();
+
+                final int height = (int) map.subList(y, map.size()) // counts consecutive chars on the y-coord
+                        .stream()
+                        .takeWhile(r -> r.charAt(startX) == k)
+                        .count();
+
+                sizes.put(k, List.of(width, height));
             }
-        }
+        }));
 
         return sizes;
+
     }
 }

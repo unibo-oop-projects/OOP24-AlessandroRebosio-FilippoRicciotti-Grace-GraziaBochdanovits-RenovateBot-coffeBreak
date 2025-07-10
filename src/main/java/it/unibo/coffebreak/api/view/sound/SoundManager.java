@@ -2,7 +2,6 @@ package it.unibo.coffebreak.api.view.sound;
 
 import javax.sound.sampled.Clip;
 
-
 /**
  * Contract for any audio system used by the game.
  * Different implementations (real, mock, or platform‑specific)
@@ -14,7 +13,7 @@ public interface SoundManager {
      * Enumeration of every game event that has an associated sound.
      * The relative path is resolved by the {@code ResourceLoader}.
      */
-    public enum Event {
+    enum Event {
 
         /**
          * enum containing the path to the sound corresponding to the GAME_START.
