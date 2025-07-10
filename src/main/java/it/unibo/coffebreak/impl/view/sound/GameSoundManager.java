@@ -4,8 +4,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import javax.sound.sampled.Clip;
 
+import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.view.sound.SoundManager;
-import it.unibo.coffebreak.impl.common.ResourceLoader;
 
 /**
  * Centralised audio manager that pre‑loads every sound {@link Clip} once and
@@ -13,26 +13,19 @@ import it.unibo.coffebreak.impl.common.ResourceLoader;
  */
 public final class GameSoundManager implements SoundManager {
 
-
-
-    private static final SoundManager INSTANCE = new GameSoundManager();
-
     private final Map<Event, Clip> clips = new EnumMap<>(Event.class);
-    private final ResourceLoader loader = new ResourceLoader();
 
-    private GameSoundManager() {
+    /**
+     * Creates a new sound manager and loads all audio clips via the given loader.
+     * 
+     * @param loader the resource loader to load sound assets
+     */
+    public GameSoundManager(final Loader loader) {
         for (final Event e : Event.values()) {
-            final Clip clip = this.loader.loadClip(e.path());
+            final Clip clip = loader.loadClip(e.path());
 
             this.clips.put(e, clip);
         }
-    }
-
-    /**
-     * @return the singleton instance.
-     */
-    public static SoundManager getInstance() {
-        return INSTANCE;
     }
 
     /**

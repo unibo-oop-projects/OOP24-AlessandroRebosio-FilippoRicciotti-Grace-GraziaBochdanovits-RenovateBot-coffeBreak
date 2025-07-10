@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
-import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -31,7 +30,6 @@ public class PauseView extends AbstractViewState {
      */
     public PauseView(final Controller controller, final Loader loader) {
         super(controller, loader);
-        GameSoundManager.getInstance().stopAll();
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
     }
 
