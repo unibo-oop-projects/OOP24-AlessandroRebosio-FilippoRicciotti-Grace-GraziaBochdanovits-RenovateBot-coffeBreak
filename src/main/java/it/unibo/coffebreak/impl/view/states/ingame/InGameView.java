@@ -12,7 +12,11 @@ import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.sound.SoundManager.Event;
+import it.unibo.coffebreak.impl.common.BoundigBox;
+import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
+import it.unibo.coffebreak.impl.view.render.entities.mario.MarioRender;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
@@ -30,6 +34,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class InGameView extends AbstractViewState {
 
+        private static final BoundigBox LIVES_ICON_DIMENSION = new BoundigBox(20, 20);
         private final RenderManager renderManager;
 
         /**
@@ -90,5 +95,16 @@ public class InGameView extends AbstractViewState {
                                 deltaTime);
 
                 g.setTransform(oldTransform);
+
+                final int lives = getController().getCharacterLives();
+                final int marioIconSize = (int) (panelHeight * 0.045f);
+                final int marioStartX = panelWidth / 3;
+                final int marioY = (int) (panelHeight * 0.09f);
+                final int spacing = 5;
+
+                for (int i = 0; i < lives; i++) {
+                        new MarioRender(getLoader()).draw(g, new Mario(new Position(marioStartX + i * (marioIconSize + spacing),
+                                        marioY), LIVES_ICON_DIMENSION), deltaTime, panelWidth, panelHeight);
+                }
         }
 }

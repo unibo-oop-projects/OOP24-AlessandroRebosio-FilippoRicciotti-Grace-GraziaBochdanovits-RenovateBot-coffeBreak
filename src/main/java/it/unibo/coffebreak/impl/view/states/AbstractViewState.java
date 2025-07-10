@@ -96,7 +96,7 @@ public abstract class AbstractViewState implements ViewState {
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
 
-        // g.setColor(Color.BLACK);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
         g.setFont(this.loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * DERIVE));
 
@@ -123,17 +123,15 @@ public abstract class AbstractViewState implements ViewState {
         // drawCenteredText(g, "BONUS", bonusX, bonusLabelY, Color.MAGENTA);
         // drawCenteredText(g, String.valueOf(getController().getBonusValue()), bonusX,
         // bonusValueY, Color.WHITE);
+    }
 
-        // final int lives = 3; // controller.getLives();
-        // final int marioIconSize = (int) (height * 0.045f);
-        // final int marioStartX = width / 30;
-        // final int marioY = (int) (height * 0.09f);
-
-        // for (int i = 0; i < lives; i++) {
-        // new MarioRender(loader).draw(g, new Mario(new Position(marioStartX + i *
-        // (marioIconSize + 5), marioY), new BoundigBox(20,20)), deltaTime, width,
-        // height);;
-        // }
+    /**
+     * Returns the loader associated with this view state.
+     *
+     * @return the loader
+     */
+    protected final Loader getLoader() {
+        return this.loader;
     }
 
     /**
