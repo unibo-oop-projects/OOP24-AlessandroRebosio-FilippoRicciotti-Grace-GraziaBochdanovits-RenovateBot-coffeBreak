@@ -166,6 +166,39 @@ del team, migliorando l'efficienza della collaborazione.
 	\item[\textbf{Soluzione}]
 \end{description}
 
+\subsection{Grazia Bochdanovits de Kavna}
+\noindent
+\textbf{Gestione degli stati di Mario}
+\begin{description}
+	\item[\textbf{Problema}]
+		  Nel gioco, il personaggio di Mario può trovarsi in diversi stati con comportamenti distinti, come lo stato normale e lo stato con il martello. Se questi venissero gestiti
+		  tramite controlli condizionali direttamente nella classe di Mario, il codice violerebbe l'Open/Closed principle, diventando rigido e difficile da estendere a nuove abilità future.
+
+	\item[\textbf{Soluzione}]
+		  Per gestire in maniera flessibile gli stati di Mario viene implementato lo \textbf{State Pattern}, definendo un'interfaccia \textit{CharaterState} che dichiara i comportamenti comuni a tutti gli stati,
+		  lasciando alle sottoclassi l'implementazione di quelli specifici (come ad esempio la possibilità o no di arrampicarsi sulle scale).
+		  In questo modo, aggiungere nuovi stati diventa semplice e non rischiede modifiche a quelli già implementati, rendendo il codice più modulare, estendibile e facile da mantenere.
+\end{description}
+
+\noindent
+\textbf{TODO}
+% TODO 
+\begin{description}
+	\item[\textbf{Problema}]
+
+	\item[\textbf{Soluzione}]
+\end{description}
+
+\noindent
+\textbf{TODO}
+% TODO 
+\begin{description}
+	\item[\textbf{Problema}]
+
+	\item[\textbf{Soluzione}]
+\end{description}
+
+
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte le classi principali. I test progettati assicurano la verifica automatica delle funzionalità fondamentali del software. Di seguito vengono riportati alcuni esempi di test implementati.
