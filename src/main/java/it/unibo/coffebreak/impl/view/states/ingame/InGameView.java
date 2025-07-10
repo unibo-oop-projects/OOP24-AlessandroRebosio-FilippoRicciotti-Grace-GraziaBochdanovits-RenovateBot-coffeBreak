@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
 import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
-import it.unibo.coffebreak.impl.view.sound.GameSoundManager.Event;
+import it.unibo.coffebreak.api.view.sound.SoundManager.Event;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**

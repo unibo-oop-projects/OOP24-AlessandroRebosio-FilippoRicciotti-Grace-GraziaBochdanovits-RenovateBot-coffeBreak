@@ -36,7 +36,6 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
  */
 public class GameEntityManager implements EntityManager {
 
-    private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
     private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
 
