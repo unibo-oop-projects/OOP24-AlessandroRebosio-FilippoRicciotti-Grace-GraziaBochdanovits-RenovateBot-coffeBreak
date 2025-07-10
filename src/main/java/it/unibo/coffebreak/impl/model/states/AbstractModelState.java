@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Option;
+import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
+import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
 /**
@@ -20,21 +22,21 @@ import it.unibo.coffebreak.api.model.states.ModelState;
 public abstract class AbstractModelState implements ModelState {
 
     /**
-     * The index of the currently selected option.
-     */
-    private static final int SELECTEDINDEX = 0;
-
-    /**
      * The list of available menu options.
      */
     private final List<Option> options = new LinkedList<>();
+
+    /**
+     * The index of the currently selected option.
+     */
+    private int selectedIndex;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Option getSelectedOption() {
-        return this.options.get(SELECTEDINDEX);
+        return this.options.get(selectedIndex);
     }
 
     /**
@@ -43,6 +45,32 @@ public abstract class AbstractModelState implements ModelState {
     @Override
     public List<Option> options() {
         return Collections.unmodifiableList(this.options);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Provides default handling for navigation actions (UP/DOWN) to move through
+     * menu options. Subclasses should override this method to handle additional
+     * actions specific to their state.
+     * </p>
+     */
+    @Override
+    public void handleAction(final Model model, final Action action) {
+        switch (action) {
+            case UP -> {
+                if (selectedIndex > 0) {
+                    selectedIndex--;
+                }
+            }
+            case DOWN -> {
+                if (selectedIndex < options.size() - 1) {
+                    selectedIndex++;
+                }
+            }
+            default -> {
+            }
+        }
     }
 
     /**

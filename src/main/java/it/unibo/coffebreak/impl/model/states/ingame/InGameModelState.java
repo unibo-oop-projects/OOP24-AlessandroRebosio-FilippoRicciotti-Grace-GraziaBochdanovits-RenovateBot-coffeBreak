@@ -1,10 +1,12 @@
 package it.unibo.coffebreak.impl.model.states.ingame;
 
+import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
+import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
  * State representing the in-game phase where gameplay occurs.
@@ -51,6 +53,28 @@ public class InGameModelState extends AbstractModelState {
 
         if (player.isGameOver()) {
             model.setState(new GameOverModelState());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Handles in-game specific actions. Currently supports:
+     * <ul>
+     * <li>ESCAPE - pauses the game and transitions to the pause state</li>
+     * </ul>
+     * Note: Mario's movement and gameplay commands are handled separately
+     * through the command queue system, not through this action handler.
+     * </p>
+     */
+    @Override
+    public void handleAction(final Model model, final Action action) {
+        switch (action) {
+            case ESCAPE -> {
+                model.setState(new PauseModelState());
+            }
+            default -> {
+            }
         }
     }
 }

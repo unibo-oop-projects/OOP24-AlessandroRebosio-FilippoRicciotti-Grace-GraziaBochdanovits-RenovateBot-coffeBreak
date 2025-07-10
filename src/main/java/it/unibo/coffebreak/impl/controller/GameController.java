@@ -1,14 +1,18 @@
 package it.unibo.coffebreak.impl.controller;
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.controller.action.ActionQueue;
+import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
+import it.unibo.coffebreak.impl.controller.action.GameActionQueue;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
@@ -26,6 +30,7 @@ import it.unibo.coffebreak.impl.model.GameModel;
  */
 public class GameController implements Controller {
 
+    private final ActionQueue actions = new GameActionQueue();
     private final Model model;
 
     /**
@@ -43,6 +48,9 @@ public class GameController implements Controller {
      */
     @Override
     public void processInput() {
+        while (!this.actions.isEmpty()) {
+            this.model.handleAction(this.actions.poll());
+        }
     }
 
     /**
@@ -63,7 +71,22 @@ public class GameController implements Controller {
      */
     @Override
     public void keyPressed(final int keyCode) {
-
+        switch (keyCode) {
+            case KeyEvent.VK_UP:
+                this.actions.add(Action.UP);
+                break;
+            case KeyEvent.VK_DOWN:
+                this.actions.add(Action.DOWN);
+                break;
+            case KeyEvent.VK_ENTER:
+                this.actions.add(Action.ENTER);
+                break;
+            case KeyEvent.VK_ESCAPE:
+                this.actions.add(Action.ESCAPE);
+                break;
+            default:
+                break;
+        }
     }
 
     /**

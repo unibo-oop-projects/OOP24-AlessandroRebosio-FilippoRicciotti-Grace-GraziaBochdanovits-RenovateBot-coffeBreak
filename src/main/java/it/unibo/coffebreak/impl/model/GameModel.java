@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Loader;
+import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -62,6 +63,14 @@ public class GameModel implements Model {
         }
         currentState = newState;
         currentState.onEnter(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleAction(final Action action) {
+        this.currentState.handleAction(this, action);
     }
 
     /**

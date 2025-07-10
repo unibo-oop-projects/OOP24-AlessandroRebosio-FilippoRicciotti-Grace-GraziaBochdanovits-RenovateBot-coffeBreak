@@ -3,6 +3,7 @@ package it.unibo.coffebreak.api.model;
 import java.util.List;
 import java.util.Optional;
 
+import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
@@ -27,6 +28,16 @@ public interface Model {
      * @throws NullPointerException if newState is null
      */
     void setState(ModelState newState);
+
+    /**
+     * Handles an action by delegating it to the current game state.
+     * This method acts as a bridge between the controller and the current
+     * model state, ensuring that actions are processed according to the
+     * current game context.
+     * 
+     * @param action the action to be handled
+     */
+    void handleAction(Action action);
 
     /**
      * Starts the first level of the game.
