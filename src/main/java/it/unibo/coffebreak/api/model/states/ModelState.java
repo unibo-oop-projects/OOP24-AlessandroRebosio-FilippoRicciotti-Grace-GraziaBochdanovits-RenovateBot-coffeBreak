@@ -2,9 +2,9 @@ package it.unibo.coffebreak.api.model.states;
 
 import java.util.List;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
 import it.unibo.coffebreak.api.common.State;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 
 /**
@@ -20,14 +20,6 @@ import it.unibo.coffebreak.api.model.Model;
 public interface ModelState extends State<Model> {
 
     /**
-     * Handles a command for the given model in this state.
-     *
-     * @param model   the model to handle the command for
-     * @param command the command to process
-     */
-    void handleCommand(Model model, Command command);
-
-    /**
      * Returns the currently selected option for this state, if any.
      *
      * @return the selected {@link Option}
@@ -40,5 +32,15 @@ public interface ModelState extends State<Model> {
      * @return the list of {@link Option} available
      */
     List<Option> options();
+
+    /**
+     * Handles an action within the context of this model state.
+     * This method processes interface-related actions such as navigation,
+     * confirmation, and cancellation that affect the state of the model.
+     * 
+     * @param model  the game model to be updated
+     * @param action the action to be processed
+     */
+    void handleAction(Model model, Action action);
 
 }
