@@ -84,6 +84,15 @@ public class GameController implements Controller {
             case KeyEvent.VK_ESCAPE:
                 this.actions.add(Action.ESCAPE);
                 break;
+            case KeyEvent.VK_SPACE:
+                this.actions.add(Action.SPACE);
+                break;
+            case KeyEvent.VK_RIGHT:
+                this.actions.add(Action.RIGHT);
+                break;
+            case KeyEvent.VK_LEFT:
+                this.actions.add(Action.LEFT);
+                break;
             default:
                 break;
         }

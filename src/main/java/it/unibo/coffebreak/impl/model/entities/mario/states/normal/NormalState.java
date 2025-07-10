@@ -25,9 +25,21 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
  */
 public class NormalState extends AbstractMarioState {
 
-    private static final float TOLERANCE = 0.1f;
     private boolean canClimb;
-    private boolean isClimbing;
+
+    /**
+     * Updates the normal state for each frame.
+     * Resets the climbing flag to false at the beginning of each update cycle.
+     * This ensures that climbing is only possible when actively colliding with a
+     * ladder.
+     * 
+     * @param character the main character (Mario) to update
+     * @param deltaTime the time elapsed since the last update in seconds
+     */
+    @Override
+    public void update(final MainCharacter character, final float deltaTime) {
+        this.canClimb = false;
+    }
 
     /**
      * Handles collisions with other entities.
@@ -39,20 +51,9 @@ public class NormalState extends AbstractMarioState {
     public void handleCollision(final MainCharacter character, final Entity other) {
         switch (other) {
             case final Enemy enemy -> character.loseLife();
-            case final Ladder ladder -> handleLadderCollision(character, ladder);
-            default -> { }
-        }
-    }
-
-    private void handleLadderCollision(final MainCharacter character, final Ladder ladder) {
-        final float marioCenter = character.getPosition().x() + character.getDimension().width() * 0.5f;
-        final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() * 0.5f;
-        final boolean isAligned = Math.abs(marioCenter - ladderCenter) <= character.getDimension().width() * TOLERANCE;
-
-        this.canClimb = isAligned;
-
-        if (isClimbing && !isAligned) {
-            stopClimb();
+            case final Ladder ladder -> this.canClimb = true;
+            default -> {
+            }
         }
     }
 
@@ -62,31 +63,5 @@ public class NormalState extends AbstractMarioState {
     @Override
     public boolean canClimb() {
         return this.canClimb;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isClimbing() {
-        return this.isClimbing;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void startClimb() {
-        this.isClimbing = true;
-        this.canClimb = true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stopClimb() {
-        this.isClimbing = false;
-        this.canClimb = false;
     }
 }

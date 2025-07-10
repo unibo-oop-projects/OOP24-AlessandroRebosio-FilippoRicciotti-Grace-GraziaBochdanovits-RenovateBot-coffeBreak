@@ -51,15 +51,14 @@ public final class GameCollision implements Collision {
 
         player.setPosition(new Position(newX, newY));
 
-        model.getEntities()
-                .stream()
-                .filter(player::collidesWith)
-                .forEach(player::onCollision);
+        // model.getEntities()
+        //         .stream()
+        //         .filter(player::collidesWith)
+        //         .forEach(player::onCollision);
 
-        model.getEntities().stream()
-                .filter(a -> !a.equals(player))
+        model.getEntities()
                 .forEach(a -> model.getEntities().stream()
-                        .filter(b -> !a.equals(b) && !b.equals(player))
+                        .filter(b -> !a.equals(b))
                         .filter(a::collidesWith)
                         .forEach(b -> {
                             a.onCollision(b);

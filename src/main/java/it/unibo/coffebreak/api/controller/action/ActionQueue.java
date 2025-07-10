@@ -31,6 +31,21 @@ public interface ActionQueue {
         ESCAPE,
 
         /**
+         * Action representing jumping or performing a jump action in the game.
+         */
+        SPACE,
+
+        /**
+         * Action representing moving left or navigating leftward.
+         */
+        LEFT,
+
+        /**
+         * Action representing moving right or navigating rightward.
+         */
+        RIGHT,
+
+        /**
          * Action representing moving up or navigating upward in menus.
          */
         UP,
