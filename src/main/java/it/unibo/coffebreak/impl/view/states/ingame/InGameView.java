@@ -1,5 +1,6 @@
 package it.unibo.coffebreak.impl.view.states.ingame;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.Comparator;
@@ -106,5 +107,12 @@ public class InGameView extends AbstractViewState {
                         new MarioRender(getLoader()).draw(g, new Mario(new Position(marioStartX + i * (marioIconSize + spacing),
                                         marioY), LIVES_ICON_DIMENSION), deltaTime, panelWidth, panelHeight);
                 }
+
+                final int bonusLabelY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);
+                final int bonusValueY = bonusLabelY + (int) (panelHeight * 0.035f);
+                final int bonusX = panelWidth + panelWidth * 2 / 3;
+
+                drawCenteredText(g, "BONUS", bonusX, bonusLabelY, Color.MAGENTA);
+                drawCenteredText(g, String.valueOf(getController().getBonusValue()), bonusX, bonusValueY, Color.WHITE);
         }
 }

@@ -112,17 +112,6 @@ public abstract class AbstractViewState implements ViewState {
         drawCenteredText(g, "L = " + String.format("%02d", controller.getLevelIndex()), width + width * 2 / 3,
                 (int) (height * SCORE_HEIGHT),
                 Color.BLUE);
-
-        // TODO: Example of bonus and lives, to fix
-        // // Draw "BONUS" label and its value below the level indicator
-        // final int bonusLabelY = (int) (height * SCORE_HEIGHT) + (int) (height *
-        // 0.04f);
-        // final int bonusValueY = bonusLabelY + (int) (height * 0.035f);
-        // final int bonusX = width + width * 2 / 3;
-
-        // drawCenteredText(g, "BONUS", bonusX, bonusLabelY, Color.MAGENTA);
-        // drawCenteredText(g, String.valueOf(getController().getBonusValue()), bonusX,
-        // bonusValueY, Color.WHITE);
     }
 
     /**
