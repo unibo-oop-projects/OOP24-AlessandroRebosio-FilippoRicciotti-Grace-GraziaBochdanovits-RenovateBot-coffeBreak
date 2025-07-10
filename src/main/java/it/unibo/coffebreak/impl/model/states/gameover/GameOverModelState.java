@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.impl.model.states.gameover;
 
-import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;

@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Loader;
-import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;

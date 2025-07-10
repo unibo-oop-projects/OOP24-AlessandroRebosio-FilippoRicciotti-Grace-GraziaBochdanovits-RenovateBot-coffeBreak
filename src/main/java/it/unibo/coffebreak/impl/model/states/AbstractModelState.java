@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.unibo.coffebreak.api.common.Option;
-import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 

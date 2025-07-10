@@ -1,19 +1,26 @@
 package it.unibo.coffebreak.api.controller.command;
 
+import java.util.Objects;
+
+import it.unibo.coffebreak.api.model.Model;
+
 /**
- * Represents a command that can be executed in the coffee break application.
- * This interface follows the Command pattern, allowing for encapsulation of
- * requests as objects, thereby letting you parameterize clients with different
- * requests, queue or log requests, and support undoable operations.
+ * Command interface for the Command Pattern implementation.
+ * Encapsulates a request as an object, allowing for parameterization and
+ * queuing.
  * 
  * @author Alessandro Rebosio
  */
 public interface Command {
 
     /**
-     * Executes the command.
-     * Implementations should define the specific behavior to be performed
-     * when this command is executed.
+     * Executes the command on the given model.
+     * 
+     * @param model the game model to execute the command on (cannot be null)
+     * @throws NullPointerException if model is null
      */
-    void execute();
+    default void execute(final Model model) {
+        Objects.requireNonNull(model, "The model cannot be null");
+    }
+
 }

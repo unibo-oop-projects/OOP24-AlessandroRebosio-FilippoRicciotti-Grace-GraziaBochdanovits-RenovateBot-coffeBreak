@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.character.lives.LivesManager;
 import it.unibo.coffebreak.api.model.entities.character.score.Score;
@@ -13,6 +14,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
+import it.unibo.coffebreak.impl.common.Vector;
 import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.mario.lives.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
@@ -44,7 +46,12 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHamme
  * @see MainCharacter
  * @author Grazia Bochdanovits de Kavna
  */
-public class Mario extends AbstractEntity implements MainCharacter {
+public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntity {
+
+    // Physics constants
+    private static final float MAX_FALLING_SPEED = 150f;
+    private static final float SPEED = 20f;
+    private static final float JUMP_FORCE = 40f;
 
     private final LivesManager livesManager = new GameLivesManager();
     private final Score score = new GameScore();
@@ -73,18 +80,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
     /**
      * Updates the state of the Mario entity for the current frame.
      * <p>
-     * Applies gravity to Mario's vertical velocity unless he is on a platform,
-     * in which case the vertical velocity is set to zero. Updates Mario's position
-     * based on the calculated velocity and resets the platform state.
+     * This method now delegates physics and collision handling to the unified
+     * PhysicsEngine, ensuring consistent behavior across all entities.
+     * Only manages Mario-specific state updates.
      * </p>
      *
      * @param deltaTime the time elapsed since the last update, in seconds
      */
     @Override
     public void update(final float deltaTime) {
-
         this.currentState.update(this, deltaTime);
-        this.onPlatform = false;
     }
 
     /**
@@ -106,13 +111,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
      * {@inheritDoc}
      * <p>
      * Moves Mario to the left if he is not currently climbing.
-     * Updates Mario's position and sets his facing direction to left.
+     * Applies leftward movement physics and sets his facing direction to left.
      * </p>
      */
     @Override
     public void moveLeft() {
         if (!this.isClimbing) {
             this.isFacingRight = false;
+            final Vector currentVelocity = this.getVelocity();
+            final Vector leftMovement = new Vector(-SPEED, 0f);
+            this.setVelocity(new Vector(leftMovement.x(), currentVelocity.y()));
         }
     }
 
@@ -120,13 +128,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
      * {@inheritDoc}
      * <p>
      * Moves Mario to the right if he is not currently climbing.
-     * Updates Mario's position and sets his facing direction to right.
+     * Applies rightward movement physics and sets his facing direction to right.
      * </p>
      */
     @Override
     public void moveRight() {
         if (!this.isClimbing) {
             this.isFacingRight = true;
+            final Vector currentVelocity = this.getVelocity();
+            final Vector rightMovement = new Vector(SPEED, 0f);
+            this.setVelocity(new Vector(rightMovement.x(), currentVelocity.y()));
         }
     }
 
@@ -134,13 +145,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
      * {@inheritDoc}
      * <p>
      * Moves Mario upward if his current state allows climbing.
-     * Sets Mario's climbing state to true when moving up.
+     * Applies upward climbing physics and sets Mario's climbing state to true.
      * </p>
      */
     @Override
     public void moveUp() {
         if (this.currentState.canClimb()) {
             this.isClimbing = true;
+            final Vector currentVelocity = this.getVelocity();
+            final Vector upMovement = new Vector(0f, -SPEED);
+            this.setVelocity(new Vector(currentVelocity.x(), upMovement.y()));
         }
     }
 
@@ -148,13 +162,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
      * {@inheritDoc}
      * <p>
      * Moves Mario downward if his current state allows climbing.
-     * Sets Mario's climbing state to true when moving down.
+     * Applies downward climbing physics and sets Mario's climbing state to true.
      * </p>
      */
     @Override
     public void moveDown() {
         if (this.currentState.canClimb()) {
             this.isClimbing = true;
+            final Vector currentVelocity = this.getVelocity();
+            final Vector downMovement = new Vector(0f, SPEED);
+            this.setVelocity(new Vector(currentVelocity.x(), downMovement.y()));
         }
     }
 
@@ -168,8 +185,11 @@ public class Mario extends AbstractEntity implements MainCharacter {
      */
     @Override
     public void jump() {
-        if (this.onPlatform) {
+        if (this.onPlatform && !this.isJumping) {
             this.isJumping = true;
+            final Vector currentVelocity = this.getVelocity();
+            final Vector jumpVector = new Vector(0f, -JUMP_FORCE);
+            this.setVelocity(new Vector(currentVelocity.x(), jumpVector.y()));
         }
     }
 
@@ -182,26 +202,16 @@ public class Mario extends AbstractEntity implements MainCharacter {
     public void onCollision(final Entity other) {
         Objects.requireNonNull(other, "Colliding entity cannot be null");
         switch (other) {
-            case final Platform platform -> this.handlePlatformCollision(platform);
+            case final Platform platform -> {
+                this.onPlatformLand();
+                platform.destroy();
+            }
             case final Collectible collectible -> collectible.collect(this);
             case final Princess princess -> princess.rescue();
             default -> {
             }
         }
         this.currentState.handleCollision(this, other);
-    }
-
-    private void handlePlatformCollision(final Platform platform) {
-        switch (platform.getCollisionSide(this)) {
-            case TOP -> {
-                this.onPlatform = true;
-                this.isJumping = false;
-            }
-            default -> {
-                this.isClimbing = false;
-            }
-        }
-        platform.destroy();
     }
 
     /**
@@ -285,5 +295,48 @@ public class Mario extends AbstractEntity implements MainCharacter {
     @Override
     public boolean isClimbing() {
         return this.isClimbing;
+    }
+
+    /**
+     * Called when Mario lands on a platform.
+     * Sets platform state and resets jumping state.
+     */
+    @Override
+    public void onPlatformLand() {
+        this.onPlatform = true;
+        this.isJumping = false;
+    }
+
+    /**
+     * Called when Mario leaves a platform.
+     * Resets platform state.
+     */
+    @Override
+    public void onPlatformLeave() {
+        this.onPlatform = false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAffectedByGravity() {
+        return !this.isClimbing;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canStandOnPlatforms() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public float getMaxFallingSpeed() {
+        return MAX_FALLING_SPEED; 
     }
 }

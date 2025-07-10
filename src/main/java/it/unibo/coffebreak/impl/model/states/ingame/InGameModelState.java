@@ -1,12 +1,11 @@
 package it.unibo.coffebreak.impl.model.states.ingame;
 
-import java.util.Optional;
-
-import it.unibo.coffebreak.api.controller.action.ActionQueue.Action;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
-import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
+import it.unibo.coffebreak.api.model.physics.PhysicsEngine;
+import it.unibo.coffebreak.impl.model.physics.GamePhysicsEngine;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
@@ -14,20 +13,40 @@ import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 /**
  * State representing the in-game phase where gameplay occurs.
  * <p>
- * Handles player input, entity updates, collisions, and game progression logic.
+ * Handles entity updates, physics, collisions, and game progression logic.
+ * Now uses a unified PhysicsEngine for consistent physics and collision
+ * handling.
  * </p>
  *
  * @author Alessandro Rebosio
  */
 public class InGameModelState extends AbstractModelState {
 
-    private Optional<Action> action = Optional.empty();
+    private final PhysicsEngine physicsEngine;
+
+    /**
+     * Creates a new in-game model state with the default physics engine.
+     */
+    public InGameModelState() {
+        this(new GamePhysicsEngine());
+    }
+
+    /**
+     * Creates a new in-game model state with the specified physics engine.
+     * 
+     * @param physicsEngine the physics engine to use for entity updates
+     */
+    public InGameModelState(final PhysicsEngine physicsEngine) {
+        this.physicsEngine = physicsEngine;
+    }
 
     /**
      * Updates the game logic for the in-game state.
      * <p>
-     * Updates all entities, handles collisions, manages bonus, and checks for game
-     * over.
+     * Updates all entities using the unified physics engine, manages bonus, and
+     * checks for game
+     * over. Player movement is handled directly by commands, not in this update
+     * loop.
      * </p>
      *
      * @param model     the game model
@@ -38,39 +57,19 @@ public class InGameModelState extends AbstractModelState {
         final var player = model.getMainCharacter().get();
         final int currentLives = player.getLives();
 
-        if (this.action.isPresent()) {
-            switch (action.get()) {
-                case ESCAPE -> {
-                    model.setState(new PauseModelState());
-                }
-                case SPACE -> {
-                    model.getMainCharacter().ifPresent(MainCharacter::jump);
-                }
-                case RIGHT -> {
-                    model.getMainCharacter().ifPresent(MainCharacter::moveRight);
-                }
-                case LEFT -> {
-                    model.getMainCharacter().ifPresent(MainCharacter::moveLeft);
-                }
-                case UP -> {
-                    model.getMainCharacter().ifPresent(MainCharacter::moveUp);
-                }
-                default -> {
-                }
-            }
-
-            this.action = Optional.empty();
-        }
-
         model.getEntities().stream()
                 .filter(Antagonist.class::isInstance)
                 .map(Antagonist.class::cast)
                 .findFirst()
                 .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
-        model.getEntities().forEach(e -> e.update(deltaTime));
-
-        GameCollision.checkCollision(model);
+        model.getEntities().forEach(entity -> {
+            if (entity instanceof PhysicsEntity) {
+                this.physicsEngine.updateEntity(entity, model, deltaTime);
+            } else {
+                entity.update(deltaTime);
+            }
+        });
 
         if (currentLives != player.getLives()) {
             model.initialEntitiesState();
@@ -88,20 +87,16 @@ public class InGameModelState extends AbstractModelState {
     /**
      * {@inheritDoc}
      * <p>
-     * Handles in-game specific actions. Currently supports:
-     * <ul>
-     * <li>ESCAPE - pauses the game and transitions to the pause state</li>
-     * </ul>
-     * Note: Mario's movement and gameplay commands are handled separately
-     * through the command queue system, not through this action handler.
+     * Only handles the ESCAPE action to pause the game.
+     * All movement commands are now handled directly by the command system.
      * </p>
      */
     @Override
     public void handleAction(final Model model, final Action action) {
         switch (action) {
             case ESCAPE -> model.setState(new PauseModelState());
-            case SPACE, UP, DOWN, LEFT, RIGHT -> this.action = Optional.of(action);
             default -> {
+                // Other actions are handled by the command system
             }
         }
     }
