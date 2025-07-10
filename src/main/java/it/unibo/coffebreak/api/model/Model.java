@@ -3,7 +3,6 @@ package it.unibo.coffebreak.api.model;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
@@ -148,14 +147,6 @@ public interface Model {
      * @throws NullPointerException if name is null
      */
     void addEntry(String name);
-
-    /**
-     * Processes and executes the given game command.
-     * 
-     * @param command the command to be executed
-     * @throws NullPointerException if command is null
-     */
-    void handleCommand(Command command);
 
     /**
      * Updates the game logic based on elapsed time.

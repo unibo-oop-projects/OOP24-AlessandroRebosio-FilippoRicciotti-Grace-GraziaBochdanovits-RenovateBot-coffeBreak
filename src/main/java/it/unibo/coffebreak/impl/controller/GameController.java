@@ -2,16 +2,13 @@ package it.unibo.coffebreak.impl.controller;
 
 import java.util.List;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
@@ -29,7 +26,6 @@ import it.unibo.coffebreak.impl.model.GameModel;
  */
 public class GameController implements Controller {
 
-    private final Input input = new InputManager();
     private final Model model;
 
     /**
@@ -47,10 +43,6 @@ public class GameController implements Controller {
      */
     @Override
     public void processInput() {
-        final Command cmd = this.input.getCommand();
-        if (cmd != null) {
-            this.model.handleCommand(cmd);
-        }
     }
 
     /**
@@ -71,7 +63,7 @@ public class GameController implements Controller {
      */
     @Override
     public void keyPressed(final int keyCode) {
-        this.input.keyPressed(keyCode);
+
     }
 
     /**
@@ -82,7 +74,7 @@ public class GameController implements Controller {
      */
     @Override
     public void keyReleased(final int keyCode) {
-        this.input.keyReleased(keyCode);
+
     }
 
     /**
@@ -139,8 +131,8 @@ public class GameController implements Controller {
     @Override
     public int getCharacterLives() {
         return this.model.getMainCharacter()
-            .map(MainCharacter::getLives)
-            .orElse(0);
+                .map(MainCharacter::getLives)
+                .orElse(0);
     }
 
     /**

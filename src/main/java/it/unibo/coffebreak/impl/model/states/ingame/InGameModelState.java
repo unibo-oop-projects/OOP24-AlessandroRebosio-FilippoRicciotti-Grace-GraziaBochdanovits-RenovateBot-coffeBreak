@@ -1,12 +1,10 @@
 package it.unibo.coffebreak.impl.model.states.ingame;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
-import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 
 /**
  * State representing the in-game phase where gameplay occurs.
@@ -17,26 +15,6 @@ import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
  * @author Alessandro Rebosio
  */
 public class InGameModelState extends AbstractModelState {
-
-    /**
-     * Handles commands during the in-game state.
-     * <p>
-     * ESCAPE sets the model state to pause (pause or exit to menu).
-     * </p>
-     *
-     * @param model   the game model
-     * @param command the command to process
-     */
-    @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
-            case ESCAPE -> {
-                model.setState(new PauseModelState());
-            }
-            default -> {
-            }
-        }
-    }
 
     /**
      * Updates the game logic for the in-game state.

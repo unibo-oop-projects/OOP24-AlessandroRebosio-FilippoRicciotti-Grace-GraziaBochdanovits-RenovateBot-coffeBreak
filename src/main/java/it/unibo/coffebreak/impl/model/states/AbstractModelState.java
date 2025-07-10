@@ -4,9 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
-import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
 /**
@@ -22,41 +20,21 @@ import it.unibo.coffebreak.api.model.states.ModelState;
 public abstract class AbstractModelState implements ModelState {
 
     /**
+     * The index of the currently selected option.
+     */
+    private static final int SELECTEDINDEX = 0;
+
+    /**
      * The list of available menu options.
      */
     private final List<Option> options = new LinkedList<>();
-
-    /**
-     * The index of the currently selected option.
-     */
-    private int selectedIndex;
-
-    /**
-     * Handles input depending on the phase the model is currently in.
-     *
-     * @param model   the game model containing the possible phase to change
-     * @param command the input to handle
-     */
-    @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
-            case MOVE_UP -> {
-                this.selectedIndex = (this.selectedIndex - 1 + this.options.size()) % options.size();
-            }
-            case MOVE_DOWN -> {
-                this.selectedIndex = (this.selectedIndex + 1) % this.options.size();
-            }
-            default -> {
-            }
-        }
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Option getSelectedOption() {
-        return this.options.get(selectedIndex);
+        return this.options.get(SELECTEDINDEX);
     }
 
     /**

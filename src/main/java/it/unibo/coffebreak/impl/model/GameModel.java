@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -213,14 +212,6 @@ public class GameModel implements Model {
     @Override
     public void addEntry(final String name) {
         this.leaderBoard.addEntry(new ScoreEntry(name, this.getScoreValue()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void handleCommand(final Command command) {
-        this.currentState.handleCommand(this, command);
     }
 
     /**
