@@ -1,17 +1,18 @@
 package it.unibo.coffebreak.impl.controller;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.controller.input.Input;
+import it.unibo.coffebreak.api.controller.command.Command;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.controller.input.InputManager;
+import it.unibo.coffebreak.impl.controller.command.CommandFactory;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
@@ -29,7 +30,7 @@ import it.unibo.coffebreak.impl.model.GameModel;
  */
 public class GameController implements Controller {
 
-    private final Input input = new InputManager();
+    private final Queue<Command> commandQueue = new ConcurrentLinkedQueue<>();
     private final Model model;
 
     /**
@@ -47,9 +48,11 @@ public class GameController implements Controller {
      */
     @Override
     public void processInput() {
-        final Command cmd = this.input.getCommand();
-        if (cmd != null) {
-            this.model.handleCommand(cmd);
+        while (!this.commandQueue.isEmpty()) {
+            final Command command = this.commandQueue.poll();
+            if (command != null) {
+                command.execute(this.model);
+            }
         }
     }
 
@@ -66,23 +69,23 @@ public class GameController implements Controller {
     /**
      * {@inheritDoc}
      * <p>
-     * Forwards the key press event to the input manager for processing.
-     * The actual command generation depends on current key bindings.
+     * Creates and queues the appropriate command based on the key pressed.
+     * Uses the CommandFactory to maintain clean separation of concerns.
      */
     @Override
     public void keyPressed(final int keyCode) {
-        this.input.keyPressed(keyCode);
+        this.commandQueue.add(CommandFactory.createCommand(keyCode));
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Notifies the input manager that a key has been released,
-     * which may affect continuous commands like movement.
+     * Creates and queues the appropriate command based on the key released.
+     * Handles stopping movement and other release-based actions.
      */
     @Override
     public void keyReleased(final int keyCode) {
-        this.input.keyReleased(keyCode);
+        this.commandQueue.add(CommandFactory.createReleaseCommand(keyCode));
     }
 
     /**
@@ -139,8 +142,8 @@ public class GameController implements Controller {
     @Override
     public int getCharacterLives() {
         return this.model.getMainCharacter()
-            .map(MainCharacter::getLives)
-            .orElse(0);
+                .map(MainCharacter::getLives)
+                .orElse(0);
     }
 
     /**

@@ -1,7 +1,7 @@
 package it.unibo.coffebreak.impl.model.states.menu;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
@@ -27,16 +27,20 @@ public class MenuModelState extends AbstractModelState {
     }
 
     /**
-     * Handles input commands for menu navigation and selection.
-     *
-     * @param model   the game model
-     * @param command the command to process
+     * {@inheritDoc}
+     * <p>
+     * Handles menu-specific actions in addition to the default navigation.
+     * When ENTER is pressed, executes the currently selected option:
+     * <ul>
+     * <li>START - starts the game and transitions to the in-game state</li>
+     * <li>QUIT - exits the application</li>
+     * </ul>
+     * </p>
      */
     @Override
-    public void handleCommand(final Model model, final Command command) {
-        super.handleCommand(model, command);
-
-        switch (command) {
+    public void handleAction(final Model model, final Action action) {
+        super.handleAction(model, action);
+        switch (action) {
             case ENTER -> {
                 switch (super.getSelectedOption()) {
                     case START -> {
