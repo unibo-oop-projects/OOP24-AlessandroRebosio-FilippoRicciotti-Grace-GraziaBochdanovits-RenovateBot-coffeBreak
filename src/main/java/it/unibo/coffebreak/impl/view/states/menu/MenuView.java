@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.view.states.menu;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.view.GameView;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
@@ -32,8 +33,8 @@ public class MenuView extends AbstractViewState {
      * @param controller the controller to interact with the game logic
      * @param loader     the resource loader for graphics
      */
-    public MenuView(final Controller controller, final Loader loader) {
-        super(controller, loader);
+    public MenuView(final Controller controller, final Loader loader, final SoundManager soundManager) {
+        super(controller, loader, soundManager);
 
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
         leaderBoard = controller.getLeaderBoard();

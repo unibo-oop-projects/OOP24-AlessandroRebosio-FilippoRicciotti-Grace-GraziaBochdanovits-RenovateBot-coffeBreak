@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 
@@ -48,6 +49,7 @@ public abstract class AbstractViewState implements ViewState {
 
     private final Controller controller;
     private final Loader loader;
+    private final SoundManager soundManager;
 
     /**
      * Constructs an AbstractViewState with the specified controller.
@@ -56,9 +58,10 @@ public abstract class AbstractViewState implements ViewState {
      * @param loader     the resource loader for graphics
      * @throws NullPointerException if {@code controller} is null
      */
-    public AbstractViewState(final Controller controller, final Loader loader) {
+    public AbstractViewState(final Controller controller, final Loader loader, final SoundManager soundManager) {
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
+        this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
     }
 
     /**

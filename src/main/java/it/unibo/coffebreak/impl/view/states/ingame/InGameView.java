@@ -10,6 +10,8 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
+import it.unibo.coffebreak.api.view.sound.SoundManager.Event;
 import it.unibo.coffebreak.impl.view.render.GameRenderManager;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
@@ -38,9 +40,10 @@ public class InGameView extends AbstractViewState {
          *                   entities
          * @param loader     the resource loader for graphics
          */
-        public InGameView(final Controller controller, final Loader loader) {
-                super(controller, loader);
+        public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
+                super(controller, loader, soundManager);
                 this.renderManager = new GameRenderManager(loader);
+                soundManager.play(Event.BACKGROUND);
         }
 
         /**
