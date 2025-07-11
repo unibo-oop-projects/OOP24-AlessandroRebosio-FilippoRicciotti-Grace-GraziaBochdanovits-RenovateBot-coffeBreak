@@ -50,6 +50,11 @@ public class GamePanel extends JPanel implements Panel {
     private final transient SoundManager soundManager;
     private float deltaTime;
 
+    private final transient ViewState menuView;
+    private final transient ViewState inGameView;
+    private final transient ViewState pauseView;
+    private final transient ViewState gameOverView;
+
     /**
      * Constructs a GamePanel associated with the given controller and sets up the
      * KeyAdapter.
@@ -65,6 +70,12 @@ public class GamePanel extends JPanel implements Panel {
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
         this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
+
+        this.menuView     = new MenuView(this.controller, this.loader, this.soundManager);
+        this.inGameView   = new InGameView(this.controller, this.loader, this.soundManager);
+        this.pauseView    = new PauseView(this.controller, this.loader, this.soundManager);
+        this.gameOverView = new GameOverView(this.controller, this.loader, this.soundManager);
+
         super.setFocusable(true);
 
         super.addKeyListener(new KeyAdapter() {
@@ -135,10 +146,10 @@ public class GamePanel extends JPanel implements Panel {
     public void update(final float deltaTime) {
         this.deltaTime = deltaTime;
         final ViewState nextState = switch (this.controller.getGameState()) {
-            case final MenuModelState menu -> new MenuView(this.controller, this.loader, this.soundManager);
-            case final InGameModelState inGame -> new InGameView(this.controller, this.loader, this.soundManager);
-            case final PauseModelState pause -> new PauseView(this.controller, this.loader, this.soundManager);
-            case final GameOverModelState gameOver -> new GameOverView(this.controller, this.loader, this.soundManager);
+            case final MenuModelState menu -> menuView;
+            case final InGameModelState inGame -> inGameView;
+            case final PauseModelState pause -> pauseView;
+            case final GameOverModelState gameOver -> gameOverView;
             default -> null;
         };
 
