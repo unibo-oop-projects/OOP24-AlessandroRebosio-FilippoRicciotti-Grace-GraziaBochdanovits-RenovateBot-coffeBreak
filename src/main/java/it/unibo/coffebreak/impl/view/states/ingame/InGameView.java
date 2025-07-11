@@ -35,7 +35,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  */
 public class InGameView extends AbstractViewState {
 
-        private static final BoundigBox LIVES_ICON_DIMENSION = new BoundigBox(20, 20);
         private final RenderManager renderManager;
 
         /**
@@ -58,8 +57,7 @@ public class InGameView extends AbstractViewState {
          * {@inheritDoc}
          */
         @Override
-        public void draw(final Graphics2D g, final int panelWidth, final int panelHeight,
-                        final float deltaTime) {
+        public void draw(final Graphics2D g, final int panelWidth, final int panelHeight, final float deltaTime) {
                 final float marginRatio = 0.1f;
                 super.draw(g, panelWidth, panelHeight, deltaTime);
 
@@ -98,14 +96,23 @@ public class InGameView extends AbstractViewState {
                 g.setTransform(oldTransform);
 
                 final int lives = getController().getCharacterLives();
-                final int marioIconSize = (int) (panelHeight * 0.045f);
-                final int marioStartX = panelWidth / 3;
-                final int marioY = (int) (panelHeight * 0.09f);
-                final int spacing = 5;
+
+                final int marioIconSize = (int) (panelHeight * 0.03f);
+                final BoundigBox scaledDimension = new BoundigBox(marioIconSize, marioIconSize);
+
+                final int oneUpX = panelWidth / 6;
+
+                final int marioY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);
+
+                final int spacing = (int) (marioIconSize * 0.2f);
+                final int totalWidth = lives * marioIconSize + (lives - 1) * spacing;
+
+                final int startX = oneUpX - totalWidth / 2;
 
                 for (int i = 0; i < lives; i++) {
-                        new MarioRender(getLoader()).draw(g, new Mario(new Position(marioStartX + i * (marioIconSize + spacing),
-                                        marioY), LIVES_ICON_DIMENSION), deltaTime, panelWidth, panelHeight);
+                        final int x = startX + i * (marioIconSize + spacing);
+                        final Position pos = new Position(x, marioY);
+                        new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth, panelHeight);
                 }
 
                 final int bonusLabelY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);
