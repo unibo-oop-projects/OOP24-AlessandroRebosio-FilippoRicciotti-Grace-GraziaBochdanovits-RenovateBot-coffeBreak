@@ -20,7 +20,7 @@ public class FireRender extends AbstractEnemyRender {
     private static final int SPACING = 2;
 
     private static final AnimationInfo ANIMATION = new AnimationInfo(
-            2, SIZE, SIZE, X_OFFSET, Y_OFFSET, SPACING);
+            2, SIZE, SIZE, X_OFFSET, Y_OFFSET, SPACING, 0.2f);
 
     /**
      * Constructs a new FireRender with the specified resource loader and screen

@@ -16,7 +16,7 @@ import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public final class DonkeyKongRender extends AnimatedEntityRender {
+public final class DonkeyKongRender extends AnimatedEntityRender<DonkeyKongRender.DKAnimationType> {
 
     private static final int SPRITE_WIDTH = 48;
     private static final int SPRITE_HEIGHT = 32;
@@ -26,9 +26,11 @@ public final class DonkeyKongRender extends AnimatedEntityRender {
     private static final int SPACING = 2;
 
     private static final Map<DKAnimationType, AnimationInfo> ANIMATIONS = Map.ofEntries(
-        Map.entry(DKAnimationType.ANGRY, new AnimationInfo(4, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_ANGRY, SPACING)),
-        Map.entry(DKAnimationType.THROW, new AnimationInfo(2, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_THROW, SPACING))
+        Map.entry(DKAnimationType.ANGRY, new AnimationInfo(4, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_ANGRY, SPACING, 0.15f)),
+        Map.entry(DKAnimationType.THROW, new AnimationInfo(3, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_THROW, SPACING, 0.15f))
     );
+
+    private final DKAnimationStatus animationStatus = new DKAnimationStatus();
 
     /**
      * Constructs a new DonkeyKong with the specified screen dimensions.
@@ -41,18 +43,33 @@ public final class DonkeyKongRender extends AnimatedEntityRender {
         super(Objects.requireNonNull(loader, "Loader cannot be null"));
     }
 
-     /**
+    /**
      * {@inheritDoc}
      */
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime, 
-                        final int width, final int height) {
+                    final int width, final int height) {
         if (!(entity instanceof Antagonist dk)) {
             return;
         }
 
-        final DKAnimationType animation = resolveAnimationType(dk);
-        final BufferedImage frame = updateAndGetFrame(dk, animation, ANIMATIONS.get(animation), deltaTime);
+        if (dk.isThrowing()) {
+            if (animationStatus.current != DKAnimationType.THROW) {
+                animationStatus.current = DKAnimationType.THROW;
+                animationStatus.time = 0f;
+            }
+        } else {
+            if (animationStatus.current == DKAnimationType.THROW 
+                && animationStatus.time >= ANIMATIONS.get(DKAnimationType.THROW).totalDuration()) {
+                animationStatus.current = DKAnimationType.ANGRY;
+                animationStatus.time = 0f;
+            }
+        }
+
+        final AnimationInfo animationInfo = ANIMATIONS.get(animationStatus.current);
+        final BufferedImage frame = updateAndGetFrame(dk, animationStatus.current, animationInfo, deltaTime);
+
+        animationStatus.time += deltaTime;
 
         g.drawImage(
             frame,
@@ -64,9 +81,27 @@ public final class DonkeyKongRender extends AnimatedEntityRender {
         );
     }
 
-    private DKAnimationType resolveAnimationType(final Antagonist dk) {
-        return dk.isThrowing() ? DKAnimationType.THROW : DKAnimationType.ANGRY;
+    /**
+     * Enumeration of possible animation states for Donkey Kong character.
+     */
+    protected enum DKAnimationType {
+        /**
+         * Represents Donkey Kong's angry animation state. */
+        ANGRY,
+
+        /**
+         * Represents Donkey Kong's throwing barrel animation state. */
+        THROW
     }
 
-    private enum DKAnimationType { ANGRY, THROW }
+    /**
+     * Tracks the current animation state and timing.
+     */
+    private static final class DKAnimationStatus {
+        /** Current active animation type. */
+        private DKAnimationType current = DKAnimationType.ANGRY;
+
+        /** Time accumulated for the current animation frame. */
+        private float time;
+    }
 }
