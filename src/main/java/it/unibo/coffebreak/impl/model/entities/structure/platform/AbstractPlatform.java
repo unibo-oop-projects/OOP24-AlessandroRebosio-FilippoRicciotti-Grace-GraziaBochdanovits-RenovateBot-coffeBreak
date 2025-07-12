@@ -20,7 +20,7 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    private static final float EPSILON = 0.001f;
+    private static final float EPSILON = 1.0f;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
@@ -65,8 +65,14 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         final float overlapLeft = otherRight - platformLeft;
         final float overlapRight = platformRight - otherLeft;
 
+        final boolean horizontallyOverlapping =
+                otherRight > platformLeft + EPSILON && otherLeft < platformRight - EPSILON;
+        if (Math.abs(overlapTop) < EPSILON && horizontallyOverlapping) {
+            return CollisionSide.TOP;
+        }
+
         final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
-                Math.min(overlapLeft, overlapRight));
+                                        Math.min(overlapLeft, overlapRight));
 
         if (Math.abs(minOverlap - overlapTop) < EPSILON) {
             return CollisionSide.TOP;
