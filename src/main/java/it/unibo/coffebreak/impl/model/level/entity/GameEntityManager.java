@@ -43,9 +43,9 @@ public class GameEntityManager implements EntityManager {
     private int row;
     private int column;
 
-
     /**
-     * Constructs a new {@code GameEntityManager} and initializes the character state
+     * Constructs a new {@code GameEntityManager} and initializes the character
+     * state
      * by invoking {@link #resetCharacter()}.
      */
     public GameEntityManager() {
@@ -236,5 +236,25 @@ public class GameEntityManager implements EntityManager {
 
         return sizes;
 
+    }
+
+    /**
+     * Method that can tell wether a ladder is present right below the given
+     * coordinates.
+     * 
+     * @param x coordinate
+     * @param y coordinate
+     * @return True if below these coordinates is present a Ladder False otherwise
+     */
+    public boolean hasLadderBelow(final float x, final float y) {
+        return this.entities.stream()
+                .filter(e -> e instanceof NormalLadder)
+                .anyMatch(ladder -> {
+                    final float ladderX = ladder.getPosition().x();
+                    final float ladderY = ladder.getPosition().y();
+                    final float h = new BoundigBox().height();
+                    return ladderY > y && ladderY <= y + h
+                            && x == ladderX;
+                });
     }
 }
