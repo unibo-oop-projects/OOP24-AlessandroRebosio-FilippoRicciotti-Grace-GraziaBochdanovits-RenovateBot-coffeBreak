@@ -83,6 +83,13 @@ public interface LevelManager {
     int getColumn();
 
     /**
+     * Resets the main character to its initial state or position in the level.
+     * This method is typically used to restart the character after a game event,
+     * such as losing a life or restarting the level.
+     */
+    void resetCharacter();
+
+    /**
      * Advances to the next level.
      */
     void advance();
