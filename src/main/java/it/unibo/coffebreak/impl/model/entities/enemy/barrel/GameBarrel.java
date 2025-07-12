@@ -77,8 +77,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
         if (this.onPlatform) {
             final float horizontalSpeed = this.movingRight ? BARREL_SPEED : -BARREL_SPEED;
             this.setVelocity(new Vector(horizontalSpeed, currentVelocity.y()));
-        } else {
-            this.setVelocity(new Vector(0f, currentVelocity.y()));
         }
     }
 
