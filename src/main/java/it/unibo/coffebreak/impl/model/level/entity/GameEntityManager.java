@@ -107,16 +107,11 @@ public class GameEntityManager implements EntityManager {
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, bb));
                     case 'P' -> {
-                        final int k = y + 1;
+                        final int nextRow = y + 1;
+                        final boolean canGoDown = nextRow < map.size() && hasLadder(map.get(nextRow), x);
 
-                        if (k < map.size()) {
-                            final boolean canGoDown = hasLadder(map.get(k), x);
-                            if (canGoDown) {
-                                this.addEntity(new NormalPlatform(position, bb, canGoDown));
-                                System.out.println(1);
-                            } else {
-                                this.addEntity(new NormalPlatform(position, bb));
-                            }
+                        if (canGoDown) {
+                            this.addEntity(new NormalPlatform(position, bb, canGoDown));
                         } else {
                             this.addEntity(new NormalPlatform(position, bb));
                         }
@@ -257,14 +252,11 @@ public class GameEntityManager implements EntityManager {
      * Method that can tell wether a ladder is present at the given
      * coordinates.
      * 
-     * @param x coordinate
-     * @param y coordinate
-     * @return True if below these coordinates is present a Ladder False otherwise
+     * @param x   coordinate
+     * @param map String containing the elements below
+     * @return True if at these coordinates is present a Ladder False otherwise
      */
     private boolean hasLadder(final String map, final int x) {
-        if (x < 0 || x >= map.length()) {
-            return false;
-        }
         return map.charAt(x) == 'L';
     }
 }
