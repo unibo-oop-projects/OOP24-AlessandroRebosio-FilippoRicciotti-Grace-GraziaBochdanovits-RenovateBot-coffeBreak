@@ -34,8 +34,7 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  */
 public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
 
-    // Physics constants
-    private static final float BARREL_SPEED = 20f;
+    private static final float BARREL_SPEED = 40f;
 
     private final boolean canTransformToFire;
     private boolean isDestroyedByTank;
@@ -136,7 +135,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
      */
     @Override
     public float getMaxFallingSpeed() {
-        return 100f; // Barrels fall slower than Mario
+        return 100f;
     }
 
     /**
