@@ -20,7 +20,7 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    private static final float EPSILON = 0.001f;
+    private final boolean canGoDown;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
@@ -30,6 +30,19 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      */
     public AbstractPlatform(final Position position, final BoundigBox dimension) {
         super(position, dimension);
+        this.canGoDown = false;
+    }
+
+    /**
+     * Constructs a new Platform with specified position, dimensions and canGoDown property.
+     * 
+     * @param position   the 2D position of the platform (cannot be null)
+     * @param dimension  the 2D dimension of the platform (cannot be null)
+     * @param canGoDown  true if entities (e.g., Mario) can go down through this platform
+     */
+    public AbstractPlatform(final Position position, final BoundigBox dimension, final boolean canGoDown) {
+        super(position, dimension);
+        this.canGoDown = canGoDown;
     }
 
     /**
@@ -50,6 +63,7 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
      */
     @Override
     public CollisionSide getCollisionSide(final Entity other) {
+        final float epsilon = 0.001f;
         final float platformTop = this.getPosition().y();
         final float platformBottom = platformTop + this.getDimension().height();
         final float platformLeft = this.getPosition().x();
@@ -68,20 +82,28 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
                 Math.min(overlapLeft, overlapRight));
 
-        if (Math.abs(minOverlap - overlapTop) < EPSILON) {
+        if (Math.abs(minOverlap - overlapTop) < epsilon) {
             return CollisionSide.TOP;
         }
-        if (Math.abs(minOverlap - overlapBottom) < EPSILON) {
+        if (Math.abs(minOverlap - overlapBottom) < epsilon) {
             return CollisionSide.BOTTOM;
         }
-        if (Math.abs(minOverlap - overlapLeft) < EPSILON) {
+        if (Math.abs(minOverlap - overlapLeft) < epsilon) {
             return CollisionSide.LEFT;
         }
-        if (Math.abs(minOverlap - overlapRight) < EPSILON) {
+        if (Math.abs(minOverlap - overlapRight) < epsilon) {
             return CollisionSide.RIGHT;
         }
 
         return CollisionSide.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canGoDown() {
+        return this.canGoDown;
     }
 
     /**
