@@ -64,10 +64,9 @@ public class InGameModelState extends AbstractModelState {
                 .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
         model.getEntities().forEach(entity -> {
+            entity.update(deltaTime);
             if (entity instanceof PhysicsEntity) {
                 this.physicsEngine.updateEntity(entity, model, deltaTime);
-            } else {
-                entity.update(deltaTime);
             }
         });
 

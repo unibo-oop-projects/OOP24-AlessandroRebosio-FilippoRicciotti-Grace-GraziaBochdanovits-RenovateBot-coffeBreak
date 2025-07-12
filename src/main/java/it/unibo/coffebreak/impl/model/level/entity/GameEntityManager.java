@@ -38,10 +38,19 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 public class GameEntityManager implements EntityManager {
 
     private final List<Entity> entities = new LinkedList<>();
-    private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
+    private MainCharacter character;
 
     private int row;
     private int column;
+
+
+    /**
+     * Constructs a new {@code GameEntityManager} and initializes the character state
+     * by invoking {@link #resetCharacter()}.
+     */
+    public GameEntityManager() {
+        this.resetCharacter();
+    }
 
     /**
      * {@inheritDoc}
@@ -147,6 +156,14 @@ public class GameEntityManager implements EntityManager {
                 || (e instanceof final Enemy enemy && enemy.isDestroyed()));
 
         this.entities.addAll(toAdd);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void resetCharacter() {
+        this.character = new Mario(new Position(0, 0), new BoundigBox());
     }
 
     /**
