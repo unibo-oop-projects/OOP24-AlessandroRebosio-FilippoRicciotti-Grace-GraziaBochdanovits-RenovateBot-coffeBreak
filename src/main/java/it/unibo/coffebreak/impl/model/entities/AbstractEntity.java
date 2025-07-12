@@ -98,10 +98,10 @@ public abstract class AbstractEntity implements Entity {
      */
     @Override
     public boolean collidesWith(final Entity entity) {
-        return this.getPosition().x() < entity.getPosition().x() + entity.getDimension().width()
-                && this.getPosition().x() + this.getDimension().width() > entity.getPosition().x()
-                && this.getPosition().y() < entity.getPosition().y() + entity.getDimension().height()
-                && this.getPosition().y() + this.getDimension().height() > entity.getPosition().y();
+        return this.getPosition().x() <= entity.getPosition().x() + entity.getDimension().width()
+                && this.getPosition().x() + this.getDimension().width() >= entity.getPosition().x()
+                && this.getPosition().y() <= entity.getPosition().y() + entity.getDimension().height()
+                && this.getPosition().y() + this.getDimension().height() >= entity.getPosition().y();
     }
 
     /**
