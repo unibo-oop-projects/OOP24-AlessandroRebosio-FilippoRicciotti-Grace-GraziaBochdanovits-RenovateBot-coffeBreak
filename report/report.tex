@@ -6,6 +6,7 @@
 \usepackage{float}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage[inkscapelatex=false]{svg}
 
 % Questo commentalo se vuoi scrivere in inglese.
 \usepackage[italian]{babel}
@@ -145,7 +146,9 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione dei collezionabili}
-%TODO put image of collectible template method
+\begin{center}
+	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/collectible.svg}
+\end{center}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
@@ -178,41 +181,41 @@ del team, migliorando l'efficienza della collaborazione.
 \noindent
 \textbf{Gestione dei livelli di gioco (\texttt{GameLevelManager})}
 \begin{description}
-    \item[\textbf{Problema}]
-    La gestione dei livelli di gioco era implementata in modo rigido, con controlli manuali per determinare il livello corrente e per passare al successivo. Questo approccio non favoriva l’estendibilità e rendeva difficile introdurre nuove logiche relative ai livelli, come eventi specifici o condizioni di completamento personalizzate. Inoltre, il caricamento e l’inizializzazione dei livelli erano distribuiti in più punti del codice, aumentando la complessità.
+	\item[\textbf{Problema}]
+	      La gestione dei livelli di gioco era implementata in modo rigido, con controlli manuali per determinare il livello corrente e per passare al successivo. Questo approccio non favoriva l’estendibilità e rendeva difficile introdurre nuove logiche relative ai livelli, come eventi specifici o condizioni di completamento personalizzate. Inoltre, il caricamento e l’inizializzazione dei livelli erano distribuiti in più punti del codice, aumentando la complessità.
 
-    \item[\textbf{Soluzione}]
-    Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager} si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando l'aggiunta di nuovi livelli.
+	\item[\textbf{Soluzione}]
+	      Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager} si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando l'aggiunta di nuovi livelli.
 \end{description}
 
 \noindent
 \textbf{Gestione delle entità di gioco (\texttt{GameEntityManager})}
 \begin{description}
-    \item[\textbf{Problema}]
-    La gestione delle entità (personaggi, ostacoli, collezionabili) era organizzata tramite liste generiche, senza una chiara separazione tra i diversi tipi di entità. Questo causava difficoltà nel controllo delle collisioni, aggiornamento dello stato e rendering, oltre a rendere il codice più difficile da mantenere e soggetto a errori legati alla gestione dei tipi.
+	\item[\textbf{Problema}]
+	      La gestione delle entità (personaggi, ostacoli, collezionabili) era organizzata tramite liste generiche, senza una chiara separazione tra i diversi tipi di entità. Questo causava difficoltà nel controllo delle collisioni, aggiornamento dello stato e rendering, oltre a rendere il codice più difficile da mantenere e soggetto a errori legati alla gestione dei tipi.
 
-\item[\textbf{Soluzione}]
+	\item[\textbf{Soluzione}]
 	      È stata realizzata la classe \texttt{GameEntityManager}, incaricata di gestire tutte le entità presenti nel gioco. Questa classe fornisce metodi per aggiungere, rimuovere e aggiornare le entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o le interazioni tra entità.
 \end{description}
 
 \noindent
 \textbf{Gestione delle mappe di gioco (\texttt{GameMapsManager})}
 \begin{description}
-    \item[\textbf{Problema}]
-    Il caricamento delle mappe e il loro ordinamento venivano gestiti tramite logiche manuali e ripetitive, basate su cicli e controlli espliciti. Questo rendeva il codice meno leggibile e più difficile da estendere con nuovi criteri di ordinamento o formati di mappa differenti.
+	\item[\textbf{Problema}]
+	      Il caricamento delle mappe e il loro ordinamento venivano gestiti tramite logiche manuali e ripetitive, basate su cicli e controlli espliciti. Questo rendeva il codice meno leggibile e più difficile da estendere con nuovi criteri di ordinamento o formati di mappa differenti.
 
-    \item[\textbf{Soluzione}]
-    Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione del codice. Questo approccio facilita la manutenzione e l’aggiunta di nuove funzionalità legate alle mappe.
+	\item[\textbf{Soluzione}]
+	      Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione del codice. Questo approccio facilita la manutenzione e l’aggiunta di nuove funzionalità legate alle mappe.
 \end{description}
 
 \noindent
 \textbf{Gestione degli stati grafici (\texttt{AbstractViewState} e \texttt{ViewStates})}
 \begin{description}
-    \item[\textbf{Problema}]
-    Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \newline \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
+	\item[\textbf{Problema}]
+	      Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \newline \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
 
-    \item[\textbf{Soluzione}]
-    Abbiamo adottato il \textbf{Template Method Pattern} all’interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
+	\item[\textbf{Soluzione}]
+	      Abbiamo adottato il \textbf{Template Method Pattern} all’interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
 \end{description}
 
 \chapter{Sviluppo}
@@ -386,8 +389,8 @@ Quando il personaggio perde tutte le vite, si entra nella schermata di Game Over
 \end{itemize}
 
 
-\bibliographystyle{alpha}
-\bibliography{report}
-\nocite{*}
+% \bibliographystyle{alpha}
+% \bibliography{report}
+% \nocite{*}
 
 \end{document}
