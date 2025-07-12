@@ -173,6 +173,44 @@ del team, migliorando l'efficienza della collaborazione.
 	      in-game. Questo approccio rende il sistema estendibile, testabile e facilita l'implementazione di funzionalità come la gestione della pressione e del rilascio dei tasti.
 \end{description}
 
+\subsection{Filippo Ricciotti}
+
+\textbf{Gestione dei livelli di gioco (\texttt{GameLevelManager})}
+\begin{description}
+    \item[\textbf{Problema}]
+    La gestione dei livelli di gioco era implementata in modo rigido, con controlli manuali per determinare il livello corrente e per passare al successivo. Questo approccio non favoriva l’estendibilità e rendeva difficile introdurre nuove logiche relative ai livelli, come eventi specifici o condizioni di completamento personalizzate. Inoltre, il caricamento e l’inizializzazione dei livelli erano distribuiti in più punti del codice, aumentando la complessità.
+
+    \item[\textbf{Soluzione}]
+    Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager} si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando l'aggiunta di nuovi livelli.
+\end{description}
+
+\textbf{Gestione delle entità di gioco (\texttt{GameEntityManager})}
+\begin{description}
+    \item[\textbf{Problema}]
+    La gestione delle entità (personaggi, ostacoli, collezionabili) era organizzata tramite liste generiche, senza una chiara separazione tra i diversi tipi di entità. Questo causava difficoltà nel controllo delle collisioni, aggiornamento dello stato e rendering, oltre a rendere il codice più difficile da mantenere e soggetto a errori legati alla gestione dei tipi.
+
+\item[\textbf{Soluzione}]
+	      È stata realizzata la classe \texttt{GameEntityManager}, incaricata di gestire tutte le entità presenti nel gioco. Questa classe fornisce metodi per aggiungere, rimuovere e aggiornare le entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o le interazioni tra entità.
+\end{description}
+
+\textbf{Gestione delle mappe di gioco (\texttt{GameMapsManager})}
+\begin{description}
+    \item[\textbf{Problema}]
+    Il caricamento delle mappe e il loro ordinamento venivano gestiti tramite logiche manuali e ripetitive, basate su cicli e controlli espliciti. Questo rendeva il codice meno leggibile e più difficile da estendere con nuovi criteri di ordinamento o formati di mappa differenti.
+
+    \item[\textbf{Soluzione}]
+    Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione del codice. Questo approccio facilita la manutenzione e l’aggiunta di nuove funzionalità legate alle mappe.
+\end{description}
+
+\textbf{Gestione degli stati grafici (\texttt{AbstractViewState} e \texttt{ViewStates})}
+\begin{description}
+    \item[\textbf{Problema}]
+    Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
+
+    \item[\textbf{Soluzione}]
+    Abbiamo adottato il \textbf{Template Method Pattern} all’interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
+\end{description}
+
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte le classi principali. I test progettati assicurano la verifica automatica delle funzionalità fondamentali del software. Di seguito vengono riportati alcuni esempi di test implementati.
@@ -269,6 +307,25 @@ Utilizzati di frequente, soprattuto nel controllo delle collisioni fra entità. 
 	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/926d3f1b985c9bba79c5f766ac0070b04fd6185f/src/main/java/it/unibo/coffebreak/impl/model/entities/mario/Mario.java#L173-L186}
 \end{sloppypar}
 
+\newpage
+\subsection{Filippo Ricciotti}
+\subsubsection{Utilizzo di \texttt{Stream}}
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/56f59dcd01020b02589aa88b808de452c07a3f05/src/main/java/it/unibo/coffebreak/impl/model/level/entity/GameEntityManager.java#L148-L159}
+\end{sloppypar}
+
+\subsubsection{Gestione degli \texttt{Optional}}
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/56f59dcd01020b02589aa88b808de452c07a3f05/src/main/java/it/unibo/coffebreak/impl/model/level/GameLevelManager.java#L122C35-L122C36}
+\end{sloppypar}
+
+\subsubsection{Utilizzo di lambda expressions}
+\begin{sloppypar}
+	\raggedright
+	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/56f59dcd01020b02589aa88b808de452c07a3f05/src/main/java/it/unibo/coffebreak/impl/model/level/entity/GameEntityManager.java#L230}
+\end{sloppypar}
 \chapter{Commenti finali}
 \section{Autovalutazione e lavori futuri}
 \subsection{Alessandro Rebosio}
@@ -281,6 +338,13 @@ Essendo il mio primo progetto strutturato, ho cercato fin da subito di scrivere 
 All'interno del gruppo ho ricoperto diversi ruoli, anche se mi sono concentrato in particolare sullo sviluppo del Controller. Ho anche definito una base per la View, per poi lasciarne lo
 sviluppo ai miei colleghi. Questo mi ha dato modo di sperimentare la sincronizzazione e l'interazione tra le diverse componenti dell'architettura, aiutandomi a comprendere più a
 fondo le dinamiche di progettazione in un contesto MVC.
+
+\subsection{Filippo Ricciotti}
+Riflettendo sul progetto svolto, mi rendo conto che avrei potuto dedicare più tempo e attenzione a questo progetto rispetto che ad altri esami, bilanciando meglio le priorità. Questo avrebbe sicuramente alleggerito il carico di lavoro per tutto il gruppo, soprattutto in alcune fasi critiche come l’integrazione tra le varie componenti e la gestione dei dettagli tecnici. Alcune difficoltà incontrate, come la sincronizzazione tra Model, View e Controller avrebbero richiesto meno sforzo complessivo se mi fossi impegnato con maggiore costanza.
+
+Nonostante ciò, considero questa esperienza molto formativa: mi ha dato una prima impressione concreta di come si lavora in ambito aziendale, con l'importanza della collaborazione e della divisione dei compiti. Ho potuto apprezzare l'utilità di strumenti come \texttt{Git} per la gestione del codice condiviso, e l'efficacia di ambienti di sviluppo come \texttt{Visual Studio Code}. Inoltre, i concetti della \texttt{programmazione ad oggetti}, come l'incapsulamento, l'ereditarietà e l'uso dei design pattern, mi sono rimasti impressi e li considero fondamentali per organizzare progetti complessi in modo chiaro e mantenibile.
+
+Questa esperienza mi ha fatto capire l'importanza di una pianificazione precisa e di un coinvolgimento costante, elementi che cercherò di applicare meglio nei progetti futuri.
 
 \section{Difficoltà incontrate e commenti per i docenti}
 
