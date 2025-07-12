@@ -106,7 +106,22 @@ public class GameEntityManager implements EntityManager {
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, bb));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, bb));
+                    case 'P' -> {
+                        final int k = y + 1;
+
+                        if (k < map.size()) {
+                            final boolean canGoDown = hasLadder(map.get(k), x);
+                            if (canGoDown) {
+                                this.addEntity(new NormalPlatform(position, bb, canGoDown));
+                                System.out.println(1);
+                            } else {
+                                this.addEntity(new NormalPlatform(position, bb));
+                            }
+                        } else {
+                            this.addEntity(new NormalPlatform(position, bb));
+                        }
+
+                    }
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
                     case 'M' -> {
                         this.character.setPosition(position);
@@ -239,22 +254,17 @@ public class GameEntityManager implements EntityManager {
     }
 
     /**
-     * Method that can tell wether a ladder is present right below the given
+     * Method that can tell wether a ladder is present at the given
      * coordinates.
      * 
      * @param x coordinate
      * @param y coordinate
      * @return True if below these coordinates is present a Ladder False otherwise
      */
-    public boolean hasLadderBelow(final float x, final float y) {
-        return this.entities.stream()
-                .filter(e -> e instanceof NormalLadder)
-                .anyMatch(ladder -> {
-                    final float ladderX = ladder.getPosition().x();
-                    final float ladderY = ladder.getPosition().y();
-                    final float h = new BoundigBox().height();
-                    return ladderY > y && ladderY <= y + h
-                            && x == ladderX;
-                });
+    private boolean hasLadder(final String map, final int x) {
+        if (x < 0 || x >= map.length()) {
+            return false;
+        }
+        return map.charAt(x) == 'L';
     }
 }
