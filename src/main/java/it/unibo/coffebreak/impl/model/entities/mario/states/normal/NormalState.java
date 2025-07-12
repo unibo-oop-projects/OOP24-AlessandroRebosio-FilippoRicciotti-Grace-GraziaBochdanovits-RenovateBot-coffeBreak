@@ -64,4 +64,12 @@ public class NormalState extends AbstractMarioState {
     public boolean canClimb() {
         return this.canClimb;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canJump() {
+        return true;
+    }
 }

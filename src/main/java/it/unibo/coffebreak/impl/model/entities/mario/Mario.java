@@ -364,6 +364,6 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      * @return true if Mario can jump
      */
     private boolean canJump() {
-        return this.onPlatform && !this.isJumping;
+        return this.onPlatform && !this.isJumping && this.currentState.canJump();
     }
 }
