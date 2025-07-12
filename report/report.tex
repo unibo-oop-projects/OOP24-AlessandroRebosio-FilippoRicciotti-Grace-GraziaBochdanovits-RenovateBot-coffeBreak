@@ -175,6 +175,7 @@ del team, migliorando l'efficienza della collaborazione.
 
 \subsection{Filippo Ricciotti}
 
+\noindent
 \textbf{Gestione dei livelli di gioco (\texttt{GameLevelManager})}
 \begin{description}
     \item[\textbf{Problema}]
@@ -184,6 +185,7 @@ del team, migliorando l'efficienza della collaborazione.
     Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager} si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando l'aggiunta di nuovi livelli.
 \end{description}
 
+\noindent
 \textbf{Gestione delle entità di gioco (\texttt{GameEntityManager})}
 \begin{description}
     \item[\textbf{Problema}]
@@ -193,6 +195,7 @@ del team, migliorando l'efficienza della collaborazione.
 	      È stata realizzata la classe \texttt{GameEntityManager}, incaricata di gestire tutte le entità presenti nel gioco. Questa classe fornisce metodi per aggiungere, rimuovere e aggiornare le entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o le interazioni tra entità.
 \end{description}
 
+\noindent
 \textbf{Gestione delle mappe di gioco (\texttt{GameMapsManager})}
 \begin{description}
     \item[\textbf{Problema}]
@@ -202,10 +205,11 @@ del team, migliorando l'efficienza della collaborazione.
     Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione del codice. Questo approccio facilita la manutenzione e l’aggiunta di nuove funzionalità legate alle mappe.
 \end{description}
 
+\noindent
 \textbf{Gestione degli stati grafici (\texttt{AbstractViewState} e \texttt{ViewStates})}
 \begin{description}
     \item[\textbf{Problema}]
-    Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
+    Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \newline \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
 
     \item[\textbf{Soluzione}]
     Abbiamo adottato il \textbf{Template Method Pattern} all’interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
