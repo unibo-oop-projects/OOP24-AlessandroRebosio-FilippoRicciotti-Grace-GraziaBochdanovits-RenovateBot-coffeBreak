@@ -165,7 +165,7 @@ public class GameEntityManager implements EntityManager {
      * {@inheritDoc}
      */
     @Override
-    public void resetCharacter() {
+    public final void resetCharacter() {
         this.character = new Mario(new Position(0, 0), new BoundigBox());
     }
 

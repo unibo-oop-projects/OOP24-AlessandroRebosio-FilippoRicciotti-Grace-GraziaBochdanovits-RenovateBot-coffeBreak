@@ -6,6 +6,7 @@ import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
+import it.unibo.coffebreak.api.model.physics.Physics;
 import it.unibo.coffebreak.api.model.physics.PhysicsEngine;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -39,9 +40,7 @@ public class GamePhysicsEngine implements PhysicsEngine {
 
     private static final String ENTITY_NULL = "Entity cannot be null";
 
-    private static final float GRAVITY = 70f;
-    private static final float DEFAULT_SPEED = 20f;
-    private static final float DEFAULT_JUMP_FORCE = 40f;
+    private final Physics physics = new GamePhysics();
 
     /**
      * Creates a new physics engine with default physics configuration.
@@ -104,7 +103,7 @@ public class GamePhysicsEngine implements PhysicsEngine {
 
             if (affectedByGravity) {
                 final Vector currentVelocity = entity.getVelocity();
-                final Vector gravityVector = new Vector(0f, GRAVITY * deltaTime);
+                final Vector gravityVector = this.physics.gravity().mul(deltaTime);
 
                 float newVerticalVelocity = currentVelocity.y() + gravityVector.y();
 
@@ -190,65 +189,4 @@ public class GamePhysicsEngine implements PhysicsEngine {
 
         entity.setPosition(new Position(newX, newY));
     }
-
-    /**
-     * Calculates movement velocity for right direction.
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return velocity vector for rightward movement
-     */
-    public Vector calculateMoveRight(final float deltaTime) {
-        return new Vector(DEFAULT_SPEED * deltaTime, 0f);
-    }
-
-    /**
-     * Calculates movement velocity for left direction.
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return velocity vector for leftward movement
-     */
-    public Vector calculateMoveLeft(final float deltaTime) {
-        return new Vector(-DEFAULT_SPEED * deltaTime, 0f);
-    }
-
-    /**
-     * Calculates movement velocity for upward direction (climbing).
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return velocity vector for upward movement
-     */
-    public Vector calculateMoveUp(final float deltaTime) {
-        return new Vector(0f, -DEFAULT_SPEED * deltaTime);
-    }
-
-    /**
-     * Calculates movement velocity for downward direction (climbing).
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return velocity vector for downward movement
-     */
-    public Vector calculateMoveDown(final float deltaTime) {
-        return new Vector(0f, DEFAULT_SPEED * deltaTime);
-    }
-
-    /**
-     * Calculates jump velocity.
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return velocity vector for jumping
-     */
-    public Vector calculateJump(final float deltaTime) {
-        return new Vector(0f, -DEFAULT_JUMP_FORCE * deltaTime);
-    }
-
-    /**
-     * Calculates gravity acceleration.
-     * 
-     * @param deltaTime the time elapsed since last update
-     * @return acceleration vector due to gravity
-     */
-    public Vector calculateGravity(final float deltaTime) {
-        return new Vector(0f, GRAVITY * deltaTime);
-    }
-
 }

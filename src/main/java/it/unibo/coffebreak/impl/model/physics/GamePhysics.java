@@ -30,47 +30,47 @@ public record GamePhysics(float speed, float jumpForce) implements Physics {
      * {@inheritDoc}
      */
     @Override
-    public Vector moveRight(final float deltaTime) {
-        return new Vector(this.speed, 0f).mul(deltaTime);
+    public Vector moveRight() {
+        return new Vector(this.speed, 0f);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveLeft(final float deltaTime) {
-        return new Vector(-this.speed, 0f).mul(deltaTime);
+    public Vector moveLeft() {
+        return new Vector(-this.speed, 0f);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveUp(final float deltaTime) {
-        return new Vector(0f, -this.speed).mul(deltaTime);
+    public Vector moveUp() {
+        return new Vector(0f, -this.speed);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveDown(final float deltaTime) {
-        return new Vector(0f, +this.speed).mul(deltaTime);
+    public Vector moveDown() {
+        return new Vector(0f, +this.speed);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector jump(final float deltaTime) {
-        return new Vector(0f, -this.jumpForce).mul(deltaTime);
+    public Vector jump() {
+        return new Vector(0f, -this.jumpForce);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector gravity(final float deltaTime) {
-        return new Vector(0f, GRAVITY).mul(deltaTime);
+    public Vector gravity() {
+        return new Vector(0f, GRAVITY);
     }
 }
