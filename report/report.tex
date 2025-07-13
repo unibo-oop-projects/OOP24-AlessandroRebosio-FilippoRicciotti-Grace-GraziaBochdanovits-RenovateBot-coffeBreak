@@ -113,12 +113,6 @@ tornare al menù principale, avviare una nuova partita o uscire.
 	\label{img:model}
 \end{figure}
 
-\begin{figure}[H]
-	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/View.svg}
-	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità della View.}
-	\label{img:View}
-\end{figure}
 \chapter{Design}
 \section{Architettura}
 L'architettura del nostro progetto adotta il pattern \textbf{Model-View-\newline Controller}, una scelta consolidata
@@ -138,47 +132,53 @@ nello sviluppo di applicazioni interattive e, in particolare, di videogiochi. Qu
 Nel caso specifico di \textit{CoffeeBreak}, ispirato a \textit{Donkey Kong}, questa struttura ha permesso di progettare un'architettura modulare, facilmente
 estendibile e manutenibile. Inoltre, l'adozione del pattern MVC ha facilitato il testing delle singole componenti e reso possibile il lavoro in parallelo tra i membri
 del team, migliorando l'efficienza della collaborazione.
-% TODO put image of view and controller
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/MVC.svg}
+	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità dell'architettura.}
+	\label{img:View}
+\end{figure}
 
+\newpage
 \section{Design dettagliato}
 \subsection{Alessandro Rebosio}
 \textbf{Gestione degli stati del gioco}
+\begin{description}
+	\item[\textbf{Problema}]
+	Nei videogiochi, è comune avere diversi stati di esecuzione, come \textit{menu}, \textit{in-game}, \textit{pausa} e \textit{game-over}. Una gestione non strutturata di questi stati
+	può portare a codice confuso, con numerosi controlli condizionali sparsi e difficoltà nel mantenimento e nell'estensione del comportamento del gioco. Inoltre, diventa complesso isolare
+	la logica specifica di ciascuno stato, con il rischio di introdurre bug quando si modifica o aggiunge un nuovo stato.
+	
+	\item[\textbf{Soluzione}]
+	Per affrontare il problema, abbiamo adottato lo \textbf{State Pattern}, che permette di rappresentare ogni stato del gioco come un oggetto distinto, con comportamento e
+	logica propri. Ogni stato implementa una comune interfaccia, garantendo uniformità nell'aggiornamento e nel rendering. Il \texttt{GameModel} mantiene il riferimento allo stato corrente.
+	Questo approccio migliora la modularità del codice, rende più facile aggiungere o modificare stati in futuro e contribuisce a una migliore organizzazione del flusso di esecuzione.
+\end{description}
 \begin{figure}[H]
 	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/ModelState.svg}
+	\includesvg[width=0.9\textwidth,pretex=\tiny]{svg/ModelState.svg}
 	\caption{UML dell'applicazione dello State pattern.}
 	\label{img:modelstate}
 \end{figure}
-\begin{description}
-	\item[\textbf{Problema}]
-	      Nei videogiochi, è comune avere diversi stati di esecuzione, come \textit{menu}, \textit{in-game}, \textit{pausa} e \textit{game-over}. Una gestione non strutturata di questi stati
-	      può portare a codice confuso, con numerosi controlli condizionali sparsi e difficoltà nel mantenimento e nell'estensione del comportamento del gioco. Inoltre, diventa complesso isolare
-	      la logica specifica di ciascuno stato, con il rischio di introdurre bug quando si modifica o aggiunge un nuovo stato.
-
-	\item[\textbf{Soluzione}]
-	      Per affrontare il problema, abbiamo adottato lo \textbf{State Pattern}, che permette di rappresentare ogni stato del gioco come un oggetto distinto, con comportamento e
-	      logica propri. Ogni stato implementa una comune interfaccia, garantendo uniformità nell'aggiornamento e nel rendering. Il \texttt{GameModel} mantiene il riferimento allo stato corrente.
-	      Questo approccio migliora la modularità del codice, rende più facile aggiungere o modificare stati in futuro e contribuisce a una migliore organizzazione del flusso di esecuzione.
-\end{description}
 
 \noindent
 \textbf{Gestione dei collezionabili}
+\begin{description}
+	\item[\textbf{Problema}]
+	Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
+	scena. Implementare queste funzionalità separatamente per ogni tipo di collezionabile porta a duplicazione di codice e rende difficile mantenere coerenza e gestire eventuali modifiche comuni.
+	
+	\item[\textbf{Soluzione}]
+	Per risolvere questo problema, abbiamo adottato il \textbf{Template Method}, definendo una classe base astratta per i collezionabili che implementa lo scheletro generale del processo di raccolta,
+	lasciando alle sottoclassi il compito di definire i dettagli specifici (ad esempio l'effetto attivato al momento della raccolta). Questo approccio permette di riutilizzare il codice comune e
+	garantisce una struttura chiara e uniforme, facilitando l'estensione con nuovi tipi di collezionabili senza modificare il comportamento di base.
+\end{description}
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Collectible.svg}
 	\caption{UML dell'applicazione del pattern Template Method per diversi Collectible.}
 	\label{img:collectible}
 \end{figure}
-\begin{description}
-	\item[\textbf{Problema}]
-	      Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
-	      scena. Implementare queste funzionalità separatamente per ogni tipo di collezionabile porta a duplicazione di codice e rende difficile mantenere coerenza e gestire eventuali modifiche comuni.
-
-	\item[\textbf{Soluzione}]
-	      Per risolvere questo problema, abbiamo adottato il \textbf{Template Method}, definendo una classe base astratta per i collezionabili che implementa lo scheletro generale del processo di raccolta,
-	      lasciando alle sottoclassi il compito di definire i dettagli specifici (ad esempio l'effetto attivato al momento della raccolta). Questo approccio permette di riutilizzare il codice comune e
-	      garantisce una struttura chiara e uniforme, facilitando l'estensione con nuovi tipi di collezionabili senza modificare il comportamento di base.
-\end{description}
 
 \newpage
 \noindent
