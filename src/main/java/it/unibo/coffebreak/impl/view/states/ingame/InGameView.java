@@ -36,6 +36,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 public class InGameView extends AbstractViewState {
 
         private final RenderManager renderManager;
+        private boolean isJumping;
 
         /**
          * Constructs an InGameView with the specified controller.
@@ -50,6 +51,7 @@ public class InGameView extends AbstractViewState {
         public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
                 super(controller, loader, soundManager);
                 this.renderManager = new GameRenderManager(loader);
+
         }
 
         /**
@@ -58,6 +60,7 @@ public class InGameView extends AbstractViewState {
         @Override
         public void onEnter() {
                 getSoundManager().loop(Event.BACKGROUND);
+                this.isJumping = false;
         }
 
         /**
@@ -73,6 +76,19 @@ public class InGameView extends AbstractViewState {
 
                 final int renderWidth = panelWidth - 2 * marginHoriz;
                 final int renderHeight = panelHeight - 2 * marginVert;
+
+                final boolean marioJumped = getController().getMainCharacter()
+                                .filter(mc -> mc instanceof Mario)
+                                .map(mc -> ((Mario) mc).isJumping())
+                                .orElse(false);
+
+                if (marioJumped == true && isJumping == false) {
+                        isJumping = true;
+                        getSoundManager().play(Event.JUMP);
+                        System.out.println("jump");
+                } else if (marioJumped == false) {
+                        isJumping = false;
+                }
 
                 final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
                                 .filter(Platform.class::isInstance)
