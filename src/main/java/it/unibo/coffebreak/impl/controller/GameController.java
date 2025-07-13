@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.impl.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -95,14 +94,6 @@ public class GameController implements Controller {
     @Override
     public List<Entity> getEntities() {
         return this.model.getEntities();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Optional<MainCharacter> getMainCharacter() {
-        return this.model.getMainCharacter();
     }
 
     /**

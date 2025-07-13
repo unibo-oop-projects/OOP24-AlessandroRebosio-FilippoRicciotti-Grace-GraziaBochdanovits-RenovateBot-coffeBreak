@@ -1,10 +1,8 @@
 package it.unibo.coffebreak.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
@@ -73,13 +71,6 @@ public interface Controller {
      * @return an unmodifiable list of game entities, never null
      */
     List<Entity> getEntities();
-
-    /**
-     * Gets the player character.
-     * 
-     * @return the main character instance, never null
-     */
-    Optional<MainCharacter> getMainCharacter();
 
     /**
      * Gets the current player score.
