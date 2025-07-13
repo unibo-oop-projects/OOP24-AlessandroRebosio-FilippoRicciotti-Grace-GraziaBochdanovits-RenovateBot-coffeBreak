@@ -1,0 +1,118 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="28.0.4">
+  <diagram name="View Interfaces UML" id="v1">
+    <mxGraphModel dx="2982" dy="1019" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;View&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ close() : void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ update(Float) : void&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="32" y="291" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;endArrow=block;endFill=0;endSize=11;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-3" target="th7fd5ovUdhD5Mqq8RVe-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-3" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;abstract&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;AbstractViewState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="317" y="304" width="153" height="53" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-7" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;RenderManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ render(Graphics,List&amp;lt;Entity&amp;gt;, &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Int,Int,Float) : void&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="32" y="417" width="190" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endSize=10;endArrow=diamond;endFill=1;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-11" target="th7fd5ovUdhD5Mqq8RVe-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-11" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;Panel&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ update(Float) : void&lt;/span&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ setViewState(ViewState) : void&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=7;" vertex="1" parent="1">
+          <mxGeometry x="-5.5" y="130" width="265" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=diamond;endFill=1;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-22" target="th7fd5ovUdhD5Mqq8RVe-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-103" y="331" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endSize=10;endArrow=diamond;endFill=1;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-19" target="th7fd5ovUdhD5Mqq8RVe-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-19" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ViewState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ onEnter() : void&lt;/span&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ onExit() : void&lt;/span&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ draw(Graphics,Int,Int,Float) : void&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=7;" vertex="1" parent="1">
+          <mxGeometry x="317" y="138" width="203" height="94" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-22" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;SoundManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ play(Event) : void&lt;/span&gt;&lt;br style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ stop(Event) : void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ loop(Event): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ stopAll(): void&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ dispose(): void&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="-210" y="174" width="150" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=10;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-25" target="th7fd5ovUdhD5Mqq8RVe-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="315" y="394" />
+              <mxPoint x="380" y="394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-25" value="InGameView" style="html=1;whiteSpace=wrap;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="434" width="90.5" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-26">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="394" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="370" y="486" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-26" value="PauseView" style="html=1;whiteSpace=wrap;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="472" width="90.5" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-27">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="384" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="390" y="486" />
+              <mxPoint x="390" y="394" />
+              <mxPoint x="380" y="394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-27" value="MenuView" style="html=1;whiteSpace=wrap;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="472" width="90.5" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;endSize=10;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-28" target="th7fd5ovUdhD5Mqq8RVe-3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="394" />
+              <mxPoint x="380" y="394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-28" value="GameOverView" style="html=1;whiteSpace=wrap;rounded=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="434" width="90.5" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-38" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;EntityRender&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ draw(Graphics,Entity, &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Int,Int,Float) : void&lt;/span&gt;&lt;br&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="-258" y="364" width="210" height="83" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;endSize=8;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-39">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="32" y="464" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="-8" y="524" />
+              <mxPoint x="-8" y="464" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-39" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;AnimatedRender&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ updateAndGetFrame(Entity, &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;Animation , Info, Float) : Image&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;text-align: center;&quot;&gt;+ getFrameImage(Int,Info): Image&lt;/span&gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;rounded=1;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="-258" y="474" width="210" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=diamond;endFill=1;endSize=10;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-38" target="th7fd5ovUdhD5Mqq8RVe-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-8" y="406" />
+              <mxPoint x="-8" y="464" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="th7fd5ovUdhD5Mqq8RVe-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.02;entryY=0.536;entryDx=0;entryDy=0;entryPerimeter=0;endArrow=diamond;endFill=1;endSize=9;exitX=0.997;exitY=0.374;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="th7fd5ovUdhD5Mqq8RVe-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="223.81" y="447.91" as="sourcePoint" />
+            <mxPoint x="269.99999999999983" y="447.91800000000006" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
