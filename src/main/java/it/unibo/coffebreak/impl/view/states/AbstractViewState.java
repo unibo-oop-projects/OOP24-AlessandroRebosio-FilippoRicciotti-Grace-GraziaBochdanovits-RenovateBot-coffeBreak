@@ -68,7 +68,7 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * {@inheritDoc}
      * <p>
-     * Default implementation does nothing.
+     * Default implementation.
      * Subclasses may override to handle setup logic.
      * </p>
      */
@@ -80,7 +80,7 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * {@inheritDoc}
      * <p>
-     * Default implementation does nothing.
+     * Default implementation.
      * Subclasses may override to handle cleanup logic.
      * </p>
      */
