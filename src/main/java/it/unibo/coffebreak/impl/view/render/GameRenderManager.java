@@ -80,11 +80,22 @@ public final class GameRenderManager implements RenderManager {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        new ArrayList<>(entities).forEach(entity -> {
+        final List<Entity> sortedEntities = new ArrayList<>(entities);
+        sortedEntities.sort((e1, e2) -> {
+            if (e1 instanceof Mario) {
+                return 1;
+            }
+            if (e2 instanceof Mario) {
+                return -1;
+            }
+            return 0;
+        });
+
+        sortedEntities.forEach(entity -> {
             entityRender.entrySet().stream()
-                    .filter(entry -> entry.getKey().isInstance(entity))
-                    .findFirst()
-                    .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
+                .filter(entry -> entry.getKey().isInstance(entity))
+                .findFirst()
+                .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
         });
     }
 
