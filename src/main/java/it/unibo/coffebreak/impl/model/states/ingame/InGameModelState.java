@@ -1,9 +1,11 @@
 package it.unibo.coffebreak.impl.model.states.ingame;
 
-import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
+import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
-import it.unibo.coffebreak.impl.model.physics.collision.GameCollision;
+import it.unibo.coffebreak.api.model.physics.PhysicsEngine;
+import it.unibo.coffebreak.impl.model.physics.GamePhysicsEngine;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
@@ -11,41 +13,40 @@ import it.unibo.coffebreak.impl.model.states.pause.PauseModelState;
 /**
  * State representing the in-game phase where gameplay occurs.
  * <p>
- * Handles player input, entity updates, collisions, and game progression logic.
+ * Handles entity updates, physics, collisions, and game progression logic.
+ * Now uses a unified PhysicsEngine for consistent physics and collision
+ * handling.
  * </p>
  *
  * @author Alessandro Rebosio
  */
 public class InGameModelState extends AbstractModelState {
 
+    private final PhysicsEngine physicsEngine;
+
     /**
-     * Handles commands during the in-game state.
-     * <p>
-     * ESCAPE sets the model state to pause (pause or exit to menu).
-     * </p>
-     *
-     * @param model   the game model
-     * @param command the command to process
+     * Creates a new in-game model state with the default physics engine.
      */
-    @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
-            case ESCAPE -> {
-                model.setState(new PauseModelState());
-            }
-            case MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_UP, JUMP -> { // TODO: to fix
-                model.getMainCharacter().ifPresent(p -> p.setDirection(command));
-            }
-            default -> {
-            }
-        }
+    public InGameModelState() {
+        this(new GamePhysicsEngine());
+    }
+
+    /**
+     * Creates a new in-game model state with the specified physics engine.
+     * 
+     * @param physicsEngine the physics engine to use for entity updates
+     */
+    public InGameModelState(final PhysicsEngine physicsEngine) {
+        this.physicsEngine = physicsEngine;
     }
 
     /**
      * Updates the game logic for the in-game state.
      * <p>
-     * Updates all entities, handles collisions, manages bonus, and checks for game
-     * over.
+     * Updates all entities using the unified physics engine, manages bonus, and
+     * checks for game
+     * over. Player movement is handled directly by commands, not in this update
+     * loop.
      * </p>
      *
      * @param model     the game model
@@ -62,9 +63,12 @@ public class InGameModelState extends AbstractModelState {
                 .findFirst()
                 .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
-        model.getEntities().forEach(e -> e.update(deltaTime));
-
-        GameCollision.checkCollision(model);
+        model.getEntities().forEach(entity -> {
+            entity.update(deltaTime);
+            if (entity instanceof PhysicsEntity) {
+                this.physicsEngine.updateEntity(entity, model, deltaTime);
+            }
+        });
 
         if (currentLives != player.getLives()) {
             model.initialEntitiesState();
@@ -76,6 +80,23 @@ public class InGameModelState extends AbstractModelState {
 
         if (player.isGameOver()) {
             model.setState(new GameOverModelState());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Only handles the ESCAPE action to pause the game.
+     * All movement commands are now handled directly by the command system.
+     * </p>
+     */
+    @Override
+    public void handleAction(final Model model, final Action action) {
+        switch (action) {
+            case ESCAPE -> model.setState(new PauseModelState());
+            default -> {
+                // Other actions are handled by the command system
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ package it.unibo.coffebreak.api.model.entities.character;
 
 import java.util.function.Supplier;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
 
@@ -16,22 +15,13 @@ import it.unibo.coffebreak.api.model.entities.character.states.CharacterState;
  * @author Grazia Bochdanovits de Kavna
  */
 public interface MainCharacter extends Entity {
+
     /**
      * Changes Mario's current state using a state supplier.
      * 
      * @param stateSupplier supplier providing the new state
      */
     void changeState(Supplier<CharacterState> stateSupplier);
-
-    /**
-     * Sets the movement direction of the character.
-     *
-     * @param command the direction in which to move the character.
-     *                The specific values and their meanings should be defined in
-     *                the
-     *                implementing class or documentation.
-     */
-    void setDirection(Command command);
 
     /**
      * Increases the character's score by the specified amount.
@@ -46,6 +36,41 @@ public interface MainCharacter extends Entity {
      * @return the current {@link CharacterState} of this character
      */
     CharacterState getCurrentState();
+
+    /**
+     * Moves the character to the left.
+     * This method handles leftward movement and may update the character's
+     * position, velocity, and facing direction.
+     */
+    void moveLeft();
+
+    /**
+     * Moves the character to the right.
+     * This method handles rightward movement and may update the character's
+     * position, velocity, and facing direction.
+     */
+    void moveRight();
+
+    /**
+     * Moves the character upward.
+     * This method handles upward movement, typically used for climbing
+     * or vertical navigation.
+     */
+    void moveUp();
+
+    /**
+     * Moves the character downward.
+     * This method handles downward movement, typically used for climbing
+     * or vertical navigation.
+     */
+    void moveDown();
+
+    /**
+     * Makes the character perform a jump action.
+     * This method initiates the jumping behavior, which may involve
+     * changing the character's state, velocity, or animation.
+     */
+    void jump();
 
     /**
      * Method for get score value.
@@ -92,4 +117,13 @@ public interface MainCharacter extends Entity {
      * @return true if Mario is jumping, false otherwise
      */
     boolean isJumping();
+
+    /**
+     * Returns whether the character is currently climbing.
+     * This method indicates if the character is in a climbing state,
+     * such as on a ladder or similar climbable structure.
+     * 
+     * @return true if the character is climbing, false otherwise
+     */
+    boolean isClimbing();
 }

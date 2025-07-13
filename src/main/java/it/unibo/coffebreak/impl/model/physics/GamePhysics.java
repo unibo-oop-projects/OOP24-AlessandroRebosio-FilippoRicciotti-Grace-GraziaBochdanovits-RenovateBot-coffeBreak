@@ -15,60 +15,62 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public record GamePhysics(float speed, float jumpForce) implements Physics {
 
-    private static final float GRAVITY = -50f;
+    private static final float GRAVITY = 70; // Positive value, applied downward
+    private static final float DEFAULT_SPEED = 20; // Reduced speed for smoother movement
+    private static final float DEFAULT_JUMP_FORCE = 40; // Positive jump force
 
     /**
      * Default constructor with standard speed and jump force.
      */
     public GamePhysics() {
-        this(-GRAVITY, GRAVITY * 2);
+        this(DEFAULT_SPEED, DEFAULT_JUMP_FORCE);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveRight(final float deltaTime) {
-        return new Vector(this.speed, 0f).mul(deltaTime);
+    public Vector moveRight() {
+        return new Vector(this.speed, 0f);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveLeft(final float deltaTime) {
-        return new Vector(-this.speed, 0f).mul(deltaTime);
+    public Vector moveLeft() {
+        return new Vector(-this.speed, 0f);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveUp(final float deltaTime) {
-        return new Vector(0f, -this.speed).mul(deltaTime);
+    public Vector moveUp() {
+        return new Vector(0f, -this.speed);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector moveDown(final float deltaTime) {
-        return new Vector(0f, +this.speed).mul(deltaTime);
+    public Vector moveDown() {
+        return new Vector(0f, +this.speed);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector jump(final float deltaTime) {
-        return new Vector(0f, this.jumpForce).mul(deltaTime);
+    public Vector jump() {
+        return new Vector(0f, -this.jumpForce);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Vector gravity(final float deltaTime) {
-        return new Vector(0f, -GRAVITY).mul(deltaTime);
+    public Vector gravity() {
+        return new Vector(0f, GRAVITY);
     }
 }

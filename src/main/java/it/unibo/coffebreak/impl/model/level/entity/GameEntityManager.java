@@ -1,10 +1,13 @@
 package it.unibo.coffebreak.impl.model.level.entity;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
@@ -34,12 +37,20 @@ import it.unibo.coffebreak.api.model.level.entity.EntityManager;
  */
 public class GameEntityManager implements EntityManager {
 
-    private static final float SLOPE_VAL = 0.06f;
     private final List<Entity> entities = new LinkedList<>();
-    private final MainCharacter character = new Mario(new Position(0, 0), new BoundigBox());
+    private MainCharacter character;
 
     private int row;
     private int column;
+
+    /**
+     * Constructs a new {@code GameEntityManager} and initializes the character
+     * state
+     * by invoking {@link #resetCharacter()}.
+     */
+    public GameEntityManager() {
+        this.resetCharacter();
+    }
 
     /**
      * {@inheritDoc}
@@ -72,36 +83,41 @@ public class GameEntityManager implements EntityManager {
 
         this.row = map.size();
         this.column = map.isEmpty() ? 0 : map.get(0).length();
+        final List<Character> ids = List.of('M', 'D', 'R', 'T');
+        final Map<Character, List<Integer>> sizes = findSize(map, ids);
 
         for (int y = 0; y < map.size(); y++) {
             final String line = map.get(y);
-            float offsetY = 0;
-            boolean activeSlope = false;
-            float trueY = y;
 
             for (int x = 0; x < line.length(); x++) {
                 char c = line.charAt(x);
-                if (c == ';' || c == ':' || activeSlope) {
-                    if (c == ':') {
-                        offsetY = SLOPE_VAL;
-                    } else if (c == ';') {
-                        offsetY = -SLOPE_VAL;
-                    }
-                    trueY -= (x % 2 == 0) ? offsetY : 0; // TODO: Consider making the sloping platform always an even
-                                                         // number inside map
-                    c = activeSlope ? c : 'P';
-                    activeSlope = true;
 
+                final Position position = new Position(x, y).scalePosition(new BoundigBox());
+                BoundigBox bb = new BoundigBox();
+
+                if (sizes.containsKey(c) && ids.contains(c)) {
+                    final int w = sizes.get(c).get(0);
+                    final int h = sizes.get(c).get(1);
+                    bb = new BoundigBox().scaleWidth(w).scaleHeight(h);
+                    sizes.remove(c);
+                } else if (ids.contains(c)) {
+                    c = '.';
                 }
-
-                final Position position = new Position(x, trueY).scalePosition(new BoundigBox());
-                final BoundigBox bb = new BoundigBox();
 
                 switch (Character.toUpperCase(c)) {
                     case 'R' -> this.addEntity(new Pauline(position, bb));
-                    case 'P' -> this.addEntity(new NormalPlatform(position, bb));
+                    case 'P' -> {
+                        final int nextRow = y + 1;
+                        final boolean canGoDown = nextRow < map.size() && hasLadder(map.get(nextRow), x);
+
+                        if (canGoDown) {
+                            this.addEntity(new NormalPlatform(position, bb, canGoDown));
+                        } else {
+                            this.addEntity(new NormalPlatform(position, bb));
+                        }
+
+                    }
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
-                    // TODO: metter flag sensati
                     case 'M' -> {
                         this.character.setPosition(position);
                         this.addEntity(this.character);
@@ -156,6 +172,14 @@ public class GameEntityManager implements EntityManager {
      * {@inheritDoc}
      */
     @Override
+    public final void resetCharacter() {
+        this.character = new Mario(new Position(0, 0), new BoundigBox());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getRow() {
         return row;
     }
@@ -166,5 +190,73 @@ public class GameEntityManager implements EntityManager {
     @Override
     public int getColumn() {
         return column;
+    }
+
+    /**
+     * Method used to find sizes of the entities by counting how many times is their
+     * corresponding char present inside the map.
+     * 
+     * @param map the map representation to load entities from
+     * @param c   List of Character of which we have to find width and height
+     * @return Map with the character and the corresponding width and height
+     */
+    private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
+        final Map<Character, List<Integer>> sizes = new HashMap<>();
+        // for (int y = 0; y < map.size(); y++) {
+        // final String line = map.get(y);
+        // for (int x = 0; x < line.length(); x++) {
+        // final char k = line.charAt(x);
+
+        // if (c.contains(k) && !sizes.containsKey(k)) {
+        // int width = 1;
+        // while (x + width < line.length() && line.charAt(x + width) == k) {
+        // width++;
+        // }
+
+        // int height = 1;
+        // while (y + height < row && map.get(y + height).charAt(x) == k) {
+        // height++;
+        // }
+        // x += width;
+        // sizes.put(k, List.of(width, height));
+        // }
+
+        // }
+        // }
+
+        IntStream.range(0, map.size()).forEach(y -> IntStream.range(0, map.get(y).length()).forEach(x -> {
+            final char k = map.get(y).charAt(x);
+
+            if (c.contains(k) && !sizes.containsKey(k)) {
+                final int startX = x;
+
+                final int width = (int) map.get(y).substring(startX) // counts consecutive chars on the x-coord
+                        .chars()
+                        .takeWhile(ch -> ch == k)
+                        .count();
+
+                final int height = (int) map.subList(y, map.size()) // counts consecutive chars on the y-coord
+                        .stream()
+                        .takeWhile(r -> r.charAt(startX) == k)
+                        .count();
+
+                sizes.put(k, List.of(width, height));
+            }
+        }));
+
+        return sizes;
+
+    }
+
+    /**
+     * Method that can tell wether a ladder is present at the given
+     * coordinates.
+     * 
+     * @param x   coordinate
+     * @param map String containing the elements below
+     * @return True if at these coordinates is present a Ladder False otherwise
+     */
+    private boolean hasLadder(final String map, final int x) {
+        return map.charAt(x) == 'L';
     }
 }

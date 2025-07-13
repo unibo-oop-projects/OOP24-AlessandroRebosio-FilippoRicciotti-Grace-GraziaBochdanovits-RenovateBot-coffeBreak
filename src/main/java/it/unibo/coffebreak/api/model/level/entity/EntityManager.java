@@ -64,9 +64,17 @@ public interface EntityManager {
     int getRow();
 
     /**
-     * Returns the number of columns in the level or map managed by this EntityManager.
+     * Returns the number of columns in the level or map managed by this
+     * EntityManager.
      *
      * @return the number of rows
      */
     int getColumn();
+
+    /**
+     * Resets the main character to its initial state or position in the level.
+     * This method is typically used to restart the character after a game event,
+     * such as losing a life or restarting the level.
+     */
+    void resetCharacter();
 }

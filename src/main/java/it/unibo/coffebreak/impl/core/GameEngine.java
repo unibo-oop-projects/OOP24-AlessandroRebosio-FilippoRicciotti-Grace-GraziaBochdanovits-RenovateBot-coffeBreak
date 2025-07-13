@@ -20,7 +20,7 @@ public class GameEngine implements Engine {
     /**
      * The target frame period in milliseconds (16ms ≈ 60 FPS).
      */
-    private static final long PERIOD = 16;
+    private static final long PERIOD = 16L;
 
     private final Loader loader = new ResourceLoader();
     private final Controller controller = new GameController(this.loader);

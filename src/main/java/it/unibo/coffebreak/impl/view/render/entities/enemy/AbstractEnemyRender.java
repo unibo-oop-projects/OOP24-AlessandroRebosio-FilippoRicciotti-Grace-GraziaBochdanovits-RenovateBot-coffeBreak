@@ -6,6 +6,7 @@ import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
 import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
+import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender.EnemyAnimationType;
 
 /**
  * An abstract base class for rendering enemy entities in the game.
@@ -19,7 +20,7 @@ import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
  *
  * @author Grazia Bochdanovits de Kavna
  */
-public abstract class AbstractEnemyRender extends AnimatedEntityRender {
+public abstract class AbstractEnemyRender extends AnimatedEntityRender<EnemyAnimationType> {
 
     /**
      * Constructs a new AbstractEnemyRender with the specified resource loader.
@@ -63,22 +64,8 @@ public abstract class AbstractEnemyRender extends AnimatedEntityRender {
      */
     protected enum EnemyAnimationType {
         /** Enemy is rolling. */
-        ROLL 
-    }
-
-    /**
-     * Contains shared sprite sheet configuration constants for all enemy renders.
-     */
-    protected static final class Constants {
-        /** Standard enemy sprite size in pixels (width and height). */
-        public static final int SIZE = 16;
-
-        /** Horizontal starting position in sprite sheet. */
-        public static final int X_OFFSET = 1;
-
-        /** Pixels between frames in sprite sheet. */
-        public static final int SPACING = 2;
-
-        private Constants() { }
+        ROLL,
+        /** Enemy is thrown. */
+        THROW
     }
 }

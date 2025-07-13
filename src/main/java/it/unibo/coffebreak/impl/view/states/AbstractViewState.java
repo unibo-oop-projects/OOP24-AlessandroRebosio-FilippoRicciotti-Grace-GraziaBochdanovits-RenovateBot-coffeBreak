@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 
@@ -48,17 +49,20 @@ public abstract class AbstractViewState implements ViewState {
 
     private final Controller controller;
     private final Loader loader;
+    private final SoundManager soundManager;
 
     /**
      * Constructs an AbstractViewState with the specified controller.
      *
-     * @param controller the controller associated with this view state
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller associated with this view state
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      * @throws NullPointerException if {@code controller} is null
      */
-    public AbstractViewState(final Controller controller, final Loader loader) {
+    public AbstractViewState(final Controller controller, final Loader loader, final SoundManager soundManager) {
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
+        this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
     }
 
     /**
@@ -92,7 +96,7 @@ public abstract class AbstractViewState implements ViewState {
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {
 
-        // g.setColor(Color.BLACK);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
         g.setFont(this.loader.loadFont(ResourceLoader.FONT_PATH).deriveFont(height * DERIVE));
 
@@ -108,28 +112,15 @@ public abstract class AbstractViewState implements ViewState {
         drawCenteredText(g, "L = " + String.format("%02d", controller.getLevelIndex()), width + width * 2 / 3,
                 (int) (height * SCORE_HEIGHT),
                 Color.BLUE);
+    }
 
-        // TODO: Example of bonus and lives, to fix
-        // // Draw "BONUS" label and its value below the level indicator
-        // final int bonusLabelY = (int) (height * SCORE_HEIGHT) + (int) (height *
-        // 0.04f);
-        // final int bonusValueY = bonusLabelY + (int) (height * 0.035f);
-        // final int bonusX = width + width * 2 / 3;
-
-        // drawCenteredText(g, "BONUS", bonusX, bonusLabelY, Color.MAGENTA);
-        // drawCenteredText(g, String.valueOf(getController().getBonusValue()), bonusX,
-        // bonusValueY, Color.WHITE);
-
-        // final int lives = 3; // controller.getLives();
-        // final int marioIconSize = (int) (height * 0.045f);
-        // final int marioStartX = width / 30;
-        // final int marioY = (int) (height * 0.09f);
-
-        // for (int i = 0; i < lives; i++) {
-        // new MarioRender(loader).draw(g, new Mario(new Position(marioStartX + i *
-        // (marioIconSize + 5), marioY), new BoundigBox(20,20)), deltaTime, width,
-        // height);;
-        // }
+    /**
+     * Returns the loader associated with this view state.
+     *
+     * @return the loader
+     */
+    protected final Loader getLoader() {
+        return this.loader;
     }
 
     /**
@@ -139,6 +130,15 @@ public abstract class AbstractViewState implements ViewState {
      */
     protected final Controller getController() {
         return this.controller;
+    }
+
+    /**
+     * Returns the soundManager responsible for playing clips.
+     *
+     * @return soundManager
+     */
+    protected final SoundManager getSoundManager() {
+        return this.soundManager;
     }
 
     /**

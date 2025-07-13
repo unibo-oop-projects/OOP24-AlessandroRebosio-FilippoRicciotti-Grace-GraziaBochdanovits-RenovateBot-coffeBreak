@@ -10,8 +10,9 @@ import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.View;
 import it.unibo.coffebreak.api.view.panel.Panel;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.impl.view.panel.GamePanel;
-import it.unibo.coffebreak.impl.view.sound.SoundManagerImpl;
+import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
 
 /**
  * The main game view component.
@@ -38,6 +39,7 @@ public class GameView extends JFrame implements View {
     @Serial
     private static final long serialVersionUID = 1L;
     private final Panel gamePanel;
+    private final transient SoundManager soundManager;
 
     /**
      * Constructs a GameView with the given controller.
@@ -47,7 +49,8 @@ public class GameView extends JFrame implements View {
      */
     public GameView(final Controller controller, final Loader loader) {
         super(TITLE);
-        this.gamePanel = new GamePanel(controller, loader);
+        this.soundManager = new GameSoundManager(loader);
+        this.gamePanel = new GamePanel(controller, loader, soundManager);
 
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
         super.add((GamePanel) gamePanel, BorderLayout.CENTER);
@@ -61,7 +64,6 @@ public class GameView extends JFrame implements View {
      */
     @Override
     public void close() {
-        SoundManagerImpl.getInstance().dispose();
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 

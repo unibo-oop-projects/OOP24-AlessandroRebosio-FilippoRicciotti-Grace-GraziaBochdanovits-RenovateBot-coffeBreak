@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
@@ -46,22 +47,34 @@ public class GamePanel extends JPanel implements Panel {
     private transient ViewState currentViewState;
     private final transient Controller controller;
     private final transient Loader loader;
-
+    private final transient SoundManager soundManager;
     private float deltaTime;
+
+    private final transient ViewState menuView;
+    private final transient ViewState inGameView;
+    private final transient ViewState pauseView;
+    private final transient ViewState gameOverView;
 
     /**
      * Constructs a GamePanel associated with the given controller and sets up the
      * KeyAdapter.
      *
-     * @param controller the controller to notify for input events
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller to notify for input events
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      * @throws NullPointerException if either argument is null
      */
-    public GamePanel(final Controller controller, final Loader loader) {
+    public GamePanel(final Controller controller, final Loader loader, final SoundManager soundManager) {
         super();
 
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
+        this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
+
+        this.menuView     = new MenuView(this.controller, this.loader, this.soundManager);
+        this.inGameView   = new InGameView(this.controller, this.loader, this.soundManager);
+        this.pauseView    = new PauseView(this.controller, this.loader, this.soundManager);
+        this.gameOverView = new GameOverView(this.controller, this.loader, this.soundManager);
 
         super.setFocusable(true);
 
@@ -133,10 +146,10 @@ public class GamePanel extends JPanel implements Panel {
     public void update(final float deltaTime) {
         this.deltaTime = deltaTime;
         final ViewState nextState = switch (this.controller.getGameState()) {
-            case final MenuModelState menu -> new MenuView(this.controller, this.loader);
-            case final InGameModelState inGame -> new InGameView(this.controller, this.loader);
-            case final PauseModelState pause -> new PauseView(this.controller, this.loader);
-            case final GameOverModelState gameOver -> new GameOverView(this.controller, this.loader);
+            case final MenuModelState menu -> menuView;
+            case final InGameModelState inGame -> inGameView;
+            case final PauseModelState pause -> pauseView;
+            case final GameOverModelState gameOver -> gameOverView;
             default -> null;
         };
 

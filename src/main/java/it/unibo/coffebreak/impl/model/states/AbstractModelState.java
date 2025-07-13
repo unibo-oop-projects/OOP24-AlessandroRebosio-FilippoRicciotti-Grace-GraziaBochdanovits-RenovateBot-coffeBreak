@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import it.unibo.coffebreak.api.common.Command;
 import it.unibo.coffebreak.api.common.Option;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
@@ -32,26 +32,6 @@ public abstract class AbstractModelState implements ModelState {
     private int selectedIndex;
 
     /**
-     * Handles input depending on the phase the model is currently in.
-     *
-     * @param model   the game model containing the possible phase to change
-     * @param command the input to handle
-     */
-    @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
-            case MOVE_UP -> {
-                this.selectedIndex = (this.selectedIndex - 1 + this.options.size()) % options.size();
-            }
-            case MOVE_DOWN -> {
-                this.selectedIndex = (this.selectedIndex + 1) % this.options.size();
-            }
-            default -> {
-            }
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -65,6 +45,32 @@ public abstract class AbstractModelState implements ModelState {
     @Override
     public List<Option> options() {
         return Collections.unmodifiableList(this.options);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Provides default handling for navigation actions (UP/DOWN) to move through
+     * menu options. Subclasses should override this method to handle additional
+     * actions specific to their state.
+     * </p>
+     */
+    @Override
+    public void handleAction(final Model model, final Action action) {
+        switch (action) {
+            case UP -> {
+                if (selectedIndex > 0) {
+                    selectedIndex--;
+                }
+            }
+            case DOWN -> {
+                if (selectedIndex < options.size() - 1) {
+                    selectedIndex++;
+                }
+            }
+            default -> {
+            }
+        }
     }
 
     /**

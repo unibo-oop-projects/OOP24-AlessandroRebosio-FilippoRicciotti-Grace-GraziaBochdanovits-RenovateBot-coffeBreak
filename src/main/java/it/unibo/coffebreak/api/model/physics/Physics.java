@@ -12,49 +12,43 @@ import it.unibo.coffebreak.impl.common.Vector;
 public interface Physics {
     /**
      * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
-     *
-     * @param deltaTime the elapsed time in seconds
+     * 
      * @return the velocity vector for right movement
      */
-    Vector moveRight(float deltaTime);
+    Vector moveRight();
 
     /**
      * Returns the horizontal velocity vector for moving left, scaled by deltaTime.
      *
-     * @param deltaTime the elapsed time in seconds
      * @return the velocity vector for left movement
      */
-    Vector moveLeft(float deltaTime);
+    Vector moveLeft();
 
     /**
      * Returns the vertical velocity vector for moving up, scaled by deltaTime.
      *
-     * @param deltaTime the elapsed time in seconds
      * @return the velocity vector for upward movement
      */
-    Vector moveUp(float deltaTime);
+    Vector moveUp();
 
     /**
      * Returns the vertical velocity vector for moving down, scaled by deltaTime.
      *
-     * @param deltaTime the elapsed time in seconds
      * @return the velocity vector for downward movement
      */
-    Vector moveDown(float deltaTime);
+    Vector moveDown();
 
     /**
      * Returns the vertical velocity vector for jumping, scaled by deltaTime.
      *
-     * @param deltaTime the elapsed time in seconds
      * @return the velocity vector for jumping
      */
-    Vector jump(float deltaTime);
+    Vector jump();
 
     /**
      * Returns the acceleration vector due to gravity, scaled by deltaTime.
      *
-     * @param deltaTime the elapsed time in seconds
      * @return the gravity vector
      */
-    Vector gravity(float deltaTime);
+    Vector gravity();
 }

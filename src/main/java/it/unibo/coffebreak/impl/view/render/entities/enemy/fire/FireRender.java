@@ -14,15 +14,13 @@ import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender;
  */
 public class FireRender extends AbstractEnemyRender {
 
+    private static final int SIZE = 16;
+    private static final int X_OFFSET = 1;
     private static final int Y_OFFSET = 193;
+    private static final int SPACING = 2;
 
     private static final AnimationInfo ANIMATION = new AnimationInfo(
-            2, 
-            AbstractEnemyRender.Constants.SIZE,
-            AbstractEnemyRender.Constants.SIZE,
-            AbstractEnemyRender.Constants.X_OFFSET,
-            Y_OFFSET,
-            AbstractEnemyRender.Constants.SPACING);
+            2, SIZE, SIZE, X_OFFSET, Y_OFFSET, SPACING, 0.2f);
 
     /**
      * Constructs a new FireRender with the specified resource loader and screen

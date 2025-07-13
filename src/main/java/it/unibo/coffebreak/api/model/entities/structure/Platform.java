@@ -43,6 +43,13 @@ public interface Platform extends Entity {
     void destroy();
 
     /**
+     * Determines whether it is possible to move down from the current platform.
+     *
+     * @return {@code true} if moving down is allowed; {@code false} otherwise.
+     */
+    boolean canGoDown();
+
+    /**
      * Checks if the platform is in a broken/destroyed state.
      * 
      * @return true if the platform has been destroyed,

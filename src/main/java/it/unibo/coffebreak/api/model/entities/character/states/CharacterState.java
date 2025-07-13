@@ -25,19 +25,9 @@ public interface CharacterState extends State<MainCharacter> {
     boolean canClimb();
 
     /**
-     * @return true if the character is climbing, false otherwise
+     * @return true if the character can jump in this state
      */
-    boolean isClimbing();
-
-    /**
-     * Initiates the climbing action for the character in this state.
-     */
-    void startClimb();
-
-    /**
-     * Terminates the climbing action for the character in this state.
-     */
-    void stopClimb();
+    boolean canJump();
 
     /**
      * Handles collision with another entity while in this state.

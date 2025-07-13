@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.impl.model.states.gameover;
 
-import it.unibo.coffebreak.api.common.Command;
+import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.impl.model.states.AbstractModelState;
 import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
@@ -16,30 +16,30 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 public class GameOverModelState extends AbstractModelState {
 
     /**
-     * Handles commands during the game over state.
-     * <p>
-     * If ENTER is pressed, transitions the model to the main menu state.
-     * </p>
-     *
-     * @param model   the game model
-     * @param command the command to process
+     * {@inheritDoc}
      */
     @Override
-    public void handleCommand(final Model model, final Command command) {
-        switch (command) {
+    public void onExit(final Model model) {
+        model.addEntry("");
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Handles game over screen actions. Currently supports:
+     * <ul>
+     * <li>ENTER - returns to the main menu</li>
+     * </ul>
+     * </p>
+     */
+    @Override
+    public void handleAction(final Model model, final Action action) {
+        switch (action) {
             case ENTER -> {
                 model.setState(new MenuModelState());
             }
             default -> {
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onExit(final Model model) {
-        model.addEntry("");
     }
 }

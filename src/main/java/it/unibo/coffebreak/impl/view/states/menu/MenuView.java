@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.view.states.menu;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.view.GameView;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
@@ -10,7 +11,6 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -24,20 +24,18 @@ import java.util.Locale;
 public class MenuView extends AbstractViewState {
 
     private final Font font;
-    private final List<Entry> leaderBoard;
 
     /**
      * Constructs the main menu view and loads required fonts.
      *
-     * @param controller the controller to interact with the game logic
-     * @param loader     the resource loader for graphics
+     * @param controller   the controller to interact with the game logic
+     * @param loader       the resource loader for graphics
+     * @param soundManager the sound Manager responsible for playing the clips
      */
-    public MenuView(final Controller controller, final Loader loader) {
-        super(controller, loader);
+    public MenuView(final Controller controller, final Loader loader, final SoundManager soundManager) {
+        super(controller, loader, soundManager);
 
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
-        leaderBoard = controller.getLeaderBoard();
-
     }
 
     /**
@@ -79,8 +77,8 @@ public class MenuView extends AbstractViewState {
         final int boardY = (int) (height * 0.60);
         drawCenteredText(g, "RANK  SCORE  NAME", width, boardY, Color.CYAN);
 
-        for (int i = 0; i < leaderBoard.size(); i++) {
-            final Entry entry = leaderBoard.get(i);
+        for (int i = 0; i < getController().getLeaderBoard().size(); i++) {
+            final Entry entry = getController().getLeaderBoard().get(i);
             final String scoreFormatted = String.format("%06d", entry.score());
             final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.name() + "  ";
             final int baseY = (int) (height * 0.65);

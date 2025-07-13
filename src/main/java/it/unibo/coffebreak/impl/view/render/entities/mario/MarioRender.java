@@ -20,7 +20,7 @@ import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
  *
  * @author Grazia Bochdanovits de Kavna
  */
-public final class MarioRender extends AnimatedEntityRender {
+public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAnimationType> {
 
     private static final int SPRITE_SIZE = 16;
     private static final int DOUBLE_SIZE = SPRITE_SIZE * 2;
@@ -36,11 +36,11 @@ public final class MarioRender extends AnimatedEntityRender {
      * Mapping of animation types to their sprite sheet information.
      */
     private static final Map<MarioAnimationType, AnimationInfo> ANIMATIONS = Map.ofEntries(
-        Map.entry(MarioAnimationType.IDLE,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.WALK,   new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_WALK, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.CLIMB,  new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_CLIMB, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.JUMP,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_JUMP, Y_OFFSET, SPACING)),
-        Map.entry(MarioAnimationType.HAMMER, new AnimationInfo(6, DOUBLE_SIZE, DOUBLE_SIZE, X_OFFSET, Y_HAMMER, SPACING))
+        Map.entry(MarioAnimationType.IDLE,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_OFFSET, Y_OFFSET, SPACING, 0.2f)),
+        Map.entry(MarioAnimationType.WALK,   new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_WALK, Y_OFFSET, SPACING, 0.2f)),
+        Map.entry(MarioAnimationType.CLIMB,  new AnimationInfo(2, SPRITE_SIZE, SPRITE_SIZE, X_CLIMB, Y_OFFSET, SPACING, 0.2f)),
+        Map.entry(MarioAnimationType.JUMP,   new AnimationInfo(1, SPRITE_SIZE, SPRITE_SIZE, X_JUMP, Y_OFFSET, SPACING, 0.2f)),
+        Map.entry(MarioAnimationType.HAMMER, new AnimationInfo(6, DOUBLE_SIZE, DOUBLE_SIZE, X_OFFSET, Y_HAMMER, SPACING, 0.2f))
     );
 
     /**
@@ -89,7 +89,7 @@ public final class MarioRender extends AnimatedEntityRender {
      */
     private MarioAnimationType resolveAnimationType(final MainCharacter mario) {
         final List<Map.Entry<Predicate<MainCharacter>, MarioAnimationType>> conditions = List.of(
-            Map.entry(m -> m.getCurrentState().isClimbing(), MarioAnimationType.CLIMB),
+            Map.entry(m -> m.isClimbing(), MarioAnimationType.CLIMB),
             Map.entry(MainCharacter::isJumping, MarioAnimationType.JUMP),
             Map.entry(m -> m.getCurrentState() instanceof WithHammerState, MarioAnimationType.HAMMER),
             Map.entry(m -> Math.abs(m.getVelocity().x()) > 0.0f, MarioAnimationType.WALK)
@@ -105,7 +105,7 @@ public final class MarioRender extends AnimatedEntityRender {
     /**
      * Enumeration of possible Mario animation types.
      */
-    private enum MarioAnimationType {
+    protected enum MarioAnimationType {
         /** Character is standing still. */
         IDLE,
         /** Character is walking. */

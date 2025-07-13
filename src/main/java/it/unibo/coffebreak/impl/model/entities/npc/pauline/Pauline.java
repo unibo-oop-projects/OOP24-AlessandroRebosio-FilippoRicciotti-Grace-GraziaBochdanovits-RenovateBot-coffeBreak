@@ -14,8 +14,6 @@ import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
  */
 public class Pauline extends AbstractNpc implements Princess {
 
-    private static final int SCALE_HEIGHT = 2;
-
     private boolean rescued;
 
     /**
@@ -28,7 +26,7 @@ public class Pauline extends AbstractNpc implements Princess {
      * @throws NullPointerException if either position or dimension are null
      */
     public Pauline(final Position position, final BoundigBox dimension) {
-        super(position, dimension.scaleHeight(SCALE_HEIGHT));
+        super(position, dimension);
     }
 
     /**

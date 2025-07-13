@@ -140,4 +140,12 @@ public class GameLevelManager implements LevelManager {
     public int getColumn() {
         return this.entityManager.getColumn();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetCharacter() {
+        this.entityManager.resetCharacter();
+    }
 }

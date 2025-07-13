@@ -25,13 +25,24 @@ public class BreakablePlatform extends AbstractPlatform {
      * Constructs a new breakable platform with specified position, dimensions and
      * slope.
      *
-     * @param position          the 2D position of the platform in game world
-     *                          coordinates
-     *                          (cannot be null)
-     * @param dimension         the 2D dimension of the platform (cannot be null)
+     * @param position  the 2D position of the platform in game world
+     *                  coordinates
+     *                  (cannot be null)
+     * @param dimension the 2D dimension of the platform (cannot be null)
      */
     public BreakablePlatform(final Position position, final BoundigBox dimension) {
         super(position, dimension);
+    }
+
+    /**
+     * Constructs a new Platform with specified position, dimensions and canGoDown property.
+     * 
+     * @param position   the 2D position of the platform (cannot be null)
+     * @param dimension  the 2D dimension of the platform (cannot be null)
+     * @param canGoDown  true if entities (e.g., Mario) can go down through this platform
+     */
+    public BreakablePlatform(final Position position, final BoundigBox dimension, final boolean canGoDown) {
+        super(position, dimension, canGoDown);
     }
 
     /**

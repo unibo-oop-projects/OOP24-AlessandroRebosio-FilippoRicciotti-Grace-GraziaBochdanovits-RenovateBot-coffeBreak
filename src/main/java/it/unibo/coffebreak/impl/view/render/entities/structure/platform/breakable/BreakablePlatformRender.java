@@ -30,6 +30,6 @@ public class BreakablePlatformRender extends AbstractPlatformRender {
     @Override
     protected void renderPlatform(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        g.setColor(Color.CYAN);
+        g.setColor(Color.YELLOW);
     }
 }

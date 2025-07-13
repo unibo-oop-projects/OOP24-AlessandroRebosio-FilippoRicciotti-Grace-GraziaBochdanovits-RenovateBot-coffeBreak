@@ -20,28 +20,43 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    private static final float EPSILON = 0.001f;
+    private static final float EPSILON = 1.0f;
+    private final boolean canGoDown;
 
     /**
      * Constructs a new Platform with specified position, dimensions and slope.
      * 
-     * @param position          the 2D position of the platform (cannot be null)
-     * @param dimension         the 2D dimension of the platform (cannot be null)
+     * @param position  the 2D position of the platform (cannot be null)
+     * @param dimension the 2D dimension of the platform (cannot be null)
      */
     public AbstractPlatform(final Position position, final BoundigBox dimension) {
         super(position, dimension);
+        this.canGoDown = false;
+    }
+
+    /**
+     * Constructs a new Platform with specified position, dimensions and canGoDown property.
+     * 
+     * @param position   the 2D position of the platform (cannot be null)
+     * @param dimension  the 2D dimension of the platform (cannot be null)
+     * @param canGoDown  true if entities (e.g., Mario) can go down through this platform
+     */
+    public AbstractPlatform(final Position position, final BoundigBox dimension, final boolean canGoDown) {
+        super(position, dimension);
+        this.canGoDown = canGoDown;
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Current implementation does nothing when a collision occurs.
-     * This should be overridden to implement specific collision behavior.
+     * Positions any colliding entity on top of this platform to prevent
+     * intersection.
      * </p>
      */
     @Override
     public void onCollision(final Entity other) {
-        // Default empty implementation
+        other.setPosition(new Position(other.getPosition().x(),
+                this.getPosition().y() - other.getDimension().height()));
     }
 
     /**
@@ -64,6 +79,12 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         final float overlapLeft = otherRight - platformLeft;
         final float overlapRight = platformRight - otherLeft;
 
+        final boolean horizontallyOverlapping =
+                otherRight > platformLeft + EPSILON && otherLeft < platformRight - EPSILON;
+        if (Math.abs(overlapTop) < EPSILON && horizontallyOverlapping) {
+            return CollisionSide.TOP;
+        }
+
         final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
                                         Math.min(overlapLeft, overlapRight));
 
@@ -81,6 +102,14 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
         }
 
         return CollisionSide.NONE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canGoDown() {
+        return this.canGoDown;
     }
 
     /**

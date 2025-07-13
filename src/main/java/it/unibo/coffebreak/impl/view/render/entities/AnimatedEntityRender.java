@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.view.render.entities.AnimatedRender;
 
 /**
  * Abstract base class for rendering animated entities with sprite sheet animations.
@@ -18,16 +19,14 @@ import it.unibo.coffebreak.api.model.entities.Entity;
  *   <li>Animation configurations (AnimationInfo)</li>
  *   <li>Animation selection logic</li>
  * </ul>
+ * @param <T> the enum type representing different animation states
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-public abstract class AnimatedEntityRender extends AbstractEntityRender {
-
-    /** Default duration for each animation frame in seconds. */
-    protected static final float DEFAULT_FRAME_DURATION = 0.03f;
+public abstract class AnimatedEntityRender<T extends Enum<T>>  extends AbstractEntityRender implements AnimatedRender<T> {
 
     /** Map tracking animation states for each entity. */
-    private final Map<Entity, AnimationState> animationStates = new HashMap<>();
+    private final Map<Entity, AnimationState<T>> animationStates = new HashMap<>();
 
     /**
      * Constructs a new AnimatedEntityRender with the specified resource loader.
@@ -40,24 +39,22 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
     }
 
     /**
-     * Updates the animation state and returns the current frame image.
-     *
-     * @param <T>           the enum type representing animation types
+     * {@inheritDoc}
      * @param entity        the entity being animated
      * @param animationType the current animation type
      * @param info          the animation configuration
      * @param deltaTime     time elapsed since last frame in seconds
      * @return the current frame image to render
-     * @throws NullPointerException if any parameter is null
      */
-    protected <T extends Enum<T>> BufferedImage updateAndGetFrame(final Entity entity, final T animationType,
+    @Override
+    public BufferedImage updateAndGetFrame(final Entity entity, final T animationType,
             final AnimationInfo info, final float deltaTime) {
 
         Objects.requireNonNull(entity, "Entity cannot be null");
         Objects.requireNonNull(animationType, "AnimationType cannot be null");
         Objects.requireNonNull(info, "AnimationInfo cannot be null");
 
-        final AnimationState state = animationStates.computeIfAbsent(entity, e -> new AnimationState());
+        final AnimationState<T> state = animationStates.computeIfAbsent(entity, e -> new AnimationState<>());
 
         if (state.currentAnimation == null || !state.currentAnimation.equals(animationType)) {
             state.currentAnimation = animationType;
@@ -67,10 +64,10 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
 
         if (info.frameCount() > 1) {
             state.elapsedTime += deltaTime;
-            if (state.elapsedTime >= DEFAULT_FRAME_DURATION) {
-                final int frameAdvance = (int) (state.elapsedTime / DEFAULT_FRAME_DURATION);
-                state.elapsedTime %= DEFAULT_FRAME_DURATION;
-                state.frameIndex = (state.frameIndex + frameAdvance) % info.frameCount();
+
+            while (state.elapsedTime >= info.frameDuration()) {
+                state.frameIndex = (state.frameIndex + 1) % info.frameCount();
+                state.elapsedTime -= info.frameDuration();
             }
         } else {
             state.frameIndex = 0;
@@ -80,14 +77,10 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
     }
 
     /**
-     * Extracts a specific frame from the sprite sheet based on animation info.
-     *
-     * @param frameIndex the index of the frame to extract
-     * @param info       the animation configuration
-     * @return the requested frame image
-     * @throws NullPointerException if animation info is null or sprite sheet not loaded
+     * {@inheritDoc}
      */
-    protected BufferedImage getFrameImage(final int frameIndex, final AnimationInfo info) {
+    @Override
+    public BufferedImage getFrameImage(final int frameIndex, final AnimationInfo info) {
         Objects.requireNonNull(info, "AnimationInfo cannot be null");
         final BufferedImage sheet = Objects.requireNonNull(getSpriteSheet(), "Sprite sheet cannot be null");
 
@@ -99,40 +92,14 @@ public abstract class AnimatedEntityRender extends AbstractEntityRender {
 
     /**
      * Tracks the animation state for a single entity.
+     * @param <T> the enum type representing animation types
      */
-    protected static final class AnimationState {
+    protected static final class AnimationState<T extends Enum<T>> {
         /** Current animation type being played. */
-        private Enum<?> currentAnimation;
+        private T currentAnimation;
         /** Current frame index within the animation. */
         private int frameIndex;
         /** Time accumulated since last frame change. */
         private float elapsedTime;
-    }
-
-    /**
-     * Configuration record for an animation sequence.
-     * 
-     * @param frameCount  number of frames in animation
-     * @param frameWidth  width of each frame in pixels
-     * @param frameHeight height of each frame in pixels
-     * @param xOffset     horizontal offset of first frame in sprite sheet
-     * @param yOffset     vertical offset of first frame in sprite sheet
-     * @param spacing     pixels between frames in sprite sheet
-     */
-    public record AnimationInfo(int frameCount, int frameWidth,
-        int frameHeight, int xOffset, int yOffset, int spacing) {
-        /**
-         * Compact constructor with parameter validation.
-         * 
-         * @throws NullPointerException if any parameter is null (boxed primitives)
-         */
-        public AnimationInfo {
-            Objects.requireNonNull(frameCount);
-            Objects.requireNonNull(frameWidth);
-            Objects.requireNonNull(frameHeight);
-            Objects.requireNonNull(xOffset);
-            Objects.requireNonNull(yOffset);
-            Objects.requireNonNull(spacing);
-        }
     }
 }

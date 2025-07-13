@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.npc.donkeykong;
 
 import java.util.Optional;
+import java.util.Random;
 
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
@@ -27,9 +28,10 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     /**
      * The interval between barrel throws in milliseconds.
      */
-    private static final float BARREL_THROW_INTERVAL = 2.0f;
-    private static final int SCALE_HEIGHT = 4;
-    private static final int SCALE_WIDTH = 5;
+    private static final int BARREL_THROW_INTERVAL = 3;
+    private static final float FIRE_BARREL_PROBABILITY = 0.6f;
+
+    private final Random random = new Random();
 
     private final boolean canThrowBarrel;
     private float lastThrowTime;
@@ -48,7 +50,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
     public DonkeyKong(final Position position, final BoundigBox dimension, final boolean canThrowBarrel) {
-        super(position, dimension.scaleHeight(SCALE_HEIGHT).scaleWidth(SCALE_WIDTH));
+        super(position, dimension);
 
         this.canThrowBarrel = canThrowBarrel;
     }
@@ -66,7 +68,8 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
             lastThrowTime = 0;
             this.isThrowing = true;
-            return Optional.of(new GameBarrel(getPosition(), new BoundigBox(), false));
+            return Optional.of(new GameBarrel(super.getPosition(), new BoundigBox(),
+                    random.nextFloat() < FIRE_BARREL_PROBABILITY));
         }
         this.isThrowing = false;
         return Optional.empty();
