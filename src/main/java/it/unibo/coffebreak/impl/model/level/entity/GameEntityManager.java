@@ -202,28 +202,6 @@ public class GameEntityManager implements EntityManager {
      */
     private Map<Character, List<Integer>> findSize(final List<String> map, final List<Character> c) {
         final Map<Character, List<Integer>> sizes = new HashMap<>();
-        // for (int y = 0; y < map.size(); y++) {
-        // final String line = map.get(y);
-        // for (int x = 0; x < line.length(); x++) {
-        // final char k = line.charAt(x);
-
-        // if (c.contains(k) && !sizes.containsKey(k)) {
-        // int width = 1;
-        // while (x + width < line.length() && line.charAt(x + width) == k) {
-        // width++;
-        // }
-
-        // int height = 1;
-        // while (y + height < row && map.get(y + height).charAt(x) == k) {
-        // height++;
-        // }
-        // x += width;
-        // sizes.put(k, List.of(width, height));
-        // }
-
-        // }
-        // }
-
         IntStream.range(0, map.size()).forEach(y -> IntStream.range(0, map.get(y).length()).forEach(x -> {
             final char k = map.get(y).charAt(x);
 

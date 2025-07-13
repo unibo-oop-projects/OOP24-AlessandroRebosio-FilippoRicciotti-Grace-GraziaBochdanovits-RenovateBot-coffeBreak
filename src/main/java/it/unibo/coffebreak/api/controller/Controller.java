@@ -1,8 +1,10 @@
 package it.unibo.coffebreak.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
 
@@ -73,6 +75,13 @@ public interface Controller {
     List<Entity> getEntities();
 
     /**
+     * Gets the player character.
+     * 
+     * @return the main character instance, never null
+     */
+    Optional<MainCharacter> getMainCharacter();
+
+    /**
      * Gets the current player score.
      * 
      * @return the current score value
@@ -108,7 +117,6 @@ public interface Controller {
      * @return the current level identifier
      */
     int getLevelIndex();
-
 
     /**
      * Retrieves the current number of lives remaining for the character.

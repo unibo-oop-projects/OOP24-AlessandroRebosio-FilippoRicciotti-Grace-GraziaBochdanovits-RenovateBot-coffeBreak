@@ -33,7 +33,6 @@ public class PauseView extends AbstractViewState {
     public PauseView(final Controller controller, final Loader loader, final SoundManager soundManager) {
         super(controller, loader, soundManager);
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
-        soundManager.stopAll();
     }
 
     /**

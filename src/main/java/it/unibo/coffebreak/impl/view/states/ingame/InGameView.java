@@ -36,6 +36,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 public class InGameView extends AbstractViewState {
 
         private final RenderManager renderManager;
+        private boolean isJumping;
 
         /**
          * Constructs an InGameView with the specified controller.
@@ -50,7 +51,16 @@ public class InGameView extends AbstractViewState {
         public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
                 super(controller, loader, soundManager);
                 this.renderManager = new GameRenderManager(loader);
-                soundManager.loop(Event.BACKGROUND);
+
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onEnter() {
+                getSoundManager().loop(Event.BACKGROUND);
+                this.isJumping = false;
         }
 
         /**
@@ -66,6 +76,17 @@ public class InGameView extends AbstractViewState {
 
                 final int renderWidth = panelWidth - 2 * marginHoriz;
                 final int renderHeight = panelHeight - 2 * marginVert;
+
+                final var player = getController().getMainCharacter().get(); // TODO: is ClimbingSound
+
+                final boolean marioJumped = player.isJumping();
+
+                if (marioJumped && !isJumping) {
+                        isJumping = true;
+                        getSoundManager().play(Event.JUMP);
+                } else if (!marioJumped) {
+                        isJumping = false;
+                }
 
                 final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
                                 .filter(Platform.class::isInstance)
@@ -112,7 +133,8 @@ public class InGameView extends AbstractViewState {
                 for (int i = 0; i < lives; i++) {
                         final int x = startX + i * (marioIconSize + spacing);
                         final Position pos = new Position(x, marioY);
-                        new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth, panelHeight);
+                        new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth,
+                                        panelHeight);
                 }
 
                 final int bonusLabelY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);
