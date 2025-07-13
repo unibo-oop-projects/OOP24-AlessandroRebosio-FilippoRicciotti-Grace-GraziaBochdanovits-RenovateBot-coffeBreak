@@ -71,9 +71,9 @@ public class GamePanel extends JPanel implements Panel {
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
         this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
 
-        this.menuView     = new MenuView(this.controller, this.loader, this.soundManager);
-        this.inGameView   = new InGameView(this.controller, this.loader, this.soundManager);
-        this.pauseView    = new PauseView(this.controller, this.loader, this.soundManager);
+        this.menuView = new MenuView(this.controller, this.loader, this.soundManager);
+        this.inGameView = new InGameView(this.controller, this.loader, this.soundManager);
+        this.pauseView = new PauseView(this.controller, this.loader, this.soundManager);
         this.gameOverView = new GameOverView(this.controller, this.loader, this.soundManager);
 
         super.setFocusable(true);
@@ -153,7 +153,7 @@ public class GamePanel extends JPanel implements Panel {
             default -> null;
         };
 
-        if (nextState != null) {
+        if (nextState != null && nextState != currentViewState) {
             this.setViewState(nextState);
         }
     }

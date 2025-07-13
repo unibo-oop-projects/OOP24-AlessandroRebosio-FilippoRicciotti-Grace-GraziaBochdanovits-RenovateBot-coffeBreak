@@ -50,7 +50,14 @@ public class InGameView extends AbstractViewState {
         public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
                 super(controller, loader, soundManager);
                 this.renderManager = new GameRenderManager(loader);
-                soundManager.loop(Event.BACKGROUND);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void onEnter() {
+                getSoundManager().loop(Event.BACKGROUND);
         }
 
         /**
@@ -112,7 +119,8 @@ public class InGameView extends AbstractViewState {
                 for (int i = 0; i < lives; i++) {
                         final int x = startX + i * (marioIconSize + spacing);
                         final Position pos = new Position(x, marioY);
-                        new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth, panelHeight);
+                        new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth,
+                                        panelHeight);
                 }
 
                 final int bonusLabelY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);

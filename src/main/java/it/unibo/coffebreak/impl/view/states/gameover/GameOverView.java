@@ -34,8 +34,14 @@ public class GameOverView extends AbstractViewState {
     public GameOverView(final Controller controller, final Loader loader, final SoundManager soundManager) {
         super(controller, loader, soundManager);
         this.font = loader.loadFont(ResourceLoader.FONT_PATH);
-        soundManager.stopAll();
-        soundManager.play(Event.DEATH);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onEnter() {
+        getSoundManager().play(Event.DEATH);
     }
 
     /**

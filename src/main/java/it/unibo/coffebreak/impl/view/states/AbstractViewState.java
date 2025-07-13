@@ -86,7 +86,7 @@ public abstract class AbstractViewState implements ViewState {
      */
     @Override
     public void onExit() {
-        // Default empty implementation
+        this.soundManager.stopAll();
     }
 
     /**
