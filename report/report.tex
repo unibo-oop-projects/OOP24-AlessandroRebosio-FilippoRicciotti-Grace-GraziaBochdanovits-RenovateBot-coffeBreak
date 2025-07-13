@@ -234,6 +234,7 @@ del team, migliorando l'efficienza della collaborazione.
 		 nuovi renderer e migliora l'efficienza grazie all'inizializzazione unica dei componenti.
 \end{description}
 
+\newpage
 \subsection{Filippo Ricciotti}
 
 \noindent
@@ -249,9 +250,12 @@ del team, migliorando l'efficienza della collaborazione.
 	      si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando
 	      l'aggiunta di nuovi livelli.
 \end{description}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameLevelManager.svg}
-\end{center}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameLevelManager.svg}
+	\caption{UML dell'applicazione del GameLevelManager.}
+	\label{img:GameLevelManager}
+\end{figure}
 
 \noindent
 \textbf{Gestione delle entità di gioco (\texttt{GameEntityManager})}
@@ -265,10 +269,13 @@ del team, migliorando l'efficienza della collaborazione.
 	      entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o
 	      le interazioni tra entità.
 \end{description}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameEntityManager.svg}
-\end{center}
-
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameEntityManager.svg}
+	\caption{UML della gestione modulare delle Entità grazie al GameEntityManager.}
+	\label{img:GameEntityManager}
+\end{figure}
+\newpage
 \noindent
 \textbf{Gestione delle mappe di gioco (\texttt{GameMapsManager})}
 \begin{description}
@@ -281,10 +288,13 @@ del team, migliorando l'efficienza della collaborazione.
 	      aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione
 	      del codice. Questo approccio facilita la manutenzione e l'aggiunta di nuove funzionalità legate alle mappe.
 \end{description}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameMapsManager.svg}
-\end{center}
-
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameMapsManager.svg}
+	\caption{UML dell'applicazione dello Strategy pattern per gestire diverse mappe.}
+	\label{img:GameMapsManager}
+\end{figure}
+\newpage
 \noindent
 \textbf{Gestione degli stati grafici (\texttt{AbstractViewState} e \texttt{ViewStates})}
 \begin{description}
@@ -297,10 +307,13 @@ del team, migliorando l'efficienza della collaborazione.
 	      Abbiamo adottato il \textbf{Template Method Pattern} all'interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, 
 	      delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
 \end{description}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/AbstractViewState.svg}
-\end{center}
-
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/AbstractViewState.svg}
+	\caption{UML dell'applicazione delo State Pattern Method per la gestione delle diverse interfacce visive.}
+	\label{img:AbstractViewState}
+\end{figure}
+\newpage
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte le classi principali. I test progettati assicurano la verifica automatica delle funzionalità fondamentali del software. Di seguito vengono riportati alcuni esempi di test implementati.
