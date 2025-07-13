@@ -67,7 +67,7 @@ public final class GameRenderManager implements RenderManager {
      * @param loader the loader used to load resources for entity renders
      */
     public GameRenderManager(final Loader loader) {
-        this.loader = loader;
+        this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
 
         this.initRender();
     }

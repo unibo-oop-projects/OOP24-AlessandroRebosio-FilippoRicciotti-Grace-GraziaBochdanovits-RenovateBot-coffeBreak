@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.Serial;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.swing.JPanel;
 
@@ -16,7 +17,6 @@ import java.awt.event.KeyEvent;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.view.panel.Panel;
-import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.states.ViewState;
 import it.unibo.coffebreak.impl.model.states.gameover.GameOverModelState;
 import it.unibo.coffebreak.impl.model.states.ingame.InGameModelState;
@@ -44,10 +44,8 @@ public class GamePanel extends JPanel implements Panel {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private transient ViewState currentViewState;
+    private transient Optional<ViewState> currentViewState = Optional.empty();
     private final transient Controller controller;
-    private final transient Loader loader;
-    private final transient SoundManager soundManager;
     private float deltaTime;
 
     private final transient ViewState menuView;
@@ -61,20 +59,17 @@ public class GamePanel extends JPanel implements Panel {
      *
      * @param controller   the controller to notify for input events
      * @param loader       the resource loader for graphics
-     * @param soundManager the sound Manager responsible for playing the clips
      * @throws NullPointerException if either argument is null
      */
-    public GamePanel(final Controller controller, final Loader loader, final SoundManager soundManager) {
+    public GamePanel(final Controller controller, final Loader loader) {
         super();
 
         this.controller = Objects.requireNonNull(controller, "The controller cannot be null");
-        this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
-        this.soundManager = Objects.requireNonNull(soundManager, "The soundManager cannot be null");
 
-        this.menuView = new MenuView(this.controller, this.loader, this.soundManager);
-        this.inGameView = new InGameView(this.controller, this.loader, this.soundManager);
-        this.pauseView = new PauseView(this.controller, this.loader, this.soundManager);
-        this.gameOverView = new GameOverView(this.controller, this.loader, this.soundManager);
+        this.menuView = new MenuView(this.controller, loader);
+        this.inGameView = new InGameView(this.controller, loader);
+        this.pauseView = new PauseView(this.controller, loader);
+        this.gameOverView = new GameOverView(this.controller, loader);
 
         super.setFocusable(true);
 
@@ -110,11 +105,8 @@ public class GamePanel extends JPanel implements Panel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
-        if (this.currentViewState == null) {
-            return;
-        }
-
-        this.currentViewState.draw((Graphics2D) g, getWidth(), getHeight(), deltaTime);
+        this.currentViewState
+                .ifPresent(viewState -> viewState.draw((Graphics2D) g, getWidth(), getHeight(), deltaTime));
     }
 
     /**
@@ -153,7 +145,7 @@ public class GamePanel extends JPanel implements Panel {
             default -> null;
         };
 
-        if (nextState != null && !nextState.equals(currentViewState)) {
+        if (nextState != null && !this.currentViewState.map(nextState::equals).orElse(false)) {
             this.setViewState(nextState);
         }
     }
@@ -165,10 +157,8 @@ public class GamePanel extends JPanel implements Panel {
      * @param newView the new view state to activate
      */
     private void setViewState(final ViewState newView) {
-        if (this.currentViewState != null) {
-            this.currentViewState.onExit();
-        }
-        this.currentViewState = newView;
-        this.currentViewState.onEnter();
+        this.currentViewState.ifPresent(ViewState::onExit);
+        this.currentViewState = Optional.of(Objects.requireNonNull(newView, "The newView cannot be null"));
+        this.currentViewState.ifPresent(ViewState::onEnter);
     }
 }

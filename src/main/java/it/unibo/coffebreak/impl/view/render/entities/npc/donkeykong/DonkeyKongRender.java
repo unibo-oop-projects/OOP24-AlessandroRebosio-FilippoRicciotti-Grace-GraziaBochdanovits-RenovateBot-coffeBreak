@@ -3,7 +3,6 @@ package it.unibo.coffebreak.impl.view.render.entities.npc.donkeykong;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
-import java.util.Objects;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -40,7 +39,7 @@ public final class DonkeyKongRender extends AnimatedEntityRender<DonkeyKongRende
      * @throws NullPointerException if resource is null
      */
     public DonkeyKongRender(final Loader loader) {
-        super(Objects.requireNonNull(loader, "Loader cannot be null"));
+        super(loader);
     }
 
     /**

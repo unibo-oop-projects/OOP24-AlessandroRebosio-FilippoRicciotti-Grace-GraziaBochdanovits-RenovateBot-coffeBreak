@@ -34,7 +34,7 @@ public abstract class AbstractEntityRender implements EntityRender {
      * @param resource the resource loader used to load the sprite sheet
      */
     public AbstractEntityRender(final Loader resource) {
-        this.resource = Objects.requireNonNull(resource);
+        this.resource = Objects.requireNonNull(resource, "The resource loader cannot be null");
         final BufferedImage rawSheet = this.resource.loadImage(PATH);
 
         final Color color1 = new Color(rawSheet.getRGB(2, 2), true);

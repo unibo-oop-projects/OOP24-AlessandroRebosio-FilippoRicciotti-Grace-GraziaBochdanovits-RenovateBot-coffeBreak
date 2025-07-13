@@ -11,7 +11,6 @@ import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.view.render.RenderManager;
-import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.api.view.sound.SoundManager.Event;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -36,20 +35,17 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 public class InGameView extends AbstractViewState {
 
     private final RenderManager renderManager;
-    private boolean isJumping;
 
     /**
      * Constructs an InGameView with the specified controller.
      * Initializes the render manager with a default resolution of 800x600 pixels.
      * 
-     * @param controller   the game controller that manages the game logic and
-     *                     entities
-     * @param loader       the resource loader for graphics
-     * 
-     * @param soundManager the sound Manager responsible for playing the clips
+     * @param controller the game controller that manages the game logic and
+     *                   entities
+     * @param loader     the resource loader for graphics
      */
-    public InGameView(final Controller controller, final Loader loader, final SoundManager soundManager) {
-        super(controller, loader, soundManager);
+    public InGameView(final Controller controller, final Loader loader) {
+        super(controller, loader);
         this.renderManager = new GameRenderManager(loader);
     }
 
@@ -58,8 +54,7 @@ public class InGameView extends AbstractViewState {
      */
     @Override
     public void onEnter() {
-        getSoundManager().loop(Event.BACKGROUND);
-        this.isJumping = false;
+        super.getSoundManager().loop(Event.BACKGROUND);
     }
 
     /**
@@ -76,25 +71,26 @@ public class InGameView extends AbstractViewState {
         final int renderWidth = panelWidth - 2 * marginHoriz;
         final int renderHeight = panelHeight - 2 * marginVert;
 
-        final var player = getController().getMainCharacter().get(); // TODO: is ClimbingSound
+        // final var player = getController().getMainCharacter().get(); // TODO: is
+        // ClimbingSound
 
-        final boolean marioJumped = player.isJumping();
+        // final boolean marioJumped = player.isJumping();
 
-        if (marioJumped && !isJumping) {
-                isJumping = true;
-                getSoundManager().play(Event.JUMP);
-        } else if (!marioJumped) {
-                isJumping = false;
-        }
+        // if (marioJumped && !isJumping) {
+        // isJumping = true;
+        // getSoundManager().play(Event.JUMP);
+        // } else if (!marioJumped) {
+        // isJumping = false;
+        // }
 
         final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
-                        .filter(Platform.class::isInstance)
-                        .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()));
+                .filter(Platform.class::isInstance)
+                .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()));
 
         final double platformRight = bottomRightPlatform.get().getPosition().x()
-                        + bottomRightPlatform.get().getDimension().width();
+                + bottomRightPlatform.get().getDimension().width();
         final double platformBottom = bottomRightPlatform.get().getPosition().y()
-                        + bottomRightPlatform.get().getDimension().height();
+                + bottomRightPlatform.get().getDimension().height();
 
         final double scaleX = renderWidth / platformRight;
         final double scaleY = renderHeight / platformBottom;
@@ -111,7 +107,7 @@ public class InGameView extends AbstractViewState {
         g.scale(scale, scale);
 
         this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom,
-                        deltaTime);
+                deltaTime);
 
         g.setTransform(oldTransform);
 
@@ -130,10 +126,10 @@ public class InGameView extends AbstractViewState {
         final int startX = oneUpX - totalWidth / 2;
 
         for (int i = 0; i < lives; i++) {
-                final int x = startX + i * (marioIconSize + spacing);
-                final Position pos = new Position(x, marioY);
-                new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth,
-                                panelHeight);
+            final int x = startX + i * (marioIconSize + spacing);
+            final Position pos = new Position(x, marioY);
+            new MarioRender(getLoader()).draw(g, new Mario(pos, scaledDimension), deltaTime, panelWidth,
+                    panelHeight);
         }
 
         final int bonusLabelY = (int) (panelHeight * SCORE_HEIGHT) + (int) (panelHeight * 0.04f);

@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -39,7 +38,7 @@ public class CoinRender extends AbstractCollectableRender implements AnimatedRen
      * @param loader
      */
     public CoinRender(final Loader loader) {
-        super(Objects.requireNonNull(loader, "Resource loader cannot be null"));
+        super(loader);
         this.coinSheet = loader.loadImage(COIN_PATH);
     }
 

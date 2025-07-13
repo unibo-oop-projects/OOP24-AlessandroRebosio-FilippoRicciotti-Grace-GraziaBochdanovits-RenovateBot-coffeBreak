@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 import it.unibo.coffebreak.api.common.Loader;
@@ -50,7 +49,7 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
      * @throws NullPointerException if resource is null
      */
     public MarioRender(final Loader loader) {
-        super(Objects.requireNonNull(loader, "Loader cannot be null"));
+        super(loader);
     }
 
     /**

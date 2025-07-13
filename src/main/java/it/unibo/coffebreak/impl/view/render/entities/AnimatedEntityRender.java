@@ -35,7 +35,7 @@ public abstract class AnimatedEntityRender<T extends Enum<T>>  extends AbstractE
      * @throws NullPointerException if loader is null
      */
     public AnimatedEntityRender(final Loader loader) {
-        super(Objects.requireNonNull(loader, "Loader cannot be null"));
+        super(loader);
     }
 
     /**
