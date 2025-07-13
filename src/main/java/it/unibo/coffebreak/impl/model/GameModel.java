@@ -138,6 +138,7 @@ public class GameModel implements Model {
      */
     @Override
     public void initialEntitiesState() {
+        this.levelManager.resetCharacter();
         this.levelManager.loadCurrentEntities();
     }
 
