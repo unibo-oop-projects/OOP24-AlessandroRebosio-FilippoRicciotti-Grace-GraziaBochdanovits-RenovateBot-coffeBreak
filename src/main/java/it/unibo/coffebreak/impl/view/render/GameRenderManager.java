@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.view.render;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,11 +81,14 @@ public final class GameRenderManager implements RenderManager {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, width, height);
 
-        new ArrayList<>(entities).forEach(entity -> {
+        final List<Entity> entitiesToRender = new ArrayList<>(entities);
+        entitiesToRender.sort(Comparator.comparingInt(e -> e instanceof Mario ? 1 : 0));
+
+        entitiesToRender.forEach(entity -> {
             entityRender.entrySet().stream()
-                    .filter(entry -> entry.getKey().isInstance(entity))
-                    .findFirst()
-                    .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
+                .filter(entry -> entry.getKey().isInstance(entity))
+                .findFirst()
+                .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
         });
     }
 
