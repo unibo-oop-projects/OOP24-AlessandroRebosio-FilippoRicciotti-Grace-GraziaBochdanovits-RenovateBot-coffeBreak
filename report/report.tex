@@ -106,7 +106,12 @@ del giocatore (es. salto dei barili, raccolta bonus, tempo residuo). È anche po
 
 Una volta terminata la partita (completamento dei livelli o esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
-% TODO put image of model
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Model.svg}
+	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità.}
+	\label{img:model}
+\end{figure}
 
 \chapter{Design}
 \section{Architettura}
@@ -132,6 +137,12 @@ del team, migliorando l'efficienza della collaborazione.
 \section{Design dettagliato}
 \subsection{Alessandro Rebosio}
 \textbf{Gestione degli stati del gioco}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/ModelState.svg}
+	\caption{UML dell'applicazione dello State pattern.}
+	\label{img:modelstate}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nei videogiochi, è comune avere diversi stati di esecuzione, come \textit{menu}, \textit{in-game}, \textit{pausa} e \textit{game-over}. Una gestione non strutturata di questi stati
@@ -146,9 +157,12 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione dei collezionabili}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/collectible.svg}
-\end{center}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Collectible.svg}
+	\caption{UML dell'applicazione del pattern Template Method per diversi Collectible.}
+	\label{img:collectible}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
@@ -160,6 +174,7 @@ del team, migliorando l'efficienza della collaborazione.
 	      garantisce una struttura chiara e uniforme, facilitando l'estensione con nuovi tipi di collezionabili senza modificare il comportamento di base.
 \end{description}
 
+\newpage
 \noindent
 \textbf{Gestione degli input e comandi di gioco}
 %TODO put image of command pattern
@@ -182,10 +197,14 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione dei livelli di gioco (\texttt{GameLevelManager})}
 \begin{description}
 	\item[\textbf{Problema}]
-	      La gestione dei livelli di gioco era implementata in modo rigido, con controlli manuali per determinare il livello corrente e per passare al successivo. Questo approccio non favoriva l’estendibilità e rendeva difficile introdurre nuove logiche relative ai livelli, come eventi specifici o condizioni di completamento personalizzate. Inoltre, il caricamento e l’inizializzazione dei livelli erano distribuiti in più punti del codice, aumentando la complessità.
+	      La gestione dei livelli di gioco era implementata in modo rigido, con controlli manuali per determinare il livello corrente e per passare al successivo. Questo approccio non favoriva l'
+	      estendibilità e rendeva difficile introdurre nuove logiche relative ai livelli, come eventi specifici o condizioni di completamento personalizzate. Inoltre, il caricamento e l'inizializzazione dei
+	      livelli erano distribuiti in più punti del codice, aumentando la complessità.
 
 	\item[\textbf{Soluzione}]
-	      Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager} si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando l'aggiunta di nuovi livelli.
+	      Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager}
+	      si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando
+	      l'aggiunta di nuovi livelli.
 \end{description}
 \begin{center}
 	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameLevelManager.svg}
@@ -195,10 +214,13 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione delle entità di gioco (\texttt{GameEntityManager})}
 \begin{description}
 	\item[\textbf{Problema}]
-	      La gestione delle entità (personaggi, ostacoli, collezionabili) era organizzata tramite liste generiche, senza una chiara separazione tra i diversi tipi di entità. Questo causava difficoltà nel controllo delle collisioni, aggiornamento dello stato e rendering, oltre a rendere il codice più difficile da mantenere e soggetto a errori legati alla gestione dei tipi.
+	      La gestione delle entità (personaggi, ostacoli, collezionabili) era organizzata tramite liste generiche, senza una chiara separazione tra i diversi tipi di entità. Questo causava
+	      difficoltà nel controllo delle collisioni, aggiornamento dello stato e rendering, oltre a rendere il codice più difficile da mantenere e soggetto a errori legati alla gestione dei tipi.
 
 	\item[\textbf{Soluzione}]
-	      È stata realizzata la classe \texttt{GameEntityManager}, incaricata di gestire tutte le entità presenti nel gioco. Questa classe fornisce metodi per aggiungere, rimuovere e aggiornare le entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o le interazioni tra entità.
+	      È stata realizzata la classe \texttt{GameEntityManager}, incaricata di gestire tutte le entità presenti nel gioco. Questa classe fornisce metodi per aggiungere, rimuovere e aggiornare le
+	      entità, garantendo un unico punto di accesso e controllo. Ciò favorisce una gestione ordinata e modulare, rendendo più semplice implementare logiche di gioco complesse come le collisioni o
+	      le interazioni tra entità.
 \end{description}
 \begin{center}
 	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameEntityManager.svg}
@@ -208,10 +230,13 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione delle mappe di gioco (\texttt{GameMapsManager})}
 \begin{description}
 	\item[\textbf{Problema}]
-	      Il caricamento delle mappe e il loro ordinamento venivano gestiti tramite logiche manuali e ripetitive, basate su cicli e controlli espliciti. Questo rendeva il codice meno leggibile e più difficile da estendere con nuovi criteri di ordinamento o formati di mappa differenti.
+	      Il caricamento delle mappe e il loro ordinamento venivano gestiti tramite logiche manuali e ripetitive, basate su cicli e controlli espliciti. Questo rendeva il codice meno
+	      leggibile e più difficile da estendere con nuovi criteri di ordinamento o formati di mappa differenti.
 
 	\item[\textbf{Soluzione}]
-	      Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione del codice. Questo approccio facilita la manutenzione e l’aggiunta di nuove funzionalità legate alle mappe.
+	      Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In
+	      aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e la concisione
+	      del codice. Questo approccio facilita la manutenzione e l'aggiunta di nuove funzionalità legate alle mappe.
 \end{description}
 \begin{center}
 	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/GameMapsManager.svg}
@@ -221,10 +246,13 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione degli stati grafici (\texttt{AbstractViewState} e \texttt{ViewStates})}
 \begin{description}
 	\item[\textbf{Problema}]
-	      Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \newline \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell’utente presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l’uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l’aggiunta di nuove funzionalità condivise tra gli stati.
+	      Nei diversi \texttt{ViewState} del gioco (come \texttt{MenuViewState}, \newline \texttt{InGameViewState}, \texttt{PauseViewState}, \texttt{GameOverViewState}), la gestione dei comandi dell'utente
+	      presentava duplicazioni, specialmente per le azioni comuni come il ritorno al menu o l'uscita dal gioco. Questo aumentava il rischio di incongruenze e complicava l'aggiunta di nuove
+	      funzionalità condivise tra gli stati.
 
 	\item[\textbf{Soluzione}]
-	      Abbiamo adottato il \textbf{Template Method Pattern} all’interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
+	      Abbiamo adottato il \textbf{Template Method Pattern} all'interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, 
+	      delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
 \end{description}
 \begin{center}
 	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/AbstractViewState.svg}
@@ -401,8 +429,8 @@ Quando il personaggio perde tutte le vite, si entra nella schermata di Game Over
 \end{itemize}
 
 
-% \bibliographystyle{alpha}
-% \bibliography{report}
-% \nocite{*}
+\bibliographystyle{alpha}
+\bibliography{report}
+\nocite{*}
 
 \end{document}
