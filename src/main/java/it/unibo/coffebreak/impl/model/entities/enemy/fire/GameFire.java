@@ -26,10 +26,13 @@ public class GameFire extends AbstractEnemy implements Fire, PhysicsEntity {
     private static final float CLIMB_PROBABILITY = 0.3f;
     private static final float CHANGE_DIRECTION_INTERVAL = 2.0f;
     private static final float CENTER_THRESHOLD = 0.5f;
+    private static final float DEFAULT_LIFETIME = 15.0f;
 
     private final Random random = new Random();
-    private float elapsedTime;
-    private boolean onPlatform;
+    private float directionChangeElapsed;
+    private float lifeElapsed;
+
+    private boolean onPlatform = true;
     private boolean climbing;
     private boolean ladderCollision;
     private boolean movingRight = true;
@@ -43,7 +46,6 @@ public class GameFire extends AbstractEnemy implements Fire, PhysicsEntity {
     public GameFire(final Position position, final BoundigBox dimension) {
         super(position, dimension);
 
-        this.onPlatform = true;
         this.setVelocity(new Vector(FIRE_SPEED, 0f));
     }
 
@@ -82,7 +84,13 @@ public class GameFire extends AbstractEnemy implements Fire, PhysicsEntity {
     public void update(final float deltaTime) {
         ladderCollision = false;
 
-        elapsedTime += deltaTime;
+        directionChangeElapsed += deltaTime;
+        this.lifeElapsed += deltaTime;
+
+        if (this.lifeElapsed >= DEFAULT_LIFETIME) {
+            this.destroy();
+            return;
+        }
 
         if (this.climbing) {
             this.setVelocity(new Vector(0f, -FIRE_SPEED));
@@ -90,11 +98,11 @@ public class GameFire extends AbstractEnemy implements Fire, PhysicsEntity {
         }
 
         if (this.onPlatform) {
-            if (elapsedTime >= CHANGE_DIRECTION_INTERVAL) {
+            if (directionChangeElapsed >= CHANGE_DIRECTION_INTERVAL) {
                 if (random.nextBoolean()) {
                     movingRight = !movingRight;
                 }
-                elapsedTime = 0f;
+                directionChangeElapsed = 0f;
             }
             final float horizontalSpeed = movingRight ? FIRE_SPEED : -FIRE_SPEED;
             this.setVelocity(new Vector(horizontalSpeed, 0f));
