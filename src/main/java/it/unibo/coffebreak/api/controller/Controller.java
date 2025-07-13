@@ -63,7 +63,7 @@ public interface Controller {
      * @return true if the game is active and should continue running, false
      *         otherwise
      */
-    boolean isGameActive();
+    boolean isRunning();
 
     /**
      * Gets the current list of game entities to be rendered.

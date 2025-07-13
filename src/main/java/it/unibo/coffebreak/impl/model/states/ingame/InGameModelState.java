@@ -98,5 +98,17 @@ public class InGameModelState extends AbstractModelState {
                 // Other actions are handled by the command system
             }
         }
+
+        model.getMainCharacter().ifPresent(p -> {
+            switch (action) {
+                case LEFT -> p.moveLeft();
+                case RIGHT -> p.moveRight();
+                case UP -> p.moveUp();
+                case DOWN -> p.moveDown();
+                case SPACE -> p.jump();
+                default -> {
+                }
+            }
+        });
     }
 }

@@ -101,6 +101,6 @@ class TestGameController {
      */
     @Test
     void testIsGameActive() {
-        assertDoesNotThrow(controller::isGameActive);
+        assertDoesNotThrow(controller::isRunning);
     }
 }

@@ -33,7 +33,7 @@ public class GameEngine implements Engine {
     public void run() {
         long previousTime = System.currentTimeMillis();
 
-        while (controller.isGameActive()) {
+        while (controller.isRunning()) {
             final long currentTime = System.currentTimeMillis();
             final float deltaTime = (currentTime - previousTime) / 1000.0f;
 

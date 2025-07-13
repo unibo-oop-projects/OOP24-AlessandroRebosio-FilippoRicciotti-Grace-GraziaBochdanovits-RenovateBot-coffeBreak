@@ -33,10 +33,10 @@ import it.unibo.coffebreak.impl.model.states.menu.MenuModelState;
 public class GameModel implements Model {
 
     private final Leaderboard leaderBoard = new GameLeaderboard();
+    private Optional<ModelState> currentState = Optional.empty();
 
     private final LevelManager levelManager;
     private BoundigBox gameBounds;
-    private ModelState currentState;
     private volatile boolean running;
 
     /**
@@ -57,12 +57,9 @@ public class GameModel implements Model {
      */
     @Override
     public final void setState(final ModelState newState) {
-        Objects.requireNonNull(newState, "The new state cannot be null");
-        if (currentState != null) {
-            currentState.onExit(this);
-        }
-        currentState = newState;
-        currentState.onEnter(this);
+        this.currentState.ifPresent(state -> state.onExit(this));
+        this.currentState = Optional.of(Objects.requireNonNull(newState, "The new State cannot be null"));
+        this.currentState.ifPresent(state -> state.onEnter(this));
     }
 
     /**
@@ -70,7 +67,7 @@ public class GameModel implements Model {
      */
     @Override
     public void handleAction(final Action action) {
-        this.currentState.handleAction(this, action);
+        this.currentState.ifPresent(state -> state.handleAction(this, action));
     }
 
     /**
@@ -114,7 +111,7 @@ public class GameModel implements Model {
      */
     @Override
     public ModelState getGameState() {
-        return this.currentState;
+        return this.currentState.orElse(new MenuModelState());
     }
 
     /**
@@ -138,7 +135,6 @@ public class GameModel implements Model {
      */
     @Override
     public void initialEntitiesState() {
-        this.levelManager.resetCharacter();
         this.levelManager.loadCurrentEntities();
     }
 
@@ -230,7 +226,7 @@ public class GameModel implements Model {
      */
     @Override
     public void update(final float deltaTime) {
-        this.currentState.update(this, deltaTime);
+        this.currentState.ifPresent(state -> state.update(this, deltaTime));
     }
 
     /**

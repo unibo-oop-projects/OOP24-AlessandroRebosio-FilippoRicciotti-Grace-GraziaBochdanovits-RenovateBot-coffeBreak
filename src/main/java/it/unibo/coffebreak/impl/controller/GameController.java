@@ -6,13 +6,15 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
-import it.unibo.coffebreak.api.controller.command.Command;
+import it.unibo.coffebreak.api.controller.action.Action;
+import it.unibo.coffebreak.api.controller.input.Input;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
-import it.unibo.coffebreak.impl.controller.command.CommandFactory;
+import it.unibo.coffebreak.impl.common.Vector;
+import it.unibo.coffebreak.impl.controller.input.InputManager;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
@@ -30,7 +32,8 @@ import it.unibo.coffebreak.impl.model.GameModel;
  */
 public class GameController implements Controller {
 
-    private final Queue<Command> commandQueue = new ConcurrentLinkedQueue<>();
+    private final Queue<Action> commandQueue = new ConcurrentLinkedQueue<>();
+    private final Input input = new InputManager();
     private final Model model;
 
     /**
@@ -49,9 +52,9 @@ public class GameController implements Controller {
     @Override
     public void processInput() {
         while (!this.commandQueue.isEmpty()) {
-            final Command command = this.commandQueue.poll();
-            if (command != null) {
-                command.execute(this.model);
+            final Action action = this.commandQueue.poll();
+            if (action != null) {
+                model.handleAction(action);
             }
         }
     }
@@ -69,23 +72,40 @@ public class GameController implements Controller {
     /**
      * {@inheritDoc}
      * <p>
-     * Creates and queues the appropriate command based on the key pressed.
-     * Uses the CommandFactory to maintain clean separation of concerns.
+     * Creates and queues the appropriate action based on the key pressed.
+     * Uses the InputManager to maintain clean separation of concerns.
      */
     @Override
     public void keyPressed(final int keyCode) {
-        this.commandQueue.add(CommandFactory.createCommand(keyCode));
+        this.input.getAction(keyCode)
+                .ifPresent(this.commandQueue::offer);
     }
 
     /**
      * {@inheritDoc}
      * <p>
-     * Creates and queues the appropriate command based on the key released.
+     * Creates and queues the appropriate action based on the key released.
      * Handles stopping movement and other release-based actions.
      */
     @Override
     public void keyReleased(final int keyCode) {
-        this.commandQueue.add(CommandFactory.createReleaseCommand(keyCode));
+        this.input.getAction(keyCode).ifPresent(action -> {
+            this.model.getMainCharacter().ifPresent(character -> {
+                switch (action) {
+                    case LEFT, RIGHT -> {
+                        final var currentVelocity = character.getVelocity();
+                        character.setVelocity(new Vector(0.0f, currentVelocity.y()));
+                    }
+                    case UP, DOWN -> {
+                        final var currentVelocity = character.getVelocity();
+                        character.setVelocity(new Vector(currentVelocity.x(), 0.0f));
+                    }
+                    default -> {
+                        // Other release actions can be added here
+                    }
+                }
+            });
+        });
     }
 
     /**
@@ -158,7 +178,7 @@ public class GameController implements Controller {
      * {@inheritDoc}
      */
     @Override
-    public boolean isGameActive() {
+    public boolean isRunning() {
         return this.model.isRunning();
     }
 }
