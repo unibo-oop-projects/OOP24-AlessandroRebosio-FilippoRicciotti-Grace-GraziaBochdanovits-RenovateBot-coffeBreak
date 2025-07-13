@@ -106,9 +106,12 @@ del giocatore (es. salto dei barili, raccolta bonus, tempo residuo). È anche po
 
 Una volta terminata la partita (completamento dei livelli o esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/Model.svg}
-\end{center}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Model.svg}
+	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità.}
+	\label{img:model}
+\end{figure}
 
 \chapter{Design}
 \section{Architettura}
@@ -134,9 +137,12 @@ del team, migliorando l'efficienza della collaborazione.
 \section{Design dettagliato}
 \subsection{Alessandro Rebosio}
 \textbf{Gestione degli stati del gioco}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/ModelState.svg}
-\end{center}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/ModelState.svg}
+	\caption{UML dell'applicazione dello State pattern.}
+	\label{img:modelstate}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nei videogiochi, è comune avere diversi stati di esecuzione, come \textit{menu}, \textit{in-game}, \textit{pausa} e \textit{game-over}. Una gestione non strutturata di questi stati
@@ -151,9 +157,12 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione dei collezionabili}
-\begin{center}
-	\includesvg[width=1\linewidth, inkscapelatex=false]{svg/Collectible.svg}
-\end{center}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Collectible.svg}
+	\caption{UML dell'applicazione del pattern Template Method per diversi Collectible.} 
+	\label{img:collectible}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
