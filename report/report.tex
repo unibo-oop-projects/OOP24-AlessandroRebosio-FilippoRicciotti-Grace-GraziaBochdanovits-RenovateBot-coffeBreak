@@ -176,6 +176,49 @@ del team, migliorando l'efficienza della collaborazione.
 	      in-game. Questo approccio rende il sistema estendibile, testabile e facilita l'implementazione di funzionalità come la gestione della pressione e del rilascio dei tasti.
 \end{description}
 
+\subsection{Grazia Bochdanovits de Kavna}
+\textbf{Gestione degli stati di Mario}
+\begin{description}
+	\item[\textbf{Problema}]
+	     Il personaggio di Mario deve adattare il suo comportamento in base al suo stato (normale o con il martello), ma un'implementazione basata su flag booleani avrebbe violato il principio Open/Closed,
+		 richiedendo modifiche invasive alla classe di Mario per aggiungere nuovi stati. Questo approccio avrebbe inoltre generato una complessa struttura condizionale, rendendo il codice difficile da mantenere e poco scalabile.
+
+	\item[\textbf{Soluzione}]
+		 Per risolvere il problema abbiamo adottato lo \textbf{State Pattern}, che ha permesso di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
+		 incapsulati i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
+		 La soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
+\end{description}
+
+\noindent
+\textbf{Gestione delle entità}
+\begin{description}
+	\item[\textbf{Problema}]
+	     Il gioco include numerose entità con caratteristiche sia comuni che specifiche. Senza una adeguata astrazione, si sarebbe verificata una pericolosa duplicazione di codice per la gestione degli attributi
+		 comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere e soggetto a errori.
+
+	\item[\textbf{Soluzione}]
+		 L'adozione del \textbf{Template Method} ha permesso di creare una gerarchia multilivello di classi astratte. La classe base \texttt{AbstractEntity} è stata progettata per incapsulare tutta la logica comune 
+		 alle entità, mentre classi intermedie come \texttt{AbstractEnemy} o \texttt{AbstractPlatform} hanno catturato i comportamenti condivisi da gruppi specifici di entità.
+		 Le classi concrete, a loro volta, hanno potuto specializzare solo gli aspetti veramente unici di ciscuna entità. Questa architettura ha notevolemente migliorato il riuso, semplificando l'estensione del sistema
+		 con l'aggiunta di nuove entità.
+
+\end{description}
+
+\noindent
+\textbf{Gestione del rendering delle entità}
+\begin{description}
+	\item[\textbf{Problema}]
+	     Il sistema di rendering doveva gestire numerose entità con caratteristiche grafiche diverse. Un aproccio centralizzato avrebbe creato un accoppiamento eccessivo
+		 tra la logica di rendering e le implementazioni delle singole entità, rendendo il sistema rigido e difficilmente estendibile.
+		 Inoltre, la necessità di gestire operazioni comuni (come il caricamento degli sprite) in modo indipendente, avrebbe portato a una significativa duplicazione di codice
+		 violando il principio DRY.
+
+	\item[\textbf{Soluzione}]
+		 Abbiamo implementato un'architettura che combina lo \textbf{Strategy Pattern} con un registro di renderer. Ciascuna entità dispone di un renderer dedicato che implementa l'interfaccia \texttt{EntityRender}. 
+		 Il \texttt{GameRenderManager} utilizza una mappa di registrazione per associare dinamicamente ogni tipo di entità al corrispondente renderer. Questa soluzione riduce l'accoppiamento, facilita l'aggiunta di 
+		 nuovi renderer e migliora l'efficienza grazie all'inizializzazione unica dei componenti.
+\end{description}
+
 \subsection{Filippo Ricciotti}
 
 \noindent
