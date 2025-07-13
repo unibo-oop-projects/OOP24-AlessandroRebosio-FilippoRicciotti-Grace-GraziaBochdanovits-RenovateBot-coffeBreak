@@ -153,7 +153,7 @@ public class GamePanel extends JPanel implements Panel {
             default -> null;
         };
 
-        if (nextState != null && nextState != currentViewState) {
+        if (nextState != null && !nextState.equals(currentViewState)) {
             this.setViewState(nextState);
         }
     }
