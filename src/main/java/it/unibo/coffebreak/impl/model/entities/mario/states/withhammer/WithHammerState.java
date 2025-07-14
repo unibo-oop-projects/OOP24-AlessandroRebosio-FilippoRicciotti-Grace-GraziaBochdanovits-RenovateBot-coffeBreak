@@ -3,7 +3,6 @@ package it.unibo.coffebreak.impl.model.entities.mario.states.withhammer;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
-import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 
@@ -34,16 +33,14 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 public class WithHammerState extends AbstractMarioState {
 
     /**
-     * The duration in milliseconds that Mario keeps the hammer (5 seconds).
+     * The duration in milliseconds that Mario keeps the hammer (7 seconds).
      */
-    public static final long HAMMER_DURATION = 5000;
+    public static final long HAMMER_DURATION = 7000;
 
     /**
      * The system time in milliseconds when this hammer state will expire.
      */
     private long expirationTime;
-
-    private BoundigBox originalDimension;
 
     /**
      * Called when entering hammer state. Initializes:
@@ -56,18 +53,6 @@ public class WithHammerState extends AbstractMarioState {
     @Override
     public void onEnter(final MainCharacter character) {
         this.expirationTime = System.currentTimeMillis() + HAMMER_DURATION;
-        this.originalDimension = new BoundigBox(character.getDimension().width(), character.getDimension().height());
-        character.setDimension(character.getDimension().scaleHeight(3));
-    }
-
-    /**
-     * Called when exiting hammer state.
-     *
-     * @param character the Mario instance transitioning to this state (non-null)
-     */
-    @Override
-    public void onExit(final MainCharacter character) {
-        character.setDimension(originalDimension);
     }
 
     /**
