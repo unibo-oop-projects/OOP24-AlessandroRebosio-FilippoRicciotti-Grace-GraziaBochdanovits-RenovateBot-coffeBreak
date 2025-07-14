@@ -98,19 +98,19 @@ salvare la damigella in pericolo.
 Il personaggio è controllabile tramite input da tastiera e può muoversi lateralmente, salire scale e saltare. Il gioco gestisce le collisioni con gli elementi di
 gioco (piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
 
-La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia il personaggio se viene colpito da un ostacolo, si attiva la condizione
+La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia, se il personaggio viene colpito da un ostacolo, si attiva la condizione
 di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione in corso e che verra confrontato con i record precedenti nel menu principale.
 
 Durante la partita, il \textbf{punteggio} è visibile nella parte superiore dello schermo e si aggiorna dinamicamente in base alle azioni
 del giocatore (es. raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
 
-Una volta terminata la partita (all' esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
+Una volta terminata la partita (all' esaurimento delle vite, oppure allo scadere del tempo), viene mostrata una schermata di fine con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
 
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Model.svg}
-	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità del Model.}
+	\caption{Schema UML dell'analisi iniziale, con le principali relazioni fra le entità del Model.}
 	\label{img:model}
 \end{figure}
 
@@ -136,7 +136,7 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/MVC.svg}
-	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità dell'architettura.}
+	\caption{Schema UML dell'analisi iniziale, con le principali relazioni fra le entità dell'architettura.}
 	\label{img:View}
 \end{figure}
 
@@ -239,14 +239,14 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il personaggio di Mario deve poter modificare il suo comportamento in base allo stato in cui si trova (ad esempio normale o con il martello).
-	      Un'implementazione basata su flag booleani o strutture condizionali annidate, avrebbe introdotti diversi problemi architetturali: in particolare,
-	      avrebbe violato il principio Open/Closed, in quanto un nuovo stato avrebbe richiesto modificiche dirette alla classe di Mario.
+		  Un'implementazione basata su flag booleani o strutture condizionali annidate, avrebbe introdotto diversi problemi architetturali: in particolare,
+		  avrebbe violato il principio Open/Closed, in quanto un nuovo stato avrebbe richiesto modifiche dirette alla classe di Mario.
 
 	\item[\textbf{Soluzione}]
 	      Per risolvere il problema abbiamo deciso di adottare lo \textbf{State Pattern}, che consente di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
 	      definiti i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
-	      la classe di \texttt{Mario} mantiene semplicemente un riferimento allo stato attuale, e delega ad esso tutte le operazioni.
-	      Questa soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
+	      La classe di \texttt{Mario} mantiene semplicemente un riferimento allo stato attuale, e delega ad esso tutte le operazioni.
+		  Questa soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
 \end{description}
 
 \newpage
@@ -507,13 +507,13 @@ Essendo il mio primo progetto strutturato di queste dimensioni, ho posto partico
 All'interno del gruppo ho ricoperto diversi ruoli, concentrandomi principalmente sullo sviluppo del Controller e definendo le basi architetturali per la View, successivamente sviluppata dai miei colleghi. Questa esperienza trasversale mi ha permesso di sperimentare direttamente la sincronizzazione e l'interazione tra le diverse componenti dell'architettura MVC, approfondendo la comprensione delle dinamiche di progettazione in un contesto collaborativo reale.
 
 \subsection{Grazia Bochdanovits de Kavna}
-Lavorare alla realizzazione di questo progetto stata per me un'esperienza formativa importante, sia dal punto di vista tecnico che umano.
+Lavorare alla realizzazione di questo progetto è stata per me un'esperienza formativa importante, sia dal punto di vista tecnico che umano.
 Mi ha permesso non solo di consolidare le competenze acquisite durante l'anno accademico, ma anche di sperimentare dinamiche lavorative e progettuali che vanno oltre il contesto puramente teorico.
 Nello specifico, ho avuto modo di approfondire l'applicazione di diversi pattern di progettazione, affrontando problemi reali come la gestione dell'evoluzione di un personaggio, la separazione delle
-responsabilità e l'organizzazione gerarchica delle classi. Questi aspetti mi hanno permesso di acquisire una maggiore padronanza nella progettazione modulare e nell'applicazione di pattern architetturali, acnhe se riconosco che ci sono
+responsabilità e l'organizzazione gerarchica delle classi. Questi aspetti mi hanno permesso di acquisire una maggiore padronanza nella progettazione modulare e nell'applicazione di pattern architetturali, anche se riconosco che ci sono
 sempre margini di miglioramento, specialmente nell'ottimizzazione del codice.
 Il lavoro di squadra, sebbene talvolta complesso, è stato fondamentale per comprendere l'importanza di una comunicazione attiva e di una buona organizzazione del lavoro.
-Mi insegnato ad accettare feedback costruttivi, e ad acquisire una maggiore consapevolezza del valore del mio contributo all'interno di questo progetto.
+Mi ha insegnato ad accettare feedback costruttivi, e ad acquisire una maggiore consapevolezza del valore del mio contributo all'interno di questo progetto.
 Questa esperienza è stata un'anteprima preziosa di ciò che il mondo del lavoro può riservare, e mi ha motivato a continuare a crescere professionalmente.
 
 \subsection{Filippo Ricciotti}
