@@ -105,6 +105,11 @@ public interface MainCharacter extends Entity {
     void resetLives();
 
     /**
+     * Resets the Behaviour of the MainCharacter to the default.
+     */
+    void resetBehaviour();
+
+    /**
      * Returns whether Mario is currently facing right.
      * 
      * @return true if Mario is facing right, false if facing left

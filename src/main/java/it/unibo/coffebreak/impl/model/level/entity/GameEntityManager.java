@@ -119,6 +119,7 @@ public class GameEntityManager implements EntityManager {
                     }
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
                     case 'M' -> {
+                        this.character.resetBehaviour();
                         this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
