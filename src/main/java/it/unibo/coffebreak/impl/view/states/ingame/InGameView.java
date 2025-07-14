@@ -71,18 +71,6 @@ public class InGameView extends AbstractViewState {
         final int renderWidth = panelWidth - 2 * marginHoriz;
         final int renderHeight = panelHeight - 2 * marginVert;
 
-        // final var player = getController().getMainCharacter().get(); // TODO: is
-        // ClimbingSound
-
-        // final boolean marioJumped = player.isJumping();
-
-        // if (marioJumped && !isJumping) {
-        // isJumping = true;
-        // getSoundManager().play(Event.JUMP);
-        // } else if (!marioJumped) {
-        // isJumping = false;
-        // }
-
         final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
                 .filter(Platform.class::isInstance)
                 .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()));

@@ -140,8 +140,8 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
     }
 
     /**
-     * Method responsible for playing Mario's realted Sound.
-     * 
+     * Method responsible for playing Mario's related Sound.
+     *
      * @param animation animation mario is currently displaying
      */
     private void handleSoundForAnimation(final MarioAnimationType animation) {
@@ -154,25 +154,15 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
             soundManager.stop(lastEvent);
         }
 
-        if (animation.equals(MarioAnimationType.HAMMER)) {
-            final SoundManager.Event hammerEvent = ANIMATION_SOUND.get(MarioAnimationType.HAMMER);
-            if (hammerEvent != null) {
-                soundManager.play(hammerEvent);
-            }
-            final SoundManager.Event walkEvent = ANIMATION_SOUND.get(MarioAnimationType.WALK);
-            if (walkEvent != null) {
-                soundManager.loop(walkEvent);
-            }
-        } else {
-            final SoundManager.Event event = ANIMATION_SOUND.get(animation);
-            if (event != null) {
-                if (animation.equals(MarioAnimationType.WALK)) {
-                    soundManager.loop(event);
-                } else {
-                    soundManager.play(event);
-                }
+        final SoundManager.Event event = ANIMATION_SOUND.get(animation);
+        if (event != null) {
+            if (animation.equals(MarioAnimationType.WALK)) {
+                soundManager.loop(event);
+            } else {
+                soundManager.play(event);
             }
         }
+
         lastAnimation = animation;
     }
 

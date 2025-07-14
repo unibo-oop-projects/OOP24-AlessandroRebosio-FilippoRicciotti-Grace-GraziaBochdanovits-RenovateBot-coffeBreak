@@ -81,6 +81,12 @@ public final class GameSoundManager implements SoundManager {
 
     /**
      * Helper method to perform an action on a Clip if present and condition is met.
+     *
+     * @param e         the event whose clip should be loaded
+     * @param condition predicate to check if the action should be performed on the
+     *                  clip
+     * @param action    the action to perform on the clip if present and condition
+     *                  is met
      */
     private void withClip(final Event e, final java.util.function.Predicate<Clip> condition,
             final Consumer<Clip> action) {
