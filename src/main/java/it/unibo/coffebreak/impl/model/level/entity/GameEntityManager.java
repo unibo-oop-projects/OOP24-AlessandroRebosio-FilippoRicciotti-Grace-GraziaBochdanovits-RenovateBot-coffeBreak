@@ -124,6 +124,7 @@ public class GameEntityManager implements EntityManager {
                     }
                     case 'D' ->
                         this.addEntity(new DonkeyKong(position, bb, canDonkeyThrowBarrel));
+                    case 'F' -> this.addEntity(new GameFire(position, bb));
                     case 'T' -> this.addEntity(new GameTank(position, bb));
                     case 'H' -> this.addEntity(new Hammer(position, bb));
                     case 'C' -> this.addEntity(new Coin(position, bb));
