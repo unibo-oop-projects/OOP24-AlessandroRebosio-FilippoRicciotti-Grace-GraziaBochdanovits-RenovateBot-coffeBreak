@@ -47,6 +47,11 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
             Map.entry(MarioAnimationType.HAMMER,
                     new AnimationInfo(6, DOUBLE_SIZE, DOUBLE_SIZE, X_OFFSET, Y_HAMMER, SPACING, 0.2f)));
 
+    private static final Map<MarioAnimationType, SoundManager.Event> ANIMATION_SOUND = Map.of(
+            MarioAnimationType.JUMP, SoundManager.Event.JUMP,
+            MarioAnimationType.WALK, SoundManager.Event.WALKING,
+            MarioAnimationType.HAMMER, SoundManager.Event.POWER_UP);
+
     private final SoundManager soundManager;
 
     private MarioAnimationType lastAnimation = MarioAnimationType.IDLE;
@@ -80,7 +85,7 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime,
             final int width, final int height) {
-        if (!(entity instanceof Mario mario)) {
+        if (!(entity instanceof final Mario mario)) {
             return;
         }
 
@@ -100,13 +105,12 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
         final int offsetY = drawHeight - baseHeight;
 
         g.drawImage(
-            frame,
-            (int) mario.getPosition().x() - offsetX,
-            (int) mario.getPosition().y() - offsetY,
-            drawWidth,
-            drawHeight,
-            null
-        );
+                frame,
+                (int) mario.getPosition().x() - offsetX,
+                (int) mario.getPosition().y() - offsetY,
+                drawWidth,
+                drawHeight,
+                null);
     }
 
     private BufferedImage getMarioFrame(final MainCharacter mario, final MarioAnimationType animation,
@@ -141,25 +145,35 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
      * @param animation animation mario is currently displaying
      */
     private void handleSoundForAnimation(final MarioAnimationType animation) {
-        if (this.soundManager == null) {
+        if (soundManager == null || animation == lastAnimation) {
             return;
         }
 
-        if (animation != lastAnimation) {
+        final SoundManager.Event lastEvent = ANIMATION_SOUND.get(lastAnimation);
+        if (lastEvent != null) {
+            soundManager.stop(lastEvent);
+        }
 
-            soundManager.stop(SoundManager.Event.WALKING);
-            soundManager.stop(SoundManager.Event.POWER_UP);
-
-            switch (animation) {
-                case JUMP -> soundManager.play(SoundManager.Event.JUMP);
-                case WALK -> soundManager.loop(SoundManager.Event.WALKING);
-                case HAMMER -> soundManager.play(SoundManager.Event.POWER_UP);
-                default -> {
+        if (animation.equals(MarioAnimationType.HAMMER)) {
+            final SoundManager.Event hammerEvent = ANIMATION_SOUND.get(MarioAnimationType.HAMMER);
+            if (hammerEvent != null) {
+                soundManager.play(hammerEvent);
+            }
+            final SoundManager.Event walkEvent = ANIMATION_SOUND.get(MarioAnimationType.WALK);
+            if (walkEvent != null) {
+                soundManager.loop(walkEvent);
+            }
+        } else {
+            final SoundManager.Event event = ANIMATION_SOUND.get(animation);
+            if (event != null) {
+                if (animation.equals(MarioAnimationType.WALK)) {
+                    soundManager.loop(event);
+                } else {
+                    soundManager.play(event);
                 }
             }
-
-            lastAnimation = animation;
         }
+        lastAnimation = animation;
     }
 
     /**

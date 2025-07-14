@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.impl.view.sound;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
@@ -31,15 +34,11 @@ public final class GameSoundManager implements SoundManager {
      */
     @Override
     public void play(final Event e) {
-        final Clip c = this.loader.loadClip(e.path());
-        if (c == null) {
-            return;
-        }
-        if (c.isRunning()) {
-            c.stop();
-        }
-        c.setFramePosition(0);
-        c.start();
+        this.withClip(e, Clip::isRunning, Clip::stop);
+        this.withClip(e, c -> true, c -> {
+            c.setFramePosition(0);
+            c.start();
+        });
     }
 
     /**
@@ -47,14 +46,11 @@ public final class GameSoundManager implements SoundManager {
      */
     @Override
     public void loop(final Event e) {
-        final Clip c = this.loader.loadClip(e.path());
-        if (c != null && !c.isRunning()) {
-            if (e == Event.WALKING) {
-                setVolume(c, LOWER_WALKING);
-            }
+        this.withClip(e, c -> e.equals(Event.WALKING), c -> this.setVolume(c, LOWER_WALKING));
+        this.withClip(e, c -> !c.isRunning(), c -> {
             c.setFramePosition(0);
             c.loop(Clip.LOOP_CONTINUOUSLY);
-        }
+        });
     }
 
     /**
@@ -62,10 +58,7 @@ public final class GameSoundManager implements SoundManager {
      */
     @Override
     public void stop(final Event e) {
-        final Clip c = this.loader.loadClip(e.path());
-        if (c != null && c.isRunning()) {
-            c.stop();
-        }
+        this.withClip(e, Clip::isRunning, Clip::stop);
     }
 
     /**
@@ -73,12 +66,8 @@ public final class GameSoundManager implements SoundManager {
      */
     @Override
     public void stopAll() {
-        for (final Event e : Event.values()) {
-            final Clip c = this.loader.loadClip(e.path());
-            if (c != null && c.isRunning()) {
-                c.stop();
-            }
-        }
+        Arrays.stream(Event.values())
+                .forEach(this::stop);
     }
 
     /**
@@ -86,12 +75,18 @@ public final class GameSoundManager implements SoundManager {
      */
     @Override
     public void dispose() {
-        for (final Event e : Event.values()) {
-            final Clip c = this.loader.loadClip(e.path());
-            if (c != null) {
-                c.close();
-            }
-        }
+        Arrays.stream(Event.values())
+                .forEach(e -> withClip(e, c -> true, Clip::close));
+    }
+
+    /**
+     * Helper method to perform an action on a Clip if present and condition is met.
+     */
+    private void withClip(final Event e, final java.util.function.Predicate<Clip> condition,
+            final Consumer<Clip> action) {
+        Optional.ofNullable(this.loader.loadClip(e.path()))
+                .filter(condition)
+                .ifPresent(action);
     }
 
     /**
