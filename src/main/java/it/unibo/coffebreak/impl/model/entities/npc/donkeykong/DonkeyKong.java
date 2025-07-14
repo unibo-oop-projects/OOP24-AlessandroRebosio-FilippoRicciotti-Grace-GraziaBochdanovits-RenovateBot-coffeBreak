@@ -66,13 +66,18 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {
         this.lastThrowTime += deltaTime;
         if (this.lastThrowTime >= BARREL_THROW_INTERVAL && this.canThrowBarrel) {
-            lastThrowTime = 0;
+            this.lastThrowTime = 0;
             this.isThrowing = true;
-            final Position spawPosition = new Position(super.getPosition().x(),
-                    super.getPosition().y() + super.getDimension().height());
-            return Optional.of(new GameBarrel(spawPosition, new BoundigBox(),
+
+            final float handX = super.getPosition().x() + super.getDimension().width() / 3f;
+            final float handY = super.getPosition().y() + super.getDimension().height() / 2f;
+
+            final Position spawnPosition = new Position(handX, handY);
+
+            return Optional.of(new GameBarrel(spawnPosition, new BoundigBox(),
                     random.nextFloat() < FIRE_BARREL_PROBABILITY));
         }
+
         this.isThrowing = false;
         return Optional.empty();
     }

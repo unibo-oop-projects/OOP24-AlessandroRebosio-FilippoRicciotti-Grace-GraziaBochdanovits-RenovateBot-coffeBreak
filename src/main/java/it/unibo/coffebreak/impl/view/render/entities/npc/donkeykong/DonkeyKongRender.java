@@ -19,14 +19,15 @@ public final class DonkeyKongRender extends AnimatedEntityRender<DonkeyKongRende
 
     private static final int SPRITE_WIDTH = 48;
     private static final int SPRITE_HEIGHT = 32;
-    private static final int X_OFFSET = 1;
+    private static final int X_ANGRY = 1;
+    private static final int X_THROW = 51;
     private static final int Y_ANGRY = 258;
     private static final int Y_THROW = 292;
     private static final int SPACING = 2;
 
     private static final Map<DKAnimationType, AnimationInfo> ANIMATIONS = Map.ofEntries(
-        Map.entry(DKAnimationType.ANGRY, new AnimationInfo(4, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_ANGRY, SPACING, 0.15f)),
-        Map.entry(DKAnimationType.THROW, new AnimationInfo(3, SPRITE_WIDTH, SPRITE_HEIGHT, X_OFFSET, Y_THROW, SPACING, 0.15f))
+        Map.entry(DKAnimationType.ANGRY, new AnimationInfo(4, SPRITE_WIDTH, SPRITE_HEIGHT, X_ANGRY, Y_ANGRY, SPACING, 0.15f)),
+        Map.entry(DKAnimationType.THROW, new AnimationInfo(2, SPRITE_WIDTH, SPRITE_HEIGHT, X_THROW, Y_THROW, SPACING, 0.15f))
     );
 
     private final DKAnimationStatus animationStatus = new DKAnimationStatus();
