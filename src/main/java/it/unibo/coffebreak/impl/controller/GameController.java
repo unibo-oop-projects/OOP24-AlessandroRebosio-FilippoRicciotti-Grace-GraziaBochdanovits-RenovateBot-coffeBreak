@@ -78,7 +78,7 @@ public class GameController implements Controller {
     @Override
     public void keyPressed(final int keyCode) {
         this.input.getAction(keyCode)
-                .ifPresent(this.commandQueue::offer);
+                .ifPresent(this.commandQueue::add);
     }
 
     /**
