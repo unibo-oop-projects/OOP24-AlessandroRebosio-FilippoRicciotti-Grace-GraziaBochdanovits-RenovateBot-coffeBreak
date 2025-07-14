@@ -7,14 +7,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.action.Action;
-import it.unibo.coffebreak.api.controller.input.KeyActionMapper;
+import it.unibo.coffebreak.api.controller.mapper.KeyActionMapper;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.common.Vector;
-import it.unibo.coffebreak.impl.controller.input.StandardKeyMapper;
+import it.unibo.coffebreak.impl.controller.mapper.StandardKeyMapper;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
