@@ -230,46 +230,68 @@ del team, migliorando l'efficienza della collaborazione.
 \newpage
 \subsection{Grazia Bochdanovits de Kavna}
 \textbf{Gestione degli stati di Mario}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/MarioState.svg}
+	\caption{UML dell'applicazione dello State Pattern per i diversi stati di Mario.}
+	\label{img:MarioState}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
-	      Il personaggio di Mario deve adattare il suo comportamento in base al suo stato (normale o con il martello), ma un'implementazione basata su flag booleani avrebbe violato il principio Open/Closed,
-	      richiedendo modifiche invasive alla classe di Mario per aggiungere nuovi stati. Questo approccio avrebbe inoltre generato una complessa struttura condizionale, rendendo il codice difficile da mantenere e poco scalabile.
+	      Il personaggio di Mario deve poter modificare il suo comportamento in base allo stato in cui si trova (ad esempio normale o con il martello).
+		  Un'implementazione basata su flag booleani o strutture condizionali annidate, avrebbe introdotti diversi problemi architetturali: in particolare,
+		  avrebbe violato il principio Open/Closed, in quanto un nuovo stato avrebbe richiesto modificiche dirette alla classe di Mario.
 
 	\item[\textbf{Soluzione}]
-	      Per risolvere il problema abbiamo adottato lo \textbf{State Pattern}, che ha permesso di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
-	      incapsulati i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
-	      La soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
+	      Per risolvere il problema abbiamo deciso di adottare lo \textbf{State Pattern}, che consente di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
+	      definiti i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
+	      la classe di \texttt{Mario} mantiene semplicemente un riferimento allo stato attuale, e delega ad esso tutte le operazioni.
+		  Questa soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
 \end{description}
 
 \noindent
-\textbf{Gestione delle entità}
+\textbf{Architettura delle entità}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/AbstractEntity.svg}
+	\caption{UML dell'applicazione del Template Method Pattern per le entità.}
+	\label{img:AbstractEntity}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
-	      Il gioco include numerose entità con caratteristiche sia comuni che specifiche. Senza una adeguata astrazione, si sarebbe verificata una pericolosa duplicazione di codice per la gestione degli attributi
-	      comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere e soggetto a errori.
+	      La gestione di numerose entità di gioco, caratterizzate da attributi comuni (come posizione, dimensione e velocità) ma anche da comportamenti specifici, ha rappresentato una delle
+		  principali sfide progettuali. Senza un'adeguata strategia di astrazione e riuso di codice, si sarebbe rapidamente generata una pericolosa duplicazione, con gravi conseguenze sulla manutenibilità
+		  e sull'affidabilità del sistema. In particolare, ogni modifica alla logica condivisa avrebbe richiesto interventi ridondanti in più classi, aumentando il rischio di errori e incoerenze.
 
 	\item[\textbf{Soluzione}]
-	      L'adozione del \textbf{Template Method} ha permesso di creare una gerarchia multilivello di classi astratte. La classe base \texttt{AbstractEntity} è stata progettata per incapsulare tutta la logica comune
-	      alle entità, mentre classi intermedie come \texttt{AbstractEnemy} o \texttt{AbstractPlatform} hanno catturato i comportamenti condivisi da gruppi specifici di entità.
-	      Le classi concrete, a loro volta, hanno potuto specializzare solo gli aspetti veramente unici di ciscuna entità. Questa architettura ha notevolemente migliorato il riuso, semplificando l'estensione del sistema
-	      con l'aggiunta di nuove entità.
-
+	      Per affrontare questa complessità è stato adottato il \textbf{Template Method Pattern}, all'interno di una gerarchia multilivello di classi astratte. Questo approccio ha permesso di definire una struttura
+		  solida e flessibile, in grado di bilanciare riuso, estendibilità e chiarezza del codice.
+		  La classe base \texttt{AbstractEntity} incapsula tutta la logica comune, fungendo da fondamento per l'intero sistema di entità. Le classi intermedie, come \texttt{AbstractEnemy} e \texttt{AbstractPlatform},
+		  hanno invece catturato comportamenti e proprietà condivise da insiemi specifici di entità, creando un ulteriore livello di riuso e specializzazione.
+		  Infine le classi concrete hanno potuto concentrarsi esclusivamente sui comportamenti distintivi, sfruttando i metodi ereditati e ridefinendo solo quelli realmente necessari.
+		  Questa progettazione basata sul Templete Method ha permesso la realizzazione di un sistema robusto, scalabile e facilmente estendibile.
 \end{description}
 
 \noindent
 \textbf{Gestione del rendering delle entità}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameRenderManager.svg}
+	\caption{UML dell'applicazione dello Strategy Pattern per i rendering delle entità di gioco.}
+	\label{img:GameRenderManager}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
-	      Il sistema di rendering doveva gestire numerose entità con caratteristiche grafiche diverse. Un aproccio centralizzato avrebbe creato un accoppiamento eccessivo
-	      tra la logica di rendering e le implementazioni delle singole entità, rendendo il sistema rigido e difficilmente estendibile.
-	      Inoltre, la necessità di gestire operazioni comuni (come il caricamento degli sprite) in modo indipendente, avrebbe portato a una significativa duplicazione di codice
-	      violando il principio DRY.
+	      Il sistema di rendering doveva gestire un ampio numero di entità, ciascuna con caratteristiche grafiche specifiche. Un approccio centralizzato avrebbe comportato un forte accoppiamento tra la logica di rendering e
+		  le implementazioni delle singole entità, compromettendo la modularità e rendendo il sistema rigido e difficilmente estensibile. Inoltre, la gestione ridondante di operazioni comuni, come il caricamento degli sprite, avrebbe
+		  portato a una significativa duplicazione del codice, violando il principio DRY.
 
 	\item[\textbf{Soluzione}]
-	      Abbiamo implementato un'architettura che combina lo \textbf{Strategy Pattern} con un registro di renderer. Ciascuna entità dispone di un renderer dedicato che implementa l'interfaccia \texttt{EntityRender}.
-	      Il \texttt{GameRenderManager} utilizza una mappa di registrazione per associare dinamicamente ogni tipo di entità al corrispondente renderer. Questa soluzione riduce l'accoppiamento, facilita l'aggiunta di
-	      nuovi renderer e migliora l'efficienza grazie all'inizializzazione unica dei componenti.
+	      Per affrontare questa sfida, è stata adottata una soluzione basata sulla combinazione dello \textbf{Strategy Pattern} con un meccanismo di registrazione dinamica dei renderer. Ogni entità dispone di un renderer dedicato che implementa l’interfaccia \texttt{EntityRender},
+		  responsabile della logica di disegno specifica. Il componente centrale \texttt{GameRenderManager} utilizza una mappa di registrazione per associare, in fase di esecuzione, ogni tipo di entità al relativo renderer.  
+	      Questo approccio ha permesso di ridurre drasticamente l’accoppiamento tra logica di gioco e logica grafica, ha semplificato l’aggiunta di nuove entità o stili di rendering, e ha permesso il riuso efficiente delle risorse grazie all’inizializzazione controllata dei componenti condivisi.
 \end{description}
+
 
 \newpage
 \subsection{Filippo Ricciotti}
@@ -477,6 +499,16 @@ La realizzazione di questo progetto ha rappresentato per me un'esperienza format
 Essendo il mio primo progetto strutturato di queste dimensioni, ho posto particolare attenzione alla scrittura di codice chiaro, modulare ed espandibile, principi che si sono rivelati fondamentali per facilitare la manutenzione e l'evoluzione del software. Aver lavorato su un progetto concreto mi ha permesso di comprendere meglio tutto l'ambiente di sviluppo: dall'utilizzo avanzato di strumenti come Git per il controllo di versione, alla gestione delle dipendenze con Gradle, fino alle metodologie di testing con JUnit.
 
 All'interno del gruppo ho ricoperto diversi ruoli, concentrandomi principalmente sullo sviluppo del Controller e definendo le basi architetturali per la View, successivamente sviluppata dai miei colleghi. Questa esperienza trasversale mi ha permesso di sperimentare direttamente la sincronizzazione e l'interazione tra le diverse componenti dell'architettura MVC, approfondendo la comprensione delle dinamiche di progettazione in un contesto collaborativo reale.
+
+\subsection{Grazia Bochdanovits de Kavna}
+Lavorare alla realizzazione di questo progetto stata per me un'esperienza formativa importante, sia dal punto di vista tecnico che umano.
+Mi ha permesso non solo di consolidare le competenze acquisite durante l'anno accademico, ma anche di sperimentare dinamiche lavorative e progettuali che vanno oltre il contesto puramente teorico.
+Nello specifico, ho avuto modo di approfondire l'applicazione di diversi pattern di progettazione, affrontando problemi reali come la gestione dell'evoluzione di un personaggio, la separazione delle
+responsabilità e l'organizzazione gerarchica delle classi. Questi aspetti mi hanno permesso di acquisire una maggiore padronanza nella progettazione modulare e nell'applicazione di pattern architetturali, acnhe se riconosco che ci sono
+sempre margini di miglioramento, specialmente nell'ottimizzazione del codice.
+Il lavoro di squadra, sebbene talvolta complesso, è stato fondamentale per comprendere l'importanza di una comunicazione attiva e di una buona organizzazione del lavoro.
+Mi insegnato ad accettare feedback costruttivi, e ad acquisire una maggiore consapevolezza del valore del mio contributo all'interno di questo progetto.
+Questa esperienza è stata un'anteprima preziosa di ciò che il mondo del lavoro può riservare, e mi ha motivato a continuare a crescere professionalmente.
 
 \subsection{Filippo Ricciotti}
 Riflettendo sul progetto svolto, mi rendo conto che avrei potuto dedicare più tempo e attenzione a questo progetto rispetto che ad altri esami, bilanciando meglio le priorità. Questo avrebbe sicuramente alleggerito il carico di lavoro per tutto il gruppo, soprattutto in alcune fasi critiche come l’integrazione tra le varie componenti e la gestione dei dettagli tecnici. Alcune difficoltà incontrate, come la sincronizzazione tra Model, View e Controller avrebbero richiesto meno sforzo complessivo se mi fossi impegnato con maggiore costanza.
