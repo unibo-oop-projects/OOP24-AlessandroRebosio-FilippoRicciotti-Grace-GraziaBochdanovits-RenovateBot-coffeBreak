@@ -186,7 +186,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
             }
             case final Collectible collectible -> collectible.collect(this);
             case final Princess princess -> princess.rescue();
-            case final DonkeyKong donkey -> this.loseLife();
+            case final DonkeyKong donkey -> this.loseLife(); 
             default -> {
             }
         }

@@ -25,13 +25,17 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.AbstractMarioState;
  */
 public class NormalState extends AbstractMarioState {
 
+    private static final float INVINCIBILITY_TIME = 2.0f;
+
     private boolean canClimb;
+    private float invincibilityTimer;
 
     /**
      * Updates the normal state for each frame.
      * Resets the climbing flag to false at the beginning of each update cycle.
      * This ensures that climbing is only possible when actively colliding with a
      * ladder.
+     * Also manages the invincibility timer to prevent rapid life loss.
      * 
      * @param character the main character (Mario) to update
      * @param deltaTime the time elapsed since the last update in seconds
@@ -39,10 +43,16 @@ public class NormalState extends AbstractMarioState {
     @Override
     public void update(final MainCharacter character, final float deltaTime) {
         this.canClimb = false;
+
+        if (this.invincibilityTimer > 0) {
+            this.invincibilityTimer -= deltaTime;
+        }
     }
 
     /**
      * Handles collisions with other entities.
+     * Includes invincibility timer to prevent rapid life loss from multiple
+     * collisions.
      * 
      * @param character the Mario instance involved in the collision
      * @param other     the entity colliding with Mario
@@ -50,7 +60,12 @@ public class NormalState extends AbstractMarioState {
     @Override
     public void handleCollision(final MainCharacter character, final Entity other) {
         switch (other) {
-            case final Enemy enemy -> character.loseLife();
+            case final Enemy enemy -> {
+                if (this.invincibilityTimer <= 0) {
+                    character.loseLife();
+                    this.invincibilityTimer = INVINCIBILITY_TIME; 
+                }
+            }
             case final Ladder ladder -> this.canClimb = true;
             default -> {
             }
