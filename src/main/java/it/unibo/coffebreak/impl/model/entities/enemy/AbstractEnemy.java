@@ -34,16 +34,21 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy, Phy
     private boolean onPlatform = true;
     private boolean movingRight = true;
 
+    private final int value;
+
     /**
-     * Constructs a new AbstractEnemy with the specified position and dimension.
+     * Constructs a new AbstractEnemy with the specified position, dimension, and
+     * score value.
      * 
      * @param position  the initial position of the enemy in 2D space (cannot be
      *                  null)
      * @param dimension the dimension of the enemy in the game world
+     * @param value     the score value awarded for destroying this enemy
      * @throws NullPointerException if position or dimension are null
      */
-    public AbstractEnemy(final Position position, final BoundigBox dimension) {
+    public AbstractEnemy(final Position position, final BoundigBox dimension, final int value) {
         super(position, dimension);
+        this.value = value;
     }
 
     /**
@@ -87,8 +92,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy, Phy
      * current movement direction:
      * </p>
      * <ul>
-     *   <li>Positive speed when moving right</li>
-     *   <li>Negative speed when moving left</li>
+     * <li>Positive speed when moving right</li>
+     * <li>Negative speed when moving left</li>
      * </ul>
      *
      * @param baseSpeed the absolute speed value (always positive)
@@ -119,5 +124,13 @@ public abstract class AbstractEnemy extends AbstractEntity implements Enemy, Phy
      */
     protected boolean isOnPlatform() {
         return this.onPlatform;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int killValue() {
+        return this.value;
     }
 }

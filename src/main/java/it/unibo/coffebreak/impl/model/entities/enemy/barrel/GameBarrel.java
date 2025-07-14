@@ -33,6 +33,8 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  */
 public class GameBarrel extends AbstractEnemy implements Barrel {
 
+    private static final int VALUE = 100;
+
     private static final float BARREL_SPEED = 40f;
 
     private final boolean canTransformToFire;
@@ -50,7 +52,7 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * @throws NullPointerException if position, dimension or physics are null
      */
     public GameBarrel(final Position position, final BoundigBox dimension, final boolean canTransformToFire) {
-        super(position, dimension);
+        super(position, dimension, VALUE);
         this.canTransformToFire = canTransformToFire;
 
         this.setVelocity(new Vector(BARREL_SPEED, 0f));

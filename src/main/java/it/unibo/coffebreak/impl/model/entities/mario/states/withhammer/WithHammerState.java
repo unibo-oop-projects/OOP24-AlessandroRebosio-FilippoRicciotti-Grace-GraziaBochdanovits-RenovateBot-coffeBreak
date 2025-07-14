@@ -90,6 +90,7 @@ public class WithHammerState extends AbstractMarioState {
     public void handleCollision(final MainCharacter character, final Entity other) {
         if (other instanceof final Enemy enemy) {
             enemy.destroy();
+            character.earnPoints(enemy.killValue());
             this.didDesoyedEnemy = true;
         }
     }

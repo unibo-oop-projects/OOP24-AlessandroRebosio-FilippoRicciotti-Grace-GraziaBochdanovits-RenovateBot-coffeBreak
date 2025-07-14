@@ -21,6 +21,8 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  */
 public class GameFire extends AbstractEnemy implements Fire {
 
+    private static final int VALUE = 200;
+
     private static final float FIRE_SPEED = 20f;
     private static final float CLIMB_PROBABILITY = 0.3f;
     private static final float CHANGE_DIRECTION_INTERVAL = 2.0f;
@@ -39,7 +41,7 @@ public class GameFire extends AbstractEnemy implements Fire {
      * @param dimension the dimension of the fire in the game world
      */
     public GameFire(final Position position, final BoundigBox dimension) {
-        super(position, dimension);
+        super(position, dimension, VALUE);
 
         this.setVelocity(new Vector(FIRE_SPEED, 0f));
     }

@@ -18,4 +18,11 @@ public interface Enemy extends Entity {
      * @return true if this enemy has been destroyed, false otherwise
      */
     boolean isDestroyed();
+
+    /**
+     * Returns the score value awarded for destroying this enemy.
+     *
+     * @return the number of points awarded for killing this enemy
+     */
+    int killValue();
 }
