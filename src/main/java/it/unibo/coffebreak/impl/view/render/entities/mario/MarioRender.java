@@ -123,9 +123,9 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
      */
     private MarioAnimationType resolveAnimationType(final MainCharacter mario) {
         final List<Map.Entry<Predicate<MainCharacter>, MarioAnimationType>> conditions = List.of(
+                Map.entry(m -> m.getCurrentState() instanceof WithHammerState, MarioAnimationType.HAMMER),
                 Map.entry(m -> m.isClimbing(), MarioAnimationType.CLIMB),
                 Map.entry(MainCharacter::isJumping, MarioAnimationType.JUMP),
-                Map.entry(m -> m.getCurrentState() instanceof WithHammerState, MarioAnimationType.HAMMER),
                 Map.entry(m -> Math.abs(m.getVelocity().x()) > 0.0f, MarioAnimationType.WALK));
 
         return conditions.stream()
