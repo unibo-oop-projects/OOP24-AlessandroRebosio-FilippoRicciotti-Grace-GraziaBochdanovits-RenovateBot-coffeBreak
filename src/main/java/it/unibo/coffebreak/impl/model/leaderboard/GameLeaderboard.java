@@ -61,6 +61,9 @@ public class GameLeaderboard implements Leaderboard {
      */
     @Override
     public boolean addEntry(final Entry entry) {
+        if (entry.score() == 0) {
+            return false;
+        }
         final boolean isAdded = this.entries.add(Objects.requireNonNull(entry, "The entry cannot be null"));
         this.entries.sort(Comparator.comparingInt(Entry::score).reversed());
 
