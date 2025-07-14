@@ -232,8 +232,8 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione degli stati di Mario}
 \begin{figure}[H]
 	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/marioState.svg}
-	\caption{UML dell'applicazione dello Strategy Pattern per i diversi stati di Mario.}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/MarioState.svg}
+	\caption{UML dell'applicazione dello State Pattern per i diversi stati di Mario.}
 	\label{img:MarioState}
 \end{figure}
 \begin{description}
@@ -249,10 +249,16 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione delle entità}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/AbstractEntity.svg}
+	\caption{UML dell'applicazione del Template Method Pattern per le entità.}
+	\label{img:AbstractEntity}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il gioco include numerose entità con caratteristiche sia comuni che specifiche. Senza una adeguata astrazione, si sarebbe verificata una pericolosa duplicazione di codice per la gestione degli attributi
-	      comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere e soggetto a errori.
+	      comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere.
 
 	\item[\textbf{Soluzione}]
 	      L'adozione del \textbf{Template Method} ha permesso di creare una gerarchia multilivello di classi astratte. La classe base \texttt{AbstractEntity} è stata progettata per incapsulare tutta la logica comune
@@ -264,6 +270,12 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione del rendering delle entità}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameRenderManager.svg}
+	\caption{UML dell'applicazione dello Strategy Pattern per i rendering delle entità di gioco.}
+	\label{img:GameRenderManager}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il sistema di rendering doveva gestire numerose entità con caratteristiche grafiche diverse. Un aproccio centralizzato avrebbe creato un accoppiamento eccessivo
