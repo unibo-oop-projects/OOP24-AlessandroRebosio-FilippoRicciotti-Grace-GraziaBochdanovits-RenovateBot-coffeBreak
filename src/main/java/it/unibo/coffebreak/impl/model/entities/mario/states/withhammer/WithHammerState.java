@@ -71,16 +71,6 @@ public class WithHammerState extends AbstractMarioState {
     }
 
     /**
-     * Checks if the hammer state has expired.
-     *
-     * @return true if the current time is past the expiration time, false otherwise
-     */
-    @Override
-    public boolean isExpired() {
-        return System.currentTimeMillis() >= expirationTime;
-    }
-
-    /**
      * Updates hammer state logic.
      * <ul>
      * <li>Checks for expiration</li>
@@ -113,5 +103,14 @@ public class WithHammerState extends AbstractMarioState {
         if (other instanceof final Enemy enemy) {
             enemy.destroy();
         }
+    }
+
+    /**
+     * Checks if the hammer state has expired.
+     *
+     * @return true if the current time is past the expiration time, false otherwise
+     */
+    protected boolean isExpired() {
+        return System.currentTimeMillis() >= expirationTime;
     }
 }

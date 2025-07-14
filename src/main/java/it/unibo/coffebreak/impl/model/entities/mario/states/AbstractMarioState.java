@@ -51,14 +51,6 @@ public abstract class AbstractMarioState implements CharacterState {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public boolean isExpired() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
      * 
      * @return false by default as Mario cannot climb in basic states
      */

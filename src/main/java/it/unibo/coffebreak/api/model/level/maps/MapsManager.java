@@ -48,6 +48,13 @@ public interface MapsManager {
     boolean shouldAdvance(List<Entity> entities);
 
     /**
+     * Determines whether the level index should be increased.
+     * 
+     * @return true if the level index should be increased, false otherwise
+     */
+    boolean shouldIncreaseLevelIndex();
+
+    /**
      * Determines whether Donkey is allowed to throw a barrel in the current map
      * state.
      * This method must be implemented by subclasses to specify the conditions under

@@ -13,13 +13,6 @@ import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 public interface CharacterState extends State<MainCharacter> {
 
     /**
-     * Checks if the hammer state has expired.
-     *
-     * @return true if the current time is past the expiration time, false otherwise
-     */
-    boolean isExpired();
-
-    /**
      * @return true if the character can climb in this state
      */
     boolean canClimb();

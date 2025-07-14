@@ -11,33 +11,6 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 public interface Platform extends Entity {
 
     /**
-     * Enum representing the possible sides where a collision can occur between
-     * entities.
-     */
-    enum CollisionSide {
-        /**
-         * Collision with the top side of the platform.
-         */
-        TOP,
-        /**
-         * Collision with the bottom side of the platform.
-         */
-        BOTTOM,
-        /**
-         * Collision with the left side of the platform.
-         */
-        LEFT,
-        /**
-         * Collision with the right side of the platform.
-         */
-        RIGHT,
-        /**
-         * No collision or undetermined collision side.
-         */
-        NONE
-    }
-
-    /**
      * Destroys or breaks the platform, changing its state.
      */
     void destroy();
@@ -56,14 +29,4 @@ public interface Platform extends Entity {
      *         false if it's still intact and functional
      */
     boolean isBroken();
-
-    /**
-     * Determines the side of this platform on which the specified entity
-     * is colliding.
-     * 
-     * @param other the entity to check collision side against
-     * @return the {@link CollisionSide} indicating the side of this platform
-     *         involved in the collision with the other entity
-     */
-    CollisionSide getCollisionSide(Entity other);
 }

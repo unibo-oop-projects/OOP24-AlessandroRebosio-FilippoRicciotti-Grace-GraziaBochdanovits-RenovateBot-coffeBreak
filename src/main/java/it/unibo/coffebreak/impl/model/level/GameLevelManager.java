@@ -25,7 +25,9 @@ import it.unibo.coffebreak.impl.model.level.maps.GameMapsManager;
 public class GameLevelManager implements LevelManager {
 
     private static final float BONUS_INTERVAL = 2f;
-    private static final int BONUS = 5000;
+    private static final int MIN_BONUS = 5000;
+    private static final int MAX_BONUS = 9000;
+    private static final int SUPPLY = 1000;
 
     private final EntityManager entityManager = new GameEntityManager();
     private final Bonus levelBonus = new GameBonus();
@@ -81,7 +83,7 @@ public class GameLevelManager implements LevelManager {
      */
     @Override
     public void loadCurrentEntities() {
-        this.levelBonus.setBonus(BONUS);
+        this.levelBonus.setBonus(this.getBonusAmount());
         this.entityManager.loadEntities(this.mapsManager.currentMap(), this.mapsManager.canDonkeyThrowBarrel());
     }
 
@@ -120,7 +122,9 @@ public class GameLevelManager implements LevelManager {
     public void advance() {
         if (this.mapsManager.advance(this.getEntities())) {
             this.getMainCharacter().ifPresent(p -> p.earnPoints(this.getBonusValue()));
-            this.levelIndex++;
+            if (this.mapsManager.shouldIncreaseLevelIndex()) {
+                this.levelIndex++;
+            }
             this.loadCurrentEntities();
         }
     }
@@ -147,5 +151,9 @@ public class GameLevelManager implements LevelManager {
     @Override
     public void resetCharacter() {
         this.entityManager.resetCharacter();
+    }
+
+    private int getBonusAmount() {
+        return Math.min(SUPPLY * this.levelIndex + MIN_BONUS, MAX_BONUS);
     }
 }

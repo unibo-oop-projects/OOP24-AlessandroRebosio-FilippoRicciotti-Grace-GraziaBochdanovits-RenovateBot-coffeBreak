@@ -27,8 +27,10 @@ public class GameMapsManager implements MapsManager {
     private int mapIndex;
 
     /**
-     * Constructs a new {@code GameMapsManager} and initializes the list of game maps.
-     * Adds predefined game maps to the manager using the provided {@link Loader} instance.
+     * Constructs a new {@code GameMapsManager} and initializes the list of game
+     * maps.
+     * Adds predefined game maps to the manager using the provided {@link Loader}
+     * instance.
      *
      * @param loader the {@link Loader} used to initialize each game map
      */
@@ -85,6 +87,14 @@ public class GameMapsManager implements MapsManager {
     @Override
     public boolean shouldAdvance(final List<Entity> entities) {
         return this.getMaps().shouldAdvance(entities);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean shouldIncreaseLevelIndex() {
+        return this.mapIndex == 0;
     }
 
     /**

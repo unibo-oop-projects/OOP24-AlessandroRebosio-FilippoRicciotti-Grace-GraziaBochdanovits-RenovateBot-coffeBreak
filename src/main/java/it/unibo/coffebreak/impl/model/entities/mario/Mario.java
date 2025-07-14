@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.mario;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
@@ -21,6 +22,7 @@ import it.unibo.coffebreak.impl.model.entities.mario.lives.GameLivesManager;
 import it.unibo.coffebreak.impl.model.entities.mario.score.GameScore;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
+import it.unibo.coffebreak.impl.model.entities.npc.donkeykong.DonkeyKong;
 import it.unibo.coffebreak.impl.model.physics.GamePhysics;
 
 /**
@@ -56,7 +58,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     private final Physics physics = new GamePhysics();
     private final Score score = new GameScore();
 
-    private CharacterState currentState;
+    private Optional<CharacterState> currentState = Optional.empty();
 
     private boolean onPlatform;
     private boolean isFacingRight;
@@ -89,7 +91,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void update(final float deltaTime) {
-        this.currentState.update(this, deltaTime);
+        this.currentState.ifPresent(state -> state.update(this, deltaTime));
     }
 
     /**
@@ -100,11 +102,9 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public final void changeState(final Supplier<CharacterState> stateSupplier) {
-        if (this.currentState != null) {
-            this.currentState.onExit(this);
-        }
-        this.currentState = Objects.requireNonNull(stateSupplier.get(), "NewState cannot be null");
-        this.currentState.onEnter(this);
+        this.currentState.ifPresent(state -> state.onExit(this));
+        this.currentState = Optional.of(Objects.requireNonNull(stateSupplier.get(), "NewState cannot be null"));
+        this.currentState.ifPresent(state -> state.onEnter(this));
     }
 
     /**
@@ -116,7 +116,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void moveLeft() {
-        handleHorizontalMovement(false, this.physics.moveLeft());
+        this.handleHorizontalMovement(false, this.physics.moveLeft());
     }
 
     /**
@@ -128,7 +128,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void moveRight() {
-        handleHorizontalMovement(true, this.physics.moveRight());
+        this.handleHorizontalMovement(true, this.physics.moveRight());
     }
 
     /**
@@ -140,7 +140,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void moveUp() {
-        handleClimbingMovement(this.physics.moveUp());
+        this.handleClimbingMovement(this.physics.moveUp());
     }
 
     /**
@@ -152,7 +152,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void moveDown() {
-        handleClimbingMovement(this.physics.moveDown());
+        this.handleClimbingMovement(this.physics.moveDown());
     }
 
     /**
@@ -165,9 +165,9 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public void jump() {
-        if (canJump()) {
+        if (this.canJump()) {
             this.isJumping = true;
-            updateVelocity(this.physics.jump(), true);
+            this.updateVelocity(this.physics.jump(), true);
         }
     }
 
@@ -186,10 +186,11 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
             }
             case final Collectible collectible -> collectible.collect(this);
             case final Princess princess -> princess.rescue();
+            case final DonkeyKong donkey -> this.loseLife();
             default -> {
             }
         }
-        this.currentState.handleCollision(this, other);
+        this.currentState.ifPresent(state -> state.handleCollision(this, other));
     }
 
     /**
@@ -205,7 +206,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      */
     @Override
     public CharacterState getCurrentState() {
-        return this.currentState;
+        return this.currentState.orElse(new NormalState());
     }
 
     /**
@@ -342,7 +343,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     private void handleHorizontalMovement(final boolean facingRight, final Vector movementVector) {
         if (!this.isClimbing) {
             this.isFacingRight = facingRight;
-            updateVelocity(movementVector, false);
+            this.updateVelocity(movementVector, false);
         }
     }
 
@@ -352,9 +353,9 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      * @param movementVector the movement vector from physics
      */
     private void handleClimbingMovement(final Vector movementVector) {
-        if (this.currentState.canClimb()) {
+        if (this.currentState.map(CharacterState::canClimb).orElse(false)) {
             this.isClimbing = true;
-            updateVelocity(movementVector, true);
+            this.updateVelocity(movementVector, true);
         }
     }
 
@@ -364,6 +365,6 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
      * @return true if Mario can jump
      */
     private boolean canJump() {
-        return this.onPlatform && !this.isJumping && this.currentState.canJump();
+        return this.onPlatform && !this.isJumping && this.currentState.map(CharacterState::canJump).orElse(false);
     }
 }

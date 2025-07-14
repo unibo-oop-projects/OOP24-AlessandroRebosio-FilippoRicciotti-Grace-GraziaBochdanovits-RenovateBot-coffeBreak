@@ -20,7 +20,6 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  */
 public abstract class AbstractPlatform extends AbstractEntity implements Platform {
 
-    private static final float EPSILON = 1.0f;
     private final boolean canGoDown;
 
     /**
@@ -57,51 +56,6 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     public void onCollision(final Entity other) {
         other.setPosition(new Position(other.getPosition().x(),
                 this.getPosition().y() - other.getDimension().height()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CollisionSide getCollisionSide(final Entity other) {
-        final float platformTop = this.getPosition().y();
-        final float platformBottom = platformTop + this.getDimension().height();
-        final float platformLeft = this.getPosition().x();
-        final float platformRight = platformLeft + this.getDimension().width();
-
-        final float otherTop = other.getPosition().y();
-        final float otherBottom = otherTop + other.getDimension().height();
-        final float otherLeft = other.getPosition().x();
-        final float otherRight = otherLeft + other.getDimension().width();
-
-        final float overlapTop = otherBottom - platformTop;
-        final float overlapBottom = platformBottom - otherTop;
-        final float overlapLeft = otherRight - platformLeft;
-        final float overlapRight = platformRight - otherLeft;
-
-        final boolean horizontallyOverlapping =
-                otherRight > platformLeft + EPSILON && otherLeft < platformRight - EPSILON;
-        if (Math.abs(overlapTop) < EPSILON && horizontallyOverlapping) {
-            return CollisionSide.TOP;
-        }
-
-        final float minOverlap = Math.min(Math.min(overlapTop, overlapBottom),
-                                        Math.min(overlapLeft, overlapRight));
-
-        if (Math.abs(minOverlap - overlapTop) < EPSILON) {
-            return CollisionSide.TOP;
-        }
-        if (Math.abs(minOverlap - overlapBottom) < EPSILON) {
-            return CollisionSide.BOTTOM;
-        }
-        if (Math.abs(minOverlap - overlapLeft) < EPSILON) {
-            return CollisionSide.LEFT;
-        }
-        if (Math.abs(minOverlap - overlapRight) < EPSILON) {
-            return CollisionSide.RIGHT;
-        }
-
-        return CollisionSide.NONE;
     }
 
     /**

@@ -72,6 +72,6 @@ public class GameLeaderboard implements Leaderboard {
      */
     @Override
     public boolean save() {
-        return this.repository.save(this.entries);
+        return this.repository.save(this.getTopScores());
     }
 }

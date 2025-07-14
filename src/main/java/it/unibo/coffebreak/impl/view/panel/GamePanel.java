@@ -39,7 +39,7 @@ import it.unibo.coffebreak.impl.view.states.pause.PauseView;
  */
 public class GamePanel extends JPanel implements Panel {
 
-    private static final float TARGET_ASPECT_RATIO = 9f / 16f;
+    private static final float TARGET_ASPECT_RATIO = 4f / 3f;
     private static final float SCREEN_SCALE = 0.7f;
 
     @Serial

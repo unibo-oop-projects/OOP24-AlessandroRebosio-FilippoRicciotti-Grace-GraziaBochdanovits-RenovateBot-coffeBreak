@@ -185,7 +185,7 @@ class TestWithHammerState {
         }
 
         @Override
-        public boolean isExpired() {
+        protected boolean isExpired() {
             return testCurrentTime >= testExpirationTime;
         }
 

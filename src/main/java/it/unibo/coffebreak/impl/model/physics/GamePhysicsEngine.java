@@ -165,8 +165,7 @@ public class GamePhysicsEngine implements PhysicsEngine {
         return model.getEntities().stream()
                 .filter(Platform.class::isInstance)
                 .map(Platform.class::cast)
-                .anyMatch(platform -> entity.collidesWith(platform)
-                        && platform.getCollisionSide(entity) == Platform.CollisionSide.TOP);
+                .anyMatch(entity::collidesWith);
     }
 
     /**

@@ -64,4 +64,12 @@ public class PauseModelState extends AbstractModelState {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onExit(final Model model) {
+        model.addEntry("");
+    }
+
 }

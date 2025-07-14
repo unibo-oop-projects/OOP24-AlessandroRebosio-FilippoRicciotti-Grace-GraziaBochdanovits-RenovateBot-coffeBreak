@@ -70,7 +70,7 @@ public class InGameModelState extends AbstractModelState {
             }
         });
 
-        if (currentLives != player.getLives()) {
+        if (currentLives != player.getLives() || model.getBonusValue() == 0) {
             model.initialEntitiesState();
         }
 

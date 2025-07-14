@@ -1,6 +1,7 @@
 package it.unibo.coffebreak.impl.model.entities.structure.ladder;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
+import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -39,6 +40,33 @@ public abstract class AbstractLadder extends AbstractEntity implements Ladder {
      */
     @Override
     public void onCollision(final Entity other) {
-        // Default empty implementation
+        switch (other) {
+            case final MainCharacter character -> {
+                if (character.isClimbing()) {
+                    this.centerCharacterOnLadder(character);
+                }
+            }
+            default -> {
+
+            }
+        }
+    }
+
+    /**
+     * Centers the character horizontally on this ladder.
+     * <p>
+     * Calculates the center position of the ladder and adjusts the character's
+     * X position to align with it, ensuring smooth climbing behavior.
+     * </p>
+     * 
+     * @param entity the entity to center on the ladder
+     */
+    private void centerCharacterOnLadder(final Entity entity) {
+        final float ladderCenterX = this.getPosition().x() + this.getDimension().width() / 2f;
+        final float characterHalfWidth = entity.getDimension().width() / 2f;
+        final float centeredX = ladderCenterX - characterHalfWidth;
+
+        final var currentPos = entity.getPosition();
+        entity.setPosition(new Position(centeredX, currentPos.y()));
     }
 }
