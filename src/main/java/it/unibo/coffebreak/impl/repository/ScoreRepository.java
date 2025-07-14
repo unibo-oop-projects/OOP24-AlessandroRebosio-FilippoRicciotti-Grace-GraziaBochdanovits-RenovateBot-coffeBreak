@@ -11,7 +11,7 @@ import java.util.Objects;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.repository.Repository;
 import it.unibo.coffebreak.api.repository.filemanager.FileManager;
-import it.unibo.coffebreak.impl.repository.filemanager.GameFileManager;
+import it.unibo.coffebreak.impl.repository.filemanager.ScoreFileManager;
 
 /**
  * A file-based repository implementation using Java serialization
@@ -31,7 +31,7 @@ public class ScoreRepository implements Repository<List<Entry>> {
      * manager. Initializes an empty list when no data file is available.
      */
     public ScoreRepository() {
-        this.fileManager = new GameFileManager(FOLDER, FILE_NAME);
+        this.fileManager = new ScoreFileManager(FOLDER, FILE_NAME);
     }
 
     /**
