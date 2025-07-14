@@ -3,6 +3,7 @@ package it.unibo.coffebreak.impl.view.sound;
 import java.util.Objects;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.view.sound.SoundManager;
@@ -13,6 +14,7 @@ import it.unibo.coffebreak.api.view.sound.SoundManager;
  */
 public final class GameSoundManager implements SoundManager {
 
+    private static final float LOWER_WALKING = -10.0f;
     private final Loader loader;
 
     /**
@@ -47,6 +49,9 @@ public final class GameSoundManager implements SoundManager {
     public void loop(final Event e) {
         final Clip c = this.loader.loadClip(e.path());
         if (c != null && !c.isRunning()) {
+            if (e == Event.WALKING) {
+                setVolume(c, LOWER_WALKING);
+            }
             c.setFramePosition(0);
             c.loop(Clip.LOOP_CONTINUOUSLY);
         }
@@ -89,4 +94,16 @@ public final class GameSoundManager implements SoundManager {
         }
     }
 
+    /**
+     * private Method for setting Clips Volume.
+     * 
+     * @param clip
+     * @param decibels
+     */
+    private void setVolume(final Clip clip, final float decibels) {
+        if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            final FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(decibels);
+        }
+    }
 }

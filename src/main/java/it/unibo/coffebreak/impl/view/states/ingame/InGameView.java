@@ -46,7 +46,7 @@ public class InGameView extends AbstractViewState {
      */
     public InGameView(final Controller controller, final Loader loader) {
         super(controller, loader);
-        this.renderManager = new GameRenderManager(loader);
+        this.renderManager = new GameRenderManager(loader, getSoundManager());
     }
 
     /**
