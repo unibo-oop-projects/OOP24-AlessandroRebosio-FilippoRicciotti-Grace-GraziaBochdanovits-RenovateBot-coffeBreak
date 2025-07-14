@@ -119,11 +119,13 @@ public class GameEntityManager implements EntityManager {
                     }
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
                     case 'M' -> {
+                        this.character.resetBehaviour();
                         this.character.setPosition(position);
                         this.addEntity(this.character);
                     }
                     case 'D' ->
                         this.addEntity(new DonkeyKong(position, bb, canDonkeyThrowBarrel));
+                    case 'F' -> this.addEntity(new GameFire(position, bb));
                     case 'T' -> this.addEntity(new GameTank(position, bb));
                     case 'H' -> this.addEntity(new Hammer(position, bb));
                     case 'C' -> this.addEntity(new Coin(position, bb));

@@ -27,8 +27,8 @@ public class MenuView extends AbstractViewState {
     /**
      * Constructs the main menu view and loads required fonts.
      *
-     * @param controller   the controller to interact with the game logic
-     * @param loader       the resource loader for graphics
+     * @param controller the controller to interact with the game logic
+     * @param loader     the resource loader for graphics
      */
     public MenuView(final Controller controller, final Loader loader) {
         super(controller, loader);
@@ -73,12 +73,13 @@ public class MenuView extends AbstractViewState {
 
         g.setFont(boardFont);
         final int boardY = (int) (height * 0.60);
-        drawCenteredText(g, "RANK  SCORE  NAME", width, boardY, Color.CYAN);
+        drawCenteredText(g, " RANK  SCORE", width, boardY, Color.CYAN);
 
         for (int i = 0; i < getController().getLeaderBoard().size(); i++) {
             final Entry entry = getController().getLeaderBoard().get(i);
             final String scoreFormatted = String.format("%06d", entry.score());
-            final String text = i + 1 + ".   " + scoreFormatted + "  " + entry.name() + "  ";
+            final String rankFormatted = String.format("% 2d", i + 1);
+            final String text = rankFormatted + ".   " + scoreFormatted;
             final int baseY = (int) (height * 0.65);
             final int stepY = (int) (height * 0.03);
             final int yPos = baseY + i * stepY;

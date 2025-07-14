@@ -248,6 +248,18 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     @Override
     public void resetLives() {
         this.livesManager.resetLives();
+        this.score.reset();
+    }
+
+    /**
+     * {@inheritDoc}
+     * Resets the number of lives back to the initial value defined.
+     */
+    @Override
+    public void resetBehaviour() {
+        this.isClimbing = false;
+        this.isJumping = false;
+        this.isFacingRight = true;
     }
 
     /**

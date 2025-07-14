@@ -7,14 +7,14 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
 import it.unibo.coffebreak.api.controller.action.Action;
-import it.unibo.coffebreak.api.controller.input.Input;
+import it.unibo.coffebreak.api.controller.mapper.KeyActionMapper;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
 import it.unibo.coffebreak.api.model.states.ModelState;
 import it.unibo.coffebreak.impl.common.Vector;
-import it.unibo.coffebreak.impl.controller.input.InputManager;
+import it.unibo.coffebreak.impl.controller.mapper.StandardKeyMapper;
 import it.unibo.coffebreak.impl.model.GameModel;
 
 /**
@@ -33,7 +33,7 @@ import it.unibo.coffebreak.impl.model.GameModel;
 public class GameController implements Controller {
 
     private final Queue<Action> commandQueue = new ConcurrentLinkedQueue<>();
-    private final Input input = new InputManager();
+    private final KeyActionMapper input = new StandardKeyMapper();
     private final Model model;
 
     /**
@@ -78,7 +78,7 @@ public class GameController implements Controller {
     @Override
     public void keyPressed(final int keyCode) {
         this.input.getAction(keyCode)
-                .ifPresent(this.commandQueue::offer);
+                .ifPresent(this.commandQueue::add);
     }
 
     /**

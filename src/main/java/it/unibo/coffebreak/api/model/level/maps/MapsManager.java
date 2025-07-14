@@ -64,4 +64,9 @@ public interface MapsManager {
      * @return true if Donkey can throw a barrel in this map state, false otherwise
      */
     boolean canDonkeyThrowBarrel();
+
+    /**
+     * Reset the MapsManager to the first Map.
+     */
+    void reset();
 }

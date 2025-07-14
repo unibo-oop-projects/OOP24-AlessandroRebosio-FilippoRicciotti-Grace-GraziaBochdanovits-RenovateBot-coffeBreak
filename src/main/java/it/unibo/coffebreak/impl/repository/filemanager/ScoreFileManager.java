@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.repository.filemanager.FileManager;
  * 
  * @author Alessandro Rebosio
  */
-public class GameFileManager implements FileManager {
+public class ScoreFileManager implements FileManager {
 
     private final Path dataFile;
     private final Path backupFile;
@@ -24,7 +24,7 @@ public class GameFileManager implements FileManager {
      * @param folderName the folder to store files in
      * @param fileName   the name of the main data file
      */
-    public GameFileManager(final String folderName, final String fileName) {
+    public ScoreFileManager(final String folderName, final String fileName) {
         this.dataDir = Path.of(System.getProperty("user.home"), folderName);
         this.dataFile = dataDir.resolve(fileName);
         this.backupFile = dataDir.resolve(fileName + ".bak");

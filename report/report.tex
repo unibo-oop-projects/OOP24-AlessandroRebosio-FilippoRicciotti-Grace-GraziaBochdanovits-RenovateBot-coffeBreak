@@ -48,8 +48,8 @@ Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti.
 Mario può spostarsi verso sinistra o destra, saltare per evitare i nemici e utilizzare le scale per muoversi verticalmente tra le piattaforme.
 L'obiettivo di ogni livello è raggiungere la cima della struttura, dove si trovano Donkey Kong e Pauline.
 %
-I quattro livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente:
-con il progredire del gioco, gli ostacoli si muovono più rapidamente, i nemici diventano meno prevedibili e i percorsi sempre più complessi.
+I due livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente:
+con il progredire del gioco, gli ostacoli si muovono più rapidamente.
 %
 Un aspetto centrale del gioco è il sistema di punteggio, che premia il giocatore per varie azioni compiute durante la partita.
 I punti vengono assegnati per ogni ostacolo evitato, nemico eliminato o oggetto bonus raccolto, come le monete e il martello,
@@ -64,12 +64,13 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 	\item \textbf{Controlli di gioco:}
 	      il giocatore deve poter controllare il personaggio principale tramite input direzionali: camminata (destra/sinistra), salto e salita/discesa scale.
 	\item \textbf{Gestione dei livelli e ostacoli:}
-	      il sistema deve generare quattro livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
+	      il sistema deve generare due livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
 	\item \textbf{Rilevamento e gestione collisioni:}
 	      il sistema deve rilevare le collisione tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
 	\item  \textbf{Sistema di punteggio e condizioni di gioco:}
-	      il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonue ed eliminazione di nemici con il martello.
-	      Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Paulina, e la \textit{condizione di GameOver} quando esaurisce le vite.
+	      il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonus ed eliminazione di nemici con il martello.
+	      Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Pauline o se non ci sono più piattaforme distruttibili da rompere, e
+	      la \textit{condizione di Game Over} quando esaurisce le vite.
 	\item \textbf{Interfaccia utente:}
 	      il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
 	\item \textbf{Menù principale:}
@@ -86,8 +87,8 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 \newpage
 \section{Modello del Dominio}
 
-Il gioco si avvia da un \textbf{menù iniziale}, che consente al giocatore di avviare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni
-precedenti oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione ispirata a \textit{Donkey Kong} (Nintendo, 1981), e
+Il gioco si avvia da un \textbf{menu iniziale}, che consente al giocatore di avviare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni
+precedenti, se presenti, oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione ispirata a \textit{Donkey Kong} (Nintendo, 1981), e
 posiziona automaticamente il personaggio principale (Jumpman) nella posizione iniziale in basso a sinistra.
 
 La \textbf{partita si sviluppa su due livelli arcade classici}, che si alternano in rotazione ad ogni completamento, ricreando il comportamento dell'originale. Ogni livello
@@ -97,15 +98,15 @@ salvare la damigella in pericolo.
 Il personaggio è controllabile tramite input da tastiera e può muoversi lateralmente, salire scale e saltare. Il gioco gestisce le collisioni con gli elementi di
 gioco (piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
 
-La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia, il personaggio può cadere oltre la parte inferiore dello schermo. In tal caso,
-o se viene colpito da un ostacolo, si attiva la condizione di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione
-in corso e confrontandolo con il record precedente.
+La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia il personaggio se viene colpito da un ostacolo, si attiva la condizione
+di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione in corso e che verra confrontato con i record precedenti nel menu principale.
 
 Durante la partita, il \textbf{punteggio} è visibile nella parte superiore dello schermo e si aggiorna dinamicamente in base alle azioni
-del giocatore (es. salto dei barili, raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
+del giocatore (es. raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
 
-Una volta terminata la partita (completamento dei livelli o esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
+Una volta terminata la partita (all' esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
+
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Model.svg}
@@ -113,12 +114,6 @@ tornare al menù principale, avviare una nuova partita o uscire.
 	\label{img:model}
 \end{figure}
 
-\begin{figure}[H]
-	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/View.svg}
-	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità della View.}
-	\label{img:View}
-\end{figure}
 \chapter{Design}
 \section{Architettura}
 L'architettura del nostro progetto adotta il pattern \textbf{Model-View-\newline Controller}, una scelta consolidata
@@ -135,20 +130,20 @@ nello sviluppo di applicazioni interattive e, in particolare, di videogiochi. Qu
 	      avvalendosi di un \textit{Render Manager} per il disegno delle entità durante il gameplay.
 \end{itemize}
 
-Nel caso specifico di \textit{CoffeeBreak}, ispirato a \textit{Donkey Kong}, questa struttura ha permesso di progettare un'architettura modulare, facilmente
+Nel caso specifico di \textit{CoffeBreak}, ispirato a \textit{Donkey Kong}, questa struttura ha permesso di progettare un'architettura modulare, facilmente
 estendibile e manutenibile. Inoltre, l'adozione del pattern MVC ha facilitato il testing delle singole componenti e reso possibile il lavoro in parallelo tra i membri
 del team, migliorando l'efficienza della collaborazione.
-% TODO put image of view and controller
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/MVC.svg}
+	\caption{Schema UML dell'anilisi iniziale, con le principali relazioni fra le entità dell'architettura.}
+	\label{img:View}
+\end{figure}
 
+\newpage
 \section{Design dettagliato}
 \subsection{Alessandro Rebosio}
 \textbf{Gestione degli stati del gioco}
-\begin{figure}[H]
-	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/ModelState.svg}
-	\caption{UML dell'applicazione dello State pattern.}
-	\label{img:modelstate}
-\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nei videogiochi, è comune avere diversi stati di esecuzione, come \textit{menu}, \textit{in-game}, \textit{pausa} e \textit{game-over}. Una gestione non strutturata di questi stati
@@ -160,15 +155,15 @@ del team, migliorando l'efficienza della collaborazione.
 	      logica propri. Ogni stato implementa una comune interfaccia, garantendo uniformità nell'aggiornamento e nel rendering. Il \texttt{GameModel} mantiene il riferimento allo stato corrente.
 	      Questo approccio migliora la modularità del codice, rende più facile aggiungere o modificare stati in futuro e contribuisce a una migliore organizzazione del flusso di esecuzione.
 \end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=0.9\textwidth,pretex=\tiny]{svg/ModelState.svg}
+	\caption{UML dell'applicazione dello State pattern.}
+	\label{img:modelstate}
+\end{figure}
 
 \noindent
 \textbf{Gestione dei collezionabili}
-\begin{figure}[H]
-	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Collectible.svg}
-	\caption{UML dell'applicazione del pattern Template Method per diversi Collectible.}
-	\label{img:collectible}
-\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel gioco sono presenti diversi tipi di oggetti collezionabili (ad esempio monete, power-up), che condividono comportamenti comuni come la raccolta, l'attivazione di effetti e la rimozione dalla
@@ -179,24 +174,60 @@ del team, migliorando l'efficienza della collaborazione.
 	      lasciando alle sottoclassi il compito di definire i dettagli specifici (ad esempio l'effetto attivato al momento della raccolta). Questo approccio permette di riutilizzare il codice comune e
 	      garantisce una struttura chiara e uniforme, facilitando l'estensione con nuovi tipi di collezionabili senza modificare il comportamento di base.
 \end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Collectible.svg}
+	\caption{UML dell'applicazione del pattern Template Method per diversi Collectible.}
+	\label{img:collectible}
+\end{figure}
 
 \newpage
 \noindent
 \textbf{Gestione degli input e comandi di gioco}
-%TODO put image of command pattern
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel controllo di un videogioco, la gestione degli input da tastiera può rapidamente diventare complessa e poco flessibile. Un approccio diretto che collega immediatamente ogni input a un'azione
 	      specifica porta a diversi problemi: codice difficile da mantenere e modificare, impossibilità di riutilizzare azioni comuni, difficoltà nell'implementazione di funzionalità avanzate come
-	      macro o replay, e complessità nella gestione di input contestuali (dove lo stesso tasto può avere significati diversi in base allo stato del gioco).
+	      combo o elaborazione batch di input, e complessità nella gestione di configurazioni di controlli personalizzabili.
 
 	\item[\textbf{Soluzione}]
-	      Per risolvere questi problemi, abbiamo implementato il \textbf{Command Pattern}, incapsulando ogni azione di gioco in un oggetto comando distinto. Il \texttt{CommandFactory} si occupa di
-	      mappare gli input da tastiera ai comandi appropriati, mentre il \texttt{GameController} esegue i comandi senza conoscere i dettagli dell'implementazione. Abbiamo inoltre implementato comandi
-	      contestuali (come \texttt{ContextualCommand}) che cambiano comportamento in base allo stato del gioco, permettendo allo stesso tasto di gestire sia la navigazione nei menu che i movimenti
-	      in-game. Questo approccio rende il sistema estendibile, testabile e facilita l'implementazione di funzionalità come la gestione della pressione e del rilascio dei tasti.
+	      Per risolvere questi problemi, abbiamo implementato il \textbf{Command Pattern} utilizzando l'enum \texttt{Action} come rappresentazione dei comandi e l'interfaccia
+	      \texttt{KeyActionMapper} per il mapping funzionale degli input. Il \texttt{KeyActionMapper} fornisce un mapping immutabile tra codici di tasto e azioni di gioco, utilizzando
+	      programmazione funzionale con \texttt{Optional} per gestire in modo sicuro input non mappati. Il \texttt{GameController} riceve gli input dalla \texttt{View}, li traduce in
+	      \texttt{Action} tramite il mapper, e li accoda per l'elaborazione asincrona nel model.
 \end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Command.svg}
+	\caption{UML dell'applicazione del Command Pattern.}
+	\label{img:command}
+\end{figure}
 
+\newpage
+\noindent
+\textbf{Gestione della persistenza della leaderboard}
+\begin{description}
+	\item[\textbf{Problema}]
+	      La gestione della persistenza dei punteggi della leaderboard presenta diverse sfide: necessità di salvare e caricare dati in modo affidabile, gestione degli errori di I/O,
+	      implementazione di meccanismi di backup per evitare perdite di dati, e mantenimento di una separazione netta tra logica di business e dettagli di persistenza.
+	      Un approccio diretto che accoppia la logica della leaderboard con i dettagli di salvataggio viola il principio di Single Responsibility e rende difficile testare
+	      e modificare i meccanismi di persistenza.
+
+	\item[\textbf{Soluzione}]
+	      Per risolvere questi problemi, abbiamo implementato il \textbf{Repository Pattern} attraverso l'interfaccia generica \texttt{Repository<T>} e la sua implementazione
+	      concreta \texttt{ScoreRepository}. Il repository incapsula tutta la logica di persistenza, utilizzando il \texttt{FileManager} per la gestione a basso livello dei file.
+	      Il sistema implementa meccanismi automatici di backup e recovery: prima di ogni operazione di salvataggio viene creata una copia di sicurezza, e in caso di errori
+	      durante il caricamento il sistema tenta automaticamente il ripristino dal backup.
+\end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Repository.svg}
+	\caption{UML dell'applicazione del Command Pattern.}
+	\label{img:repository}
+\end{figure}
+
+
+\newpage
 \subsection{Grazia Bochdanovits de Kavna}
 \textbf{Gestione degli stati di Mario}
 \begin{figure}[H]
@@ -207,27 +238,27 @@ del team, migliorando l'efficienza della collaborazione.
 \end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
-	     Il personaggio di Mario deve adattare il suo comportamento in base al suo stato (normale o con il martello), ma un'implementazione basata su flag booleani avrebbe violato il principio Open/Closed,
-		 richiedendo modifiche invasive alla classe di Mario per aggiungere nuovi stati. Questo approccio avrebbe inoltre generato una complessa struttura condizionale, rendendo il codice difficile da mantenere e poco scalabile.
+	      Il personaggio di Mario deve adattare il suo comportamento in base al suo stato (normale o con il martello), ma un'implementazione basata su flag booleani avrebbe violato il principio Open/Closed,
+	      richiedendo modifiche invasive alla classe di Mario per aggiungere nuovi stati. Questo approccio avrebbe inoltre generato una complessa struttura condizionale, rendendo il codice difficile da mantenere e poco scalabile.
 
 	\item[\textbf{Soluzione}]
-		 Per risolvere il problema abbiamo adottato lo \textbf{State Pattern}, che ha permesso di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
-		 incapsulati i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
-		 La soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
+	      Per risolvere il problema abbiamo adottato lo \textbf{State Pattern}, che ha permesso di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
+	      incapsulati i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
+	      La soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
 \end{description}
 
 \noindent
 \textbf{Gestione delle entità}
 \begin{description}
 	\item[\textbf{Problema}]
-	     Il gioco include numerose entità con caratteristiche sia comuni che specifiche. Senza una adeguata astrazione, si sarebbe verificata una pericolosa duplicazione di codice per la gestione degli attributi
-		 comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere e soggetto a errori.
+	      Il gioco include numerose entità con caratteristiche sia comuni che specifiche. Senza una adeguata astrazione, si sarebbe verificata una pericolosa duplicazione di codice per la gestione degli attributi
+	      comuni (posizione, dimensione e velocità), rendendo il sistema difficile da mantenere e soggetto a errori.
 
 	\item[\textbf{Soluzione}]
-		 L'adozione del \textbf{Template Method} ha permesso di creare una gerarchia multilivello di classi astratte. La classe base \texttt{AbstractEntity} è stata progettata per incapsulare tutta la logica comune 
-		 alle entità, mentre classi intermedie come \texttt{AbstractEnemy} o \texttt{AbstractPlatform} hanno catturato i comportamenti condivisi da gruppi specifici di entità.
-		 Le classi concrete, a loro volta, hanno potuto specializzare solo gli aspetti veramente unici di ciscuna entità. Questa architettura ha notevolemente migliorato il riuso, semplificando l'estensione del sistema
-		 con l'aggiunta di nuove entità.
+	      L'adozione del \textbf{Template Method} ha permesso di creare una gerarchia multilivello di classi astratte. La classe base \texttt{AbstractEntity} è stata progettata per incapsulare tutta la logica comune
+	      alle entità, mentre classi intermedie come \texttt{AbstractEnemy} o \texttt{AbstractPlatform} hanno catturato i comportamenti condivisi da gruppi specifici di entità.
+	      Le classi concrete, a loro volta, hanno potuto specializzare solo gli aspetti veramente unici di ciscuna entità. Questa architettura ha notevolemente migliorato il riuso, semplificando l'estensione del sistema
+	      con l'aggiunta di nuove entità.
 
 \end{description}
 
@@ -235,15 +266,15 @@ del team, migliorando l'efficienza della collaborazione.
 \textbf{Gestione del rendering delle entità}
 \begin{description}
 	\item[\textbf{Problema}]
-	     Il sistema di rendering doveva gestire numerose entità con caratteristiche grafiche diverse. Un aproccio centralizzato avrebbe creato un accoppiamento eccessivo
-		 tra la logica di rendering e le implementazioni delle singole entità, rendendo il sistema rigido e difficilmente estendibile.
-		 Inoltre, la necessità di gestire operazioni comuni (come il caricamento degli sprite) in modo indipendente, avrebbe portato a una significativa duplicazione di codice
-		 violando il principio DRY.
+	      Il sistema di rendering doveva gestire numerose entità con caratteristiche grafiche diverse. Un aproccio centralizzato avrebbe creato un accoppiamento eccessivo
+	      tra la logica di rendering e le implementazioni delle singole entità, rendendo il sistema rigido e difficilmente estendibile.
+	      Inoltre, la necessità di gestire operazioni comuni (come il caricamento degli sprite) in modo indipendente, avrebbe portato a una significativa duplicazione di codice
+	      violando il principio DRY.
 
 	\item[\textbf{Soluzione}]
-		 Abbiamo implementato un'architettura che combina lo \textbf{Strategy Pattern} con un registro di renderer. Ciascuna entità dispone di un renderer dedicato che implementa l'interfaccia \texttt{EntityRender}. 
-		 Il \texttt{GameRenderManager} utilizza una mappa di registrazione per associare dinamicamente ogni tipo di entità al corrispondente renderer. Questa soluzione riduce l'accoppiamento, facilita l'aggiunta di 
-		 nuovi renderer e migliora l'efficienza grazie all'inizializzazione unica dei componenti.
+	      Abbiamo implementato un'architettura che combina lo \textbf{Strategy Pattern} con un registro di renderer. Ciascuna entità dispone di un renderer dedicato che implementa l'interfaccia \texttt{EntityRender}.
+	      Il \texttt{GameRenderManager} utilizza una mappa di registrazione per associare dinamicamente ogni tipo di entità al corrispondente renderer. Questa soluzione riduce l'accoppiamento, facilita l'aggiunta di
+	      nuovi renderer e migliora l'efficienza grazie all'inizializzazione unica dei componenti.
 \end{description}
 
 \newpage
@@ -303,7 +334,7 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameMapsManager.svg}
-	\caption{UML dell'applicazione dello Strategy pattern per gestire diverse mappe.}
+	\caption{UML dell'applicazione dello Strategy pattern per gestire diverse mappe e la possibilita futura di poterne aggiungere di nuove.}
 	\label{img:GameMapsManager}
 \end{figure}
 \newpage
@@ -316,7 +347,7 @@ del team, migliorando l'efficienza della collaborazione.
 	      funzionalità condivise tra gli stati.
 
 	\item[\textbf{Soluzione}]
-	      Abbiamo adottato il \textbf{Template Method Pattern} all'interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati, 
+	      Abbiamo adottato il \textbf{Template Method Pattern} all'interno della classe astratta \texttt{AbstractViewState}, definendo un metodo finale che gestisce i comandi comuni a tutti gli stati,
 	      delegando solo i comandi specifici ai sottotipi. In questo modo, la logica ripetuta viene centralizzata, semplificando la manutenzione e migliorando la coerenza tra i diversi stati grafici del gioco.
 \end{description}
 \begin{figure}[H]
@@ -340,7 +371,7 @@ In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte l
 
 \subsubsection*{Controller}
 \begin{itemize}
-	\item \texttt{TestInputManager:} controlla la gestione degli input da tastiera.
+	\item \texttt{TestKeyActionMapper:} verifica la corretta mappatura dei tasti, la conversione da codice a azione, la gestione di input non mappati.
 	\item \texttt{TestGameController:}  testa la logica principale di controllo del gioco.
 \end{itemize}
 
@@ -444,15 +475,11 @@ Utilizzati di frequente, soprattuto nel controllo delle collisioni fra entità. 
 \chapter{Commenti finali}
 \section{Autovalutazione e lavori futuri}
 \subsection{Alessandro Rebosio}
-Dopo un'attenta analisi iniziale, ho iniziato subito a scrivere le classi principali del progetto. Tuttavia, man mano che procedevo nello sviluppo, mi rendevo conto di come alcune
-parti potessero essere migliorate, e dove possibile ho effettuato operazioni di refactoring. Sono consapevole che ci siano ancora margini di miglioramento, ma questa esperienza mi ha fatto
-comprendere quanto l'utilizzo dei pattern sia utile per organizzare meglio il lavoro e ridurre la complessità complessiva.
+La realizzazione di questo progetto ha rappresentato per me un'esperienza formativa di grande valore. Dopo un'attenta analisi iniziale, ho iniziato subito a implementare le classi principali, scoprendo gradualmente come alcune parti potessero essere migliorate attraverso operazioni di refactoring. Questa esperienza mi ha fatto comprendere profondamente l'utilità dei design pattern per organizzare il lavoro e ridurre la complessità complessiva del sistema.
 
-Essendo il mio primo progetto strutturato, ho cercato fin da subito di scrivere codice il più possibile chiaro, modulare ed espandibile, in modo da facilitarne la manutenzione e l'evoluzione futura.
+Essendo il mio primo progetto strutturato di queste dimensioni, ho posto particolare attenzione alla scrittura di codice chiaro, modulare ed espandibile, principi che si sono rivelati fondamentali per facilitare la manutenzione e l'evoluzione del software. Aver lavorato su un progetto concreto mi ha permesso di comprendere meglio tutto l'ambiente di sviluppo: dall'utilizzo avanzato di strumenti come Git per il controllo di versione, alla gestione delle dipendenze con Gradle, fino alle metodologie di testing con JUnit.
 
-All'interno del gruppo ho ricoperto diversi ruoli, anche se mi sono concentrato in particolare sullo sviluppo del Controller. Ho anche definito una base per la View, per poi lasciarne lo
-sviluppo ai miei colleghi. Questo mi ha dato modo di sperimentare la sincronizzazione e l'interazione tra le diverse componenti dell'architettura, aiutandomi a comprendere più a
-fondo le dinamiche di progettazione in un contesto MVC.
+All'interno del gruppo ho ricoperto diversi ruoli, concentrandomi principalmente sullo sviluppo del Controller e definendo le basi architetturali per la View, successivamente sviluppata dai miei colleghi. Questa esperienza trasversale mi ha permesso di sperimentare direttamente la sincronizzazione e l'interazione tra le diverse componenti dell'architettura MVC, approfondendo la comprensione delle dinamiche di progettazione in un contesto collaborativo reale.
 
 \subsection{Filippo Ricciotti}
 Riflettendo sul progetto svolto, mi rendo conto che avrei potuto dedicare più tempo e attenzione a questo progetto rispetto che ad altri esami, bilanciando meglio le priorità. Questo avrebbe sicuramente alleggerito il carico di lavoro per tutto il gruppo, soprattutto in alcune fasi critiche come l’integrazione tra le varie componenti e la gestione dei dettagli tecnici. Alcune difficoltà incontrate, come la sincronizzazione tra Model, View e Controller avrebbero richiesto meno sforzo complessivo se mi fossi impegnato con maggiore costanza.

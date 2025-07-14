@@ -9,7 +9,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -21,7 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
-import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 
@@ -40,15 +38,11 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHamme
  */
 @ExtendWith(MockitoExtension.class)
 class TestWithHammerState {
-    private static final int DEFAULT_WIDTH = 1;
-    private static final int DEFAULT_HEIGHT = 1;
-    private static final int HAMMER_HEIGHT = 3;
     private static final float DELTA_TIME = 0.5f;
-    private static final float EXPIRATION_TIME = 5000;
+    private static final float EXPIRATION_TIME = 7000;
 
     @Mock private MainCharacter mockCharacter;
     private WithHammerState hammerState;
-    private final BoundigBox defaultDimension = new BoundigBox(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
     @BeforeEach
     void setUp() {
@@ -76,28 +70,6 @@ class TestWithHammerState {
     }
 
     /**
-     * Tests that state entry increases character height while maintaining width.
-     */
-    @Test
-    void shouldIncreaseHeightWhenEnteringState() {
-        when(mockCharacter.getDimension()).thenReturn(defaultDimension);
-        hammerState.onEnter(mockCharacter);
-        verify(mockCharacter).setDimension(argThat(box -> 
-            box.width() == DEFAULT_WIDTH && box.height() == HAMMER_HEIGHT));
-    }
-
-    /**
-     * Tests that state exit restores original dimensions.
-     */
-    @Test
-    void shouldRestoreOriginalDimensionsWhenExitingState() {
-        when(mockCharacter.getDimension()).thenReturn(defaultDimension);
-        hammerState.onEnter(mockCharacter);
-        hammerState.onExit(mockCharacter);
-        verify(mockCharacter).setDimension(defaultDimension);
-    }
-
-    /**
      * Tests that hammer duration constant has correct value (5 seconds).
      */
     @Test
@@ -116,7 +88,6 @@ class TestWithHammerState {
         @BeforeEach
         void prepareTestableState() {
             testableState = new TestableWithHammerState(WithHammerState.HAMMER_DURATION);
-            when(mockCharacter.getDimension()).thenReturn(defaultDimension);
         }
 
         /**

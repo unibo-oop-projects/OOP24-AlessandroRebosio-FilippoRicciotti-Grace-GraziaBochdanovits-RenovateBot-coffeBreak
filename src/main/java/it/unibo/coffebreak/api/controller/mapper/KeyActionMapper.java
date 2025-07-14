@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.controller.input;
+package it.unibo.coffebreak.api.controller.mapper;
 
 import java.util.Map;
 import java.util.Optional;
@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.controller.action.Action;
  * 
  * @author Alessandro Rebosio
  */
-public interface Input {
+public interface KeyActionMapper {
 
     /**
      * Returns the immutable key mappings for this input manager.

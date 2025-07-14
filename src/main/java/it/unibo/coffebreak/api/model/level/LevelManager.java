@@ -93,4 +93,9 @@ public interface LevelManager {
      * Advances to the next level.
      */
     void advance();
+
+    /**
+     * Reset LevelManager to first Level.
+     */
+    void reset();
 }

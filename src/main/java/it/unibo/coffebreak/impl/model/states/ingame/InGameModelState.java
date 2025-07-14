@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.impl.model.states.ingame;
 
+import java.util.Objects;
+
 import it.unibo.coffebreak.api.controller.action.Action;
 import it.unibo.coffebreak.api.model.Model;
 import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
@@ -37,7 +39,7 @@ public class InGameModelState extends AbstractModelState {
      * @param physicsEngine the physics engine to use for entity updates
      */
     public InGameModelState(final PhysicsEngine physicsEngine) {
-        this.physicsEngine = physicsEngine;
+        this.physicsEngine = Objects.requireNonNull(physicsEngine, "The physics engine cannot be null");
     }
 
     /**
