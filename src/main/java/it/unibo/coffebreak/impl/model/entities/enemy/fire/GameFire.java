@@ -24,7 +24,6 @@ public class GameFire extends AbstractEnemy implements Fire {
     private static final float FIRE_SPEED = 20f;
     private static final float CLIMB_PROBABILITY = 0.3f;
     private static final float CHANGE_DIRECTION_INTERVAL = 2.0f;
-    private static final float CENTER_THRESHOLD = 0.5f;
     private static final float DEFAULT_LIFETIME = 15.0f;
 
     private final Random random = new Random();
@@ -60,13 +59,11 @@ public class GameFire extends AbstractEnemy implements Fire {
                 }
             }
             case final Ladder ladder -> {
-                if (isCenteredOnLadder(ladder)) {
-                    this.ladderCollision = true;
+                this.ladderCollision = true;
                     if (random.nextFloat() < CLIMB_PROBABILITY) {
                         this.climbing = true;
                         this.onPlatformLeave();
                     }
-                }
             }
             default -> {
             }
@@ -101,11 +98,5 @@ public class GameFire extends AbstractEnemy implements Fire {
         } else {
             setVelocity(new Vector(0f, FIRE_SPEED));
         }
-    }
-
-    private boolean isCenteredOnLadder(final Entity ladder) {
-        final float ladderCenter = ladder.getPosition().x() + ladder.getDimension().width() / 2f;
-        final float fireCenter = getPosition().x() + getDimension().width() / 2f;
-        return Math.abs(fireCenter - ladderCenter) <= ladder.getDimension().width() * CENTER_THRESHOLD;
     }
 }

@@ -2,6 +2,7 @@ package it.unibo.coffebreak.impl.model.entities.structure.ladder;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
+import it.unibo.coffebreak.api.model.entities.enemy.fire.Fire;
 import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
@@ -46,8 +47,10 @@ public abstract class AbstractLadder extends AbstractEntity implements Ladder {
                     this.centerCharacterOnLadder(character);
                 }
             }
+            case final Fire fire -> {
+                this.centerCharacterOnLadder(fire);
+            }
             default -> {
-
             }
         }
     }
