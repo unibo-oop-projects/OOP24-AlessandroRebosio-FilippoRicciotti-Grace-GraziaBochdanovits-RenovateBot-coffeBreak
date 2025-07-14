@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.model.level.maps;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -39,18 +42,18 @@ class TestMapsManager {
         List<String> initialMap = mapsManager.currentMap();
 
         // Simulate a dummy entity list for advance()
-        List<Entity> dummyEntities = List.of();
+        final List<Entity> dummyEntities = List.of();
 
         // Advance through all maps until cannot advance anymore
         while (mapsManager.advance(dummyEntities)) {
-            List<String> nextMap = mapsManager.currentMap();
+            final List<String> nextMap = mapsManager.currentMap();
             assertNotEquals(initialMap, nextMap, "Current map should change after advance.");
             initialMap = nextMap;
         }
 
         // After full advance, calling advance again should not change map anymore
-        List<String> lastMapBeforeFail = mapsManager.currentMap();
-        boolean result = mapsManager.advance(dummyEntities);
+        final List<String> lastMapBeforeFail = mapsManager.currentMap();
+        final boolean result = mapsManager.advance(dummyEntities);
         assertFalse(result, "Should not advance beyond last map.");
         assertEquals(lastMapBeforeFail, mapsManager.currentMap(), "Map should remain the same after failed advance.");
 
@@ -66,10 +69,10 @@ class TestMapsManager {
      */
     @Test
     void shouldReturnCanDonkeyThrowBarrelFlag() {
-        List<Entity> dummyEntities = List.of();
+        final List<Entity> dummyEntities = List.of();
 
         do {
-            boolean result = mapsManager.canDonkeyThrowBarrel();
+            final boolean result = mapsManager.canDonkeyThrowBarrel();
             assertNotNull(result);
         } while (mapsManager.advance(dummyEntities));
     }

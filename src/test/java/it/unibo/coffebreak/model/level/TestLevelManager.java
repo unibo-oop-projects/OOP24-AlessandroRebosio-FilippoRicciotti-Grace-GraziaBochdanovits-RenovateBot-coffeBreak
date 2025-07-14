@@ -1,6 +1,9 @@
 package it.unibo.coffebreak.model.level;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
@@ -30,8 +33,8 @@ import it.unibo.coffebreak.impl.model.level.GameLevelManager;
  */
 class TestLevelManager {
 
+    private static final int BONUS_START = 5000;
     private GameLevelManager lm;
-    private Loader dummyLoader;
 
     /**
      * Sets up a new {@link GameLevelManager} before each test,
@@ -39,7 +42,7 @@ class TestLevelManager {
      */
     @BeforeEach
     void setUp() {
-        dummyLoader = new ResourceLoader();
+        final Loader dummyLoader = new ResourceLoader();
         this.lm = new GameLevelManager(dummyLoader);
     }
 
@@ -63,7 +66,7 @@ class TestLevelManager {
     @Test
     void loadEntitiesSetsBonusAndEntities() {
         lm.loadCurrentEntities();
-        assertTrue(lm.getBonusValue() == 5000);
+        assertEquals(lm.getBonusValue(), BONUS_START);
         assertFalse(lm.getEntities().isEmpty());
     }
 
@@ -74,7 +77,7 @@ class TestLevelManager {
     @Test
     void advanceDoesNotIncreaseWithoutCondition() {
         lm.loadCurrentEntities();
-        int idx = lm.getLevelIndex();
+        final int idx = lm.getLevelIndex();
         lm.advance();
         assertEquals(idx, lm.getLevelIndex());
     }
@@ -98,7 +101,7 @@ class TestLevelManager {
     @Test
     void advanceWhenShouldAdvanceIncreasesIndexAndAwardsPoints() {
         lm.loadCurrentEntities();
-        Optional<MainCharacter> mc = lm.getMainCharacter();
+        final Optional<MainCharacter> mc = lm.getMainCharacter();
         assertTrue(mc.isPresent());
         assertTrue(mc.get() instanceof Mario);
     }

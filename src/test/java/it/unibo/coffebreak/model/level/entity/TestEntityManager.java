@@ -1,6 +1,6 @@
 package it.unibo.coffebreak.model.level.entity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,10 +58,10 @@ class TestEntityManager {
      */
     @Test
     void shouldAddAndRetrieveEntities() {
-        List<String> map = List.of("RP!MDFTHCL");
+        final List<String> map = List.of("RP!MDFTHCL");
 
         entityManager.loadEntities(map, false);
-        List<Entity> entities = entityManager.getEntities();
+        final List<Entity> entities = entityManager.getEntities();
         assertTrue(entities.stream().anyMatch(e -> e instanceof Pauline));
         assertTrue(entities.stream().anyMatch(e -> e instanceof NormalPlatform));
         assertTrue(entities.stream().anyMatch(e -> e instanceof BreakablePlatform));
@@ -80,7 +80,7 @@ class TestEntityManager {
      */
     @Test
     void shouldRetrieveMainCharacterIfPresent() {
-        Optional<? extends Entity> mainCharacter = entityManager.getMainCharacter();
+        final Optional<? extends Entity> mainCharacter = entityManager.getMainCharacter();
         assertTrue(mainCharacter.isPresent());
         assertTrue(mainCharacter.get() instanceof Mario);
     }
