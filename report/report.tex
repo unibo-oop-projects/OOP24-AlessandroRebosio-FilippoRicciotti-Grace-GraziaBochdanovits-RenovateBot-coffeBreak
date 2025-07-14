@@ -17,7 +17,7 @@
 
 \author{Grazia Bochdanovits de Kavna\\
 Alessandro Rebosio\\
-Filippo Riccioti
+Filippo Ricciotti
 }
 \date{\today}
 
@@ -38,10 +38,10 @@ Il protagonista è Mario, il cui obiettivo è salvare Pauline, rapita dal gigant
 Il giocatore prende il controllo di Mario e lo guida in un platform a livelli fissi, caratterizzato da strutture complesse
 composte da piattaforme, scale e numerosi ostacoli da superare.
 %
-All'inizio di ogni partita, Mario dispone di tre vite, ogni volta che entra in contatto con un nemico, come barili rotolanti o fiamme, perde una vita e viene riposizionato
+All'inizio di ogni partita, Mario dispone di tre vite, ogni volta che entra in contatto con un nemico, come barili rotolanti, fiamme o DonkeyKong, perde una vita e viene riposizionato
 all'inizio del livello corrente.
 %
-La partita continua finché ci sono vite disponibili; una volta esaurite, compare la schermata di \textit{Game Over},
+La partita continua finché ci sono vite disponibili o il timer del bonus non è scaduto; una volta esaurite una delle due opzioni, compare la schermata di \textit{Game Over},
 che riporta l'utente al menu principale, da cui è possibile avviare una nuova partita.
 %
 Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti.
@@ -66,15 +66,15 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 	\item \textbf{Gestione dei livelli e ostacoli:}
 	      il sistema deve generare due livelli di gioco in sequenza e gestire la dinamica degli ostacoli, incluso il lancio periodico dei barili da parte di Donkey Kong.
 	\item \textbf{Rilevamento e gestione collisioni:}
-	      il sistema deve rilevare le collisione tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
+	      il sistema deve rilevare le collisioni tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
 	\item  \textbf{Sistema di punteggio e condizioni di gioco:}
 	      il sistema deve calcolare il punteggio in base a: salti sui barili, raccolta di oggetti bonus ed eliminazione di nemici con il martello.
-	      Inoltre, deve rilevare la \textit{condizione di vittoria} quando raggiunge Pauline o se non ci sono più piattaforme distruttibili da rompere, e
+	      Inoltre, deve rilevare: la \textit{condizione di vittoria}, quando raggiunge Pauline o se non ci sono più piattaforme distruttibili da rompere, e
 	      la \textit{condizione di Game Over} quando esaurisce le vite.
 	\item \textbf{Interfaccia utente:}
 	      il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
 	\item \textbf{Menù principale:}
-	      il sistema deve offrire un menù iniziale con opzioni per avviare una nuova partita e visualizzare i comandi di gioco.
+	      il sistema deve offrire un menù iniziale con opzioni per avviare una nuova partita oppure per uscire dal gioco.
 \end{itemize}
 
 \subsection*{Requisiti non funzionali}
@@ -88,15 +88,15 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 \section{Modello del Dominio}
 
 Il gioco si avvia da un \textbf{menu iniziale}, che consente al giocatore di avviare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni
-precedenti, se presenti, oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione ispirata a \textit{Donkey Kong} (Nintendo, 1981), e
+precedenti, se presenti, oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione, ispirato a \textit{Donkey Kong} (Nintendo, 1981), e
 posiziona automaticamente il personaggio principale (Jumpman) nella posizione iniziale in basso a sinistra.
 
 La \textbf{partita si sviluppa su due livelli arcade classici}, che si alternano in rotazione ad ogni completamento, ricreando il comportamento dell'originale. Ogni livello
 presenta una disposizione fissa di piattaforme, scale, ostacoli e nemici (barili o fiamme), con un obiettivo specifico: raggiungere la cima dello schermo evitando gli ostacoli e
 salvare la damigella in pericolo.
 
-Il personaggio è controllabile tramite input da tastiera e può muoversi lateralmente, salire scale e saltare. Il gioco gestisce le collisioni con gli elementi di
-gioco (piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
+Il personaggio è controllabile tramite input da tastiera e può muoversi lateralmente, salire scale e saltare. Il gioco gestisce le collisioni tra i vari elementi del livello
+(piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
 
 La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia, se il personaggio viene colpito da un ostacolo, si attiva la condizione
 di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione in corso e che verra confrontato con i record precedenti nel menu principale.
@@ -275,12 +275,6 @@ del team, migliorando l'efficienza della collaborazione.
 
 \noindent
 \textbf{Gestione del rendering delle entità}
-\begin{figure}[H]
-	\centering{}
-	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameRenderManager.svg}
-	\caption{UML dell'applicazione dello Strategy Pattern per i rendering delle entità di gioco.}
-	\label{img:GameRenderManager}
-\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il sistema di rendering doveva gestire un ampio numero di entità, ciascuna con caratteristiche grafiche specifiche. Un approccio centralizzato avrebbe comportato un forte accoppiamento tra la logica di rendering e
@@ -292,7 +286,12 @@ del team, migliorando l'efficienza della collaborazione.
 	      responsabile della logica di disegno specifica. Il componente centrale \texttt{GameRenderManager} utilizza una mappa di registrazione per associare, in fase di esecuzione, ogni tipo di entità al relativo renderer.
 	      Questo approccio ha permesso di ridurre drasticamente l’accoppiamento tra logica di gioco e logica grafica, ha semplificato l’aggiunta di nuove entità o stili di rendering, e ha permesso il riuso efficiente delle risorse grazie all’inizializzazione controllata dei componenti condivisi.
 \end{description}
-
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameRenderManager.svg}
+	\caption{UML dell'applicazione dello Strategy Pattern per i rendering delle entità di gioco.}
+	\label{img:GameRenderManager}
+\end{figure}
 
 \newpage
 \subsection{Filippo Ricciotti}
@@ -381,7 +380,7 @@ In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte l
 \subsubsection*{Common}
 \begin{itemize}
 	\item \texttt{TestBoundingBox:} verifica la corretta creazione e il corretto funzionamento delle dimensioni delle entità.
-	\item \texttt{TestResourceLoader:} viene verificato il giusto caricamento delle risorse del gioco.
+	\item \texttt{TestResourceLoader:} verifica il giusto caricamento delle risorse del gioco.
 	\item \texttt{TestPosition:} testa la gestione delle posizioni nello spazio di gioco.
 	\item \texttt{TestVector:} verifica le operazioni sui vettori.
 \end{itemize}
@@ -465,7 +464,7 @@ Utilizzati di frequente. Permalink di un esempio
 \end{sloppypar}
 
 \subsubsection{Gestione degli \texttt{Optional}}
-Usato per gestire valori che potrebbere essere assenti. Permalink di un esempio
+Usati per gestire valori che potrebbere essere assenti. Permalink di un esempio
 \begin{sloppypar}
 	\raggedright
 	\url{https://github.com/alessandrorebosio/OOP24-coffeBreak/blob/926d3f1b985c9bba79c5f766ac0070b04fd6185f/src/main/java/it/unibo/coffebreak/impl/view/render/GameRenderManager.java#L82-L87}
@@ -533,7 +532,7 @@ All'avvio dell'applicazione, l'unico strumento a disposizione sarà la tastiera.
 \section{Durante il Gioco}
 Entrati in gioco, si parte dal primo livello: lo scopo è raggiungere la principessa evitando i nemici e raccogliendo power-up.
 
-Per giocare basta usare la tastiera: ogni \texttt{freccia} muove il personaggio nella rispettiva direzione, la \texttt{barra spaziatrice} fa saltare, mentre le frecce \texttt{SU} e \texttt{GIÙ} funzionano solo in corrispondenza di una scala. In qualsiasi momento, premendo il tasto \texttt{ESC} puoi mettere il gioco in pausa.
+Per giocare basta usare la tastiera: ogni \texttt{freccia} muove il personaggio nella rispettiva direzione, la \texttt{barra spaziatrice} fa saltare, mentre le frecce \texttt{SU} e \texttt{GIÙ} funzionano solo in corrispondenza di una scala. In qualsiasi momento, premendo il tasto \texttt{ESC} si può mettere il gioco in pausa.
 
 \section{Menu di Pausa}
 Nel menu di pausa si naviga tra le opzioni disponibili con le frecce \texttt{SU} e \texttt{GIÙ}, e si seleziona l'opzione desiderata con \texttt{ENTER}.
