@@ -153,7 +153,7 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
             switch (animation) {
                 case JUMP -> soundManager.play(SoundManager.Event.JUMP);
                 case WALK -> soundManager.loop(SoundManager.Event.WALKING);
-                case HAMMER -> soundManager.loop(SoundManager.Event.POWER_UP);
+                case HAMMER -> soundManager.play(SoundManager.Event.POWER_UP);
                 default -> {
                 }
             }
