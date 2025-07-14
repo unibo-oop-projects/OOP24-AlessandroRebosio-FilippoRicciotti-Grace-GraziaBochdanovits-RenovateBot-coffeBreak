@@ -162,6 +162,11 @@ public class GameLevelManager implements LevelManager {
         this.levelIndex = 0;
     }
 
+    /**
+     * method that returns the correct bonus depending on the level.
+     * 
+     * @return Bonus depending on levelIndex
+     */
     private int getBonusAmount() {
         return Math.min(SUPPLY * this.levelIndex + MIN_BONUS, MAX_BONUS);
     }
