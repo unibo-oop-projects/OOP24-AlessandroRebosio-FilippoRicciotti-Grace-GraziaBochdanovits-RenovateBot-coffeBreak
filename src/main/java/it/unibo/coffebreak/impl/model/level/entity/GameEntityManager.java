@@ -107,13 +107,9 @@ public class GameEntityManager implements EntityManager {
                     case 'R' -> this.addEntity(new Pauline(position, bb));
                     case 'P' -> {
                         final int nextRow = y + 1;
-                        final boolean canGoDown = nextRow < map.size() && hasLadder(map.get(nextRow), x);
 
-                        if (canGoDown) {
-                            this.addEntity(new NormalPlatform(position, bb, canGoDown));
-                        } else {
-                            this.addEntity(new NormalPlatform(position, bb));
-                        }
+                        this.addEntity(new NormalPlatform(position, bb,
+                                nextRow < map.size() && hasLadder(map.get(nextRow), x)));
 
                     }
                     case '!' -> this.addEntity(new BreakablePlatform(position, bb));
