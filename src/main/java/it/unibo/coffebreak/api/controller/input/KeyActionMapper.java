@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.controller.action.Action;
  * 
  * @author Alessandro Rebosio
  */
-public interface Input {
+public interface KeyActionMapper {
 
     /**
      * Returns the immutable key mappings for this input manager.

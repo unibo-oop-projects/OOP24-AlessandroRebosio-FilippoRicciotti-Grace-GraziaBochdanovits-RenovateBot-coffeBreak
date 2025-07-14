@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 import java.util.Map;
 
 import it.unibo.coffebreak.api.controller.action.Action;
-import it.unibo.coffebreak.api.controller.input.Input;
+import it.unibo.coffebreak.api.controller.input.KeyActionMapper;
 
 /**
- * Concrete implementation of the {@link Input} interface.
+ * Concrete implementation of the {@link KeyActionMapper} interface.
  * <p>
  * Provides default key mappings for the game using immutable collections.
  * This implementation maps standard keyboard keys to corresponding game actions
@@ -26,7 +26,7 @@ import it.unibo.coffebreak.api.controller.input.Input;
  * 
  * @author Alessandro Rebosio
  */
-public class InputManager implements Input {
+public class StandardKeyMapper implements KeyActionMapper {
 
     /**
      * {@inheritDoc}
