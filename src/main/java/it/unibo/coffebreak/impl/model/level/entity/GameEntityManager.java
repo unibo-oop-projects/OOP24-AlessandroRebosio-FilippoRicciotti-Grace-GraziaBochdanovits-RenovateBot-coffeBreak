@@ -26,7 +26,6 @@ import it.unibo.coffebreak.impl.model.entities.structure.ladder.normal.NormalLad
 import it.unibo.coffebreak.impl.model.entities.structure.platform.breakable.BreakablePlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.platform.normal.NormalPlatform;
 import it.unibo.coffebreak.impl.model.entities.structure.tank.GameTank;
-import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.level.entity.EntityManager;
 
 /**
@@ -164,7 +163,6 @@ public class GameEntityManager implements EntityManager {
                 .toList();
 
         this.entities.removeIf(e -> (e instanceof final Collectible collectible && collectible.isCollected())
-                || (e instanceof final Platform platform && platform.isBroken())
                 || (e instanceof final Enemy enemy && enemy.isDestroyed()));
 
         this.entities.addAll(toAdd);

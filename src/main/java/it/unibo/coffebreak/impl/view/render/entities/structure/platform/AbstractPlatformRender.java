@@ -40,7 +40,7 @@ public abstract class AbstractPlatformRender extends AbstractEntityRender {
     @Override
     public void draw(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
-        if (entity instanceof final Platform platform && !platform.isBroken()) {
+        if (entity instanceof Platform) {
             this.renderPlatform(g, entity, deltaTime, width, height);
             final BufferedImage spriteSheet = getSpriteSheet();
             if (spriteSheet != null) {
