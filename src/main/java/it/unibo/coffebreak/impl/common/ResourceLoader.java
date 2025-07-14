@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -144,7 +145,8 @@ public final class ResourceLoader implements Loader {
     @Override
     public Clip loadClip(final String path) {
         return SOUND_CACHE.computeIfAbsent(path, p -> loadResource(p, is -> {
-            try (AudioInputStream audioIn = AudioSystem.getAudioInputStream(is)) {
+            try (AudioInputStream audioIn = AudioSystem
+                    .getAudioInputStream(new ByteArrayInputStream(is.readAllBytes()))) {
                 final Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 return clip;
