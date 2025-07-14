@@ -37,6 +37,8 @@ public class WithHammerState extends AbstractMarioState {
      */
     public static final long HAMMER_DURATION = 7000;
 
+    private boolean didDesoyedEnemy;
+
     /**
      * The system time in milliseconds when this hammer state will expire.
      */
@@ -70,6 +72,7 @@ public class WithHammerState extends AbstractMarioState {
         if (this.isExpired()) {
             character.changeState(NormalState::new);
         }
+        this.didDesoyedEnemy = false;
     }
 
     /**
@@ -87,7 +90,16 @@ public class WithHammerState extends AbstractMarioState {
     public void handleCollision(final MainCharacter character, final Entity other) {
         if (other instanceof final Enemy enemy) {
             enemy.destroy();
+            this.didDesoyedEnemy = true;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean didDesoyedEnemy() {
+        return this.didDesoyedEnemy;
     }
 
     /**

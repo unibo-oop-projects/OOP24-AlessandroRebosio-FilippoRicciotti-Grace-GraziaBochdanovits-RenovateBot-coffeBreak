@@ -186,7 +186,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
             }
             case final Collectible collectible -> collectible.collect(this);
             case final Princess princess -> princess.rescue();
-            case final DonkeyKong donkey -> this.loseLife(); 
+            case final DonkeyKong donkey -> this.loseLife();
             default -> {
             }
         }
@@ -276,6 +276,21 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     @Override
     public boolean isJumping() {
         return this.isJumping;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Returns true if Mario's current state has destroyed an enemy.
+     * Delegates to the current {@link CharacterState} if present, otherwise returns
+     * false.
+     * </p>
+     *
+     * @return true if an enemy was destroyed in the current state, false otherwise
+     */
+    @Override
+    public boolean didDesoyedEnemy() {
+        return this.currentState.map(CharacterState::didDesoyedEnemy).orElse(false);
     }
 
     /**

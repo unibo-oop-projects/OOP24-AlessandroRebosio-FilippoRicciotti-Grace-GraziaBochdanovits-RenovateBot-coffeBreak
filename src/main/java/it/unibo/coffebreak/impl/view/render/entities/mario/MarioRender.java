@@ -11,9 +11,11 @@ import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 import it.unibo.coffebreak.api.view.sound.SoundManager;
+import it.unibo.coffebreak.api.view.sound.SoundManager.Event;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
 import it.unibo.coffebreak.impl.model.entities.mario.states.withhammer.WithHammerState;
 import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
+import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
 
 /**
  * Render implementation for {@link Mario} player entity.
@@ -63,8 +65,7 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
      * @throws NullPointerException if resource is null
      */
     public MarioRender(final Loader loader) {
-        super(loader);
-        this.soundManager = null;
+        this(loader, new GameSoundManager(loader));
     }
 
     /**
@@ -92,6 +93,10 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
         final MarioAnimationType animation = resolveAnimationType(mario);
 
         handleSoundForAnimation(animation);
+
+        if (mario.didDesoyedEnemy()) {
+            soundManager.play(Event.POWER_UP);
+        }
 
         final BufferedImage frame = getMarioFrame(mario, animation, deltaTime);
 
@@ -145,7 +150,7 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
      * @param animation animation mario is currently displaying
      */
     private void handleSoundForAnimation(final MarioAnimationType animation) {
-        if (soundManager == null || animation == lastAnimation) {
+        if (animation == lastAnimation) {
             return;
         }
 

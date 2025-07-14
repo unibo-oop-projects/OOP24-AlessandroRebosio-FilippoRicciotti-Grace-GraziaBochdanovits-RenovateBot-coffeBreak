@@ -23,6 +23,13 @@ public interface CharacterState extends State<MainCharacter> {
     boolean canJump();
 
     /**
+     * Returns whether the character has destroyed an enemy in this state.
+     *
+     * @return true if an enemy was destroyed in this state, false otherwise
+     */
+    boolean didDesoyedEnemy();
+
+    /**
      * Handles collision with another entity while in this state.
      * 
      * @param character the character in this state

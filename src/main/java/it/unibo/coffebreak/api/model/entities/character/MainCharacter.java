@@ -124,6 +124,13 @@ public interface MainCharacter extends Entity {
     boolean isJumping();
 
     /**
+     * Returns whether the character has destroyed an enemy in the current state.
+     *
+     * @return true if an enemy was destroyed in the current state, false otherwise
+     */
+    boolean didDesoyedEnemy();
+
+    /**
      * Returns whether the character is currently climbing.
      * This method indicates if the character is in a climbing state,
      * such as on a ladder or similar climbable structure.
