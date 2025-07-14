@@ -48,8 +48,8 @@ Il gameplay si basa su una combinazione di tempismo e precisione nei movimenti.
 Mario può spostarsi verso sinistra o destra, saltare per evitare i nemici e utilizzare le scale per muoversi verticalmente tra le piattaforme.
 L'obiettivo di ogni livello è raggiungere la cima della struttura, dove si trovano Donkey Kong e Pauline.
 %
-I quattro livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente:
-con il progredire del gioco, gli ostacoli si muovono più rapidamente, i nemici diventano meno prevedibili e i percorsi sempre più complessi.
+I due livelli predefiniti si ripetono ciclicamente ma presentano una difficoltà crescente:
+con il progredire del gioco, gli ostacoli si muovono più rapidamente.
 %
 Un aspetto centrale del gioco è il sistema di punteggio, che premia il giocatore per varie azioni compiute durante la partita.
 I punti vengono assegnati per ogni ostacolo evitato, nemico eliminato o oggetto bonus raccolto, come le monete e il martello,
@@ -99,12 +99,12 @@ Il personaggio è controllabile tramite input da tastiera e può muoversi latera
 gioco (piattaforme, scale, ostacoli e oggetti bonus) permettendo un'esperienza coerente con l'originale.
 
 La visuale è statica: l'intero livello è visibile in una singola schermata. Tuttavia il personaggio se viene colpito da un ostacolo, si attiva la condizione
-di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione in corso e confrontandolo con il record precedente.
+di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulato nella sessione in corso e che verra confrontato con i record precedenti nel menu principale.
 
 Durante la partita, il \textbf{punteggio} è visibile nella parte superiore dello schermo e si aggiorna dinamicamente in base alle azioni
 del giocatore (es. raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
 
-Una volta terminata la partita (completamento dei livelli o esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
+Una volta terminata la partita (all' esaurimento delle vite), viene mostrata una schermata di fine con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
 
 \begin{figure}[H]
@@ -328,7 +328,7 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{figure}[H]
 	\centering{}
 	\includesvg[width=1\textwidth,pretex=\tiny]{svg/GameMapsManager.svg}
-	\caption{UML dell'applicazione dello Strategy pattern per gestire diverse mappe.}
+	\caption{UML dell'applicazione dello Strategy pattern per gestire diverse mappe e la possibilita futura di poterne aggiungere di nuove.}
 	\label{img:GameMapsManager}
 \end{figure}
 \newpage
