@@ -252,6 +252,17 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     }
 
     /**
+     * {@inheritDoc}
+     * Resets the number of lives back to the initial value defined.
+     */
+    @Override
+    public void resetBehaviour() {
+        this.isClimbing = false;
+        this.isJumping = false;
+        this.isFacingRight = true;
+    }
+
+    /**
      * @return true if Mario is facing right, false if facing left
      */
     @Override
