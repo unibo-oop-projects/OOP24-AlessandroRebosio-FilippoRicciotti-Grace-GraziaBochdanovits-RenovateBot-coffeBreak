@@ -66,12 +66,21 @@ public final class MarioRender extends AnimatedEntityRender<MarioRender.MarioAni
         final MarioAnimationType animation = resolveAnimationType(mario);
         final BufferedImage frame = getMarioFrame(mario, animation, deltaTime);
 
+        final int baseWidth = mario.getDimension().width();
+        final int baseHeight = mario.getDimension().height();
+
+        final int drawWidth = animation == MarioAnimationType.HAMMER ? baseWidth * 2 : baseWidth;
+        final int drawHeight = animation == MarioAnimationType.HAMMER ? baseHeight * 2 : baseHeight;
+
+        final int offsetX = (drawWidth - baseWidth) / 2;
+        final int offsetY = drawHeight - baseHeight;
+
         g.drawImage(
             frame,
-            (int) mario.getPosition().x(),
-            (int) mario.getPosition().y(),
-            mario.getDimension().width(),
-            mario.getDimension().height(),
+            (int) mario.getPosition().x() - offsetX,
+            (int) mario.getPosition().y() - offsetY,
+            drawWidth,
+            drawHeight,
             null
         );
     }
