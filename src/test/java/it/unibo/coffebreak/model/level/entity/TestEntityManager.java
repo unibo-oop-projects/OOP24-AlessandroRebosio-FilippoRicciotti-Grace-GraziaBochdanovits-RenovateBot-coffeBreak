@@ -25,8 +25,7 @@ import it.unibo.coffebreak.impl.model.level.entity.GameEntityManager;
  * Unit tests for the {@link GameEntityManager} class.
  * <p>
  * These tests verify entity management functionalities such as:
- * adding entities, retrieving entities, accessing the main character,
- * and accessing grid dimensions.
+ * adding entities, retrieving entities, accessing the main character.
  * </p>
  * 
  * @author Filippo Ricciotti
