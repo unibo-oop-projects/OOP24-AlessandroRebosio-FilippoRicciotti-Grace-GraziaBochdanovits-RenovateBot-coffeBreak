@@ -1,4 +1,4 @@
-package it.unibo.coffebreak.api.controller.input;
+package it.unibo.coffebreak.api.controller.mapper;
 
 import java.util.Map;
 import java.util.Optional;

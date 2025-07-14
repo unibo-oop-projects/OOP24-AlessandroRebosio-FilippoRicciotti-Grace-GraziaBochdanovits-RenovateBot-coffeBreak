@@ -1,10 +1,10 @@
-package it.unibo.coffebreak.impl.controller.input;
+package it.unibo.coffebreak.impl.controller.mapper;
 
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
 import it.unibo.coffebreak.api.controller.action.Action;
-import it.unibo.coffebreak.api.controller.input.KeyActionMapper;
+import it.unibo.coffebreak.api.controller.mapper.KeyActionMapper;
 
 /**
  * Concrete implementation of the {@link KeyActionMapper} interface.
