@@ -15,7 +15,7 @@ import it.unibo.coffebreak.impl.common.Vector;
  */
 public record GamePhysics(float speed, float jumpForce) implements Physics {
 
-    private static final float GRAVITY = 70; // Positive value, applied downward
+    private static final float GRAVITY = 65; // Positive value, applied downward
     private static final float DEFAULT_SPEED = 20; // Reduced speed for smoother movement
     private static final float DEFAULT_JUMP_FORCE = 40; // Positive jump force
 
