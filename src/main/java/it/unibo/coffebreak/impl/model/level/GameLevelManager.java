@@ -153,6 +153,15 @@ public class GameLevelManager implements LevelManager {
         this.entityManager.resetCharacter();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reset() {
+        this.mapsManager.reset();
+        this.levelIndex = 0;
+    }
+
     private int getBonusAmount() {
         return Math.min(SUPPLY * this.levelIndex + MIN_BONUS, MAX_BONUS);
     }
