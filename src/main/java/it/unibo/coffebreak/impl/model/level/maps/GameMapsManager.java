@@ -119,10 +119,11 @@ public class GameMapsManager implements MapsManager {
     public boolean canDonkeyThrowBarrel() {
         return this.maps.get(this.mapIndex).canDonkeyThrowBarrel();
     }
-    
+
     /**
      * {@inheritDoc}
      */
+    @Override
     public void reset() {
         this.mapIndex = 0;
     }
