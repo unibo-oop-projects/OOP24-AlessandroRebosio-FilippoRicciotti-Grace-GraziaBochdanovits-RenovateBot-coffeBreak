@@ -239,14 +239,14 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il personaggio di Mario deve poter modificare il suo comportamento in base allo stato in cui si trova (ad esempio normale o con il martello).
-		  Un'implementazione basata su flag booleani o strutture condizionali annidate, avrebbe introdotti diversi problemi architetturali: in particolare,
-		  avrebbe violato il principio Open/Closed, in quanto un nuovo stato avrebbe richiesto modificiche dirette alla classe di Mario.
+	      Un'implementazione basata su flag booleani o strutture condizionali annidate, avrebbe introdotti diversi problemi architetturali: in particolare,
+	      avrebbe violato il principio Open/Closed, in quanto un nuovo stato avrebbe richiesto modificiche dirette alla classe di Mario.
 
 	\item[\textbf{Soluzione}]
 	      Per risolvere il problema abbiamo deciso di adottare lo \textbf{State Pattern}, che consente di definire un'architettura flessibile e modulare. Attravero l'interfaccia \texttt{CharacterState} sono stati
 	      definiti i comportamenti del personaggio, mentre le classi concrete, come \texttt{NormalState} e \texttt{WithHammerState}, hanno implementato le specifiche logiche di comportamento.
 	      la classe di \texttt{Mario} mantiene semplicemente un riferimento allo stato attuale, e delega ad esso tutte le operazioni.
-		  Questa soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
+	      Questa soluzione ha garantito una chiara separazione delle responsabilità, migliorando significativamente la manutenibilità e l'estendibilità del sistema.
 \end{description}
 
 \newpage
@@ -261,16 +261,16 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{description}
 	\item[\textbf{Problema}]
 	      La gestione di numerose entità di gioco, caratterizzate da attributi comuni (come posizione, dimensione e velocità) ma anche da comportamenti specifici, ha rappresentato una delle
-		  principali sfide progettuali. Senza un'adeguata strategia di astrazione e riuso di codice, si sarebbe rapidamente generata una pericolosa duplicazione, con gravi conseguenze sulla manutenibilità
-		  e sull'affidabilità del sistema. In particolare, ogni modifica alla logica condivisa avrebbe richiesto interventi ridondanti in più classi, aumentando il rischio di errori e incoerenze.
+	      principali sfide progettuali. Senza un'adeguata strategia di astrazione e riuso di codice, si sarebbe rapidamente generata una pericolosa duplicazione, con gravi conseguenze sulla manutenibilità
+	      e sull'affidabilità del sistema. In particolare, ogni modifica alla logica condivisa avrebbe richiesto interventi ridondanti in più classi, aumentando il rischio di errori e incoerenze.
 
 	\item[\textbf{Soluzione}]
 	      Per affrontare questa complessità è stato adottato il \textbf{Template Method Pattern}, all'interno di una gerarchia multilivello di classi astratte. Questo approccio ha permesso di definire una struttura
-		  solida e flessibile, in grado di bilanciare riuso, estendibilità e chiarezza del codice.
-		  La classe base \texttt{AbstractEntity} incapsula tutta la logica comune, fungendo da fondamento per l'intero sistema di entità. Le classi intermedie, come \texttt{AbstractEnemy} e \texttt{AbstractPlatform},
-		  hanno invece catturato comportamenti e proprietà condivise da insiemi specifici di entità, creando un ulteriore livello di riuso e specializzazione.
-		  Infine le classi concrete hanno potuto concentrarsi esclusivamente sui comportamenti distintivi, sfruttando i metodi ereditati e ridefinendo solo quelli realmente necessari.
-		  Questa progettazione basata sul Templete Method ha permesso la realizzazione di un sistema robusto, scalabile e facilmente estendibile.
+	      solida e flessibile, in grado di bilanciare riuso, estendibilità e chiarezza del codice.
+	      La classe base \texttt{AbstractEntity} incapsula tutta la logica comune, fungendo da fondamento per l'intero sistema di entità. Le classi intermedie, come \texttt{AbstractEnemy} e \texttt{AbstractPlatform},
+	      hanno invece catturato comportamenti e proprietà condivise da insiemi specifici di entità, creando un ulteriore livello di riuso e specializzazione.
+	      Infine le classi concrete hanno potuto concentrarsi esclusivamente sui comportamenti distintivi, sfruttando i metodi ereditati e ridefinendo solo quelli realmente necessari.
+	      Questa progettazione basata sul Templete Method ha permesso la realizzazione di un sistema robusto, scalabile e facilmente estendibile.
 \end{description}
 
 \noindent
@@ -284,12 +284,12 @@ del team, migliorando l'efficienza della collaborazione.
 \begin{description}
 	\item[\textbf{Problema}]
 	      Il sistema di rendering doveva gestire un ampio numero di entità, ciascuna con caratteristiche grafiche specifiche. Un approccio centralizzato avrebbe comportato un forte accoppiamento tra la logica di rendering e
-		  le implementazioni delle singole entità, compromettendo la modularità e rendendo il sistema rigido e difficilmente estensibile. Inoltre, la gestione ridondante di operazioni comuni, come il caricamento degli sprite, avrebbe
-		  portato a una significativa duplicazione del codice, violando il principio DRY.
+	      le implementazioni delle singole entità, compromettendo la modularità e rendendo il sistema rigido e difficilmente estensibile. Inoltre, la gestione ridondante di operazioni comuni, come il caricamento degli sprite, avrebbe
+	      portato a una significativa duplicazione del codice, violando il principio DRY.
 
 	\item[\textbf{Soluzione}]
 	      Per affrontare questa sfida, è stata adottata una soluzione basata sulla combinazione dello \textbf{Strategy Pattern} con un meccanismo di registrazione dinamica dei renderer. Ogni entità dispone di un renderer dedicato che implementa l’interfaccia \texttt{EntityRender},
-		  responsabile della logica di disegno specifica. Il componente centrale \texttt{GameRenderManager} utilizza una mappa di registrazione per associare, in fase di esecuzione, ogni tipo di entità al relativo renderer.  
+	      responsabile della logica di disegno specifica. Il componente centrale \texttt{GameRenderManager} utilizza una mappa di registrazione per associare, in fase di esecuzione, ogni tipo di entità al relativo renderer.
 	      Questo approccio ha permesso di ridurre drasticamente l’accoppiamento tra logica di gioco e logica grafica, ha semplificato l’aggiunta di nuove entità o stili di rendering, e ha permesso il riuso efficiente delle risorse grazie all’inizializzazione controllata dei componenti condivisi.
 \end{description}
 
@@ -408,6 +408,7 @@ In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte l
 	\item \texttt{TestPauline}: testa il comportamento dell'ostaggio.
 	\item \texttt{TestDonkeyKong}: verifica la logica del lancio dei barili e il comportamento dell'antagonista.
 	\item \texttt{TestFire}: verifica il comportamento delle fiamme.
+	\item \texttt{TestBarrel}: verifica il comportamento dei barili.
 	\item \texttt{TestCollectible}: testa la raccolta degli oggetti collezionabili (monete, martelli) e il loro effetto.
 	\item \texttt{TestEntry:} verifica la corretta gestione delle singole voci della classifica.
 	\item \texttt{TestGameLeaderBoard:} verifica la gestione e il salvataggio dei punteggi nella leaderboard.
@@ -416,6 +417,10 @@ In questo progetto abbiamo implementato dei test unitari con JUnit 5 per tutte l
 	\item \texttt{TestLevelManager} verifica corretto avanzamento e reset di livello.
 	\item \texttt{TestMapsManager} verifica il corretto comportamento delle mappe.
 	\item \texttt{TestEntityManager} verifica l'accesso alle varie entita e il loro corretto collocamento.
+	\item \texttt{TestMenuModelState:} verifica la navigazione nel menu principale, la gestione delle azioni utente e le transizioni verso lo stato di gioco.
+	\item \texttt{TestInGameModelState:} verifica la logica di gioco attiva, inclusi aggiornamenti delle entità, gestione del motore fisico, lancio dei barili dall'antagonista, movimento del giocatore e transizioni agli stati di pausa e game over.
+	\item \texttt{TestPauseModelState:} verifica il menu di pausa, le opzioni disponibili (riprendi, menu principale, esci) e le relative transizioni di stato.
+	\item \texttt{TestGameOverModelState:} verifica lo stato di fine gioco, la gestione del punteggio finale e il ritorno al menu principale.
 \end{itemize}
 
 \newpage
