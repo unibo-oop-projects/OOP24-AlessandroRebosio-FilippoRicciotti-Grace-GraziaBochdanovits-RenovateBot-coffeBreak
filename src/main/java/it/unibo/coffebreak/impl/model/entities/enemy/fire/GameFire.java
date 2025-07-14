@@ -61,6 +61,7 @@ public class GameFire extends AbstractEnemy implements Fire {
             case final Ladder ladder -> {
                 this.ladderCollision = true;
                     if (random.nextFloat() < CLIMB_PROBABILITY) {
+                        this.lifeElapsed = 0f;
                         this.climbing = true;
                         this.onPlatformLeave();
                     }
