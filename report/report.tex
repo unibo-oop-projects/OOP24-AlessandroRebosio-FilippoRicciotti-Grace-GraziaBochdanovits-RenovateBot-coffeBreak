@@ -194,8 +194,7 @@ del team, migliorando l'efficienza della collaborazione.
 	      Per risolvere questi problemi, abbiamo implementato il \textbf{Command Pattern} utilizzando l'enum \texttt{Action} come rappresentazione dei comandi e l'interfaccia
 	      \texttt{KeyActionMapper} per il mapping funzionale degli input. Il \texttt{KeyActionMapper} fornisce un mapping immutabile tra codici di tasto e azioni di gioco, utilizzando
 	      programmazione funzionale con \texttt{Optional} per gestire in modo sicuro input non mappati. Il \texttt{GameController} riceve gli input dalla \texttt{View}, li traduce in
-	      \texttt{Action} tramite il mapper, e li accoda per l'elaborazione asincrona nel model. Questa implementazione del Command Pattern garantisce separazione delle responsabilità, facilita
-	      il testing unitario e supporta funzionalità avanzate come l'elaborazione di stream di input multipli attraverso il metodo \texttt{processKeys()}.
+	      \texttt{Action} tramite il mapper, e li accoda per l'elaborazione asincrona nel model.
 \end{description}
 \begin{figure}[H]
 	\centering{}
