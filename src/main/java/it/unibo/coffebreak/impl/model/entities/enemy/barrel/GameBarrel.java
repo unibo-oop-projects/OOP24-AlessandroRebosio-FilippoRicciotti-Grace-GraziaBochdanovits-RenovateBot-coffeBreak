@@ -1,7 +1,6 @@
 package it.unibo.coffebreak.impl.model.entities.enemy.barrel;
 
 import it.unibo.coffebreak.api.model.entities.Entity;
-import it.unibo.coffebreak.api.model.entities.PhysicsEntity;
 import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.structure.Platform;
 import it.unibo.coffebreak.api.model.entities.structure.Tank;
@@ -32,15 +31,13 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  * @see AbstractEntity
  * @author Grazia Bochdanovits de Kavna
  */
-public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
+public class GameBarrel extends AbstractEnemy implements Barrel {
 
     private static final float BARREL_SPEED = 40f;
 
     private final boolean canTransformToFire;
     private boolean isDestroyedByTank;
-    private boolean onPlatform;
     private boolean hasFallen;
-    private boolean movingRight = true;
 
     /**
      * Constructs a new game barrel with specified properties.
@@ -56,11 +53,10 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
         super(position, dimension);
         this.canTransformToFire = canTransformToFire;
 
-        this.onPlatform = true;
         this.setVelocity(new Vector(BARREL_SPEED, 0f));
     }
 
-    /**
+     /**
      * {@inheritDoc}
      * <p>
      * Barrel movement logic:
@@ -71,11 +67,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
      */
     @Override
     public void update(final float deltaTime) {
-        final Vector currentVelocity = this.getVelocity();
-
-        if (this.onPlatform) {
-            final float horizontalSpeed = this.movingRight ? BARREL_SPEED : -BARREL_SPEED;
-            this.setVelocity(new Vector(horizontalSpeed, currentVelocity.y()));
+        if (isOnPlatform()) {
+            setVelocity(new Vector(getHorizontalSpeed(BARREL_SPEED), getVelocity().y()));
         }
     }
 
@@ -93,8 +86,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
     public void onCollision(final Entity other) {
         switch (other) {
             case final Tank tank -> {
-                this.isDestroyedByTank = true;
-                this.destroy();
+                isDestroyedByTank = true;
+                destroy();
             }
             case final Platform platform -> this.onPlatformLand();
             default -> {
@@ -110,12 +103,11 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
      */
     @Override
     public void onPlatformLand() {
-        if (this.hasFallen) {
-            this.movingRight = !this.movingRight;
-            this.hasFallen = false;
+        super.onPlatformLand();
+        if (hasFallen) {
+            invertDirection();
+            hasFallen = false;
         }
-
-        this.onPlatform = true;
     }
 
     /**
@@ -126,8 +118,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
      */
     @Override
     public void onPlatformLeave() {
-        this.onPlatform = false;
-        this.hasFallen = true;
+        super.onPlatformLeave();
+        hasFallen = true;
     }
 
     /**
@@ -145,6 +137,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel, PhysicsEntity {
      */
     @Override
     public boolean canTransformToFire() {
-        return this.canTransformToFire && this.isDestroyedByTank;
+        return canTransformToFire && isDestroyedByTank;
     }
 }
