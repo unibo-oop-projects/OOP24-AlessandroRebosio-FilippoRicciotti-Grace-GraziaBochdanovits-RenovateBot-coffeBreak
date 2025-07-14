@@ -19,6 +19,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.api.view.render.RenderManager;
 import it.unibo.coffebreak.api.view.render.entities.EntityRender;
+import it.unibo.coffebreak.api.view.sound.SoundManager;
 import it.unibo.coffebreak.impl.model.entities.collectible.coin.Coin;
 import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.model.entities.mario.Mario;
@@ -60,15 +61,18 @@ public final class GameRenderManager implements RenderManager {
 
     private final Map<Class<? extends Entity>, EntityRender> entityRender = new HashMap<>();
     private final Loader loader;
+    private final SoundManager soundManager;
 
     /**
      * Constructs a new GameRenderManager with the specified loader.
      * 
-     * @param loader the loader used to load resources for entity renders
+     * @param loader       the loader used to load resources for entity renders
+     * @param soundManager the audio manager responsible for playing
+     *                     Clips
      */
-    public GameRenderManager(final Loader loader) {
+    public GameRenderManager(final Loader loader, final SoundManager soundManager) {
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
-
+        this.soundManager = Objects.requireNonNull(soundManager, "The loader cannot be null");
         this.initRender();
     }
 
@@ -86,9 +90,9 @@ public final class GameRenderManager implements RenderManager {
 
         entitiesToRender.forEach(entity -> {
             entityRender.entrySet().stream()
-                .filter(entry -> entry.getKey().isInstance(entity))
-                .findFirst()
-                .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
+                    .filter(entry -> entry.getKey().isInstance(entity))
+                    .findFirst()
+                    .ifPresent(entry -> entry.getValue().draw(g, entity, deltaTime, width, height));
         });
     }
 
@@ -97,7 +101,7 @@ public final class GameRenderManager implements RenderManager {
         this.entityRender.put(Hammer.class, new HammerRender(loader));
         this.entityRender.put(Barrel.class, new BarrelRender(loader));
         this.entityRender.put(Fire.class, new FireRender(loader));
-        this.entityRender.put(Mario.class, new MarioRender(loader));
+        this.entityRender.put(Mario.class, new MarioRender(loader, soundManager));
         this.entityRender.put(Pauline.class, new PaulineRender(loader));
         this.entityRender.put(DonkeyKong.class, new DonkeyKongRender(loader));
         this.entityRender.put(Princess.class, new PaulineRender(loader));
