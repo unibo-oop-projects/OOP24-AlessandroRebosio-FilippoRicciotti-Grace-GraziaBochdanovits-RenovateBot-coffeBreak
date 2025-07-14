@@ -31,5 +31,11 @@ public class BreakablePlatformRender extends AbstractPlatformRender {
     protected void renderPlatform(final Graphics2D g, final Entity entity, final float deltaTime, final int width,
             final int height) {
         g.setColor(Color.YELLOW);
+        g.drawRect(
+            (int) entity.getPosition().x(),
+            (int) entity.getPosition().y(),
+            entity.getDimension().width(),
+            entity.getDimension().height()
+        );
     }
 }
