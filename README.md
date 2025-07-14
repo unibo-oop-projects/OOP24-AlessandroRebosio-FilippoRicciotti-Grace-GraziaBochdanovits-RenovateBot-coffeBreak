@@ -1,8 +1,41 @@
 # CoffeBreak
 
-CoffeBreak ha le stesse meccaniche di Donkey Kong. Uno studente cerca di farsi la sua pausa caffè e deve raggiungere la macchinetta che si trova in cima ad una struttura protetta dal tecnico delle macchinette. Quest'ultimo, ben consapevole del letale rischio di bersi 6 caffe al giorno, cerca di impedire la scalata al povero laureando tirandogli bottiglie di fluidi senza caffeina. L'idratazione è importante. Lo studente ha solo due modi per evitarle: saltarle o usando il power up. Durante il tragitto, si potranno trovare delle monetine che verranno raccolte immediatamente. Per raggiungere il suo obiettivo avrà a disposizione 3 appelli (vite) alla fine dei quali sarà costretto a rinunciare agli studi, la stanchezza non perdona!
+CoffeBreak is inspired by Donkey Kong, developed by Nintendo in 1981. JumpMan tries to reach the Princess at the top of a structure while avoiding obstacles thrown by the Donkey Kong. Use arrow keys to move, spacebar to jump, and collect coins along the way. You have 3 lives to complete your mission! 
 
-# Componenti del Team
+## Requirements
+
+- **Java 21** or higher
+- **Gradle** (included via Gradle Wrapper)
+
+## Installation and Running
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/alessandrorebosio/OOP24-coffeBreak.git
+cd OOP24-coffeBreak
+```
+
+### 2. Build the project
+```bash
+./gradlew build
+```
+
+### 3. Run the game
+```bash
+./gradlew run
+```
+
+Alternatively, you can run the pre-built JAR file:
+```bash
+java -jar coffeBreak-all.jar
+```
+
+**Note**: Make sure you have Java 21 installed on your system. You can check your Java version with:
+```bash
+java -version
+```
+
+# Team Members
 
 #### Grazia Bochdanovits
 - **GitHub**: [this-Grace](https://github.com/this-Grace)
