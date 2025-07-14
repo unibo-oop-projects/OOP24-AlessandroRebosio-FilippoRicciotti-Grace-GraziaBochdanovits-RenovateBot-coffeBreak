@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.impl.view.sound;
 
+import java.util.Objects;
+
 import javax.sound.sampled.Clip;
 
 import it.unibo.coffebreak.api.common.Loader;
@@ -19,7 +21,7 @@ public final class GameSoundManager implements SoundManager {
      * @param loader the resource loader to load sound assets
      */
     public GameSoundManager(final Loader loader) {
-        this.loader = loader;
+        this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
     }
 
     /**
