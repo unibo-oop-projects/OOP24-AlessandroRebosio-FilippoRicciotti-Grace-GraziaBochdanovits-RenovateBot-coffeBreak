@@ -184,20 +184,51 @@ del team, migliorando l'efficienza della collaborazione.
 \newpage
 \noindent
 \textbf{Gestione degli input e comandi di gioco}
-%TODO put image of command pattern
 \begin{description}
 	\item[\textbf{Problema}]
 	      Nel controllo di un videogioco, la gestione degli input da tastiera può rapidamente diventare complessa e poco flessibile. Un approccio diretto che collega immediatamente ogni input a un'azione
 	      specifica porta a diversi problemi: codice difficile da mantenere e modificare, impossibilità di riutilizzare azioni comuni, difficoltà nell'implementazione di funzionalità avanzate come
-	      macro o replay, e complessità nella gestione di input contestuali (dove lo stesso tasto può avere significati diversi in base allo stato del gioco).
+	      combo o elaborazione batch di input, e complessità nella gestione di configurazioni di controlli personalizzabili.
 
 	\item[\textbf{Soluzione}]
-	      Per risolvere questi problemi, abbiamo implementato il \textbf{Command Pattern}, incapsulando ogni azione di gioco in un oggetto comando distinto. Il \texttt{CommandFactory} si occupa di
-	      mappare gli input da tastiera ai comandi appropriati, mentre il \texttt{GameController} esegue i comandi senza conoscere i dettagli dell'implementazione. Abbiamo inoltre implementato comandi
-	      contestuali (come \texttt{ContextualCommand}) che cambiano comportamento in base allo stato del gioco, permettendo allo stesso tasto di gestire sia la navigazione nei menu che i movimenti
-	      in-game. Questo approccio rende il sistema estendibile, testabile e facilita l'implementazione di funzionalità come la gestione della pressione e del rilascio dei tasti.
+	      Per risolvere questi problemi, abbiamo implementato il \textbf{Command Pattern} utilizzando l'enum \texttt{Action} come rappresentazione dei comandi e l'interfaccia
+	      \texttt{KeyActionMapper} per il mapping funzionale degli input. Il \texttt{KeyActionMapper} fornisce un mapping immutabile tra codici di tasto e azioni di gioco, utilizzando
+	      programmazione funzionale con \texttt{Optional} per gestire in modo sicuro input non mappati. Il \texttt{GameController} riceve gli input dalla \texttt{View}, li traduce in
+	      \texttt{Action} tramite il mapper, e li accoda per l'elaborazione asincrona nel model. Questa implementazione del Command Pattern garantisce separazione delle responsabilità, facilita
+	      il testing unitario e supporta funzionalità avanzate come l'elaborazione di stream di input multipli attraverso il metodo \texttt{processKeys()}.
 \end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Command.svg}
+	\caption{UML dell'applicazione del Command Pattern.}
+	\label{img:command}
+\end{figure}
 
+\newpage
+\noindent
+\textbf{Gestione della persistenza della leaderboard}
+\begin{description}
+	\item[\textbf{Problema}]
+	      La gestione della persistenza dei punteggi della leaderboard presenta diverse sfide: necessità di salvare e caricare dati in modo affidabile, gestione degli errori di I/O,
+	      implementazione di meccanismi di backup per evitare perdite di dati, e mantenimento di una separazione netta tra logica di business e dettagli di persistenza.
+	      Un approccio diretto che accoppia la logica della leaderboard con i dettagli di salvataggio viola il principio di Single Responsibility e rende difficile testare
+	      e modificare i meccanismi di persistenza.
+
+	\item[\textbf{Soluzione}]
+	      Per risolvere questi problemi, abbiamo implementato il \textbf{Repository Pattern} attraverso l'interfaccia generica \texttt{Repository<T>} e la sua implementazione
+	      concreta \texttt{ScoreRepository}. Il repository incapsula tutta la logica di persistenza, utilizzando il \texttt{FileManager} per la gestione a basso livello dei file.
+	      Il sistema implementa meccanismi automatici di backup e recovery: prima di ogni operazione di salvataggio viene creata una copia di sicurezza, e in caso di errori
+	      durante il caricamento il sistema tenta automaticamente il ripristino dal backup.
+\end{description}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/Repository.svg}
+	\caption{UML dell'applicazione del Command Pattern.}
+	\label{img:repository}
+\end{figure}
+
+
+\newpage
 \subsection{Grazia Bochdanovits de Kavna}
 \textbf{Gestione degli stati di Mario}
 \begin{description}
