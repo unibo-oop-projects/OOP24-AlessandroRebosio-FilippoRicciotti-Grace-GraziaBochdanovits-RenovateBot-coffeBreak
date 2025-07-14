@@ -199,6 +199,12 @@ del team, migliorando l'efficienza della collaborazione.
 
 \subsection{Grazia Bochdanovits de Kavna}
 \textbf{Gestione degli stati di Mario}
+\begin{figure}[H]
+	\centering{}
+	\includesvg[width=1\textwidth,pretex=\tiny]{svg/marioState.svg}
+	\caption{UML dell'applicazione dello Strategy Pattern per i diversi stati di Mario.}
+	\label{img:MarioState}
+\end{figure}
 \begin{description}
 	\item[\textbf{Problema}]
 	     Il personaggio di Mario deve adattare il suo comportamento in base al suo stato (normale o con il martello), ma un'implementazione basata su flag booleani avrebbe violato il principio Open/Closed,
