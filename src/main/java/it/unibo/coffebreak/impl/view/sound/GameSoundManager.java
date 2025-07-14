@@ -14,6 +14,7 @@ import it.unibo.coffebreak.api.view.sound.SoundManager;
  */
 public final class GameSoundManager implements SoundManager {
 
+    private static final float LOWER_WALKING = -10.0f;
     private final Loader loader;
 
     /**
@@ -49,7 +50,7 @@ public final class GameSoundManager implements SoundManager {
         final Clip c = this.loader.loadClip(e.path());
         if (c != null && !c.isRunning()) {
             if (e == Event.WALKING) {
-                setVolume(c, -10.0f); 
+                setVolume(c, LOWER_WALKING);
             }
             c.setFramePosition(0);
             c.loop(Clip.LOOP_CONTINUOUSLY);
@@ -99,7 +100,7 @@ public final class GameSoundManager implements SoundManager {
      * @param clip
      * @param decibels
      */
-    private void setVolume(final Clip clip, float decibels) {
+    private void setVolume(final Clip clip, final float decibels) {
         if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             final FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
             gainControl.setValue(decibels);
