@@ -1,5 +1,7 @@
 package it.unibo.coffebreak.model.entities.npc.pauline;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,8 +33,7 @@ class TestPauline {
     private static final Position TEST_POSITION = new Position(10.0f, 20.0f);
 
     /** Test dimension used for princess initialization. */
-    // private static final Dimension TEST_DIMENSION = new Dimension(5.0f,
-    // 10.0f);
+    private static final BoundigBox TEST_DIMENSION = new BoundigBox(8, 8);
 
     /** The princess instance under test. */
     private Pauline princess;
@@ -50,12 +51,9 @@ class TestPauline {
      */
     @Test
     void testInitialState() {
-        // assertFalse(princess.isRescued(), "Princess should not be rescued
-        // initially");
-        // assertEquals(TEST_POSITION, princess.getPosition(), "Position should match
-        // constructor argument");
-        // assertEquals(TEST_DIMENSION, princess.getDimension(), "Dimension should match
-        // constructor argument");
+        assertFalse(princess.isRescued(), "Princess should not be rescued initially");
+        assertEquals(TEST_POSITION, princess.getPosition(), "Position should match constructor argument");
+        assertEquals(TEST_DIMENSION, princess.getDimension(), "Dimension should match constructor argument");
     }
 
     /**
@@ -66,5 +64,4 @@ class TestPauline {
         princess.rescue();
         assertTrue(princess.isRescued(), "Princess should be rescued after calling rescue()");
     }
-
 }
