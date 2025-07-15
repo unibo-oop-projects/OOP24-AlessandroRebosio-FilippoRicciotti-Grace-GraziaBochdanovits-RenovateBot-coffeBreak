@@ -41,10 +41,9 @@ import it.unibo.coffebreak.impl.view.render.entities.npc.pauline.PaulineRender;
 
 /**
  * Implementation of {@link RenderManager} that manages the rendering process
- * for both static and dynamic game entities. This class coordinates the drawing
- * of all
- * game elements in the proper order and delegates the actual rendering to
- * specialized renderers for each entity type.
+ * for both static and dynamic game entities.
+ * This class coordinates the drawing of all game elements in the proper order
+ * and delegates the actual rendering to specialized renderers for each entity type.
  * 
  * <p>
  * The rendering process follows this sequence:
@@ -67,8 +66,7 @@ public final class GameRenderManager implements RenderManager {
      * Constructs a new GameRenderManager with the specified loader.
      * 
      * @param loader       the loader used to load resources for entity renders
-     * @param soundManager the audio manager responsible for playing
-     *                     Clips
+     * @param soundManager the audio manager responsible for playing Clips
      */
     public GameRenderManager(final Loader loader, final SoundManager soundManager) {
         this.loader = Objects.requireNonNull(loader, "The loader cannot be null");
@@ -76,6 +74,9 @@ public final class GameRenderManager implements RenderManager {
         this.initRender();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void render(final Graphics2D g, final List<Entity> entities, final int width, final int height,
             final float deltaTime) {

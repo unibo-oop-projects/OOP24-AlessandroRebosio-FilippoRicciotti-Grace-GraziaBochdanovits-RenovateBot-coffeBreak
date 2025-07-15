@@ -10,8 +10,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
 
 /**
- * A renderer for the Antagonist that draws him as a yellow rectangle on the
- * screen.
+ * A renderer for the Antagonist entity.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -33,7 +32,7 @@ public final class DonkeyKongRender extends AnimatedEntityRender<DonkeyKongRende
     private final DKAnimationStatus animationStatus = new DKAnimationStatus();
 
     /**
-     * Constructs a new DonkeyKong with the specified screen dimensions.
+     * Constructs a new DonkeyKongRender with the specified screen dimensions.
      * The entity dimensions will be scaled according to these dimensions.
      *
      *  @param loader the loader used to access the sprite sheet

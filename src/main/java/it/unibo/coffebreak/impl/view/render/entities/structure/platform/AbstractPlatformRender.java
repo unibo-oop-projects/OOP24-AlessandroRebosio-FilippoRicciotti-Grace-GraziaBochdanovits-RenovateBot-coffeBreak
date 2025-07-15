@@ -56,14 +56,14 @@ public abstract class AbstractPlatformRender extends AbstractEntityRender {
     }
 
     /**
-     * Renders the visual representation of the collectible entity.
+     * Renders the visual representation of the platform entity.
      * <p>
      * Concrete subclasses must implement this method to provide the specific
-     * rendering logic for their collectible type.
+     * rendering logic.
      * </p>
      * 
-     * @param g         the {@link Graphics2D} context to render onto
-     * @param entity    the collectible entity to render
+     * @param g         the {@link Graphics2D} context to render into
+     * @param entity    the platform entity to render
      * @param deltaTime the time in seconds since the last frame was rendered
      * @param width     the width available for rendering the entity
      * @param height    the height available for rendering the entity

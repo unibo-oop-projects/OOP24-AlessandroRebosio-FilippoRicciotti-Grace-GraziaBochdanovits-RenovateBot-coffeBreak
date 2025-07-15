@@ -14,7 +14,7 @@ import it.unibo.coffebreak.impl.view.render.entities.structure.platform.Abstract
 public class NormalPlatformRender extends AbstractPlatformRender {
 
     /**
-     * Constructs a new Hammer with the specified screen dimensions.
+     * Constructs a new NormalPlatformRender with the specified screen dimensions.
      * The entity dimensions will be scaled according to these dimensions.
      *
      * @param resource

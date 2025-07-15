@@ -12,10 +12,8 @@ import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender.E
  * An abstract base class for rendering enemy entities in the game.
  * <p>
  * This class provides common rendering logic for all enemy types, specifically
- * handling
- * the case where an enemy has been destroyed. Concrete subclasses must
- * implement
- * the actual rendering of the enemy's visual representation.
+ * handling the case where an enemy has been destroyed.
+ * Concrete subclasses must implement the actual rendering of the enemy's visual representation.
  * </p>
  *
  * @author Grazia Bochdanovits de Kavna
@@ -51,7 +49,7 @@ public abstract class AbstractEnemyRender extends AnimatedEntityRender<EnemyAnim
      * the enemy exists and hasn't been destroyed.
      * </p>
      *
-     * @param g         the {@link Graphics2D} context to render onto
+     * @param g         the {@link Graphics2D} context to render into
      * @param entity    the enemy entity to render
      * @param deltaTime the time in seconds since the last frame was rendered
      * @param width     the width available for rendering the entity

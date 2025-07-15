@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.Comparator;
-import java.util.Optional;
 
 import it.unibo.coffebreak.api.common.Loader;
 import it.unibo.coffebreak.api.controller.Controller;
@@ -26,8 +25,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  * 
  * <p>
  * It extends {@link AbstractViewState} to inherit common view state
- * functionality
- * and implements the game-specific rendering logic.
+ * functionality and implements the game-specific rendering logic.
  * </p>
  * 
  * @author Grazia Bochdanovits de Kavna
@@ -71,33 +69,15 @@ public class InGameView extends AbstractViewState {
         final int renderWidth = panelWidth - 2 * marginHoriz;
         final int renderHeight = panelHeight - 2 * marginVert;
 
-        final Optional<Entity> bottomRightPlatform = getController().getEntities().stream()
+        getController().getEntities().stream()
                 .filter(Platform.class::isInstance)
-                .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()));
-
-        final double platformRight = bottomRightPlatform.get().getPosition().x()
-                + bottomRightPlatform.get().getDimension().width();
-        final double platformBottom = bottomRightPlatform.get().getPosition().y()
-                + bottomRightPlatform.get().getDimension().height();
-
-        final double scaleX = renderWidth / platformRight;
-        final double scaleY = renderHeight / platformBottom;
-        final double scale = Math.min(scaleX, scaleY);
-
-        final double scaledWidth = platformRight * scale;
-        final double scaledHeight = platformBottom * scale;
-
-        final double offsetX = marginHoriz + (renderWidth - scaledWidth) / 2;
-        final double offsetY = marginVert + (renderHeight - scaledHeight) / 2;
-
-        final AffineTransform oldTransform = g.getTransform();
-        g.translate(offsetX, offsetY);
-        g.scale(scale, scale);
-
-        this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom,
-                deltaTime);
-
-        g.setTransform(oldTransform);
+                .max(Comparator.comparingDouble(e -> e.getPosition().x() + e.getPosition().y()))
+                .ifPresentOrElse(
+                        platform -> renderGameWorld(g, platform, marginHoriz, marginVert, renderWidth, renderHeight,
+                                deltaTime),
+                        () -> {
+                        }
+                );
 
         final int lives = getController().getCharacterLives();
 
@@ -126,5 +106,43 @@ public class InGameView extends AbstractViewState {
 
         drawCenteredText(g, "BONUS", bonusX, bonusLabelY, Color.MAGENTA);
         drawCenteredText(g, String.valueOf(getController().getBonusValue()), bonusX, bonusValueY, Color.WHITE);
+    }
+
+    /**
+     * Renders the main game world using the specified platform as reference for
+     * scaling.
+     * 
+     * @param g            the graphics context
+     * @param platform     the reference platform for calculating world bounds
+     * @param marginHoriz  horizontal margin
+     * @param marginVert   vertical margin
+     * @param renderWidth  available width for rendering
+     * @param renderHeight available height for rendering
+     * @param deltaTime    time elapsed since last frame
+     */
+    private void renderGameWorld(final Graphics2D g, final Entity platform, final int marginHoriz,
+            final int marginVert, final int renderWidth, final int renderHeight,
+            final float deltaTime) {
+        final double platformRight = platform.getPosition().x() + platform.getDimension().width();
+        final double platformBottom = platform.getPosition().y() + platform.getDimension().height();
+
+        final double scaleX = renderWidth / platformRight;
+        final double scaleY = renderHeight / platformBottom;
+        final double scale = Math.min(scaleX, scaleY);
+
+        final double scaledWidth = platformRight * scale;
+        final double scaledHeight = platformBottom * scale;
+
+        final double offsetX = marginHoriz + (renderWidth - scaledWidth) / 2;
+        final double offsetY = marginVert + (renderHeight - scaledHeight) / 2;
+
+        final AffineTransform oldTransform = g.getTransform();
+        g.translate(offsetX, offsetY);
+        g.scale(scale, scale);
+
+        this.renderManager.render(g, getController().getEntities(), (int) platformRight, (int) platformBottom,
+                deltaTime);
+
+        g.setTransform(oldTransform);
     }
 }

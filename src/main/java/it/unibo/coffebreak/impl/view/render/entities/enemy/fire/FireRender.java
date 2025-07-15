@@ -8,7 +8,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender;
 
 /**
- * A renderer for Fire entities that draws them as red circle on the screen.
+ * A renderer for Fire entities.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
