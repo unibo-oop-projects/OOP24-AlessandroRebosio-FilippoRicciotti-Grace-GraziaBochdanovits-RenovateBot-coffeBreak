@@ -6,7 +6,7 @@ package it.unibo.coffebreak.api.common;
  * <ul>
  * <li>{@link #START}: Start a new game from the main menu.</li>
  * <li>{@link #RESUME}: Resume the game from the pause menu.</li>
- * <li>{@link #QUIT}: Exit the game or return to the main menu.</li>
+ * <li>{@link #QUIT}: Exit the game.</li>
  * <li>{@link #NONE}: No option selected or not applicable.</li>
  * </ul>
  * 

@@ -14,6 +14,7 @@ import it.unibo.coffebreak.api.view.sound.SoundManager;
 /**
  * Centralised audio manager that loads and plays sounds {@link Clip} on demand.
  * 
+ * @author Filippo Ricciotti
  */
 public final class GameSoundManager implements SoundManager {
 

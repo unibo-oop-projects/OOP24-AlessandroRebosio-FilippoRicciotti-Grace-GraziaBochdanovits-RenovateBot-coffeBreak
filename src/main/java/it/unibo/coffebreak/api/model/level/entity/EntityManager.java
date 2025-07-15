@@ -7,7 +7,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.api.model.entities.character.MainCharacter;
 
 /**
- * Manages the entities within a game level, including their loading,
+ * Interface for managing the entities within a game level, including their loading,
  * addition, transformation, and access to the main character.
  * Provides methods to interact with and modify the set of entities
  * present in the current level.
@@ -52,7 +52,9 @@ public interface EntityManager {
     boolean addEntity(Entity entity);
 
     /**
-     * Transforms entities according to game logic (e.g., removal, replacement).
+     * Transforms certain entities (e.g., barrels that can transform to fire),
+     * removes collected collectibles, broken platforms, and destroyed enemies,
+     * and adds new entities as needed.
      */
     void transformEntities();
 

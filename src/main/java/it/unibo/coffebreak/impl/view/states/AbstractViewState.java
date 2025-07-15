@@ -15,7 +15,7 @@ import it.unibo.coffebreak.impl.view.sound.GameSoundManager;
  * Abstract implementation of the {@link ViewState} interface.
  * <p>
  * Provides a base class for all view states with access to shared resources,
- * such as fonts, images, or audio files.
+ * such as fonts, texts positions, images, or audio files.
  * </p>
  * 
  * @author Filippo Ricciotti
@@ -55,8 +55,8 @@ public abstract class AbstractViewState implements ViewState {
     /**
      * Constructs an AbstractViewState with the specified controller.
      *
-     * @param controller   the controller associated with this view state
-     * @param loader       the resource loader for graphics
+     * @param controller the controller associated with this view state
+     * @param loader     the resource loader for graphics
      * @throws NullPointerException if {@code controller} is null
      */
     public AbstractViewState(final Controller controller, final Loader loader) {

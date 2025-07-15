@@ -29,6 +29,9 @@ public class GameMapFour extends AbstractMapState {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * This one Checks if all the Breakable Platform are gone.
+     * </p>
      */
     @Override
     public boolean shouldAdvance(final List<Entity> entities) {

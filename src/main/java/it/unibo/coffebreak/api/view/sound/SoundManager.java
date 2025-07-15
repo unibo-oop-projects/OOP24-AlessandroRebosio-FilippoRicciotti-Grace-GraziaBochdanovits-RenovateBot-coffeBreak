@@ -3,9 +3,9 @@ package it.unibo.coffebreak.api.view.sound;
 import javax.sound.sampled.Clip;
 
 /**
- * Contract for any audio system used by the game.
- * Different implementations (real, mock, or platform‑specific)
- * can be swapped in without toccare il resto del codice.
+ * Interface for the centralized audio system used by the game.
+ * 
+ * @author Filippo Ricciotti
  */
 public interface SoundManager {
 
