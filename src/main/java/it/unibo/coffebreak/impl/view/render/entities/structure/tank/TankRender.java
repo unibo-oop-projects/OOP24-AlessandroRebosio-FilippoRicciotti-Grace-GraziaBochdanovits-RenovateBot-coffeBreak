@@ -9,7 +9,7 @@ import it.unibo.coffebreak.api.model.entities.structure.Tank;
 import it.unibo.coffebreak.impl.view.render.entities.AnimatedEntityRender;
 
 /**
- * A renderer for the Tank that draws it as a white rectangle on the screen.
+ * A renderer for the Tank entity.
  * 
  * @author Grazia Bochdanovits de Kavna
  */

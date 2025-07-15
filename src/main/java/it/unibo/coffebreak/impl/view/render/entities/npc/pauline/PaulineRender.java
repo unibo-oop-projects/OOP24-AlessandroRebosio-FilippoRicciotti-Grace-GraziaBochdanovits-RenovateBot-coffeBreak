@@ -9,7 +9,7 @@ import it.unibo.coffebreak.api.model.entities.npc.Princess;
 import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
- * A renderer for the princess that draws him as a pink rectangle on the screen.
+ * A renderer for the princess entity.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -21,7 +21,7 @@ public class PaulineRender extends AbstractEntityRender {
     private static final int PAULINE_HEIGHT = 32;
 
     /**
-     * Constructs a new Princess with the specified screen dimensions.
+     * Constructs a new PrincessRender with the specified screen dimensions.
      * The target dimensions will be scaled according to these dimensions.
      *
      * @param resource

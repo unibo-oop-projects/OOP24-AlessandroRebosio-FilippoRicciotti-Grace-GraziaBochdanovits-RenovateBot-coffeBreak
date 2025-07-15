@@ -31,8 +31,7 @@ import it.unibo.coffebreak.impl.view.states.pause.PauseView;
  * Resizable panel for game rendering, using double buffering to prevent
  * flickering.
  * This panel automatically adjusts the rendering area size to maintain a 10:16
- * aspect ratio
- * and delegates drawing of game elements to the current view state.
+ * aspect ratio and delegates drawing of game elements to the current view state.
  * Also handles keyboard input via KeyAdapter.
  * 
  * @author Grazia Bochdanovits de Kavna

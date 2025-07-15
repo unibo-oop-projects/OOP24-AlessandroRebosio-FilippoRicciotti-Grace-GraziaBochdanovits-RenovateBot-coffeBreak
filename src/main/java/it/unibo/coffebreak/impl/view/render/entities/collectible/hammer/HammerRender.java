@@ -9,7 +9,7 @@ import it.unibo.coffebreak.impl.model.entities.collectible.hammer.Hammer;
 import it.unibo.coffebreak.impl.view.render.entities.collectible.AbstractCollectableRender;
 
 /**
- * A renderer for the Hammer that draws it as a white circle on the screen.
+ * A renderer for the Hammer entity.
  * 
  * @author Grazia Bochdanovits de Kavna
  */

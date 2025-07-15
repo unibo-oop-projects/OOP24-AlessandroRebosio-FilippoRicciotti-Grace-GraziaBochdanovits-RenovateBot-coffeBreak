@@ -10,7 +10,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 import it.unibo.coffebreak.impl.view.render.entities.enemy.AbstractEnemyRender;
 
 /**
- * A renderer for Barrel entities that draws them as blue circle on the screen.
+ * A renderer for Barrel entities.
  * 
  * @author Grazia Bochdanovits de Kavna
  */

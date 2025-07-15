@@ -25,8 +25,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
  * 
  * <p>
  * It extends {@link AbstractViewState} to inherit common view state
- * functionality
- * and implements the game-specific rendering logic.
+ * functionality and implements the game-specific rendering logic.
  * </p>
  * 
  * @author Grazia Bochdanovits de Kavna

@@ -50,7 +50,7 @@ public abstract class AbstractCollectableRender extends AbstractEntityRender {
      * rendering logic for their collectible type.
      * </p>
      * 
-     * @param g         the {@link Graphics2D} context to render onto
+     * @param g         the {@link Graphics2D} context to render into
      * @param entity    the collectible entity to render
      * @param deltaTime the time in seconds since the last frame was rendered
      * @param width     the width available for rendering the entity

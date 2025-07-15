@@ -9,8 +9,7 @@ import it.unibo.coffebreak.api.model.entities.structure.Ladder;
 import it.unibo.coffebreak.impl.view.render.entities.AbstractEntityRender;
 
 /**
- * A renderer for ladder entities that draws them as red rectangles on the
- * screen.
+ * A renderer for ladder entities.
  * 
  * @author Grazia Bochdanovits de Kavna
  */
