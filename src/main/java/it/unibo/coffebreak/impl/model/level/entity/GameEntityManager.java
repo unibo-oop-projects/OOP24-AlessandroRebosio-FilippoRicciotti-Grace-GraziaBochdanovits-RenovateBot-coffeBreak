@@ -53,7 +53,7 @@ public class GameEntityManager implements EntityManager {
 
     /**
      * {@inheritDoc}
-     * Returns an unmodifiable list of all entities managed by this manager.
+     * Returns an unmodifiable list of all entities managed by this Manager.
      */
     @Override
     public List<Entity> getEntities() {
@@ -71,10 +71,6 @@ public class GameEntityManager implements EntityManager {
 
     /**
      * {@inheritDoc}
-     * Loads entities from the provided map representation.
-     * Not yet implemented.
-     *
-     * @param map the map representation to load entities from
      */
     @Override
     public void loadEntities(final List<String> map, final boolean canDonkeyThrowBarrel) {
@@ -134,10 +130,7 @@ public class GameEntityManager implements EntityManager {
 
     /**
      * {@inheritDoc}
-     * Adds a non-null entity to the manager.
-     *
-     * @param entity the entity to add
-     * @return true if the entity was added successfully
+     * 
      * @throws NullPointerException if the entity is null
      */
     @Override
@@ -147,9 +140,6 @@ public class GameEntityManager implements EntityManager {
 
     /**
      * {@inheritDoc}
-     * Transforms certain entities (e.g., barrels that can transform to fire),
-     * removes collected collectibles, broken platforms, and destroyed enemies,
-     * and adds new entities as needed.
      */
     @Override
     public void transformEntities() {

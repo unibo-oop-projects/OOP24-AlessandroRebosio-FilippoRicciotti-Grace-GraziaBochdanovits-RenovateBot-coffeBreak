@@ -15,7 +15,7 @@ import java.util.Locale;
 /**
  * View state responsible for rendering the main menu screen.
  * <p>
- * Displays the game title and menu options such as "Start Game" and "Exit".
+ * Displays the game title and menu options such as "Start Game" and "QUIT".
  * </p>
  * 
  * @author Filippo Ricciotti

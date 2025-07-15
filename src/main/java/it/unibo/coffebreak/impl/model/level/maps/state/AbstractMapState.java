@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.model.level.maps.state.MapState;
  * and storing map data from a resource file. Subclasses must implement
  * the advancement condition and provide the map index.
  *
- * The map file is loaded from the path "maps/map{index}.txt" where
+ * The map file is loaded from the path "/maps/Map{index}.txt" where
  * {index} is provided by the subclass via the constructor.
  *
  * @author Filippo Ricciotti

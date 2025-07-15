@@ -11,10 +11,10 @@ import it.unibo.coffebreak.impl.common.ResourceLoader;
 import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 
 /**
- * View state responsible for rendering the GAme Over screen.
+ * View state responsible for rendering the Game Over screen.
  * <p>
- * Displays the game over title, your high Score and an interface to insert your
- * nickname.
+ * Displays the game over title and prompts you to press enter to get back to
+ * the menu where your score will be displayed.
  * </p>
  * 
  * @author Filippo Ricciotti
@@ -26,8 +26,8 @@ public class GameOverView extends AbstractViewState {
     /**
      * Constructs the Game Over view and loads required fonts.
      *
-     * @param controller   the controller to interact with the game logic
-     * @param loader       the resource loader for graphics
+     * @param controller the controller to interact with the game logic
+     * @param loader     the resource loader for graphics
      */
     public GameOverView(final Controller controller, final Loader loader) {
         super(controller, loader);
@@ -43,7 +43,12 @@ public class GameOverView extends AbstractViewState {
     }
 
     /**
-     * {@inheritDoc}
+     * Draws the Game Over background, title, and text label.
+     *
+     * @param g         the graphics context
+     * @param width     the width of the window
+     * @param height    the height of the window
+     * @param deltaTime
      */
     @Override
     public void draw(final Graphics2D g, final int width, final int height, final float deltaTime) {

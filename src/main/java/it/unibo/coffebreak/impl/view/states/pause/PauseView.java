@@ -12,8 +12,7 @@ import it.unibo.coffebreak.impl.view.states.AbstractViewState;
 /**
  * View state responsible for rendering the Pause screen.
  * <p>
- * Displays the Pause title and the options such as "Resume" and "Exit"(Exit =>
- * Go to Main Menu).
+ * Displays the Pause title and the options such as "Resume" ,"Menu" and "Quit".
  * </p>
  * 
  * @author Filippo Ricciotti
@@ -25,8 +24,8 @@ public class PauseView extends AbstractViewState {
     /**
      * Constructs the pause view and loads required fonts.
      *
-     * @param controller   the controller to interact with the game logic
-     * @param loader       the resource loader for graphics
+     * @param controller the controller to interact with the game logic
+     * @param loader     the resource loader for graphics
      */
     public PauseView(final Controller controller, final Loader loader) {
         super(controller, loader);

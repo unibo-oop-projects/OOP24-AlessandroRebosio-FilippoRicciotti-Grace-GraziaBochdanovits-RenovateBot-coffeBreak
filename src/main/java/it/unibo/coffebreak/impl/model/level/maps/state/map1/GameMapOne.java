@@ -29,6 +29,9 @@ public class GameMapOne extends AbstractMapState {
 
     /**
      * {@inheritDoc}
+     * <p>
+     * This one Checks if the Princess has been rescued.
+     * </p>
      */
     @Override
     public boolean shouldAdvance(final List<Entity> entities) {
