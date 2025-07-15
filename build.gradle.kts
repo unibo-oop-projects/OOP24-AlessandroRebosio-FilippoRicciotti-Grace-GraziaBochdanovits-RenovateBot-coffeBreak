@@ -59,4 +59,9 @@ tasks.test {
         events(*org.gradle.api.tasks.testing.logging.TestLogEvent.values())
         showStandardStreams = true
     }
+    // Suppress Java agent warnings in tests
+    jvmArgs(
+        "-XX:+EnableDynamicAgentLoading",
+        "-Djdk.instrument.traceUsage=false"
+    )
 }
