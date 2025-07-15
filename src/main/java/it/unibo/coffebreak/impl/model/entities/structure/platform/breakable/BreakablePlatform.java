@@ -10,7 +10,6 @@ import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatfo
  * This platform type can be destroyed or broken under certain game conditions,
  * though the current implementation marks it as unbreakable ({@code canBreak()}
  * returns false).
- * Designed to be extended for specific breakable platform behaviors.
  * </p>
  * 
  * @see AbstractPlatform
@@ -22,12 +21,10 @@ public class BreakablePlatform extends AbstractPlatform {
     private boolean broken;
 
     /**
-     * Constructs a new breakable platform with specified position, dimensions and
-     * slope.
+     * Constructs a new breakable platform with specified position and dimensions.
      *
      * @param position  the 2D position of the platform in game world
-     *                  coordinates
-     *                  (cannot be null)
+     *                  coordinates (cannot be null)
      * @param dimension the 2D dimension of the platform (cannot be null)
      */
     public BreakablePlatform(final Position position, final BoundigBox dimension) {

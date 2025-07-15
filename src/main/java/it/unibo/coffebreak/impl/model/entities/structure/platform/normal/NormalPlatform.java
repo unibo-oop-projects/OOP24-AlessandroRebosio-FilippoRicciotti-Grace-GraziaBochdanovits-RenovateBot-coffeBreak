@@ -14,8 +14,7 @@ import it.unibo.coffebreak.impl.model.entities.structure.platform.AbstractPlatfo
 public class NormalPlatform extends AbstractPlatform {
 
     /**
-     * Constructs a new NormalPlatform with specified position, dimensions and
-     * slope.
+     * Constructs a new NormalPlatform with specified position and dimensions.
      * 
      * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimension of the platform (cannot be null)

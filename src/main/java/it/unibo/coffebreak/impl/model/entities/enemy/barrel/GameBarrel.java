@@ -22,7 +22,6 @@ import it.unibo.coffebreak.impl.model.entities.enemy.AbstractEnemy;
  * <ul>
  * <li>Starts moving right at constant speed ({@value #BARREL_SPEED})</li>
  * <li>Only moves horizontally when on a platform</li>
- * <li>Has no horizontal movement when falling/in air</li>
  * <li>Inverts direction only once each time it lands after a fall</li>
  * <li>Affected by game physics (gravity)</li>
  * </ul>
@@ -45,10 +44,8 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * Constructs a new game barrel with specified properties.
      *
      * @param position           the initial position of the barrel (cannot be null)
-     * @param dimension          the initial dimension of the barrel (cannot be
-     *                           null)
-     * @param canTransformToFire whether the barrel can turn into fire when
-     *                           destroyed
+     * @param dimension          the initial dimension of the barrel (cannot be null)
+     * @param canTransformToFire whether the barrel can turn into fire when destroyed
      * @throws NullPointerException if position, dimension or physics are null
      */
     public GameBarrel(final Position position, final BoundigBox dimension, final boolean canTransformToFire) {
@@ -63,7 +60,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * <p>
      * Barrel movement logic:
      * - Only moves horizontally when on a platform
-     * - When falling, has no horizontal movement
      * - Maintains current direction when on platform
      * </p>
      */
@@ -78,8 +74,6 @@ public class GameBarrel extends AbstractEnemy implements Barrel {
      * {@inheritDoc}
      * <p>
      * Handles collisions with platforms to update the barrel's rolling direction.
-     * When colliding with an inclined platform, updates the current slope
-     * direction.
      * </p>
      *
      * @param other the entity this barrel collided with

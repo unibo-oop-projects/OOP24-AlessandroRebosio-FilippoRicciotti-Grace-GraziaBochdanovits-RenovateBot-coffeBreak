@@ -7,7 +7,6 @@ import it.unibo.coffebreak.api.model.entities.enemy.barrel.Barrel;
 import it.unibo.coffebreak.api.model.entities.npc.Antagonist;
 import it.unibo.coffebreak.impl.common.BoundigBox;
 import it.unibo.coffebreak.impl.common.Position;
-import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 import it.unibo.coffebreak.impl.model.entities.enemy.barrel.GameBarrel;
 import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
 
@@ -20,13 +19,13 @@ import it.unibo.coffebreak.impl.model.entities.npc.AbstractNpc;
  * </p>
  * 
  * @see Antagonist
- * @see AbstractEntity
+ * @see AbstractNpc
  * @author Grazia Bochdanovits de Kavna
  */
 public class DonkeyKong extends AbstractNpc implements Antagonist {
 
     /**
-     * The interval between barrel throws in milliseconds.
+     * The interval between barrel throws.
      */
     private static final int BARREL_THROW_INTERVAL = 3;
     private static final float FIRE_BARREL_PROBABILITY = 0.6f;
@@ -44,10 +43,8 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      *
      * @param position       the initial position of Donkey Kong (cannot be null)
      * @param dimension      the dimension of the pauline in the game world
-     * @param canThrowBarrel true if Donkey Kong is allowed to throw barrels, false
-     *                       otherwise
+     * @param canThrowBarrel true if Donkey Kong is allowed to throw barrels, false otherwise
      * @throws NullPointerException     if position or dimension are null
-     * @throws IllegalArgumentException if barrelThrowInterval is negative
      */
     public DonkeyKong(final Position position, final BoundigBox dimension, final boolean canThrowBarrel) {
         super(position, dimension);
@@ -59,8 +56,7 @@ public class DonkeyKong extends AbstractNpc implements Antagonist {
      * {@inheritDoc}
      * 
      * @param deltaTime the time elapsed
-     * @return {@link Optional} containing a new {@link Barrel} if thrown, otherwise
-     *         empty
+     * @return {@link Optional} containing a new {@link Barrel} if thrown, otherwise empty
      */
     @Override
     public Optional<Barrel> tryThrowBarrel(final float deltaTime) {

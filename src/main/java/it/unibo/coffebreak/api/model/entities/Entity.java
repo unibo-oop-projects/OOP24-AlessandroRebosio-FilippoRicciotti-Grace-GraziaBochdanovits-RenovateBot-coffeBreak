@@ -14,7 +14,6 @@ import it.unibo.coffebreak.impl.common.Vector;
  * 
  * @author Grazia Bochdanovits de Kavna
  */
-
 public interface Entity {
     /**
      * Gets the current position of this entity in game world coordinates.
@@ -66,8 +65,7 @@ public interface Entity {
     /**
      * Checks if this entity intersects with another entity.
      * The intersection is typically determined by comparing the position and
-     * dimensions
-     * of both entities.
+     * dimensions of both entities.
      *
      * @param other the entity to check for intersection with
      * @return {@code true} if this entity intersects with the given entity,
@@ -78,11 +76,9 @@ public interface Entity {
     /**
      * Handles collision detection response with another entity.
      * This method is invoked when a collision is detected between this entity and
-     * another entity,
-     * and should contain the logic to respond to the collision.
+     * another entity, and should contain the logic to respond to the collision.
      * 
      * @param other the entity that collided with this entity (never {@code null})
-     * 
      * @throws NullPointerException if the other parameter is null
      */
     void onCollision(Entity other);

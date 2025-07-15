@@ -12,7 +12,7 @@ import it.unibo.coffebreak.api.model.entities.enemy.Enemy;
  * <h3>Behavior Characteristics:</h3>
  * <ul>
  *   <li>Rolls autonomously along platforms</li>
- *   <li>Changes direction based on platform slopes</li>
+ *   <li>Changes direction when falling from a platform</li>
  *   <li>Can be destroyed by player actions</li>
  *   <li>May transform into fire hazards under certain conditions</li>
  * </ul>

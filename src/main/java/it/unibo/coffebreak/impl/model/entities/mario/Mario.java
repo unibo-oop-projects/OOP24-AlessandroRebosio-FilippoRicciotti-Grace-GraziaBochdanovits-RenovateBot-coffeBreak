@@ -48,6 +48,7 @@ import it.unibo.coffebreak.impl.model.physics.GamePhysics;
  * 
  * @see AbstractEntity
  * @see MainCharacter
+ * @see PhysicsEntity
  * @author Grazia Bochdanovits de Kavna
  */
 public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntity {
@@ -218,7 +219,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
     }
 
     /**
-     * Makes Mario lose one life and handles death/respawn.
+     * Makes Mario lose one life.
      */
     @Override
     public void loseLife() {
@@ -253,7 +254,7 @@ public class Mario extends AbstractEntity implements MainCharacter, PhysicsEntit
 
     /**
      * {@inheritDoc}
-     * Resets the number of lives back to the initial value defined.
+     * Resets the behaviors back to the initial value defined.
      */
     @Override
     public void resetBehaviour() {

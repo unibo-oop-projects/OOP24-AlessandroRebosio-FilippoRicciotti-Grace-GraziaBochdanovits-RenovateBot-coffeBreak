@@ -8,13 +8,8 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
 
 /**
  * Concrete implementation of a {@link Platform} entity in the game world.
- * <p>
- * This class represents a physical platform that can influence the movement
- * of entities standing on it through its slope property.
- * </p>
  * 
  * @see Platform
- * @see GameEntity
  * 
  * @author Grazia Bochdanovits de Kavna
  */
@@ -23,7 +18,7 @@ public abstract class AbstractPlatform extends AbstractEntity implements Platfor
     private final boolean canGoDown;
 
     /**
-     * Constructs a new Platform with specified position, dimensions and slope.
+     * Constructs a new Platform with specified position and dimensions.
      * 
      * @param position  the 2D position of the platform (cannot be null)
      * @param dimension the 2D dimension of the platform (cannot be null)

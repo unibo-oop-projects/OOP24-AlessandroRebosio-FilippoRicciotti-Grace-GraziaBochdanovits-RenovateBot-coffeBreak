@@ -33,8 +33,7 @@ public class NormalState extends AbstractMarioState {
     /**
      * Updates the normal state for each frame.
      * Resets the climbing flag to false at the beginning of each update cycle.
-     * This ensures that climbing is only possible when actively colliding with a
-     * ladder.
+     * This ensures that climbing is only possible when actively colliding with a ladder.
      * Also manages the invincibility timer to prevent rapid life loss.
      * 
      * @param character the main character (Mario) to update

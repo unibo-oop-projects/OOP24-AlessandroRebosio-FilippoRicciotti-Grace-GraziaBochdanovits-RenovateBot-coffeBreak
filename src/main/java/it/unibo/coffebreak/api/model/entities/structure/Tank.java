@@ -5,7 +5,7 @@ import it.unibo.coffebreak.api.model.entities.Entity;
 /**
  * Represents a stationary oil tank that can ignite barrels on contact.
  * <p>
- * When a barrel reaches the tank's position, the barrel transforms into a fire entity.
+ * When a barrel reaches the tank's position, the barrel can transforms into a fire entity.
  * </p>
  *
  * @see Entity

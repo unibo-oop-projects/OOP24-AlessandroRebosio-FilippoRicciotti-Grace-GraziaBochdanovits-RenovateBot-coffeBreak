@@ -9,10 +9,9 @@ import it.unibo.coffebreak.impl.common.Vector;
 
 /**
  * An abstract base class for all game entities, providing common functionality
- * for position, dimension, velocity and facing direction management.
+ * for position, dimension and velocity.
  * This class implements the {@link Entity} interface and serves as the
- * foundation
- * for both static and dynamic game objects.
+ * foundation for both static and dynamic game objects.
  * 
  * @see Entity
  * @author Grazia Bochdanovits de Kavna

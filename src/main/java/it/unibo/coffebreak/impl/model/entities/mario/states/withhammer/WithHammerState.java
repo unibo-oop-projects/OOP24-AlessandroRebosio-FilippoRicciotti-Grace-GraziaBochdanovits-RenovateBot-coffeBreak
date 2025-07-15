@@ -23,7 +23,6 @@ import it.unibo.coffebreak.impl.model.entities.mario.states.normal.NormalState;
  * <li>To {@link NormalState} when:
  * <ul>
  * <li>Hammer duration expires</li>
- * <li>Mario loses a life</li>
  * </ul>
  * </li>
  * </ul>

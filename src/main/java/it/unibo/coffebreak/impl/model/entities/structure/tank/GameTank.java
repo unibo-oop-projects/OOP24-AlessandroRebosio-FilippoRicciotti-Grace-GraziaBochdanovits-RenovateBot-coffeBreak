@@ -12,8 +12,7 @@ import it.unibo.coffebreak.impl.model.entities.AbstractEntity;
  * <p>
  * This stationary entity serves as an environmental hazard that transforms
  * barrels into fire when they collide with it. The tank remains fixed in
- * position
- * and activates visual fire effects upon barrel collisions.
+ * position and activates visual fire effects upon barrel collisions.
  * </p>
  *
  * @see Tank
