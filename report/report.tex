@@ -69,7 +69,7 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 	      il sistema deve rilevare le collisioni tra il personaggio e gli ostacoli/nemici, e applicare le conseguenze previste (es. perdita di vita o bonus).
 	\item  \textbf{Sistema di punteggio e condizioni di gioco:}
 	      il sistema deve calcolare il punteggio in base a: raccolta di oggetti bonus ed eliminazione di nemici con il martello.
-	      Inoltre, deve rilevare: la \textit{condizione per passare al livello successio} e la \textit{condizione di Game Over} quando esaurisce le vite.
+	      Inoltre, deve rilevare: la \textit{condizione per passare al livello successio} e la \textit{condizione di Game Over}.
 	\item \textbf{Interfaccia utente:}
 	      il sistema deve fornire un'interfaccia che mostri in tempo reale il punteggio e  le vite rimanenti.
 	\item \textbf{Menù principale:}
@@ -86,7 +86,7 @@ offrendo un vantaggio momentaneo e un'opportunità per accumulare punti extra.
 \newpage
 \section{Modello del Dominio}
 
-Il gioco si avvia da un \textbf{menu iniziale}, che consente al giocatore di avviare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni
+Il gioco si avvia da un \textbf{menu iniziale}, che consente al giocatore di iniziare una nuova partita, visualizzare i cinque punteggi più alti raggiunti nelle sessioni
 precedenti, se presenti, oppure uscire dal gioco. Al momento dell'avvio della partita, il gioco carica il \textbf{primo livello} della rotazione, ispirato a \textit{Donkey Kong} (Nintendo, 1981), e
 posiziona automaticamente il personaggio principale (Jumpman) nella posizione iniziale.
 
@@ -103,7 +103,7 @@ di \textbf{game over} o di perdita di una vita, mostrando il punteggio accumulat
 Durante la partita, il \textbf{punteggio} è visibile nella parte superiore dello schermo e si aggiorna dinamicamente in base alle azioni
 del giocatore (es. raccolta bonus, tempo residuo). È anche possibile mettere il gioco in \textbf{pausa} e riprendere la partita in qualsiasi momento.
 
-Una volta terminata la partita (all' esaurimento delle vite, oppure allo scadere del tempo), viene mostrata una schermata di fine con l'opzione per
+Una volta terminata la partita (all' esaurimento delle vite, oppure allo scadere del tempo), viene mostrata una schermata di gameOver con l'opzione per
 tornare al menù principale, avviare una nuova partita o uscire.
 
 \begin{figure}[H]
