@@ -15,6 +15,7 @@ import it.unibo.coffebreak.api.model.states.ModelState;
  * @author Alessandro Rebosio
  */
 public interface Controller {
+
     /**
      * Handles a key press event by forwarding it to the input system.
      * Concrete implementations should translate the key code into appropriate game
@@ -35,14 +36,6 @@ public interface Controller {
     /**
      * Processes all pending input commands and applies them to the game model.
      * Should be called once per frame to ensure responsive controls.
-     * <p>
-     * Implementation should:
-     * </p>
-     * <ol>
-     * <li>Poll the input system for pending commands</li>
-     * <li>Apply each command to the model</li>
-     * <li>Clear processed commands</li>
-     * </ol>
      */
     void processInput();
 
@@ -97,8 +90,7 @@ public interface Controller {
     /**
      * Gets the highest score currently in the leaderboard.
      * 
-     * @return the highest score value
-     * @throws IllegalStateException if the leaderboard is empty
+     * @return the highest score value, or 0 if the leaderboard is empty
      */
     int getHighestScore();
 
@@ -112,7 +104,8 @@ public interface Controller {
     /**
      * Retrieves the current number of lives remaining for the character.
      *
-     * @return the number of lives the character has left
+     * @return the number of lives the character has left, or 0 if no character is
+     *         present
      */
     int getCharacterLives();
 

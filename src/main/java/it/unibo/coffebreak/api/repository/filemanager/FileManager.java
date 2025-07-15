@@ -9,6 +9,7 @@ import java.nio.file.Path;
  * @author Alessandro Rebosio
  */
 public interface FileManager {
+
     /**
      * Retrieves the main data file path.
      *
@@ -18,6 +19,8 @@ public interface FileManager {
 
     /**
      * Creates a backup of the current data file.
+     *
+     * @throws IllegalStateException if backup creation fails
      */
     void createBackup();
 
@@ -25,6 +28,7 @@ public interface FileManager {
      * Attempts to restore data from a backup file.
      *
      * @return true if restoration was successful, false otherwise
+     * @throws IllegalStateException if backup restore fails
      */
     boolean restoreFromBackup();
 

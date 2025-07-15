@@ -22,7 +22,7 @@ public interface ModelState extends State<Model> {
     /**
      * Returns the currently selected option for this state, if any.
      *
-     * @return the selected {@link Option}
+     * @return the selected {@link Option}, or null if no valid option is selected
      */
     Option getSelectedOption();
 

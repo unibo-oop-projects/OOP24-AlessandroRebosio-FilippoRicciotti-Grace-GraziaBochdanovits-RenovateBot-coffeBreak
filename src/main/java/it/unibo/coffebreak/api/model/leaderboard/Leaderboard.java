@@ -15,6 +15,7 @@ import it.unibo.coffebreak.api.model.leaderboard.entry.Entry;
  * @author Alessandro Rebosio
  */
 public interface Leaderboard {
+
     /**
      * Returns an unmodifiable view of entries ranked from highest to lowest.
      * The returned list is a snapshot and won't reflect subsequent modifications.

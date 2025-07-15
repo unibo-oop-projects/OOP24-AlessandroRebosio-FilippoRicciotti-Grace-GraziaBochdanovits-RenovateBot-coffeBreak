@@ -7,6 +7,7 @@ package it.unibo.coffebreak.api.core;
  * @author Alessandro Rebosio
  */
 public interface Engine {
+
     /**
      * Starts and runs the main game loop.
      * The implementation should handle game timing, updates, and rendering.

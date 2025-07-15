@@ -36,6 +36,9 @@ public abstract class AbstractModelState implements ModelState {
      */
     @Override
     public Option getSelectedOption() {
+        if (this.options.isEmpty()) {
+            return Option.NONE;
+        }
         return this.options.get(selectedIndex);
     }
 
