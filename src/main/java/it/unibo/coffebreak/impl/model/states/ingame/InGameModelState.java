@@ -56,33 +56,34 @@ public class InGameModelState extends AbstractModelState {
      */
     @Override
     public void update(final Model model, final float deltaTime) {
-        final var player = model.getMainCharacter().get();
-        final int currentLives = player.getLives();
+        model.getMainCharacter().ifPresent(player -> {
+            final int currentLives = player.getLives();
 
-        model.getEntities().stream()
-                .filter(Antagonist.class::isInstance)
-                .map(Antagonist.class::cast)
-                .findFirst()
-                .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
+            model.getEntities().stream()
+                    .filter(Antagonist.class::isInstance)
+                    .map(Antagonist.class::cast)
+                    .findFirst()
+                    .ifPresent(a -> a.tryThrowBarrel(deltaTime).ifPresent(model::addEntity));
 
-        model.getEntities().forEach(entity -> {
-            entity.update(deltaTime);
-            if (entity instanceof PhysicsEntity) {
-                this.physicsEngine.updateEntity(entity, model, deltaTime);
+            model.getEntities().forEach(entity -> {
+                entity.update(deltaTime);
+                if (entity instanceof PhysicsEntity) {
+                    this.physicsEngine.updateEntity(entity, model, deltaTime);
+                }
+            });
+
+            if (currentLives != player.getLives() || model.getBonusValue() == 0) {
+                model.initialEntitiesState();
+            }
+
+            model.transformEntities();
+            model.nextMap();
+            model.calculateBonus(deltaTime);
+
+            if (player.isGameOver()) {
+                model.setState(new GameOverModelState());
             }
         });
-
-        if (currentLives != player.getLives() || model.getBonusValue() == 0) {
-            model.initialEntitiesState();
-        }
-
-        model.transformEntities();
-        model.nextMap();
-        model.calculateBonus(deltaTime);
-
-        if (player.isGameOver()) {
-            model.setState(new GameOverModelState());
-        }
     }
 
     /**
