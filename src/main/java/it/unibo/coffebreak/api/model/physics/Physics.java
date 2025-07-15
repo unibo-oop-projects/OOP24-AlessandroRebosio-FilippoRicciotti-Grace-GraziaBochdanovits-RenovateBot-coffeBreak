@@ -10,6 +10,7 @@ import it.unibo.coffebreak.impl.common.Vector;
  * @author Alessandro Rebosio
  */
 public interface Physics {
+
     /**
      * Returns the horizontal velocity vector for moving right, scaled by deltaTime.
      * 

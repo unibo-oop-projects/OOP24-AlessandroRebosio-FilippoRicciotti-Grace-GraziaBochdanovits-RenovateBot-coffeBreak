@@ -15,35 +15,33 @@ import javax.sound.sampled.Clip;
  * @author Alessandro Rebosio
  */
 public interface Loader {
+
     /**
      * Loads an image from the specified path.
      *
      * @param path the path to the image resource, relative to the classpath
      * @return the loaded BufferedImage
-     * 
-     * @throws IllegalArgumentException if the image format is invalid
+     * @throws RuntimeException if the image cannot be loaded or the format is
+     *                          invalid
      */
     BufferedImage loadImage(String path);
 
     /**
-     * Loads a font from the specified path with the given size.
+     * Loads a font from the specified path.
      *
      * @param path the path to the font resource, relative to the classpath
-     * 
      * @return the loaded Font
+     * @throws RuntimeException if the font cannot be loaded or the format is
+     *                          invalid
      */
     Font loadFont(String path);
 
     /**
      * Loads an audio clip from the specified classpath location.
-     * <p>
-     * Supported audio formats are implementation dependent but typically include
-     * WAV, AIFF, and AU formats.
-     * </p>
      *
      * @param path the classpath-relative path to the audio resource
-     * 
      * @return the loaded {@link Clip}
+     * @throws RuntimeException if the audio resource cannot be loaded
      */
     Clip loadClip(String path);
 
@@ -52,7 +50,7 @@ public interface Loader {
      *
      * @param path the path to the file containing the map data
      * @return a list of strings representing the loaded map
-     * @throws IOException if an I/O error occurs while reading the file
+     * @throws RuntimeException if the map resource cannot be loaded
      */
     List<String> loadMap(String path);
 

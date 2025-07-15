@@ -9,6 +9,7 @@ package it.unibo.coffebreak.api.view;
  * @author Alessandro Rebosio
  */
 public interface View {
+
     /**
      * Closes the view and releases resources.
      */

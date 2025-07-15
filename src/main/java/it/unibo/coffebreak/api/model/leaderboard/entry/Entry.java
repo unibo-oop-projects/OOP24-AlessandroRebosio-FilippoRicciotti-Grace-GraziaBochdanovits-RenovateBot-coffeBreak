@@ -11,6 +11,7 @@ import java.io.Serializable;
  * @author Alessandro Rebosio
  */
 public interface Entry extends Serializable {
+
     /**
      * Gets the name associated with this entry.
      * 
