@@ -307,7 +307,7 @@ del team, migliorando l'efficienza della collaborazione.
 	      livelli erano distribuiti in più punti del codice, aumentando la complessità.
 
 	\item[\textbf{Soluzione}]
-	      Per risolvere il problema, abbiamo strutturato la gestione dei livelli applicando il \textbf{State Pattern}, trattando ogni livello come uno stato distinto del gioco. Il \texttt{GameLevelManager}
+	      Per risolvere il problema, abbiamo affidato la gestione dei livelli ad un Level Manager che funge da MiddleMan tra la gestione delle Mappe e la gestione delle Entità. Il \texttt{GameLevelManager}
 	      si occupa esclusivamente della transizione tra stati-livello, centralizzando le logiche di passaggio, caricamento e inizializzazione. Questo consente una gestione più modulare, facilitando
 	      l'aggiunta di nuovi livelli.
 \end{description}
@@ -348,7 +348,9 @@ del team, migliorando l'efficienza della collaborazione.
 	\item[\textbf{Soluzione}]
 	      Abbiamo applicato il \textbf{Strategy Pattern} per definire criteri di ordinamento intercambiabili tra mappe, separando la logica di confronto da quella di caricamento. In
 	      aggiunta, abbiamo sfruttato le \textbf{Stream API} di Java per semplificare le operazioni su collezioni, come il filtro e il conteggio di elementi, migliorando la chiarezza e
-	      la concisione del codice. Questo approccio facilita la manutenzione e l'aggiunta di nuove funzionalità legate alle mappe.
+	      la concisione del codice. Questo approccio facilita la manutenzione e l'aggiunta di nuove funzionalità legate alle mappe. Ecco spiegata la scelta di chiamare le singole Mappe con numeri non adiacenti, 
+		  non solo per rendere omaggio alla Mappa1 e la Mappa4 presenti nel gioco originale alla quali sono ispirate, ma sopratutto per rendere evidente la possibilità di espansione del gioco aggiungendo nuove Mappe con dinamiche 
+		  di vittoria differenti.
 \end{description}
 \begin{figure}[H]
 	\centering{}
